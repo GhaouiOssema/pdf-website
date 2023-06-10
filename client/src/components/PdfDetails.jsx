@@ -13,7 +13,7 @@ const PdfDetails = () => {
 		const getPdfData = async () => {
 			try {
 				const response = await axios.get(
-					`http://localhost:3000/pdf/${id}`
+					`https://pdf-server-v2.onrender.com/pdf/${id}`
 				);
 				setPdfData(response.data);
 			} catch (error) {

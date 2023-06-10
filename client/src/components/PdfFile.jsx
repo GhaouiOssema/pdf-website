@@ -11,7 +11,9 @@ const PdfFile = () => {
 
 	const fetchPdfs = async () => {
 		try {
-			const response = await fetch('http://localhost:3000/pdfs');
+			const response = await fetch(
+				'https://pdf-server-v2.onrender.com/pdfs'
+			);
 			const data = await response.json();
 
 			if (response.ok) {
