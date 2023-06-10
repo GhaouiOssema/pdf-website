@@ -18,13 +18,10 @@ const FormSend = () => {
 		formData.append('pdf', selectedFile);
 
 		try {
-			const response = await fetch(
-				'https://pdf-server-v2.onrender.com/upload',
-				{
-					method: 'POST',
-					body: formData,
-				}
-			);
+			const response = await fetch('http://localhost:3000/upload', {
+				method: 'POST',
+				body: formData,
+			});
 
 			if (response.ok) {
 				console.log('PDF uploaded successfully.');

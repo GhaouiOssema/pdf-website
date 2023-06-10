@@ -43,7 +43,7 @@ const PdfFile = () => {
 						key={pdf._id}
 						className='flex items-center mb-2 ml-5 p-10'>
 						<Document
-							file={`http://localhost:3000/${pdf.path}`}
+							file={`https://pdf-server-v2.onrender.com/${pdf.path}`}
 							className='mr-2'>
 							<Page pageNumber={1} width={80} />
 						</Document>
