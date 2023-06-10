@@ -39,19 +39,19 @@ const PdfDetails = () => {
 					<div>
 						<h1>QR Code</h1>
 						<QRCode
-							value={`http://localhost:5173/pdf/${pdfData.path}`}
+							value={`https://64842f49bf187a33bc276c2f--harmonious-axolotl-ae12d5.netlify.app/${pdfData.path}`}
 						/>
 					</div>
 					<div
 						key={pdfData._id}
 						className='flex items-center mb-2 ml-5 p-10'>
 						<Document
-							file={`http://localhost:3000/${pdfData.path}`}
+							file={`https://pdf-server-v2.onrender.com/${pdfData.path}`}
 							className='mr-2'>
 							<Page pageNumber={1} width={200} />
 						</Document>
 						<a
-							href={`http://localhost:3000/${pdfData.path}`}
+							href={`https://64842f49bf187a33bc276c2f--harmonious-axolotl-ae12d5.netlify.app/${pdfData.path}`}
 							target='_blank'
 							rel='noopener noreferrer'
 							className='text-blue-500 underline mr-2'>
