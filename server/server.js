@@ -44,6 +44,10 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Define a route for uploading a PDF file
 app.post('/upload', upload.single('pdf'), async (req, res) => {
+	// Check if a file was uploaded
+	if (!req.file) {
+		res.status(400).json({ error: 'No file uploaded.' });
+	}
 	const { filename, path } = req.file;
 
 	// Create a new PDF document
@@ -73,22 +77,19 @@ app.get('/pdfs', async (req, res) => {
 		res.status(500).json({ error: 'Failed to fetch PDF files.' });
 	}
 });
-// app.delete('/pdfs/:id', async (req, res) => {
-// 	const { id } = req.params;
-
-// 	try {
-// 		// Find the PDF document by ID
-// 		const pdf = await PDF.findById(id);
-
-// 		// Delete the PDF document from the database
-// 		await pdf.remove();
-
-// 		res.status(200).json({ message: 'PDF deleted successfully.' });
-// 	} catch (error) {
-// 		console.error(error);
-// 		res.status(500).json({ error: 'Failed to delete PDF.' });
-// 	}
-// });
+app.delete('/pdfs/:id', async (req, res) => {
+	try {
+		const pdf = await PDF.deleteOne({ _id: req.params.id });
+		if (pdf.deletedCount === 0) {
+			return res.status(404).json({ message: 'PDF not found.' });
+		}
+		return res.status(200).json({ message: 'PDF deleted successfully.' });
+	} catch (error) {
+		return res
+			.status(500)
+			.json({ message: 'Failed to delete PDF.', error: error.message });
+	}
+});
 
 app.get('/pdf/:id', async (req, res) => {
 	try {

@@ -1,19 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Document, Page } from 'react-pdf';
+import { Document, Page, pdfjs } from 'react-pdf';
 import QRCode from 'react-qr-code';
-import { Link } from 'react-router-dom';
+import html2canvas from 'html2canvas';
+
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const PdfDetails = () => {
 	const { id } = useParams();
 	const [pdfData, setPdfData] = useState(null);
+	const qrCodeRef = useRef(null);
+	const Navigate = useNavigate();
 
 	useEffect(() => {
 		const getPdfData = async () => {
 			try {
 				const response = await axios.get(
-					`https://pdf-server-v2.onrender.com/pdf/${id}`
+					`http://localhost:3000/pdf/${id}`
 				);
 				setPdfData(response.data);
 			} catch (error) {
@@ -24,45 +28,77 @@ const PdfDetails = () => {
 		getPdfData();
 	}, [id]);
 
+	const handleDownloadQRCode = () => {
+		html2canvas(qrCodeRef.current).then((canvas) => {
+			const qrCodeDataURL = canvas.toDataURL();
+			const downloadLink = document.createElement('a');
+			downloadLink.href = qrCodeDataURL;
+			downloadLink.download = 'qr_code.png';
+			downloadLink.click();
+		});
+	};
+
+	const handleDelete = async () => {
+		try {
+			const response = await axios.delete(
+				`http://localhost:3000/pdfs/${id}`
+			);
+
+			if (response.status === 200) {
+				console.log('PDF deleted successfully.');
+				Navigate('/pdf');
+			} else {
+				console.error('Failed to delete PDF.');
+			}
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
 	return (
 		<div>
-			<div className='flex'>
+			<div className='flex items-center'>
 				<h2 className='text-2xl font-bold mb-2'>PDF Details</h2>
-				<Link to={'/'}>
-					<button className='ml-5 px-4 py-2 bg-blue-500 text-white font-semibold'>
-						Home
-					</button>
-				</Link>
+				{pdfData ? (
+					<div className='ml-10 flex'>
+						<button
+							onClick={handleDownloadQRCode}
+							className='ml-2 px-2 py-1 bg-blue-500 text-white text-sm font-semibold'>
+							Download QR Code
+						</button>
+						<button
+							onClick={handleDelete}
+							className='ml-2 px-2 py-1 bg-red-500 text-white text-sm font-semibold'>
+							Delete PDF
+						</button>
+					</div>
+				) : null}
 			</div>
-			{pdfData != null ? (
+			{pdfData ? (
 				<div className='flex justify-around mt-5'>
 					<div>
 						<h1>QR Code</h1>
-						<QRCode
-							value={`https://64842f49bf187a33bc276c2f--harmonious-axolotl-ae12d5.netlify.app/${pdfData.path}`}
-						/>
+						<div ref={qrCodeRef}>
+							<QRCode
+								value={`http://localhost:5173/pdf/${pdfData.path}`}
+							/>
+						</div>
 					</div>
 					<div
 						key={pdfData._id}
-						className='flex items-center mb-2 ml-5 p-10'>
-						<Document
-							file={`https://pdf-server-v2.onrender.com/${pdfData.path}`}
-							className='mr-2'>
-							<Page pageNumber={1} width={200} />
-						</Document>
+						className='flex flex-col items-center mb-2 ml-5 p-10'>
 						<a
-							href={`https://64842f49bf187a33bc276c2f--harmonious-axolotl-ae12d5.netlify.app/${pdfData.path}`}
+							href={`http://localhost:3000/${pdfData.path}`}
 							target='_blank'
 							rel='noopener noreferrer'
 							className='text-blue-500 underline mr-2'>
 							{pdfData.filename}
 						</a>
-
-						<button
-							onClick={() => handleDelete(pdf._id)}
-							className='ml-2 px-2 py-1 bg-red-500 text-white text-sm font-semibold'>
-							Delete
-						</button>
+						<Document
+							file={`http://localhost:3000/${pdfData.path}`}
+							className='mr-2'>
+							<Page pageNumber={1} width={200} />
+						</Document>
 					</div>
 				</div>
 			) : (

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { pdfjs } from 'react-pdf';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const FormSend = () => {
 	const [selectedFile, setSelectedFile] = useState(null);
+	const Navigate = useNavigate();
 
 	const handleFileChange = (event) => {
 		setSelectedFile(event.target.files[0]);
@@ -14,21 +15,24 @@ const FormSend = () => {
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 
+		// Check if a file was selected
+		if (!selectedFile) {
+			alert('Please select a PDF file.');
+			return;
+		}
+
 		const formData = new FormData();
 		formData.append('pdf', selectedFile);
 
 		try {
-			const response = await fetch(
-				'https://pdf-server-v2.onrender.com/upload',
-				{
-					method: 'POST',
-					body: formData,
-				}
-			);
+			const response = await fetch('http://localhost:3000/upload', {
+				method: 'POST',
+				body: formData,
+			});
 
 			if (response.ok) {
 				console.log('PDF uploaded successfully.');
-				// fetchPdfs();
+				Navigate('/pdf');
 			} else {
 				console.error('Failed to upload PDF.');
 			}
