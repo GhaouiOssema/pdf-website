@@ -113,7 +113,7 @@ const PdfDetails = () => {
 						key={pdfData._id}
 						className='flex flex-col items-center mb-2 ml-5 p-10'>
 						<a
-							href={`https://pdf-server-809j.onrender.com/${pdfData.filename}`}
+							href={`https://pdf-server-809j.onrender.com/view/${pdfData.filename}`}
 							target='_blank'
 							rel='noopener noreferrer'
 							className='text-blue-500 underline mr-2'>

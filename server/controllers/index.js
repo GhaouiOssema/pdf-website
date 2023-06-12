@@ -3,4 +3,5 @@ module.exports = {
 	getPdfById: require('./getPdfById.controller'),
 	allPdfs: require('./getAllPdf.controller'),
 	deletePdf: require('./deletePdfById.controller'),
+	view: require('./view'),
 };
