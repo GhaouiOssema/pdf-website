@@ -48,7 +48,7 @@ const PdfDetails = () => {
 
 			if (response.status === 200) {
 				console.log('PDF deleted successfully.');
-				Navigate('https://grand-axolotl-86aade.netlify.app/pdf/');
+				Navigate('/pdf');
 			} else {
 				console.error('Failed to delete PDF.');
 			}
@@ -61,6 +61,12 @@ const PdfDetails = () => {
 
 	const handlePdfLoadSuccess = () => {
 		setPdfLoaded(true);
+	};
+	const handlePDFClick = () => {
+		window.open(
+			`https://pdf-server-809j.onrender.com/view/${pdfData.filename}`,
+			'_blank'
+		);
 	};
 
 	return (
@@ -114,7 +120,8 @@ const PdfDetails = () => {
 							href={`https://pdf-server-809j.onrender.com/view/${pdfData.filename}`}
 							target='_blank'
 							rel='noopener noreferrer'
-							className='text-blue-500 underline mr-2'>
+							className='text-blue-500 underline mr-2'
+							onClick={handlePDFClick}>
 							{pdfData.title}
 						</a>
 						<Document
