@@ -48,7 +48,9 @@ const PdfDetails = () => {
 
 			if (response.status === 200) {
 				console.log('PDF deleted successfully.');
-				Navigate('/pdf');
+				Navigate(
+					'https://master--grand-axolotl-86aade.netlify.app/pdf'
+				);
 			} else {
 				console.error('Failed to delete PDF.');
 			}
@@ -87,7 +89,7 @@ const PdfDetails = () => {
 						<div ref={qrCodeRef}>
 							<QRCode
 								className='w-[200px] h-[200px]'
-								value={`http://localhost:5173/pdf/${pdfData.path}`}
+								value={`https://master--grand-axolotl-86aade.netlify.app/pdf/${pdfData.path}`}
 							/>
 						</div>
 						<div className='mt-5'>
