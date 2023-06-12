@@ -93,7 +93,7 @@ const PdfDetails = () => {
 						<div ref={qrCodeRef}>
 							<QRCode
 								className='w-[200px] h-[200px]'
-								value={`https://master--grand-axolotl-86aade.netlify.app/pdf/${id}`}
+								value={`https://pdf-server-809j.onrender.com/pdf/${id}`}
 							/>
 						</div>
 						<div className='mt-5'>
@@ -122,7 +122,7 @@ const PdfDetails = () => {
 							rel='noopener noreferrer'
 							className='text-blue-500 underline mr-2'
 							onClick={handlePDFClick}>
-							{pdfData.title}
+							{pdfData.filename}
 						</a>
 						<Document
 							file={`https://pdf-server-809j.onrender.com/${pdfData.path}`}
