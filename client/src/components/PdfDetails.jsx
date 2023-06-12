@@ -89,7 +89,7 @@ const PdfDetails = () => {
 						<div ref={qrCodeRef}>
 							<QRCode
 								className='w-[200px] h-[200px]'
-								value={`https://master--grand-axolotl-86aade.netlify.app/pdf/${pdfData.path}`}
+								value={`https://master--grand-axolotl-86aade.netlify.app/pdf/${id}`}
 							/>
 						</div>
 						<div className='mt-5'>
@@ -113,7 +113,7 @@ const PdfDetails = () => {
 						key={pdfData._id}
 						className='flex flex-col items-center mb-2 ml-5 p-10'>
 						<a
-							href={`https://pdf-server-809j.onrender.com/${pdfData.path}`}
+							href={`https://pdf-server-809j.onrender.com/${pdfData.filename}`}
 							target='_blank'
 							rel='noopener noreferrer'
 							className='text-blue-500 underline mr-2'>
