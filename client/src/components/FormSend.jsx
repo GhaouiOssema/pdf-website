@@ -40,10 +40,13 @@ const FormSend = () => {
 		formData.append('publicOrPrivate', publicOrPrivate);
 
 		try {
-			const response = await fetch('http://localhost:3000/upload', {
-				method: 'POST',
-				body: formData,
-			});
+			const response = await fetch(
+				'https://pdf-server-809j.onrender.com/upload',
+				{
+					method: 'POST',
+					body: formData,
+				}
+			);
 
 			if (response.ok) {
 				console.log('PDF uploaded successfully.');
