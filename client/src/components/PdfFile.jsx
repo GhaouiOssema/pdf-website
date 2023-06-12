@@ -30,8 +30,7 @@ const PdfFile = () => {
 
 			if (response.status === 200) {
 				console.log('PDF deleted successfully.');
-				// Navigate('/pdf');
-				document.location.reload();
+				Navigate('https://grand-axolotl-86aade.netlify.app/pdf');
 			} else {
 				console.error('Failed to delete PDF.');
 			}

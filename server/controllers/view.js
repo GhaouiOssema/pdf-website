@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
 	async pdfView(req, res) {
 		const filename = req.params.filename;

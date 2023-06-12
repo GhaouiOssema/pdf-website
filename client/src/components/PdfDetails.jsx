@@ -48,9 +48,7 @@ const PdfDetails = () => {
 
 			if (response.status === 200) {
 				console.log('PDF deleted successfully.');
-				Navigate(
-					'https://master--grand-axolotl-86aade.netlify.app/pdf'
-				);
+				Navigate('https://grand-axolotl-86aade.netlify.app/pdf');
 			} else {
 				console.error('Failed to delete PDF.');
 			}
