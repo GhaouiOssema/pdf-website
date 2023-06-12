@@ -10,7 +10,9 @@ const PdfFile = () => {
 	useEffect(() => {
 		const getPdfData = async () => {
 			try {
-				const response = await axios.get('http://localhost:3000/pdfs');
+				const response = await axios.get(
+					'https://pdf-server-809j.onrender.com/pdfs'
+				);
 				setPdfs(response.data.pdfs);
 			} catch (error) {
 				console.log('Error retrieving PDF data:', error);

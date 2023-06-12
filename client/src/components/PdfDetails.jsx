@@ -19,7 +19,7 @@ const PdfDetails = () => {
 		const getPdfData = async () => {
 			try {
 				const response = await axios.get(
-					`http://localhost:3000/pdf/${id}`
+					`https://pdf-server-809j.onrender.com/pdf/${id}`
 				);
 				setPdfData(response.data);
 			} catch (error) {
@@ -43,7 +43,7 @@ const PdfDetails = () => {
 	const handleDelete = async () => {
 		try {
 			const response = await axios.delete(
-				`http://localhost:3000/pdfs/${id}`
+				`https://pdf-server-809j.onrender.com/pdfs/${id}`
 			);
 
 			if (response.status === 200) {
@@ -110,15 +110,15 @@ const PdfDetails = () => {
 					<div
 						key={pdfData._id}
 						className='flex flex-col items-center mb-2 ml-5 p-10'>
-						<a
-							href={`http://localhost:3000/${pdfData.path}`}
+						{/* <a
+							href={`https://pdf-server-809j.onrender.com/${pdfData.path}`}
 							target='_blank'
 							rel='noopener noreferrer'
 							className='text-blue-500 underline mr-2'>
 							{pdfData.filename}
-						</a>
+						</a> */}
 						<Document
-							file={`http://localhost:3000/${pdfData.path}`}
+							file={`https://pdf-server-809j.onrender.com/${pdfData.path}`}
 							onLoadSuccess={handlePdfLoadSuccess}>
 							{pdfLoaded && (
 								<Page
