@@ -48,7 +48,7 @@ const PdfDetails = () => {
 
 			if (response.status === 200) {
 				console.log('PDF deleted successfully.');
-				Navigate('https://grand-axolotl-86aade.netlify.app/pdf');
+				Navigate('https://grand-axolotl-86aade.netlify.app/pdf/');
 			} else {
 				console.error('Failed to delete PDF.');
 			}
@@ -115,7 +115,7 @@ const PdfDetails = () => {
 							target='_blank'
 							rel='noopener noreferrer'
 							className='text-blue-500 underline mr-2'>
-							{pdfData.filename}
+							{pdfData.title}
 						</a>
 						<Document
 							file={`https://pdf-server-809j.onrender.com/${pdfData.path}`}
