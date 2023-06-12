@@ -14,6 +14,7 @@ const PdfDetails = () => {
 	const qrCodeRef = useRef(null);
 
 	const Navigate = useNavigate();
+	const base64Data = '';
 
 	useEffect(() => {
 		const getPdfData = async () => {
@@ -22,6 +23,13 @@ const PdfDetails = () => {
 					`https://pdf-server-809j.onrender.com/pdf/${id}`
 				);
 				setPdfData(response.data);
+				const base64Data = btoa(
+					new Uint8Array(response.data).reduce(
+						(data, byte) => data + String.fromCharCode(byte),
+						''
+					)
+				);
+				base64Data = base64Data;
 			} catch (error) {
 				console.log('Error retrieving PDF data:', error);
 			}
@@ -62,11 +70,10 @@ const PdfDetails = () => {
 	const handlePdfLoadSuccess = () => {
 		setPdfLoaded(true);
 	};
+
 	const handlePDFClick = () => {
-		window.open(
-			`https://pdf-server-809j.onrender.com/view/${pdfData.filename}`,
-			'_blank'
-		);
+		const dataUrl = `data:application/pdf;base64,${base64Data}`;
+		window.open(dataUrl, '_blank');
 	};
 
 	return (
@@ -116,14 +123,13 @@ const PdfDetails = () => {
 					<div
 						key={pdfData._id}
 						className='flex flex-col items-center mb-2 ml-5 p-10'>
-						<a
-							href={`https://pdf-server-809j.onrender.com/view/${pdfData.filename}`}
+						<button
 							target='_blank'
 							rel='noopener noreferrer'
 							className='text-blue-500 underline mr-2'
 							onClick={handlePDFClick}>
 							{pdfData.filename}
-						</a>
+						</button>
 						<Document
 							file={`https://pdf-server-809j.onrender.com/${pdfData.path}`}
 							onLoadSuccess={handlePdfLoadSuccess}>
