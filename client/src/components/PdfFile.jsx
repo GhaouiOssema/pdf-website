@@ -10,6 +10,7 @@ const PdfFile = () => {
 
 	const [pdfs, setPdfs] = useState([]);
 	const Navigate = useNavigate();
+	const [pdfLoaded, setPdfLoaded] = useState(false);
 
 	const fetchPdfs = async () => {
 		try {
@@ -44,6 +45,10 @@ const PdfFile = () => {
 		}
 	};
 
+	const handlePdfLoadSuccess = () => {
+		setPdfLoaded(true);
+	};
+
 	return (
 		<div>
 			<div className='flex'>
@@ -55,13 +60,19 @@ const PdfFile = () => {
 						{pdfs.map((pdf) => (
 							<li
 								key={pdf._id}
-								className='flex items-center mb-2 ml-5 p-10'>
+								className='flex flex-col items-center mb-2 ml-5 p-10'>
 								<Document
 									file={`http://localhost:3000/${pdf.path}`}
-									className='mr-2'>
-									<Page pageNumber={1} width={80} />
+									onLoadSuccess={handlePdfLoadSuccess}>
+									{pdfLoaded && (
+										<Page
+											pageNumber={1}
+											width={100}
+											renderTextLayer={false}
+										/>
+									)}
 								</Document>
-								<div>
+								<div className='mt-3'>
 									<Link to={`/pdf/${pdf._id}`}>
 										<button className='px-2 py-1 bg-red-500 text-white text-sm font-semibold'>
 											Details

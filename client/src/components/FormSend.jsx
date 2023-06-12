@@ -5,15 +5,27 @@ import { Link, useNavigate } from 'react-router-dom';
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const FormSend = () => {
-	const [selectedFile, setSelectedFile] = useState(null);
+	const [formState, setFormState] = useState({
+		selectedFile: null,
+		title: '',
+		owner: '',
+		publicOrPrivate: 'public',
+	});
 	const Navigate = useNavigate();
 
+	const handleInputChange = (event) => {
+		const { name, value } = event.target;
+		setFormState({ ...formState, [name]: value });
+	};
+
 	const handleFileChange = (event) => {
-		setSelectedFile(event.target.files[0]);
+		setFormState({ ...formState, selectedFile: event.target.files[0] });
 	};
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
+
+		const { selectedFile, title, owner, publicOrPrivate } = formState;
 
 		// Check if a file was selected
 		if (!selectedFile) {
@@ -23,6 +35,9 @@ const FormSend = () => {
 
 		const formData = new FormData();
 		formData.append('pdf', selectedFile);
+		formData.append('title', title);
+		formData.append('owner', owner);
+		formData.append('publicOrPrivate', publicOrPrivate);
 
 		try {
 			const response = await fetch('http://localhost:3000/upload', {
@@ -52,14 +67,38 @@ const FormSend = () => {
 						onChange={handleFileChange}
 						className='p-2 border border-gray-300 mr-2'
 					/>
+					<input
+						type='text'
+						name='title'
+						placeholder='Title'
+						value={formState.title}
+						onChange={handleInputChange}
+						className='p-2 border border-gray-300 mr-2'
+					/>
+					<input
+						type='text'
+						name='owner'
+						placeholder='Owner'
+						value={formState.owner}
+						onChange={handleInputChange}
+						className='p-2 border border-gray-300 mr-2'
+					/>
+					<select
+						name='publicOrPrivate'
+						value={formState.publicOrPrivate}
+						onChange={handleInputChange}
+						className='p-2 border border-gray-300 mr-2'>
+						<option value='public'>Public</option>
+						<option value='private'>Private</option>
+					</select>
 					<button
 						type='submit'
 						className='px-4 py-2 bg-blue-500 text-white font-semibold'>
 						Upload
 					</button>
-					<Link to={'/pdf'}>
+					<Link to='/pdf'>
 						<button className='ml-5 px-4 py-2 bg-blue-500 text-white font-semibold'>
-							show all pdf
+							Show all PDFs
 						</button>
 					</Link>
 				</div>

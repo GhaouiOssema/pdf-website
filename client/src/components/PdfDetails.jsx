@@ -5,12 +5,14 @@ import { Document, Page, pdfjs } from 'react-pdf';
 import QRCode from 'react-qr-code';
 import html2canvas from 'html2canvas';
 
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+// pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 
 const PdfDetails = () => {
 	const { id } = useParams();
 	const [pdfData, setPdfData] = useState(null);
 	const qrCodeRef = useRef(null);
+
 	const Navigate = useNavigate();
 
 	useEffect(() => {
@@ -55,33 +57,54 @@ const PdfDetails = () => {
 		}
 	};
 
+	const [pdfLoaded, setPdfLoaded] = useState(false);
+
+	const handlePdfLoadSuccess = () => {
+		setPdfLoaded(true);
+	};
+
 	return (
 		<div>
 			<div className='flex items-center'>
 				<h2 className='text-2xl font-bold mb-2'>PDF Details</h2>
-				{pdfData ? (
-					<div className='ml-10 flex'>
-						<button
-							onClick={handleDownloadQRCode}
-							className='ml-2 px-2 py-1 bg-blue-500 text-white text-sm font-semibold'>
-							Download QR Code
-						</button>
-						<button
-							onClick={handleDelete}
-							className='ml-2 px-2 py-1 bg-red-500 text-white text-sm font-semibold'>
-							Delete PDF
-						</button>
-					</div>
-				) : null}
+				<div className='ml-10 flex'>
+					<button
+						onClick={handleDownloadQRCode}
+						className='ml-2 px-2 py-1 bg-blue-500 text-white text-sm font-semibold'>
+						Download QR Code
+					</button>
+					<button
+						onClick={handleDelete}
+						className='ml-2 px-2 py-1 bg-red-500 text-white text-sm font-semibold'>
+						Delete PDF
+					</button>
+				</div>
 			</div>
 			{pdfData ? (
 				<div className='flex justify-around mt-5'>
-					<div>
+					<div className='mt-5'>
 						<h1>QR Code</h1>
 						<div ref={qrCodeRef}>
 							<QRCode
+								className='w-[200px] h-[200px]'
 								value={`http://localhost:5173/pdf/${pdfData.path}`}
 							/>
+						</div>
+						<div className='mt-5'>
+							<h1 className='font-bold text-lg'>
+								Title :
+								<span className='font-normal'>
+									{' '}
+									{pdfData.title}
+								</span>
+							</h1>
+							<h1 className='font-bold text-2xl'>
+								Owner :
+								<span className='font-normal'>
+									{' '}
+									{pdfData.owner}
+								</span>
+							</h1>
 						</div>
 					</div>
 					<div
@@ -96,8 +119,14 @@ const PdfDetails = () => {
 						</a>
 						<Document
 							file={`http://localhost:3000/${pdfData.path}`}
-							className='mr-2'>
-							<Page pageNumber={1} width={200} />
+							onLoadSuccess={handlePdfLoadSuccess}>
+							{pdfLoaded && (
+								<Page
+									pageNumber={1}
+									width={200}
+									renderTextLayer={false}
+								/>
+							)}
 						</Document>
 					</div>
 				</div>
