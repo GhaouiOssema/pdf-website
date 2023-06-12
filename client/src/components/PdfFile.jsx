@@ -25,7 +25,7 @@ const PdfFile = () => {
 	const handleDelete = async (id) => {
 		try {
 			const response = await axios.delete(
-				`http://localhost:3000/pdfs/${id}`
+				`https://pdf-server-809j.onrender.com/pdfs/${id}`
 			);
 
 			if (response.status === 200) {

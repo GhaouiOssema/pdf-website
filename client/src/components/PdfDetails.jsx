@@ -110,13 +110,13 @@ const PdfDetails = () => {
 					<div
 						key={pdfData._id}
 						className='flex flex-col items-center mb-2 ml-5 p-10'>
-						{/* <a
+						<a
 							href={`https://pdf-server-809j.onrender.com/${pdfData.path}`}
 							target='_blank'
 							rel='noopener noreferrer'
 							className='text-blue-500 underline mr-2'>
 							{pdfData.filename}
-						</a> */}
+						</a>
 						<Document
 							file={`https://pdf-server-809j.onrender.com/${pdfData.path}`}
 							onLoadSuccess={handlePdfLoadSuccess}>
