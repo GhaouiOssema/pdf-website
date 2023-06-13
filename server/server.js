@@ -12,6 +12,13 @@ app.use(cors({ origin: true, credentials: true }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use(require('./routes'));
+app.use((req, res, next) => {
+	res.setHeader(
+		'Content-Security-Policy',
+		"default-src 'self'; style-src 'self' https://fonts.googleapis.com"
+	);
+	next();
+});
 
 // Start the server
 app.listen(3000, () => {

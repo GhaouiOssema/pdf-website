@@ -3,11 +3,11 @@ const path = require('path');
 
 module.exports = {
 	async pdfView(req, res) {
-		// Retrieve the PDF file based on the provided ID
-		const pdfId = req.params.id;
-		const filePath = path.join(__dirname, '../uploads/', `${pdfId}.pdf`);
+		// Retrieve the filename from the request parameters
+		const { filename } = req.params;
 
-		// Send the PDF file to the client
-		res.sendFile(filePath);
+		// Implement logic to serve the PDF file or perform any other actions
+		// For example:
+		res.sendFile(`${__dirname}/upload/${filename}`);
 	},
 };

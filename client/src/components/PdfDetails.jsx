@@ -64,7 +64,7 @@ const PdfDetails = () => {
 	};
 	const handlePDFClick = () => {
 		window.open(
-			`https://pdf-server-809j.onrender.com/pdf/view/d8506e42e1e487bec8b260332e78c05f`,
+			`https://pdf-server-809j.onrender.com/pdf/view/${pdfData._id}`,
 			'_blank'
 		);
 	};
