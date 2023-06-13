@@ -31,10 +31,12 @@ const PdfView = () => {
 	};
 
 	const handleDownload = () => {
-		const downloadLink = document.createElement('a');
-		downloadLink.href = pdfData;
-		downloadLink.download = `document_${id}.pdf`;
-		downloadLink.click();
+		const fileURL = URL.createObjectURL(pdfData);
+		const link = document.createElement('a');
+		link.href = fileURL;
+		link.download = `document_${id}.pdf`;
+		link.click();
+		URL.revokeObjectURL(fileURL);
 	};
 
 	const [screenSize, setScreenSize] = useState({
