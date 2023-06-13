@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { pdfjs } from 'react-pdf';
+import { Document, Page, pdfjs } from 'react-pdf';
 import { Link, useNavigate } from 'react-router-dom';
 
-pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 
 const FormSend = () => {
 	const [formState, setFormState] = useState({
@@ -109,14 +110,15 @@ const FormSend = () => {
 				</div>
 			</form>
 			{pdfUrl && (
-				<div className='mt-10'>
+				<div>
 					<h2>Preview</h2>
-					<iframe
-						src={pdfUrl}
+					<object
+						data={pdfUrl}
+						type='application/pdf'
 						width='100%'
-						height='500px'
-						title='PDF Preview'
-					/>
+						height='500px'>
+						<p>Unable to display PDF.</p>
+					</object>
 				</div>
 			)}
 		</div>

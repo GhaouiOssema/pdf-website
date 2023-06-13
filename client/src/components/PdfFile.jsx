@@ -30,7 +30,7 @@ const PdfFile = () => {
 
 			if (response.status === 200) {
 				console.log('PDF deleted successfully.');
-				Navigate('/pdf');
+				window.location.reload();
 			} else {
 				console.error('Failed to delete PDF.');
 			}
