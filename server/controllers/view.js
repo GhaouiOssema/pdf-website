@@ -1,13 +1,40 @@
-const PDF = require('../models/PDF');
+const fs = require('fs');
 const path = require('path');
+const PDF = require('../models/PDF');
 
 module.exports = {
 	async pdfView(req, res) {
-		// Retrieve the filename from the request parameters
-		const { filename } = req.params;
+		const { filename } = req.params.id;
 
-		// Implement logic to serve the PDF file or perform any other actions
-		// For example:
-		res.sendFile(`${__dirname}/upload/${filename}`);
+		try {
+			// Check if the file ID exists in the database
+			const pdf = await PDF.findOne({ _id: filename });
+
+			if (!pdf) {
+				// If the file ID does not exist, return a 404 status
+				return res.status(404).send('File not found');
+			}
+
+			// Assuming the PDF files are stored in a specific directory
+			const filePath = path.join(
+				__dirname,
+				'path/to/pdf/files',
+				`${filename}.pdf`
+			);
+
+			// Check if the file exists in the specified path
+			if (fs.existsSync(filePath)) {
+				// If the file exists, send the file URL as the response
+				const fileURL = `https://pdf-server-809j.onrender.com/path/to/pdf/files/${filename}.pdf`;
+				return res.send(fileURL);
+			} else {
+				// If the file does not exist, return a 404 status
+				return res.status(404).send('File not found');
+			}
+		} catch (error) {
+			// Handle any other errors that may occur
+			console.error(error);
+			return res.status(500).send('Internal Server Error');
+		}
 	},
 };
