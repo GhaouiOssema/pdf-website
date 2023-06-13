@@ -110,7 +110,7 @@ const FormSend = () => {
 				</form>
 			</div>
 			<Document
-				file={`https://pdf-server-809j.onrender.com/${pdfData.path}`}
+				file={`https://pdf-server-809j.onrender.com/${formState.selectedFile.path}`}
 				onLoadSuccess={handlePdfLoadSuccess}>
 				{pdfLoaded && (
 					<Page pageNumber={1} width={200} renderTextLayer={false} />
