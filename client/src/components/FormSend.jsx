@@ -13,7 +13,6 @@ const FormSend = () => {
 		publicOrPrivate: 'public',
 	});
 	const Navigate = useNavigate();
-	const [pdfDataUrl, setPdfDataUrl] = useState('');
 
 	const handleInputChange = (event) => {
 		const { name, value } = event.target;
@@ -22,13 +21,6 @@ const FormSend = () => {
 
 	const handleFileChange = (e) => {
 		const selectedFile = e.target.files[0];
-		setFile(selectedFile);
-
-		const reader = new FileReader();
-		reader.onload = () => {
-			setPdfDataUrl(reader.result);
-		};
-		reader.readAsDataURL(selectedFile);
 	};
 
 	const handleSubmit = async (event) => {
@@ -117,18 +109,13 @@ const FormSend = () => {
 					</div>
 				</form>
 			</div>
-			{pdfDataUrl && (
-				<div>
-					<h2>Preview</h2>
-					<object
-						data={pdfDataUrl}
-						type='application/pdf'
-						width='100%'
-						height='500px'>
-						<p>Unable to display PDF.</p>
-					</object>
-				</div>
-			)}
+			<Document
+				file={`https://pdf-server-809j.onrender.com/${pdfData.path}`}
+				onLoadSuccess={handlePdfLoadSuccess}>
+				{pdfLoaded && (
+					<Page pageNumber={1} width={200} renderTextLayer={false} />
+				)}
+			</Document>
 		</div>
 	);
 };
