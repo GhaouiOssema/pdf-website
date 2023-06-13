@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Document, Page } from 'react-pdf';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import Navbar from './NavBar';
 
 const PdfFile = () => {
 	const [pdfs, setPdfs] = useState([]);
@@ -47,7 +48,10 @@ const PdfFile = () => {
 
 	return (
 		<div>
-			<div className='flex'>
+			<div className='mt-[-40px]'>
+				<Navbar />
+			</div>
+			<div className='flex mt-10'>
 				<h2 className='text-2xl font-bold mb-2'>All PDF Files</h2>
 			</div>
 			<ul className='flex flex-col flex-wrap'>

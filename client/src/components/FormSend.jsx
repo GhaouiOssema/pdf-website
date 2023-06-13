@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
+import Navbar from './NavBar';
 
 const FormSend = () => {
 	const [formState, setFormState] = useState({
@@ -61,53 +62,58 @@ const FormSend = () => {
 	};
 
 	return (
-		<div className='flex felx-col'>
-			<h1 className='text-3xl font-bold mb-4'>Upload PDF</h1>
-			<form onSubmit={handleSubmit} className='mb-4'>
-				<div className='flex'>
-					<input
-						type='file'
-						accept='.pdf'
-						onChange={handleFileChange}
-						className='p-2 border border-gray-300 mr-2'
-					/>
-					<input
-						type='text'
-						name='title'
-						placeholder='Title'
-						value={formState.title}
-						onChange={handleInputChange}
-						className='p-2 border border-gray-300 mr-2'
-					/>
-					<input
-						type='text'
-						name='owner'
-						placeholder='Owner'
-						value={formState.owner}
-						onChange={handleInputChange}
-						className='p-2 border border-gray-300 mr-2'
-					/>
-					<select
-						name='publicOrPrivate'
-						value={formState.publicOrPrivate}
-						onChange={handleInputChange}
-						className='p-2 border border-gray-300 mr-2'>
-						<option value='public'>Public</option>
-						<option value='private'>Private</option>
-					</select>
-					<button
-						type='submit'
-						className='px-4 py-2 bg-blue-500 text-white font-semibold'>
-						Upload
-					</button>
-					<Link to='/pdf'>
-						<button className='ml-5 px-4 py-2 bg-blue-500 text-white font-semibold'>
-							Show all PDFs
+		<>
+			<div className='mt-[-40px]'>
+				<Navbar />
+			</div>
+			<div className='flex felx-col mt-10'>
+				<h1 className='text-3xl font-bold mb-4'>Upload PDF</h1>
+				<form onSubmit={handleSubmit} className='mb-4'>
+					<div className='flex'>
+						<input
+							type='file'
+							accept='.pdf'
+							onChange={handleFileChange}
+							className='p-2 border border-gray-300 mr-2'
+						/>
+						<input
+							type='text'
+							name='title'
+							placeholder='Title'
+							value={formState.title}
+							onChange={handleInputChange}
+							className='p-2 border border-gray-300 mr-2'
+						/>
+						<input
+							type='text'
+							name='owner'
+							placeholder='Owner'
+							value={formState.owner}
+							onChange={handleInputChange}
+							className='p-2 border border-gray-300 mr-2'
+						/>
+						<select
+							name='publicOrPrivate'
+							value={formState.publicOrPrivate}
+							onChange={handleInputChange}
+							className='p-2 border border-gray-300 mr-2'>
+							<option value='public'>Public</option>
+							<option value='private'>Private</option>
+						</select>
+						<button
+							type='submit'
+							className='px-4 py-2 bg-blue-500 text-white font-semibold'>
+							Upload
 						</button>
-					</Link>
-				</div>
-			</form>
-		</div>
+						<Link to='/pdf'>
+							<button className='ml-5 px-4 py-2 bg-blue-500 text-white font-semibold'>
+								Show all PDFs
+							</button>
+						</Link>
+					</div>
+				</form>
+			</div>
+		</>
 	);
 };
 

@@ -10,7 +10,6 @@ const PdfView = () => {
 	const { id } = useParams();
 	const [pdfData, setPdfData] = useState(null);
 	const [numPages, setNumPages] = useState(null);
-	const [currentPage, setCurrentPage] = useState(1);
 
 	useEffect(() => {
 		const getPdfData = async () => {
@@ -31,43 +30,64 @@ const PdfView = () => {
 		setNumPages(numPages);
 	};
 
-	const goToNextPage = () => {
-		if (currentPage < numPages) {
-			setCurrentPage(currentPage + 1);
-		}
+	const handleDownload = () => {
+		const downloadLink = document.createElement('a');
+		downloadLink.href = `https://pdf-server-809j.onrender.com/${pdfData.path}`;
+		downloadLink.download = `document_${id}.pdf`;
+		downloadLink.click();
 	};
+	const [screenSize, setScreenSize] = useState({
+		width: window.innerWidth,
+		height: window.innerHeight,
+	});
 
-	const goToPreviousPage = () => {
-		if (currentPage > 1) {
-			setCurrentPage(currentPage - 1);
-		}
-	};
+	useEffect(() => {
+		const handleResize = () => {
+			setScreenSize({
+				width: window.innerWidth,
+				height: window.innerHeight,
+			});
+		};
+
+		window.addEventListener('resize', handleResize);
+
+		return () => {
+			window.removeEventListener('resize', handleResize);
+		};
+	}, []);
 
 	if (!pdfData || !pdfData.path) {
 		return <div>Loading PDF...</div>;
 	}
 
 	return (
-		<div className='pdf-view-container'>
-			<div className='pdf-view-toolbar'>
-				<span>Number of Pages: {numPages}</span>
-				<button onClick={goToPreviousPage} disabled={currentPage === 1}>
-					Previous
-				</button>
-				<span>
-					{currentPage}/{numPages}
-				</span>
-				<button
-					onClick={goToNextPage}
-					disabled={currentPage === numPages}>
-					Next
-				</button>
+		<div className='min-h-screen flex flex-col'>
+			<div className='flex items-center justify-center'>
+				<div className='flex items-center justify-between px-4 py-2 bg-gray-200 sm:w-[600px] w-[400px]'>
+					<span className='text-normal'>
+						Number of Pages: {numPages}
+					</span>
+					<button
+						className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-xs'
+						onClick={handleDownload}>
+						Download PDF
+					</button>
+				</div>
 			</div>
-			<div className='pdf-view-content'>
+			<div className='flex-1 overflow-y-auto mx-4 my-2'>
 				<Document
 					file={`https://pdf-server-809j.onrender.com/${pdfData.path}`}
+					className='flex flex-col items-center'
 					onLoadSuccess={handlePdfLoadSuccess}>
-					<Page pageNumber={currentPage} renderTextLayer={false} />
+					{Array.from(new Array(numPages), (el, index) => (
+						<Page
+							key={index}
+							pageNumber={index + 1}
+							renderTextLayer={false}
+							width={screenSize.width < 700 ? 400 : 600}
+							className='mt-5'
+						/>
+					))}
 				</Document>
 			</div>
 		</div>

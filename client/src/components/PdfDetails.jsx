@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
+import Navbar from './NavBar';
 
 const PdfDetails = () => {
 	const { id } = useParams();
@@ -72,7 +73,10 @@ const PdfDetails = () => {
 
 	return (
 		<div>
-			<div className='flex items-center'>
+			<div className='mt-[-40px]'>
+				<Navbar />
+			</div>
+			<div className='flex items-center mt-10'>
 				<h2 className='text-2xl font-bold mb-2'>PDF Details</h2>
 				<div className='ml-10 flex'>
 					<button
