@@ -13,8 +13,9 @@ module.exports = {
 				return res.status(404).send('PDF not found');
 			}
 
-			const filePath = path.join(
+			const filePath = path.resolve(
 				__dirname,
+				'..',
 				'uploads',
 				pdfDocument.filepath
 			);
