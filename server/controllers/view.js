@@ -4,7 +4,7 @@ const PDF = require('../models/PDF');
 
 module.exports = {
 	async pdfView(req, res) {
-		const { filename } = req.params;
+		const { filename } = req.params.id;
 
 		try {
 			// Check if the file ID exists in the database
@@ -25,7 +25,7 @@ module.exports = {
 			// Check if the file exists in the specified path
 			if (fs.existsSync(filePath)) {
 				// If the file exists, send the file URL as the response
-				const fileURL = `https://pdf-server-809j.onrender.com/path/to/pdf/files/${filename}.pdf`;
+				const fileURL = `https://pdf-server-809j.onrender.com/uploads/${filename}.pdf`;
 				return res.send(fileURL);
 			} else {
 				// If the file does not exist, return a 404 status
