@@ -94,7 +94,7 @@ const PdfDetails = () => {
 						<div ref={qrCodeRef}>
 							<QRCode
 								className='w-[200px] h-[200px]'
-								value={`https://pdf-server-809j.onrender.com/pdf/view/${pdfData.filename}`}
+								value={`https://grand-axolotl-86aade.netlify.app/pdf/view/${pdfData._id}`}
 							/>
 						</div>
 						<div className='mt-5'>

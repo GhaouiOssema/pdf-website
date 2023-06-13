@@ -39,14 +39,7 @@ const PdfView = () => {
 		<Document
 			file={`https://pdf-server-809j.onrender.com/${pdfData.path}`}
 			onLoadSuccess={handlePdfLoadSuccess}>
-			{pdfLoaded && (
-				<Page
-					pageNumber={1}
-					width={400}
-					height={400}
-					renderTextLayer={false}
-				/>
-			)}
+			{pdfLoaded && <Page pageNumber={1} renderTextLayer={false} />}
 		</Document>
 	);
 };
