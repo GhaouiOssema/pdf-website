@@ -13,15 +13,22 @@ const FormSend = () => {
 		publicOrPrivate: 'public',
 	});
 	const Navigate = useNavigate();
-	const [pdfUrl, setPdfUrl] = useState('');
+	const [pdfDataUrl, setPdfDataUrl] = useState('');
 
 	const handleInputChange = (event) => {
 		const { name, value } = event.target;
 		setFormState({ ...formState, [name]: value });
 	};
 
-	const handleFileChange = (event) => {
-		setFormState({ ...formState, selectedFile: event.target.files[0] });
+	const handleFileChange = (e) => {
+		const selectedFile = e.target.files[0];
+		setFile(selectedFile);
+
+		const reader = new FileReader();
+		reader.onload = () => {
+			setPdfDataUrl(reader.result);
+		};
+		reader.readAsDataURL(selectedFile);
 	};
 
 	const handleSubmit = async (event) => {
@@ -62,61 +69,64 @@ const FormSend = () => {
 	};
 
 	return (
-		<div className='flex felx-col'>
-			<h1 className='text-3xl font-bold mb-4'>Upload PDF</h1>
-			<form onSubmit={handleSubmit} className='mb-4'>
-				<div className='flex'>
-					<input
-						type='file'
-						accept='.pdf'
-						onChange={handleFileChange}
-						className='p-2 border border-gray-300 mr-2'
-					/>
-					<input
-						type='text'
-						name='title'
-						placeholder='Title'
-						value={formState.title}
-						onChange={handleInputChange}
-						className='p-2 border border-gray-300 mr-2'
-					/>
-					<input
-						type='text'
-						name='owner'
-						placeholder='Owner'
-						value={formState.owner}
-						onChange={handleInputChange}
-						className='p-2 border border-gray-300 mr-2'
-					/>
-					<select
-						name='publicOrPrivate'
-						value={formState.publicOrPrivate}
-						onChange={handleInputChange}
-						className='p-2 border border-gray-300 mr-2'>
-						<option value='public'>Public</option>
-						<option value='private'>Private</option>
-					</select>
-					<button
-						type='submit'
-						className='px-4 py-2 bg-blue-500 text-white font-semibold'>
-						Upload
-					</button>
-					<Link to='/pdf'>
-						<button className='ml-5 px-4 py-2 bg-blue-500 text-white font-semibold'>
-							Show all PDFs
+		<div className='flex flex-col'>
+			<div>
+				<h1 className='text-3xl font-bold mb-4'>Upload PDF</h1>
+				<form onSubmit={handleSubmit} className='mb-4'>
+					<div className='flex'>
+						<input
+							type='file'
+							accept='.pdf'
+							onChange={handleFileChange}
+							className='p-2 border border-gray-300 mr-2'
+						/>
+						<input
+							type='text'
+							name='title'
+							placeholder='Title'
+							value={formState.title}
+							onChange={handleInputChange}
+							className='p-2 border border-gray-300 mr-2'
+						/>
+						<input
+							type='text'
+							name='owner'
+							placeholder='Owner'
+							value={formState.owner}
+							onChange={handleInputChange}
+							className='p-2 border border-gray-300 mr-2'
+						/>
+						<select
+							name='publicOrPrivate'
+							value={formState.publicOrPrivate}
+							onChange={handleInputChange}
+							className='p-2 border border-gray-300 mr-2'>
+							<option value='public'>Public</option>
+							<option value='private'>Private</option>
+						</select>
+						<button
+							type='submit'
+							className='px-4 py-2 bg-blue-500 text-white font-semibold'>
+							Upload
 						</button>
-					</Link>
-				</div>
-			</form>
-			{formState.selectedFile && (
-				<div className='mt-10'>
+						<Link to='/pdf'>
+							<button className='ml-5 px-4 py-2 bg-blue-500 text-white font-semibold'>
+								Show all PDFs
+							</button>
+						</Link>
+					</div>
+				</form>
+			</div>
+			{pdfDataUrl && (
+				<div>
 					<h2>Preview</h2>
-					<iframe
-						src={formState.selectedFile}
+					<object
+						data={pdfDataUrl}
+						type='application/pdf'
 						width='100%'
-						height='500px'
-						title='PDF Preview'
-					/>
+						height='500px'>
+						<p>Unable to display PDF.</p>
+					</object>
 				</div>
 			)}
 		</div>
