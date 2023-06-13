@@ -66,7 +66,7 @@ const PdfDetails = () => {
 	};
 	const handlePDFClick = () => {
 		window.open(
-			`https://grand-axolotl-86aade.netlify.app/pdf/view/${pdfData._id}`,
+			`https://qr-plan.netlify.app/pdf/view/${pdfData._id}`,
 			'_blank'
 		);
 	};
@@ -98,7 +98,7 @@ const PdfDetails = () => {
 						<div ref={qrCodeRef}>
 							<QRCode
 								className='w-[200px] h-[200px]'
-								value={`https://grand-axolotl-86aade.netlify.app/pdf/view/${pdfData._id}`}
+								value={`https://qr-plan.netlify.app/pdf/view/${pdfData._id}`}
 							/>
 						</div>
 						<div className='mt-5'>
