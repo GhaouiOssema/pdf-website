@@ -22,7 +22,6 @@ const FormSend = () => {
 
 	const handleFileChange = (event) => {
 		setFormState({ ...formState, selectedFile: event.target.files[0] });
-		setPdfUrl(URL.createObjectURL(e.target.files[0]));
 	};
 
 	const handleSubmit = async (event) => {
@@ -113,7 +112,7 @@ const FormSend = () => {
 				<div className='mt-10'>
 					<h2>Preview</h2>
 					<iframe
-						src={pdfUrl}
+						src={formState.selectedFile}
 						width='100%'
 						height='500px'
 						title='PDF Preview'
