@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Document, Page, pdfjs } from 'react-pdf';
 import QRCode from 'react-qr-code';
 import html2canvas from 'html2canvas';
+import { Link } from 'react-router-dom';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
@@ -116,7 +117,7 @@ const PdfDetails = () => {
 					<div
 						key={pdfData._id}
 						className='flex flex-col items-center mb-2 ml-5 p-10'>
-						<button onClick={handlePDFClick}>Open PDF</button>
+						<Link to={`/pdf/view/${pdfData._id}`}>Open Pdf</Link>
 
 						<Document
 							file={`https://pdf-server-809j.onrender.com/${pdfData.path}`}

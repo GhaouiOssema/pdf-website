@@ -6,6 +6,7 @@ import FormSend from './components/FormSend';
 import PdfDetails from './components/PdfDetails';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Navbar from './components/NavBar';
+import PdfView from './components/PdfView';
 
 const App = () => {
 	return (
@@ -17,6 +18,7 @@ const App = () => {
 						<Route path='/*' element={<FormSend />} />
 						<Route path='/pdf' element={<PdfFile />} />
 						<Route path='pdf/:id' element={<PdfDetails />} />
+						<Route path='/pdf/view/:id' element={<PdfView />} />
 					</Routes>
 				</div>
 			</Router>
