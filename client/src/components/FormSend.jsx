@@ -110,15 +110,14 @@ const FormSend = () => {
 				</div>
 			</form>
 			{pdfUrl && (
-				<div>
+				<div className='mt-10'>
 					<h2>Preview</h2>
-					<object
-						data={pdfUrl}
-						type='application/pdf'
+					<iframe
+						src={pdfUrl}
 						width='100%'
-						height='500px'>
-						<p>Unable to display PDF.</p>
-					</object>
+						height='500px'
+						title='PDF Preview'
+					/>
 				</div>
 			)}
 		</div>
