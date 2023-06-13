@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
@@ -9,8 +9,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 const PdfView = () => {
 	const { id } = useParams();
 	const [pdfData, setPdfData] = useState(null);
-	const [pdfLoaded, setPdfLoaded] = useState(false);
-	const navigate = useNavigate();
+	const [numPages, setNumPages] = useState(null);
 
 	useEffect(() => {
 		const getPdfData = async () => {
@@ -27,8 +26,8 @@ const PdfView = () => {
 		getPdfData();
 	}, [id]);
 
-	const handlePdfLoadSuccess = () => {
-		setPdfLoaded(true);
+	const handlePdfLoadSuccess = ({ numPages }) => {
+		setNumPages(numPages);
 	};
 
 	if (!pdfData || !pdfData.path) {
@@ -36,11 +35,24 @@ const PdfView = () => {
 	}
 
 	return (
-		<Document
-			file={`https://pdf-server-809j.onrender.com/${pdfData.path}`}
-			onLoadSuccess={handlePdfLoadSuccess}>
-			{pdfLoaded && <Page pageNumber={1} renderTextLayer={false} />}
-		</Document>
+		<div className='pdf-view-container'>
+			<div className='pdf-view-toolbar'>
+				<span>Number of Pages: {numPages}</span>
+				<button
+					onClick={() =>
+						document.documentElement.requestFullscreen()
+					}>
+					Fullscreen
+				</button>
+			</div>
+			<div className='pdf-view-content'>
+				<Document
+					file={`https://pdf-server-809j.onrender.com/${pdfData.path}`}
+					onLoadSuccess={handlePdfLoadSuccess}>
+					<Page pageNumber={1} renderTextLayer={false} />
+				</Document>
+			</div>
+		</div>
 	);
 };
 
