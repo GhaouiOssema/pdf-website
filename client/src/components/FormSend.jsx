@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Document, Page, pdfjs } from 'react-pdf';
 import { Link, useNavigate } from 'react-router-dom';
-
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
-import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 
 const FormSend = () => {
 	const [formState, setFormState] = useState({
@@ -109,13 +105,6 @@ const FormSend = () => {
 					</div>
 				</form>
 			</div>
-			<Document
-				file={`https://pdf-server-809j.onrender.com/${formState.selectedFile.path}`}
-				onLoadSuccess={handlePdfLoadSuccess}>
-				{pdfLoaded && (
-					<Page pageNumber={1} width={200} renderTextLayer={false} />
-				)}
-			</Document>
 		</div>
 	);
 };
