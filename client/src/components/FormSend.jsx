@@ -12,6 +12,7 @@ const FormSend = () => {
 		publicOrPrivate: 'public',
 	});
 	const Navigate = useNavigate();
+	const [pdfUrl, setPdfUrl] = useState('');
 
 	const handleInputChange = (event) => {
 		const { name, value } = event.target;
@@ -20,6 +21,7 @@ const FormSend = () => {
 
 	const handleFileChange = (event) => {
 		setFormState({ ...formState, selectedFile: event.target.files[0] });
+		setPdfUrl(URL.createObjectURL(e.target.files[0]));
 	};
 
 	const handleSubmit = async (event) => {
@@ -60,7 +62,7 @@ const FormSend = () => {
 	};
 
 	return (
-		<div>
+		<div className='flex felx-col'>
 			<h1 className='text-3xl font-bold mb-4'>Upload PDF</h1>
 			<form onSubmit={handleSubmit} className='mb-4'>
 				<div className='flex'>
@@ -106,6 +108,17 @@ const FormSend = () => {
 					</Link>
 				</div>
 			</form>
+			{pdfUrl && (
+				<div className='mt-10'>
+					<h2>Preview</h2>
+					<iframe
+						src={pdfUrl}
+						width='100%'
+						height='500px'
+						title='PDF Preview'
+					/>
+				</div>
+			)}
 		</div>
 	);
 };
