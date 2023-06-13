@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
+import { IoIosArrowBack } from 'react-icons/io';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -59,6 +60,13 @@ const PdfView = () => {
 		};
 	}, []);
 
+	const location = useLocation();
+	const navigate = useNavigate();
+
+	const handleGoBack = () => {
+		navigate(-1);
+	};
+
 	if (!pdfData || !pdfData.path) {
 		return <div>Loading PDF...</div>;
 	}
@@ -67,9 +75,14 @@ const PdfView = () => {
 		<div className='min-h-screen flex flex-col'>
 			<div className='flex items-center justify-center'>
 				<div className='flex items-center justify-between px-4 py-2 bg-gray-200 sm:w-[600px] w-[400px]'>
-					<span className='text-normal'>
+					<div className='text-normal flex items-center'>
+						<button
+							className='items-center text-center text-white focus:outline-none bg-black rounded-full mr-5'
+							onClick={handleGoBack}>
+							<IoIosArrowBack size={20} />
+						</button>
 						Number of Pages: {numPages}
-					</span>
+					</div>
 					<button
 						className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-xs'
 						onClick={handleDownload}>
