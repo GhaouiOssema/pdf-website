@@ -108,7 +108,7 @@ const FormSend = () => {
 					</Link>
 				</div>
 			</form>
-			{pdfUrl && (
+			{formState.selectedFile && (
 				<div className='mt-10'>
 					<h2>Preview</h2>
 					<iframe
