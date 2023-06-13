@@ -32,10 +32,11 @@ const PdfView = () => {
 
 	const handleDownload = () => {
 		const downloadLink = document.createElement('a');
-		downloadLink.href = `https://pdf-server-809j.onrender.com/${pdfData.path}`;
+		downloadLink.href = pdfData;
 		downloadLink.download = `document_${id}.pdf`;
 		downloadLink.click();
 	};
+
 	const [screenSize, setScreenSize] = useState({
 		width: window.innerWidth,
 		height: window.innerHeight,
