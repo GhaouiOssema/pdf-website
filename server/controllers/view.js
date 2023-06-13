@@ -18,7 +18,7 @@ module.exports = {
 			// Assuming the PDF files are stored in a specific directory
 			const filePath = path.join(
 				__dirname,
-				'path/to/pdf/files',
+				'uploads/',
 				`${filename}.pdf`
 			);
 
