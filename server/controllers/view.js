@@ -4,11 +4,11 @@ const PDF = require('../models/PDF');
 
 module.exports = {
 	async pdfView(req, res) {
-		const { filename } = req.params.id;
+		const { filename } = req.params;
 
 		try {
 			// Check if the file ID exists in the database
-			const pdf = await PDF.findOne({ _id: filename });
+			const pdf = await PDF.findOne({ filename });
 
 			if (!pdf) {
 				// If the file ID does not exist, return a 404 status

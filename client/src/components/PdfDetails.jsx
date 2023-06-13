@@ -64,7 +64,7 @@ const PdfDetails = () => {
 	};
 	const handlePDFClick = () => {
 		window.open(
-			`https://pdf-server-809j.onrender.com/pdf/view/${pdfData._id}`,
+			`https://grand-axolotl-86aade.netlify.app/pdf/view/${pdfData._id}`,
 			'_blank'
 		);
 	};
@@ -93,7 +93,7 @@ const PdfDetails = () => {
 						<div ref={qrCodeRef}>
 							<QRCode
 								className='w-[200px] h-[200px]'
-								value={`https://pdf-server-809j.onrender.com/pdf/view/${pdfData._id}`}
+								value={`https://pdf-server-809j.onrender.com/pdf/view/${pdfData.filename}`}
 							/>
 						</div>
 						<div className='mt-5'>
