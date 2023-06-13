@@ -1,17 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
 import { Document, Page, pdfjs } from 'react-pdf';
+import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
-import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 
 const PdfView = () => {
 	const { id } = useParams();
 	const [pdfData, setPdfData] = useState(null);
-
-	const Navigate = useNavigate();
+	const [pdfLoaded, setPdfLoaded] = useState(false);
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const getPdfData = async () => {
@@ -28,11 +27,14 @@ const PdfView = () => {
 		getPdfData();
 	}, [id]);
 
-	const [pdfLoaded, setPdfLoaded] = useState(false);
-
 	const handlePdfLoadSuccess = () => {
 		setPdfLoaded(true);
 	};
+
+	if (!pdfData || !pdfData.path) {
+		return <div>Loading PDF...</div>;
+	}
+
 	return (
 		<Document
 			file={`https://pdf-server-809j.onrender.com/${pdfData.path}`}
