@@ -93,7 +93,7 @@ const PdfDetails = () => {
 						<div ref={qrCodeRef}>
 							<QRCode
 								className='w-[200px] h-[200px]'
-								value={`https://pdf-server-809j.onrender.com/pdf/${id}`}
+								value={`https://pdf-server-809j.onrender.com/pdf/view/${id}`}
 							/>
 						</div>
 						<div className='mt-5'>
