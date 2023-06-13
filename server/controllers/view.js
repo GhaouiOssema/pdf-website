@@ -4,7 +4,7 @@ const PDF = require('../models/PDF');
 
 module.exports = {
 	async pdfView(req, res) {
-		const { filename } = req.params.id;
+		const { filename } = req.params;
 
 		try {
 			// Check if the file ID exists in the database
