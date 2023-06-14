@@ -101,4 +101,7 @@
 	.max {
 		width: 100%;
 	}
+	.max__size {
+		width: 400px;
+	}
 }
