@@ -85,7 +85,7 @@ const PdfFile = () => {
 						{pdfs.map((pdf) => (
 							<li
 								key={pdf._id}
-								className=' row__card h-10 flex justify-between items-center mt-8 mb-2 p-10 rounded-2xl shadow-md shadow-black/30'>
+								className=' row__card h-10 flex justify-between items-center mb-2 p-10 rounded-2xl shadow-md shadow-black/30'>
 								<div className=' flex items-center justify-between w-[170px] pdf__file__name'>
 									<img
 										width='44'

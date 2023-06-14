@@ -5,7 +5,7 @@ import { Document, Page, pdfjs } from 'react-pdf';
 import QRCode from 'react-qr-code';
 import html2canvas from 'html2canvas';
 import { Link } from 'react-router-dom';
-import { IoIosArrowForward } from 'react-icons/io';
+import { IoIosArrowForward, IoIosWarning, IoIosDownload } from 'react-icons/io';
 
 import Stack from '@mui/material/Stack';
 import Snackbar from '@mui/material/Snackbar';
@@ -108,31 +108,26 @@ const PdfDetails = () => {
 
 	return (
 		<>
+			<div className='mt-[-40px]'>
+				<Navbar />
+			</div>
 			<div className='container'>
-				<div className='mt-[-40px]'>
-					<Navbar />
-				</div>
 				<div className='flex items-center mt-10'>
 					<div className='header'>
 						<h2 className='text-2xl font-bold mb-2'>PDF Details</h2>
-					</div>{' '}
-					<div className='ml-10 flex button-group'>
-						<button
-							onClick={handleDownloadQRCode}
-							className='ml-2 px-2 py-1 bg-blue-500 text-white text-sm font-semibold button'>
-							Download QR Code
-						</button>
-						<button
-							onClick={handleDelete}
-							className='ml-2 px-2 py-1 bg-red-500 text-white text-sm font-semibold button'>
-							Delete PDF
-						</button>
 					</div>
 				</div>
 				{pdfData ? (
 					<div className='flex justify-around mt-5 flex__col'>
-						<div className='mt-5 qr-code-section'>
-							<h1>QR Code</h1>
+						<div className='qr-code-section'>
+							<h1 className='flex items-center justify-center'>
+								<IoIosDownload
+									size={32}
+									onClick={handleDownloadQRCode}
+									className='cursor-pointer'
+								/>
+								<span className='ml-3'>QR Code</span>
+							</h1>
 							<div ref={qrCodeRef} className='qr-code'>
 								<QRCode
 									className='w-[200px] h-[200px] space_top'
@@ -151,13 +146,18 @@ const PdfDetails = () => {
 						</div>
 						<div
 							key={pdfData._id}
-							className='flex flex-col items-center ml-5 p-10 pdf-details'>
-							<div className='open-pdf-link'>
+							className='flex justify-between items-center flex-col ml-5 p-10 mb-5'>
+							<div className='pdf__footer'>
 								<Link
 									to={`/pdf/view/${pdfData._id}`}
-									className='open-pdf flex items-center'>
-									<span>Open Pdf </span> <IoIosArrowForward />
+									className='buttons__style_link__h buttons__style_link__left bg-gray-200'>
+									<span>Open Pdf</span> <IoIosArrowForward />
 								</Link>
+								<div
+									className='buttons__style_link__h buttons__style_link__right'
+									onClick={handleDelete}>
+									<span>Delete</span> <IoIosWarning />
+								</div>
 							</div>
 							<div className='pdf-preview' key={pdfData._id}>
 								<Document
