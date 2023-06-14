@@ -79,7 +79,7 @@ const PdfFile = () => {
 			<h1 className='text-3xl text-center font-bold mb-4 mt-10'>
 				All PDF Files
 			</h1>
-			<ul className='flex flex-col flex-wrap'>
+			<ul className='flex flex-col flex-wrap  row__card__main'>
 				{pdfs ? (
 					<>
 						{pdfs.map((pdf) => (
