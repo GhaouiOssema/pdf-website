@@ -112,4 +112,9 @@
 	.button__left {
 		margin-left: 8px;
 	}
+	.row__card {
+		border: 1px solid black;
+		width: 80%;
+		@apply justify-center items-center;
+	}
 }

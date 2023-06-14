@@ -4,7 +4,6 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from './NavBar';
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 
@@ -86,8 +85,8 @@ const PdfFile = () => {
 						{pdfs.map((pdf) => (
 							<li
 								key={pdf._id}
-								className='h-10 flex justify-between items-center mt-8 mb-2 ml-5 p-10 rounded-2xl shadow-md shadow-black/30'>
-								<div className='flex items-center justify-around w-[200px]'>
+								className='row__card h-10 flex justify-between items-center mt-8 mb-2 ml-5 p-10 rounded-2xl shadow-md shadow-black/30'>
+								<div className='flex items-center justify-between w-[200px]'>
 									<img
 										width='64'
 										height='64'

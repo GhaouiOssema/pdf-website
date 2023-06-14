@@ -7,18 +7,38 @@ import html2canvas from 'html2canvas';
 import { Link } from 'react-router-dom';
 import { IoIosArrowForward } from 'react-icons/io';
 
-import './MediaStyle.css';
-
+import Stack from '@mui/material/Stack';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+	return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />;
+});
+
 import Navbar from './NavBar';
 
 const PdfDetails = () => {
 	const { id } = useParams();
 	const [pdfData, setPdfData] = useState(null);
+	const [open, setOpen] = useState(false);
+
 	const qrCodeRef = useRef(null);
 
 	const Navigate = useNavigate();
+	const [alertMsg, setAlertMsg] = useState('');
+
+	const handleClick = () => {
+		setOpen(true);
+	};
+
+	const handleClose = (event, reason) => {
+		if (reason === 'clickaway') {
+			return;
+		}
+		setOpen(false);
+	};
 
 	useEffect(() => {
 		const getPdfData = async () => {
@@ -52,8 +72,8 @@ const PdfDetails = () => {
 			);
 
 			if (response.status === 200) {
-				console.log('PDF deleted successfully.');
-				Navigate('/pdf');
+				setAlertMsg('success');
+				handleClick();
 			} else {
 				console.error('Failed to delete PDF.');
 			}
@@ -73,80 +93,107 @@ const PdfDetails = () => {
 			'_blank'
 		);
 	};
+	useEffect(() => {
+		if (alertMsg === 'success') {
+			const performActionAfterInterval = () => {
+				Navigate('/pdf');
+			};
+			const timeout = setTimeout(performActionAfterInterval, 2000);
+
+			return () => {
+				clearTimeout(timeout);
+			};
+		}
+	}, [alertMsg]);
 
 	return (
-		<div className='container'>
-			<div className='mt-[-40px]'>
-				<Navbar />
-			</div>
-			<div className='flex items-center mt-10'>
-				<div className='header'>
-					<h2 className='text-2xl font-bold mb-2'>PDF Details</h2>
-				</div>{' '}
-				<div className='ml-10 flex button-group'>
-					<button
-						onClick={handleDownloadQRCode}
-						className='ml-2 px-2 py-1 bg-blue-500 text-white text-sm font-semibold button'>
-						Download QR Code
-					</button>
-					<button
-						onClick={handleDelete}
-						className='ml-2 px-2 py-1 bg-red-500 text-white text-sm font-semibold button'>
-						Delete PDF
-					</button>
+		<>
+			<div className='container'>
+				<div className='mt-[-40px]'>
+					<Navbar />
 				</div>
-			</div>
-			{pdfData ? (
-				<div className='flex justify-around mt-5 flex__col'>
-					<div className='mt-5 qr-code-section'>
-						<h1>QR Code</h1>
-						<div ref={qrCodeRef} className='qr-code'>
-							<QRCode
-								className='w-[200px] h-[200px] space_top'
-								value={`https://qr-plan.netlify.app/pdf/view/${pdfData._id}`}
-							/>
-						</div>
-						<div className='mt-5 pdf-details-info'>
-							<h1 className='font-bold text-lg title'>
-								Title :
-								<span className='font-normal'>
-									{' '}
-									{pdfData.title}
-								</span>
-							</h1>
-						</div>
-					</div>
-					<div
-						key={pdfData._id}
-						className='flex flex-col items-center ml-5 p-10 pdf-details'>
-						<div className='open-pdf-link'>
-							<Link
-								to={`/pdf/view/${pdfData._id}`}
-								className='open-pdf'>
-								<span>Open Pdf </span> <IoIosArrowForward />
-							</Link>
-						</div>
-						<div className='pdf-preview' key={pdfData._id}>
-							<Document
-								file={`https://pdf-server-809j.onrender.com/${pdfData.path}`}
-								onLoadSuccess={handlePdfLoadSuccess}
-								className='hidden__class'>
-								{pdfLoaded && (
-									<Page
-										pageNumber={1}
-										width={200}
-										renderTextLayer={false}
-										className='pdf-page'
-									/>
-								)}
-							</Document>
-						</div>
+				<div className='flex items-center mt-10'>
+					<div className='header'>
+						<h2 className='text-2xl font-bold mb-2'>PDF Details</h2>
+					</div>{' '}
+					<div className='ml-10 flex button-group'>
+						<button
+							onClick={handleDownloadQRCode}
+							className='ml-2 px-2 py-1 bg-blue-500 text-white text-sm font-semibold button'>
+							Download QR Code
+						</button>
+						<button
+							onClick={handleDelete}
+							className='ml-2 px-2 py-1 bg-red-500 text-white text-sm font-semibold button'>
+							Delete PDF
+						</button>
 					</div>
 				</div>
-			) : (
-				<p>Loading PDF data...</p>
-			)}
-		</div>
+				{pdfData ? (
+					<div className='flex justify-around mt-5 flex__col'>
+						<div className='mt-5 qr-code-section'>
+							<h1>QR Code</h1>
+							<div ref={qrCodeRef} className='qr-code'>
+								<QRCode
+									className='w-[200px] h-[200px] space_top'
+									value={`https://qr-plan.netlify.app/pdf/view/${pdfData._id}`}
+								/>
+							</div>
+							<div className='mt-5 pdf-details-info'>
+								<h1 className='font-bold text-lg title'>
+									Title :
+									<span className='font-normal'>
+										{' '}
+										{pdfData.title}
+									</span>
+								</h1>
+							</div>
+						</div>
+						<div
+							key={pdfData._id}
+							className='flex flex-col items-center ml-5 p-10 pdf-details'>
+							<div className='open-pdf-link'>
+								<Link
+									to={`/pdf/view/${pdfData._id}`}
+									className='open-pdf flex items-center'>
+									<span>Open Pdf </span> <IoIosArrowForward />
+								</Link>
+							</div>
+							<div className='pdf-preview' key={pdfData._id}>
+								<Document
+									file={`https://pdf-server-809j.onrender.com/${pdfData.path}`}
+									onLoadSuccess={handlePdfLoadSuccess}
+									className='hidden__class'>
+									{pdfLoaded && (
+										<Page
+											pageNumber={1}
+											width={200}
+											renderTextLayer={false}
+											className='pdf-page'
+										/>
+									)}
+								</Document>
+							</div>
+						</div>
+					</div>
+				) : (
+					<p>Loading PDF data...</p>
+				)}
+			</div>
+			<Stack spacing={2} sx={{ width: '100%' }}>
+				<Snackbar
+					open={open}
+					autoHideDuration={6000}
+					onClose={handleClose}>
+					<Alert
+						onClose={handleClose}
+						severity='success'
+						sx={{ width: '100%' }}>
+						Fichier supprimer avec succès
+					</Alert>
+				</Snackbar>
+			</Stack>
+		</>
 	);
 };
 
