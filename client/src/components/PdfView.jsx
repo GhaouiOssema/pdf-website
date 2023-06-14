@@ -31,13 +31,19 @@ const PdfView = () => {
 		setNumPages(numPages);
 	};
 
-	const handleDownload = () => {
-		const fileURL = URL.createObjectURL(pdfData);
-		const link = document.createElement('a');
-		link.href = fileURL;
-		link.download = `document_${id}.pdf`;
-		link.click();
-		URL.revokeObjectURL(fileURL);
+	const handleDownload = async () => {
+		try {
+			const response = await fetch('url/to/your/pdf');
+			const pdfBlob = await response.blob();
+			const fileURL = URL.createObjectURL(pdfBlob);
+			const link = document.createElement('a');
+			link.href = fileURL;
+			link.download = `document_${id}.pdf`;
+			link.click();
+			URL.revokeObjectURL(fileURL);
+		} catch (error) {
+			console.error('Error downloading PDF:', error);
+		}
 	};
 
 	const [screenSize, setScreenSize] = useState({
