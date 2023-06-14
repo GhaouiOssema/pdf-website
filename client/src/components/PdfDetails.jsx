@@ -121,14 +121,17 @@ const PdfDetails = () => {
 					<div className='flex justify-around mt-5 flex__col'>
 						<div className='qr-code-section'>
 							<h1 className='flex items-center justify-center'>
-								<IoIosDownload
-									size={32}
+								<button
 									onClick={handleDownloadQRCode}
-									className='cursor-pointer'
-								/>
+									className=''>
+									<IoIosDownload
+										size={32}
+										className='cursor-pointer'
+									/>
+								</button>
 								<span className='ml-3'>QR Code</span>
 							</h1>
-							<div ref={qrCodeRef} className='qr-code'>
+							<div className='qr-code bg-white' ref={qrCodeRef}>
 								<QRCode
 									className='w-[200px] h-[200px] space_top'
 									value={`https://qr-plan.netlify.app/pdf/view/${pdfData._id}`}
