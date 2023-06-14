@@ -77,9 +77,9 @@ const PdfFile = () => {
 			<div className='mt-[-40px]'>
 				<Navbar />
 			</div>
-			<div className='flex mt-10'>
-				<h2 className='text-2xl font-bold mb-2'>All PDF Files</h2>
-			</div>
+			<h1 className='text-3xl text-center font-bold mb-4 mt-10'>
+				All PDF Files
+			</h1>
 			<ul className='flex flex-col flex-wrap'>
 				{pdfs ? (
 					<>
