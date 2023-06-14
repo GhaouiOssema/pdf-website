@@ -111,12 +111,10 @@ const PdfDetails = () => {
 			<div className='mt-[-40px]'>
 				<Navbar />
 			</div>
+			<h1 className='text-3xl text-center font-bold mb-4 mt-10'>
+				PDF Details
+			</h1>
 			<div className='container'>
-				<div className='flex items-center mt-10'>
-					<div className='header'>
-						<h2 className='text-2xl font-bold mb-2'>PDF Details</h2>
-					</div>
-				</div>
 				{pdfData ? (
 					<div className='flex justify-around mt-5 flex__col'>
 						<div className='qr-code-section'>
