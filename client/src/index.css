@@ -146,28 +146,34 @@
 	}
 
 	.pdf__footer {
-		margin-left: -60px;
-		@apply w-[300px] flex justify-between;
+		@apply w-[230px] flex justify-between items-center mt-2;
 	}
 
 	.buttons__style_link__h {
 		@apply flex items-center;
 	}
 	.buttons__style_link__left {
-		@apply w-[220px] p-2 text-black cursor-pointer rounded-lg;
+		@apply w-[150px] p-2 text-black cursor-pointer rounded-lg;
+		height: 30px;
 	}
 	.buttons__style_link__left span {
 		@apply w-[200px] justify-around text-center;
 	}
 	.buttons__style_link__right {
-		@apply bg-red-500 p-2 ml-3 text-white cursor-pointer rounded-lg;
+		@apply p-2 text-white cursor-pointer rounded-lg;
 	}
 	.title {
-		color: red;
+		@apply mb-5;
 	}
 	.qr-code-sec {
 		text-align: center;
 		margin-top: 20px;
 		@apply shadow-md shadow-black/20 p-4 rounded-xl w-11/12 ml-6;
+	}
+	.button__left {
+		height: 30px;
+	}
+	.qr-code-section {
+		@apply shadow-md shadow-black/20 p-4 rounded-xl h-[50vh];
 	}
 }
