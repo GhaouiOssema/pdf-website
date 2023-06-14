@@ -78,6 +78,7 @@
 	}
 
 	.pdf__footer {
+		margin-left: -60px;
 		@apply w-[300px] flex justify-between;
 	}
 
@@ -91,7 +92,7 @@
 		@apply w-[200px] justify-around text-center;
 	}
 	.buttons__style_link__right {
-		@apply bg-red-500 p-3 text-white cursor-pointer rounded-lg;
+		@apply bg-red-500 p-3 ml-3 text-white cursor-pointer rounded-lg;
 	}
 
 	.pdf-details .pdf-preview .pdf-page {
