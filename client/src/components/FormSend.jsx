@@ -161,12 +161,12 @@ const FormSend = () => {
 							<div className='button__style mt-5 my-2 flex w-[100%] justify-end'>
 								<button
 									type='submit'
-									className='uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-lg focus:outline-none focus:shadow-outline'>
+									className='uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-lg focus:outline-none focus:shadow-outline hover:bg-green-500'>
 									Ajouter
 								</button>
 								<button
 									type='reset'
-									className='button__left uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 ml-5 rounded-lg focus:outline-none focus:shadow-outline'>
+									className='button__left uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 ml-5 rounded-lg focus:outline-none focus:shadow-outline hover:bg-red-500'>
 									Restaurer
 								</button>
 							</div>

@@ -97,14 +97,20 @@ const PdfFile = () => {
 								</div>
 								<div className=' ml-5 flex '>
 									<Link to={`/pdf/${pdf._id}`}>
-										<button className='px-2 py-1 bg-red-500 text-white text-sm font-semibold'>
+										<button
+											onClick={() =>
+												handleDelete(pdf._id)
+											}
+											className='button__left uppercase text-sm tracking-wide bg-green-500 text-gray-100 px-2 py-1 ml-5 rounded-md focus:outline-none focus:shadow-outline'>
 											Details
 										</button>
 									</Link>
+
 									<button
 										onClick={() => handleDelete(pdf._id)}
-										className='ml-2 px-2 py-1 bg-red-500 text-white text-sm font-semibold'>
-										Delete
+										type='reset'
+										className='button__left uppercase text-sm tracking-wide bg-blue-900 text-gray-100 px-2 py-1 ml-5 rounded-md focus:outline-none focus:shadow-outline hover:bg-red-500'>
+										Supprimer
 									</button>
 								</div>
 							</li>

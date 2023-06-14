@@ -106,6 +106,26 @@ const PdfDetails = () => {
 		}
 	}, [alertMsg]);
 
+	const [screenSize, setScreenSize] = useState({
+		width: window.innerWidth,
+		height: window.innerHeight,
+	});
+
+	useEffect(() => {
+		const handleResize = () => {
+			setScreenSize({
+				width: window.innerWidth,
+				height: window.innerHeight,
+			});
+		};
+
+		window.addEventListener('resize', handleResize);
+
+		return () => {
+			window.removeEventListener('resize', handleResize);
+		};
+	}, []);
+
 	return (
 		<>
 			<div className='mt-[-40px]'>
@@ -116,19 +136,22 @@ const PdfDetails = () => {
 			</h1>
 			<div className='container'>
 				{pdfData ? (
-					<div className='flex justify-around mt-5 flex__col'>
-						<div className='qr-code-section'>
-							<h1 className='flex items-center justify-center'>
+					<div className='flex justify-around  mt-5 flex__col qr-code-sec'>
+						<div className='qr-code-section '>
+							<h1 className='flex items-center justify-center space_top'>
 								<button
 									onClick={handleDownloadQRCode}
-									className=''>
+									className='focus:outline-none'>
 									<IoIosDownload
 										size={32}
 										className='cursor-pointer'
 									/>
 								</button>
-								<span className='ml-3'>QR Code</span>
+								<span className='ml-3 text-xl font-semibold'>
+									QR Code
+								</span>
 							</h1>
+
 							<div className='qr-code bg-white' ref={qrCodeRef}>
 								<QRCode
 									className='w-[200px] h-[200px] space_top'
@@ -147,7 +170,7 @@ const PdfDetails = () => {
 						</div>
 						<div
 							key={pdfData._id}
-							className='flex justify-between items-center flex-col ml-5 p-10 mb-5'>
+							className='flex justify-between items-center  flex-col-reverse flex-col ml-5 p-10 mb-5'>
 							<div className='pdf__footer'>
 								<Link
 									to={`/pdf/view/${pdfData._id}`}
@@ -155,9 +178,9 @@ const PdfDetails = () => {
 									<span>Open Pdf</span> <IoIosArrowForward />
 								</Link>
 								<div
-									className='buttons__style_link__h buttons__style_link__right'
+									className='button__left uppercase text-sm tracking-wide bg-green-500 text-gray-100 px-2 py-1 ml-5 rounded-md focus:outline-none focus:shadow-outline'
 									onClick={handleDelete}>
-									<span>Delete</span> <IoIosWarning />
+									Delete
 								</div>
 							</div>
 							<div className='pdf-preview' key={pdfData._id}>
@@ -168,7 +191,11 @@ const PdfDetails = () => {
 									{pdfLoaded && (
 										<Page
 											pageNumber={1}
-											width={200}
+											width={
+												screenSize.width < 700
+													? 400
+													: 300
+											}
 											renderTextLayer={false}
 											className='pdf-page'
 										/>
