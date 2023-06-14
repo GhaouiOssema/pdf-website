@@ -1,3 +1,98 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@media (max-width: 640px) {
+	.hidden__class {
+		display: none;
+	}
+	.flex__row {
+		display: flex;
+		flex-direction: row;
+	}
+	.flex__col {
+		display: flex;
+		flex-direction: column;
+	}
+	.qr__code__style {
+		@apply flex flex-col items-center;
+	}
+	.space_top {
+		padding-top: 10px;
+	}
+	.container {
+		padding: 20px;
+	}
+
+	.header {
+		text-align: center;
+		margin-bottom: 10px;
+	}
+
+	.button-group {
+		display: flex;
+		align-items: center;
+		margin-top: -16px;
+	}
+
+	.button-group button {
+		margin-top: 5px;
+		padding: 5px 10px;
+		font-size: 12px;
+	}
+
+	.qr-code-section {
+		text-align: center;
+		margin-top: 20px;
+		@apply shadow-md shadow-black/20 p-4 rounded-xl w-11/12 ml-6;
+	}
+
+	.qr-code {
+		width: 200px;
+		height: 200px;
+		margin: 0 auto;
+	}
+
+	.pdf-details-info {
+		margin-top: 20px;
+	}
+	.pdf-details {
+		margin-top: 20px;
+		height: 50px;
+		padding: 0;
+		@apply bg-gray-200 rounded-xl;
+	}
+
+	.pdf-details .title {
+		font-size: 16px;
+		margin-top: 10px;
+	}
+
+	.pdf-details .open-pdf-link {
+		margin-top: 10px;
+		text-align: center;
+	}
+
+	.pdf-details .open-pdf-link .open-pdf {
+		font-weight: bold;
+		font-size: 16px;
+		text-decoration: none;
+		color: #0000ff;
+		@apply flex items-center;
+	}
+	.pdf-details .open-pdf-link .open-pdf span {
+		padding-right: 5px;
+	}
+
+	.pdf-details .pdf-preview {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-top: 20px;
+	}
+
+	.pdf-details .pdf-preview .pdf-page {
+		width: 100%;
+		max-width: 200px;
+	}
+}

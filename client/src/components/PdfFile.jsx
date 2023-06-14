@@ -3,11 +3,30 @@ import { Document, Page } from 'react-pdf';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from './NavBar';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+	return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />;
+});
 
 const PdfFile = () => {
 	const [pdfs, setPdfs] = useState([]);
-	const Navigate = useNavigate();
-	const [pdfLoaded, setPdfLoaded] = useState(false);
+	const [open, setOpen] = useState(false);
+	const [alertMsg, setAlertMsg] = useState('');
+
+	const handleClick = () => {
+		setOpen(true);
+	};
+
+	const handleClose = (event, reason) => {
+		if (reason === 'clickaway') {
+			return;
+		}
+		setOpen(false);
+	};
 	useEffect(() => {
 		const getPdfData = async () => {
 			try {
@@ -30,8 +49,8 @@ const PdfFile = () => {
 			);
 
 			if (response.status === 200) {
-				console.log('PDF deleted successfully.');
-				window.location.reload();
+				setAlertMsg('success');
+				handleClick();
 			} else {
 				console.error('Failed to delete PDF.');
 			}
@@ -40,11 +59,18 @@ const PdfFile = () => {
 		}
 	};
 
-	const handlePdfLoadSuccess = () => {
-		setPdfLoaded(true);
-	};
+	useEffect(() => {
+		if (alertMsg === 'success') {
+			const performActionAfterInterval = () => {
+				window.location.reload();
+			};
+			const timeout = setTimeout(performActionAfterInterval, 2000);
 
-	console.log(pdfs);
+			return () => {
+				clearTimeout(timeout);
+			};
+		}
+	}, [alertMsg]);
 
 	return (
 		<div>
@@ -70,7 +96,7 @@ const PdfFile = () => {
 									/>
 									<span>{pdf.title}</span>
 								</div>
-								<div className='mt-3 ml-5'>
+								<div className='mt-3 ml-5 flex'>
 									<Link to={`/pdf/${pdf._id}`}>
 										<button className='px-2 py-1 bg-red-500 text-white text-sm font-semibold'>
 											Details
@@ -91,6 +117,19 @@ const PdfFile = () => {
 					</h2>
 				)}
 			</ul>
+			<Stack spacing={2} sx={{ width: '100%' }}>
+				<Snackbar
+					open={open}
+					autoHideDuration={6000}
+					onClose={handleClose}>
+					<Alert
+						onClose={handleClose}
+						severity='success'
+						sx={{ width: '100%' }}>
+						Fichier supprimer avec succès
+					</Alert>
+				</Snackbar>
+			</Stack>
 		</div>
 	);
 };

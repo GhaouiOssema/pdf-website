@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { IoIosArrowBack } from 'react-icons/io';
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { FiMenu, FiX } from 'react-icons/fi';
 
 const Navbar = () => {
@@ -15,6 +15,9 @@ const Navbar = () => {
 	const handleGoBack = () => {
 		navigate(-1);
 	};
+	const handleGoNext = () => {
+		navigate(+1);
+	};
 
 	return (
 		<nav className='bg-gray-800'>
@@ -23,9 +26,10 @@ const Navbar = () => {
 					<div>
 						{location.pathname !== '/' && (
 							<button
-								className='text-white focus:outline-none'
+								className='text-white focus:outline-none flex items-center'
 								onClick={handleGoBack}>
 								<IoIosArrowBack size={20} />
+								<IoIosArrowForward size={20} />
 							</button>
 						)}
 					</div>
