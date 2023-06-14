@@ -105,4 +105,7 @@
 		width: 350px;
 		@apply flex justify-center;
 	}
+	.button__style {
+		@apply w-full justify-between;
+	}
 }
