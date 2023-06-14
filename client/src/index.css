@@ -114,9 +114,13 @@
 	}
 	.row__card {
 		width: 100%;
-		@apply justify-center items-center;
+		@apply justify-between items-center;
 	}
 	.row__card__main {
 		width: 300px;
+	}
+	.pdf__file__name {
+		width: 9rem;
+		@apply justify-between;
 	}
 }

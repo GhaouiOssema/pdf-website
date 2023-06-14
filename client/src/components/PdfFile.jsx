@@ -79,23 +79,23 @@ const PdfFile = () => {
 			<h1 className='text-3xl text-center font-bold mb-4 mt-10'>
 				All PDF Files
 			</h1>
-			<ul className='flex flex-col flex-wrap row__card__main'>
+			<ul className='grid grid-cols-1 sm:grid-cols-2 gap-6'>
 				{pdfs ? (
 					<>
 						{pdfs.map((pdf) => (
 							<li
 								key={pdf._id}
-								className='row__card h-10 flex justify-between items-center mt-8 mb-2 ml-5 p-10 rounded-2xl shadow-md shadow-black/30'>
-								<div className='flex items-center justify-between w-[200px]'>
+								className=' row__card h-10 flex justify-between items-center mt-8 mb-2 p-10 rounded-2xl shadow-md shadow-black/30'>
+								<div className=' flex items-center justify-between w-[170px] pdf__file__name'>
 									<img
-										width='64'
-										height='64'
+										width='44'
+										height='44'
 										src='https://img.icons8.com/cute-clipart/64/pdf.png'
 										alt='pdf'
 									/>
 									<span>{pdf.title}</span>
 								</div>
-								<div className='mt-3 ml-5 flex'>
+								<div className=' ml-5 flex '>
 									<Link to={`/pdf/${pdf._id}`}>
 										<button className='px-2 py-1 bg-red-500 text-white text-sm font-semibold'>
 											Details
@@ -116,6 +116,7 @@ const PdfFile = () => {
 					</h2>
 				)}
 			</ul>
+
 			<Stack spacing={2} sx={{ width: '100%' }}>
 				<Snackbar
 					open={open}
