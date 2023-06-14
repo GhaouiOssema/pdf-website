@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import { IoIosArrowBack } from 'react-icons/io';
+import download from 'downloadjs';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -30,28 +31,23 @@ const PdfView = () => {
 	const handlePdfLoadSuccess = ({ numPages }) => {
 		setNumPages(numPages);
 	};
-
-	const handleDownload = async () => {
-		try {
-			const response = await fetch(
-				`https://pdf-server-809j.onrender.com/pdf/${id}`
-			);
-			const blob = await response.blob();
-
-			const fileURL = URL.createObjectURL(blob);
-
-			const link = document.createElement('a');
-			link.href = fileURL;
-			link.target = '_blank';
-			link.rel = 'noopener noreferrer';
-
-			link.click();
-
-			URL.revokeObjectURL(fileURL);
-			link.remove();
-		} catch (error) {
-			console.error('Error downloading PDF:', error);
-		}
+	const handleDownload = () => {
+		// using Java Script method to get PDF file
+		fetch(`https://pdf-server-809j.onrender.com/pdf/${id}`).then(
+			(response) => {
+				console.log(response);
+				response.blob().then((blob) => {
+					// Creating new object of PDF file
+					const fileURL = window.URL.createObjectURL(blob);
+					console.log(fileURL);
+					// Setting various property values
+					let alink = document.createElement('a');
+					alink.href = fileURL;
+					alink.download = `download_${id}.pdf`;
+					alink.click();
+				});
+			}
+		);
 	};
 
 	const [screenSize, setScreenSize] = useState({
