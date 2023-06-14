@@ -33,14 +33,22 @@ const PdfView = () => {
 
 	const handleDownload = async () => {
 		try {
-			const response = await fetch('url/to/your/pdf');
-			const pdfBlob = await response.blob();
-			const fileURL = URL.createObjectURL(pdfBlob);
+			const response = await fetch(
+				`https://pdf-server-809j.onrender.com/pdf/${id}`
+			);
+			const blob = await response.blob();
+
+			const fileURL = URL.createObjectURL(blob);
+
 			const link = document.createElement('a');
 			link.href = fileURL;
-			link.download = `document_${id}.pdf`;
+			link.target = '_blank';
+			link.rel = 'noopener noreferrer';
+
 			link.click();
+
 			URL.revokeObjectURL(fileURL);
+			link.remove();
 		} catch (error) {
 			console.error('Error downloading PDF:', error);
 		}
