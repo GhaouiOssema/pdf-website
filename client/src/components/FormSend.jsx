@@ -166,7 +166,7 @@ const FormSend = () => {
 								</button>
 								<button
 									type='reset'
-									className='uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 ml-5 rounded-lg focus:outline-none focus:shadow-outline'>
+									className='button__left uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 ml-5 rounded-lg focus:outline-none focus:shadow-outline'>
 									Restaurer
 								</button>
 							</div>
