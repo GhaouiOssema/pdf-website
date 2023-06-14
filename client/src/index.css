@@ -116,10 +116,7 @@
 		width: 100%;
 		@apply justify-center items-center;
 	}
-	.boorder {
-		border: 1px solid black;
-	}
 	.row__card__main {
-		width: 400px;
+		width: 300px;
 	}
 }
