@@ -4,12 +4,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import { Alert } from '@mui/material';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import Navbar from './NavBar';
+import PdfFile from './PdfFile';
 
-const Alert = React.forwardRef(function Alert(props, ref) {
+const ATert = React.forwardRef(function Alert(props, ref) {
 	return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />;
 });
 
@@ -105,69 +107,41 @@ const FormSend = () => {
 			<h1 className='text-3xl text-center font-bold mb-4 mt-10'>
 				Ajouter un Plan
 			</h1>
-			{/* <div className='flex flex-col mt-10 border-4 border-sky-500 w-[70%] ml-[15%]'>
-				<form onSubmit={handleSubmit} className='flex flex-col mb-4'>
-					<div className='flex w-[100%]'>
-						<input
-							type='file'
-							accept='.pdf'
-							onChange={handleFileChange}
-							className=' border border-gray-300 mr-2'
-						/>
-					</div>
-					<input
-						type='text'
-						name='title'
-						placeholder='Title'
-						value={formState.title}
-						onChange={handleInputChange}
-						className='p-2 border border-gray-300 mr-2'
-					/>
-					<input
-						type='text'
-						name='owner'
-						placeholder='Owner'
-						value={formState.owner}
-						onChange={handleInputChange}
-						className='p-2 border border-gray-300 mr-2'
-					/>
-					<select
-						name='publicOrPrivate'
-						value={formState.publicOrPrivate}
-						onChange={handleInputChange}
-						className='p-2 border border-gray-300 mr-2'>
-						<option value='public'>Public</option>
-						<option value='private'>Private</option>
-					</select>
-					<div className='flex justify-center'>
-						<button
-							type='submit'
-							className='px-4 py-2 bg-blue-500 text-white font-semibold mr-5'>
-							Upload
-						</button>
-						<button className='px-4 py-2 bg-blue-500 text-white font-semibold'>
-							<Link to='/pdf'>Show all PDFs</Link>
-						</button>
-					</div>
-				</form>
-			</div> */}
 			<form onSubmit={handleSubmit}>
 				<div className='flex justify-center items-center bg-white'>
 					<div className=' w-[70%] container mx-auto my-4 px-4 lg:px-20'>
 						<div className='p-8 my-4 mr-auto rounded-2xl shadow-2xl'>
 							<div className=' mt-5'>
-								<div className='w-full'>
+								<div className='w-full flex flex-col'>
 									<input
 										className='w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline'
 										type='file'
 										accept='.pdf'
 										onChange={handleFileChange}
-										placeholder='First Name*'
 									/>
+									{formState.selectedFile && (
+										<Stack
+											sx={{
+												width: '100%',
+												color: 'black',
+												marginTop: '10px',
+											}}
+											spacing={2}>
+											<Alert severity='info'>
+												<span>
+													{
+														formState.selectedFile
+															.name
+													}
+												</span>
+											</Alert>
+										</Stack>
+									)}
+									<label htmlFor='files'></label>
 								</div>
-								<div className='flex items-center justify-between'>
+								<div className='flex items-center justify-between form__style'>
 									<input
-										className='w-[60%] bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline'
+										className='w-[60%] bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline max'
 										type='text'
 										placeholder='Nom du fichier'
 										value={formState.title}
@@ -178,7 +152,7 @@ const FormSend = () => {
 										name='publicOrPrivate'
 										value={formState.publicOrPrivate}
 										onChange={handleInputChange}
-										className='w-[38%] bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline pl-5'>
+										className='max w-[38%] bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline pl-5'>
 										<option value='public'>Publique</option>
 										<option value='private'>Privé</option>
 									</select>
@@ -206,19 +180,19 @@ const FormSend = () => {
 					autoHideDuration={6000}
 					onClose={handleClose}>
 					{alertMsg === 'success' ? (
-						<Alert
+						<ATert
 							onClose={handleClose}
 							severity='success'
 							sx={{ width: '100%' }}>
 							Fichier ajouté avec succès
-						</Alert>
+						</ATert>
 					) : alertMsg === 'error' ? (
-						<Alert
+						<ATert
 							onClose={handleClose}
 							severity='error'
 							sx={{ width: '100%' }}>
 							Veuillez insérer un fichier!
-						</Alert>
+						</ATert>
 					) : null}
 				</Snackbar>
 			</Stack>

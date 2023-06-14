@@ -95,4 +95,10 @@
 		width: 100%;
 		max-width: 200px;
 	}
+	.form__style {
+		@apply flex flex-col w-full;
+	}
+	.max {
+		width: 100%;
+	}
 }
