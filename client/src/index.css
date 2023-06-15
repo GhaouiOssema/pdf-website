@@ -82,6 +82,7 @@
 	}
 
 	.buttons__style_link__h {
+		margin-left: -20px;
 		@apply flex items-center;
 	}
 	.buttons__style_link__left {
