@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-import { Alert } from '@mui/material';
+import { Alert, CircularProgress } from '@mui/material';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
@@ -91,19 +91,19 @@ const FormSend = () => {
 
 	useEffect(() => {
 		let timeoutNavigate;
-		let timeoutLoading;
 
 		const action = () => {
 			Navigate('/pdf');
 		};
 
 		const loadingOff = () => {
-			setLoading(false);
+			setOpen(false);
 		};
 
 		if (alertMsg === 'success') {
 			timeoutNavigate = setTimeout(action, 2000);
 		}
+		let timeoutLoading = setTimeout(loadingOff, 2000);
 
 		return () => {
 			clearTimeout(timeoutNavigate);
@@ -183,7 +183,23 @@ const FormSend = () => {
 								</div>
 							</div>
 							<div className='button__style mt-5 my-2 flex w-[100%] justify-end'>
-								{!loading ? (
+								{open && (
+									<div className='pr-6'>
+										<Stack
+											sx={{
+												color: 'rgb(30, 58 ,138)',
+												marginTop: 1,
+											}}
+											spacing={2}
+											direction='row'>
+											<CircularProgress
+												color='inherit'
+												size={32}
+											/>
+										</Stack>
+									</div>
+								)}
+								{!open ? (
 									<button
 										type='submit'
 										onClick={() => setLoading(true)}
@@ -194,11 +210,7 @@ const FormSend = () => {
 									<button
 										type='submit'
 										className='uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-lg focus:outline-none focus:shadow-outline hover:bg-green-500'>
-										{alertMsg === 'error' ? (
-											<>error</>
-										) : (
-											<>loading</>
-										)}
+										Loading
 									</button>
 								)}
 								<button
