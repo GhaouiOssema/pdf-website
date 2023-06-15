@@ -26,7 +26,7 @@ const FormSend = () => {
 	const Navigate = useNavigate();
 
 	const [open, setOpen] = useState(false);
-	const [alertMsg, setAlertMsg] = useState('error');
+	const [alertMsg, setAlertMsg] = useState(null);
 
 	const handleClick = () => {
 		setOpen(true);
@@ -50,8 +50,6 @@ const FormSend = () => {
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
-
-		setLoading(true);
 
 		const { selectedFile, title, owner, publicOrPrivate } = formState;
 
@@ -80,7 +78,7 @@ const FormSend = () => {
 			if (response.ok) {
 				setAlertMsg('success');
 				handleClick();
-				setLoading(false);
+				setOpen(true);
 			} else {
 				console.error('Failed to upload PDF.');
 			}
@@ -96,18 +94,12 @@ const FormSend = () => {
 			Navigate('/pdf');
 		};
 
-		const loadingOff = () => {
-			setOpen(false);
-		};
-
 		if (alertMsg === 'success') {
 			timeoutNavigate = setTimeout(action, 2000);
 		}
-		let timeoutLoading = setTimeout(loadingOff, 2000);
 
 		return () => {
 			clearTimeout(timeoutNavigate);
-			clearTimeout(timeoutLoading);
 		};
 	}, [alertMsg, Navigate, setLoading]);
 
@@ -202,7 +194,7 @@ const FormSend = () => {
 								{!open ? (
 									<button
 										type='submit'
-										onClick={() => setLoading(true)}
+										onClick={() => setOpen(true)}
 										className='uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-lg focus:outline-none focus:shadow-outline hover:bg-green-500'>
 										Ajouter
 									</button>
@@ -210,7 +202,7 @@ const FormSend = () => {
 									<button
 										type='submit'
 										className='uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-lg focus:outline-none focus:shadow-outline hover:bg-green-500'>
-										Loading
+										Encour
 									</button>
 								)}
 								<button
