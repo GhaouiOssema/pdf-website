@@ -82,19 +82,19 @@ const PdfView = () => {
 	return (
 		<div className='min-h-screen flex flex-col'>
 			<div className='flex items-center justify-center'>
-				<div className='flex items-center justify-between px-4 py-2 bg-gray-200 sm:w-[600px] w-[400px]'>
+				<div className='flex items-center justify-between px-4 py-2 bg-gray-200 sm:w-[600px] w-[350px]'>
 					<div className='text-normal flex items-center'>
 						<button
 							className='items-center text-center text-white focus:outline-none bg-black rounded-full mr-5'
 							onClick={handleGoBack}>
 							<IoIosArrowBack size={20} />
 						</button>
-						Number of Pages: {numPages}
+						Numéro de Pages: {numPages}
 					</div>
 					<button
-						className='items-center text-center text-white focus:outline-none bg-blue-500 rounded-full px-4 py-2'
+						className='text-xs items-center text-center text-white focus:outline-none bg-blue-500 rounded-full px-4 py-2'
 						onClick={handleDownload}>
-						Download PDF
+						Télécharger
 					</button>
 				</div>
 			</div>
@@ -109,7 +109,7 @@ const PdfView = () => {
 							pageNumber={index + 1}
 							renderTextLayer={false}
 							height={null}
-							width={screenSize.width < 700 ? 200 : 600}
+							width={screenSize.width < 700 ? 400 : 600}
 							className='mt-5'
 						/>
 					))}
