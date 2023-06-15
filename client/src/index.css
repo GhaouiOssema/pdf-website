@@ -176,4 +176,7 @@
 	.qr-code-section {
 		@apply shadow-md shadow-black/20 p-4 rounded-xl h-[50vh];
 	}
+	.boor {
+		border: 1px solid black;
+	}
 }
