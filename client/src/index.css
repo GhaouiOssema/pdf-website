@@ -47,12 +47,6 @@
 		@apply shadow-md shadow-black/20 p-4 rounded-xl w-full;
 	}
 
-	.qr-code {
-		width: 200px;
-		height: 200px;
-		margin: 0 auto;
-	}
-
 	.pdf-details-info {
 		margin-top: 20px;
 	}
