@@ -70,6 +70,7 @@ const ResponsiveAppBar = () => {
 						sx={{
 							flexGrow: 1,
 							display: { xs: 'flex', md: 'none' },
+							mt: { xs: 1 },
 						}}>
 						<IconButton
 							size='large'
@@ -130,6 +131,7 @@ const ResponsiveAppBar = () => {
 							letterSpacing: '.3rem',
 							color: 'inherit',
 							textDecoration: 'none',
+							mt: { xs: 1 },
 						}}>
 						LOGO
 					</Typography>
