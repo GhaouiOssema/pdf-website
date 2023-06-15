@@ -110,9 +110,9 @@ const PdfDetails = () => {
 	}, []);
 	return (
 		<>
-			<div className='mt-[-40px]'>
+			{/* <div className='mt-[-40px]'>
 				<Navbar />
-			</div>
+			</div> */}
 			<h1 className='text-3xl text-center font-bold mt-10'>
 				PDF Details
 			</h1>

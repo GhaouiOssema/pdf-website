@@ -58,11 +58,28 @@ const PdfFile = () => {
 		}
 	};
 
+	useEffect(() => {
+		let timeoutNavigate;
+
+		const action = () => {
+			setOpen(false);
+			window.location.reload();
+		};
+
+		if (alertMsg === 'success') {
+			timeoutNavigate = setTimeout(action, 1000);
+		}
+
+		return () => {
+			clearTimeout(timeoutNavigate);
+		};
+	}, [open]);
+
 	return (
 		<div>
-			<div className='mt-[-40px]'>
+			{/* <div className='mt-[-40px]'>
 				<Navbar />
-			</div>
+			</div> */}
 			<h1 className='text-3xl text-center font-bold mb-4 mt-10'>
 				All PDF Files
 			</h1>

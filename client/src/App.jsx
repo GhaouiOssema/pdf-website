@@ -10,17 +10,16 @@ import PdfView from './components/PdfView';
 
 const App = () => {
 	return (
-		<div className='container mx-auto p-4 flex flex-col flex-wrap'>
-			<Router>
-				<div className='mt-10'>
-					<Routes>
-						<Route path='/' element={<FormSend />} />
-						<Route path='/pdf' element={<PdfFile />} />
-						<Route path='pdf/:id' element={<PdfDetails />} />
-						<Route path='/pdf/view/:id' element={<PdfView />} />
-					</Routes>
-				</div>
-			</Router>
+		<div className='mx-auto flex flex-col flex-wrap'>
+			<Navbar />
+			<div className='container mt-10'>
+				<Routes>
+					<Route path='/' element={<FormSend />} />
+					<Route path='/pdf' element={<PdfFile />} />
+					<Route path='pdf/:id' element={<PdfDetails />} />
+					<Route path='/pdf/view/:id' element={<PdfView />} />
+				</Routes>
+			</div>
 		</div>
 	);
 };

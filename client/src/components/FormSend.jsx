@@ -114,9 +114,6 @@ const FormSend = () => {
 
 	return (
 		<>
-			<div className='mt-[-40px]'>
-				<Navbar />
-			</div>
 			<h1 className='text-3xl text-center font-bold mb-4 mt-10'>
 				Ajouter un Plan
 			</h1>
@@ -202,7 +199,7 @@ const FormSend = () => {
 									<button
 										type='submit'
 										className='uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-lg focus:outline-none focus:shadow-outline hover:bg-green-500'>
-										Encour
+										Encours
 									</button>
 								)}
 								<button
