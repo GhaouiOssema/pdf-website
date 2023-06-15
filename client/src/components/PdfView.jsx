@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import { IoIosArrowBack } from 'react-icons/io';
-import download from 'downloadjs';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -12,6 +11,7 @@ const PdfView = () => {
 	const { id } = useParams();
 	const [pdfData, setPdfData] = useState(null);
 	const [numPages, setNumPages] = useState(null);
+	const pdfRef = useRef();
 
 	useEffect(() => {
 		const getPdfData = async () => {
@@ -30,24 +30,6 @@ const PdfView = () => {
 
 	const handlePdfLoadSuccess = ({ numPages }) => {
 		setNumPages(numPages);
-	};
-	const handleDownload = () => {
-		// using Java Script method to get PDF file
-		fetch(`https://pdf-server-809j.onrender.com/pdf/${id}`).then(
-			(response) => {
-				console.log(response);
-				response.blob().then((blob) => {
-					// Creating new object of PDF file
-					const fileURL = window.URL.createObjectURL(blob);
-					console.log(fileURL);
-					// Setting various property values
-					let alink = document.createElement('a');
-					alink.href = fileURL;
-					alink.download = `download_${id}.pdf`;
-					alink.click();
-				});
-			}
-		);
 	};
 
 	const [screenSize, setScreenSize] = useState({
@@ -70,11 +52,27 @@ const PdfView = () => {
 		};
 	}, []);
 
-	const location = useLocation();
 	const navigate = useNavigate();
 
 	const handleGoBack = () => {
 		navigate(-1);
+	};
+
+	const handleDownload = () => {
+		const url = `https://pdf-server-809j.onrender.com/${pdfData.path}`;
+		fetch(url)
+			.then((response) => response.blob())
+			.then((blob) => {
+				const downloadLink = URL.createObjectURL(blob);
+				const a = document.createElement('a');
+				a.href = downloadLink;
+				a.download = 'download.pdf';
+				a.click();
+				URL.revokeObjectURL(downloadLink);
+			})
+			.catch((error) => {
+				console.log('Error downloading PDF:', error);
+			});
 	};
 
 	if (!pdfData || !pdfData.path) {
@@ -94,13 +92,13 @@ const PdfView = () => {
 						Number of Pages: {numPages}
 					</div>
 					<button
-						className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-xs'
+						className='items-center text-center text-white focus:outline-none bg-blue-500 rounded-full px-4 py-2'
 						onClick={handleDownload}>
 						Download PDF
 					</button>
 				</div>
 			</div>
-			<div className='flex-1 overflow-y-auto mx-4 my-2'>
+			<div className='flex-1 overflow-y-auto mx-4 my-2' ref={pdfRef}>
 				<Document
 					file={`https://pdf-server-809j.onrender.com/${pdfData.path}`}
 					className='flex flex-col items-center'
@@ -115,6 +113,7 @@ const PdfView = () => {
 						/>
 					))}
 				</Document>
+				<br />
 			</div>
 		</div>
 	);

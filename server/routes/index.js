@@ -11,20 +11,15 @@ router.post('/upload', upload.single('pdf'), controllers.upload.uploadPdf);
 const uploadDirectory = path.join(__dirname, 'uploads/');
 
 router.get('/download/:id', (req, res) => {
-	const fileId = req.params.id;
-	const filePath = path.join(uploadDirectory, fileId);
+	const { filename } = req.params;
+	const filePath = path.join(__dirname, 'uploads', filename);
 
-	fs.access(filePath, fs.constants.F_OK, (err) => {
-		if (err) {
-			console.error('Error accessing PDF file:', err);
-			res.sendStatus(404);
-			return;
-		}
+	// Set the appropriate headers for the download
+	res.setHeader('Content-Disposition', `attachment; filename=${filename}`);
+	res.setHeader('Content-Type', 'application/pdf');
 
-		const fileStream = fs.createReadStream(filePath);
-		res.setHeader('Content-Type', 'application/pdf');
-		fileStream.pipe(res);
-	});
+	// Send the file as the response
+	res.sendFile(filePath);
 });
 
 module.exports = router;
