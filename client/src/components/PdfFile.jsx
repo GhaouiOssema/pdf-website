@@ -85,30 +85,27 @@ const PdfFile = () => {
 						{pdfs.map((pdf) => (
 							<li
 								key={pdf._id}
-								className=' row__card h-10 flex justify-between items-center mb-2 p-10 rounded-2xl shadow-md shadow-black/30'>
-								<div className=' flex items-center justify-between w-[170px] pdf__file__name'>
-									<img
-										width='44'
-										height='44'
-										src='https://img.icons8.com/cute-clipart/64/pdf.png'
-										alt='pdf'
-									/>
-									<span>{pdf.title}</span>
-								</div>
-								<div className=' ml-5 flex '>
-									<Link to={`/pdf/${pdf._id}`}>
-										<button className='button__left uppercase text-sm tracking-wide bg-green-500 text-gray-100 px-2 py-1 ml-5 rounded-md focus:outline-none focus:shadow-outline'>
-											Details
-										</button>
-									</Link>
+								className='w-[330px] sm:w-[600px] h-10 flex justify-between items-center mb-2 p-2 sm:p-10 rounded-2xl shadow-md shadow-black/30'>
+								<img
+									width='44'
+									height='44'
+									src='https://img.icons8.com/cute-clipart/64/pdf.png'
+									alt='pdf'
+								/>
+								<span>{pdf.title}</span>
 
-									<button
-										onClick={() => handleDelete(pdf._id)}
-										type='reset'
-										className='button__left uppercase text-sm tracking-wide bg-blue-900 text-gray-100 px-2 py-1 ml-5 rounded-md focus:outline-none focus:shadow-outline hover:bg-red-500'>
-										Supprimer
+								<Link to={`/pdf/${pdf._id}`}>
+									<button className='button__left uppercase text-sm tracking-wide bg-green-500 text-gray-100 px-2 py-1 ml-5 rounded-md focus:outline-none focus:shadow-outline'>
+										Details
 									</button>
-								</div>
+								</Link>
+
+								<button
+									onClick={() => handleDelete(pdf._id)}
+									type='reset'
+									className='button__left uppercase text-sm tracking-wide bg-blue-900 text-gray-100 px-2 py-1 ml-5 rounded-md focus:outline-none focus:shadow-outline hover:bg-red-500'>
+									Supprimer
+								</button>
 							</li>
 						))}
 					</>

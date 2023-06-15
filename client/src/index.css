@@ -109,10 +109,6 @@
 	.button__left {
 		margin-left: 8px;
 	}
-	.row__card {
-		width: 100%;
-		@apply justify-between items-center;
-	}
 	.row__card__main {
 		width: 300px;
 	}
