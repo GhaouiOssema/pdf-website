@@ -44,7 +44,7 @@
 	.qr-code-section {
 		text-align: center;
 		margin-top: 20px;
-		@apply shadow-md shadow-black/20 p-4 rounded-xl w-11/12 ml-6;
+		@apply shadow-md shadow-black/20 p-4 rounded-xl w-full;
 	}
 
 	.qr-code {
@@ -78,15 +78,14 @@
 	}
 
 	.pdf__footer {
-		margin-left: -60px;
-		@apply w-[300px] flex justify-between;
+		@apply w-full flex justify-between items-center;
 	}
 
 	.buttons__style_link__h {
 		@apply flex items-center;
 	}
 	.buttons__style_link__left {
-		@apply w-[220px] p-2 text-black cursor-pointer rounded-lg;
+		@apply w-[180px] p-2 text-black cursor-pointer rounded-lg;
 	}
 	.buttons__style_link__left span {
 		@apply w-[200px] justify-around text-center;

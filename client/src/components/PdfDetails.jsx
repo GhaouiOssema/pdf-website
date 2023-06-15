@@ -149,15 +149,16 @@ const PdfDetails = () => {
 						</div>
 						<div
 							key={pdfData._id}
-							className='flex justify-between flex-col-reverse items-center flex-col ml-5 p-10 mb-5'>
-							<div className='pdf__footer'>
+							className='flex justify-between flex-col-reverse items-center flex-col ml-5 pt-10 mb-5'>
+							<div className='pdf__footer boor'>
+								{/* <br /> */}
 								<Link
 									to={`/pdf/view/${id}`}
 									className='buttons__style_link__h buttons__style_link__left bg-gray-200'>
 									<span>Open Pdf</span> <IoIosArrowForward />
 								</Link>
 								<div
-									className='cursor-pointer button__left uppercase text-sm tracking-wide bg-blue-500 text-gray-100 px-2 py-1 ml-1 rounded-md focus:outline-none focus:shadow-outline hover:bg-red-500'
+									className='cursor-pointer button__left uppercase text-sm tracking-wide bg-blue-500 text-gray-100 px-2 py-[10px] rounded-md focus:outline-none focus:shadow-outline hover:bg-red-500'
 									onClick={handleDelete}>
 									Delete
 								</div>
