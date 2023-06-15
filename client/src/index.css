@@ -58,8 +58,7 @@
 	}
 
 	.pdf-details .title {
-		font-size: 16px;
-		margin-top: 10px;
+		display: flex;
 	}
 
 	.pdf-details .open-pdf-link .open-pdf span {
