@@ -153,9 +153,6 @@ const PdfDetails = () => {
 								)}
 								{screenSize.width < 700 && (
 									<div className='flex flex-wrap'>
-										<h1 className='ml-3 font-bold'>
-											Title :
-										</h1>
 										<span className='ml-3'>
 											{pdfData.title}
 										</span>
