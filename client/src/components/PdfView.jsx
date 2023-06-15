@@ -108,7 +108,8 @@ const PdfView = () => {
 							key={index}
 							pageNumber={index + 1}
 							renderTextLayer={false}
-							width={screenSize.width < 700 ? 400 : 600}
+							height={null}
+							width={screenSize.width < 700 ? 200 : 600}
 							className='mt-5'
 						/>
 					))}
