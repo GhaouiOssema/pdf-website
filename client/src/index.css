@@ -78,7 +78,7 @@
 	}
 
 	.pdf__footer {
-		@apply w-full flex justify-between items-center;
+		@apply w-full flex justify-around items-center;
 	}
 
 	.buttons__style_link__h {
@@ -86,7 +86,7 @@
 		@apply flex items-center;
 	}
 	.buttons__style_link__left {
-		@apply w-[180px] p-2 text-black cursor-pointer rounded-lg;
+		@apply w-[200px] p-2 text-black cursor-pointer rounded-lg;
 	}
 	.buttons__style_link__left span {
 		@apply w-[200px] justify-around text-center;
