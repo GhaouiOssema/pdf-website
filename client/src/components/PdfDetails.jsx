@@ -113,96 +113,96 @@ const PdfDetails = () => {
 			<div className='mt-[-40px]'>
 				<Navbar />
 			</div>
-			<h1 className='text-3xl text-center font-bold mb-4 mt-10'>
+			<h1 className='text-3xl text-center font-bold mt-10'>
 				PDF Details
 			</h1>
 			<div className='container'>
 				{pdfData ? (
-					<div className='flex justify-around mt-5 flex__col'>
-						<div className='qr-code-section'>
-							{screenSize.width > 700 && (
-								<div className='flex flex-wrap mb-3'>
-									<h1 className='ml-3 font-bold'>Title :</h1>
-									<span className='ml-3'>
-										{pdfData.title}
-									</span>
-								</div>
-							)}
-							<div
-								className={`w-[202px] bg-white ${
-									screenSize.width < 700 && 'ml-9'
-								}`}
-								ref={qrCodeRef}>
-								<QRCode
-									className='w-[200px] h-[200px]'
-									value={`https://qr-plan.netlify.app/pdf/view/${pdfData._id}`}
-								/>
+					<>
+						{screenSize.width < 700 && (
+							<div className='flex flex-wrap justify-center items-center text-center'>
+								<h1 className='text-lg font-bold'>Titre :</h1>
+								<span className='ml-3'>{pdfData.title}</span>
 							</div>
-							<div className='mt-5 w-full flex-row-reverse  text-xl flex items-center justify-center'>
-								{screenSize.width < 700 && (
-									<button onClick={handleDownloadQRCode}>
-										<IoIosDownload
-											size={32}
-											style={{
-												position: 'absolute',
-												marginTop: -16,
-												marginLeft: 50,
-											}}
-										/>
-									</button>
-								)}
-								{screenSize.width < 700 && (
-									<div className='flex flex-wrap'>
+						)}
+
+						<div className='flex justify-around  flex__col'>
+							<div className='qr-code-section'>
+								{screenSize.width > 700 && (
+									<div className='flex flex-wrap mb-3'>
+										<h1 className='ml-3 font-bold'>
+											Title :
+										</h1>
 										<span className='ml-3'>
 											{pdfData.title}
 										</span>
 									</div>
 								)}
-								{screenSize.width > 700 && (
-									<div
-										className='cursor-pointer w-full text-center uppercase text-sm tracking-wide bg-blue-500 text-gray-100 px-2 py-[10px] rounded-md focus:outline-none focus:shadow-outline hover:bg-green-500'
-										onClick={handleDownloadQRCode}>
-										Télècharger
-									</div>
-								)}
-							</div>
-						</div>
-						<div
-							key={pdfData._id}
-							className='flex justify-between flex-col-reverse items-center flex-col ml-5 pt-10 mb-5'>
-							<div className='pdf__footer'>
-								<Link
-									to={`/pdf/view/${id}`}
-									className='buttons__style_link__h buttons__style_link__left bg-gray-200'>
-									<span>Open Pdf</span> <IoIosArrowForward />
-								</Link>
 								<div
-									className='cursor-pointer  uppercase text-sm tracking-wide bg-blue-500 text-gray-100 px-2 py-[10px] rounded-md focus:outline-none focus:shadow-outline hover:bg-red-500'
-									onClick={handleDelete}>
-									Delete
+									className={`w-[202px] bg-white ${
+										screenSize.width < 700 && 'ml-9'
+									}`}
+									ref={qrCodeRef}>
+									<QRCode
+										className='w-[200px] h-[200px]'
+										value={`https://qr-plan.netlify.app/pdf/view/${pdfData._id}`}
+									/>
+								</div>
+								<div className='mt-5 w-full flex-row-reverse  text-xl flex items-center justify-center'>
+									{screenSize.width < 700 && (
+										<div
+											className='cursor-pointer w-full text-center uppercase text-sm tracking-wide bg-blue-500 text-gray-100 px-2 py-[10px] rounded-md focus:outline-none focus:shadow-outline hover:bg-green-500'
+											onClick={handleDownloadQRCode}>
+											Télècharger
+										</div>
+									)}
+									{screenSize.width > 700 && (
+										<div
+											className='cursor-pointer w-full text-center uppercase text-sm tracking-wide bg-blue-500 text-gray-100 px-2 py-[10px] rounded-md focus:outline-none focus:shadow-outline hover:bg-green-500'
+											onClick={handleDownloadQRCode}>
+											Télècharger
+										</div>
+									)}
 								</div>
 							</div>
-							<div className='pdf-preview' key={pdfData._id}>
-								<Document
-									file={`https://pdf-server-809j.onrender.com/${pdfData.path}`}
-									onLoadSuccess={handlePdfLoadSuccess}
-									className='hidden__class'>
-									{pdfLoaded && (
-										<Page
-											pageNumber={1}
-											width={
-												screenSize.width < 700
-													? 400
-													: 230
-											}
-											renderTextLayer={false}
-											className='pdf-page'
-										/>
-									)}
-								</Document>
+							<div
+								key={pdfData._id}
+								className='flex justify-between flex-col-reverse items-center flex-col ml-5 pt-5 mb-5'>
+								<div className='pdf__footer'>
+									<Link
+										to={`/pdf/view/${id}`}
+										className='buttons__style_link__h buttons__style_link__left bg-gray-200'>
+										<span>Open Pdf</span>
+										<IoIosArrowForward />
+									</Link>
+									<div
+										className='cursor-pointer  uppercase text-sm tracking-wide bg-blue-500 text-gray-100 px-2 py-[10px] rounded-md focus:outline-none focus:shadow-outline hover:bg-red-500'
+										onClick={handleDelete}>
+										Delete
+									</div>
+								</div>
+								<div className='pdf-preview' key={pdfData._id}>
+									<Document
+										file={`https://pdf-server-809j.onrender.com/${pdfData.path}`}
+										onLoadSuccess={handlePdfLoadSuccess}
+										className='hidden__class'>
+										{pdfLoaded && (
+											<Page
+												pageNumber={1}
+												width={
+													screenSize.width < 700
+														? 400
+														: 230
+												}
+												renderTextLayer={false}
+												className='pdf-page'
+											/>
+										)}
+									</Document>
+								</div>
 							</div>
 						</div>
-					</div>
+					</>
 				) : (
 					<p>Loading PDF data...</p>
 				)}

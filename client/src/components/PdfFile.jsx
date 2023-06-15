@@ -58,19 +58,6 @@ const PdfFile = () => {
 		}
 	};
 
-	useEffect(() => {
-		if (alertMsg === 'success') {
-			const performActionAfterInterval = () => {
-				window.location.reload();
-			};
-			const timeout = setTimeout(performActionAfterInterval, 2000);
-
-			return () => {
-				clearTimeout(timeout);
-			};
-		}
-	}, [alertMsg]);
-
 	return (
 		<div>
 			<div className='mt-[-40px]'>

@@ -22,11 +22,11 @@ const FormSend = () => {
 		owner: '',
 		publicOrPrivate: 'public',
 	});
+	const [loading, setLoading] = useState(false);
 	const Navigate = useNavigate();
 
 	const [open, setOpen] = useState(false);
 	const [alertMsg, setAlertMsg] = useState('error');
-	const [errorMSG, setErrorMSG] = useState(false);
 
 	const handleClick = () => {
 		setOpen(true);
@@ -51,11 +51,12 @@ const FormSend = () => {
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 
+		setLoading(true);
+
 		const { selectedFile, title, owner, publicOrPrivate } = formState;
 
 		// Check if a file was selected
 		if (!selectedFile) {
-			setErrorMSG(false);
 			setAlertMsg('error');
 			handleClick();
 			return;
@@ -77,9 +78,9 @@ const FormSend = () => {
 			);
 
 			if (response.ok) {
-				setErrorMSG(true);
 				setAlertMsg('success');
 				handleClick();
+				setLoading(false);
 			} else {
 				console.error('Failed to upload PDF.');
 			}
@@ -89,17 +90,26 @@ const FormSend = () => {
 	};
 
 	useEffect(() => {
-		if (alertMsg === 'success') {
-			const performActionAfterInterval = () => {
-				Navigate('/pdf');
-			};
-			const timeout = setTimeout(performActionAfterInterval, 2000);
+		let timeoutNavigate;
+		let timeoutLoading;
 
-			return () => {
-				clearTimeout(timeout);
-			};
+		const action = () => {
+			Navigate('/pdf');
+		};
+
+		const loadingOff = () => {
+			setLoading(false);
+		};
+
+		if (alertMsg === 'success') {
+			timeoutNavigate = setTimeout(action, 2000);
 		}
-	}, [alertMsg, Navigate]);
+
+		return () => {
+			clearTimeout(timeoutNavigate);
+			clearTimeout(timeoutLoading);
+		};
+	}, [alertMsg, Navigate, setLoading]);
 
 	const handleReset = () => {
 		setFormState({
@@ -173,11 +183,24 @@ const FormSend = () => {
 								</div>
 							</div>
 							<div className='button__style mt-5 my-2 flex w-[100%] justify-end'>
-								<button
-									type='submit'
-									className='uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-lg focus:outline-none focus:shadow-outline hover:bg-green-500'>
-									Ajouter
-								</button>
+								{!loading ? (
+									<button
+										type='submit'
+										onClick={() => setLoading(true)}
+										className='uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-lg focus:outline-none focus:shadow-outline hover:bg-green-500'>
+										Ajouter
+									</button>
+								) : (
+									<button
+										type='submit'
+										className='uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-lg focus:outline-none focus:shadow-outline hover:bg-green-500'>
+										{alertMsg === 'error' ? (
+											<>error</>
+										) : (
+											<>loading</>
+										)}
+									</button>
+								)}
 								<button
 									type='reset'
 									className='uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 ml-5 rounded-lg focus:outline-none focus:shadow-outline hover:bg-red-500'>

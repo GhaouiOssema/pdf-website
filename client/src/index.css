@@ -143,7 +143,7 @@
 	}
 	.buttons__style_link__left {
 		@apply w-[150px] p-2 text-black cursor-pointer rounded-lg;
-		height: 30px;
+		height: 38px;
 	}
 	.buttons__style_link__left span {
 		@apply w-[200px] justify-around text-center;
