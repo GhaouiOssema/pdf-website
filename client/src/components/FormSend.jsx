@@ -26,6 +26,7 @@ const FormSend = () => {
 
 	const [open, setOpen] = useState(false);
 	const [alertMsg, setAlertMsg] = useState('error');
+	const [errorMSG, setErrorMSG] = useState(false);
 
 	const handleClick = () => {
 		setOpen(true);
@@ -54,6 +55,7 @@ const FormSend = () => {
 
 		// Check if a file was selected
 		if (!selectedFile) {
+			setErrorMSG(false);
 			setAlertMsg('error');
 			handleClick();
 			return;
@@ -75,7 +77,7 @@ const FormSend = () => {
 			);
 
 			if (response.ok) {
-				// alert('good');
+				setErrorMSG(true);
 				setAlertMsg('success');
 				handleClick();
 			} else {
@@ -99,6 +101,15 @@ const FormSend = () => {
 		}
 	}, [alertMsg, Navigate]);
 
+	const handleReset = () => {
+		setFormState({
+			selectedFile: null,
+			title: '',
+			owner: '',
+			publicOrPrivate: 'public',
+		});
+	};
+
 	return (
 		<>
 			<div className='mt-[-40px]'>
@@ -107,7 +118,7 @@ const FormSend = () => {
 			<h1 className='text-3xl text-center font-bold mb-4 mt-10'>
 				Ajouter un Plan
 			</h1>
-			<form onSubmit={handleSubmit}>
+			<form onSubmit={handleSubmit} onReset={handleReset}>
 				<div className='flex justify-center items-center bg-white'>
 					<div className=' max__size w-[70%] container mx-auto my-4 px-4 lg:px-20'>
 						<div className=' p-8 my-4 mr-auto rounded-2xl shadow-2xl'>
@@ -119,24 +130,27 @@ const FormSend = () => {
 										accept='.pdf'
 										onChange={handleFileChange}
 									/>
-									{formState.selectedFile && (
-										<Stack
-											sx={{
-												width: '100%',
-												color: 'black',
-												marginTop: '10px',
-											}}
-											spacing={2}>
-											<Alert severity='info'>
-												<span>
-													{
-														formState.selectedFile
-															.name
-													}
-												</span>
-											</Alert>
-										</Stack>
-									)}
+									<>
+										{formState.selectedFile && (
+											<Stack
+												sx={{
+													width: '100%',
+													color: 'black',
+													marginTop: '10px',
+												}}
+												spacing={2}>
+												<Alert severity='info'>
+													<span>
+														{
+															formState
+																.selectedFile
+																.name
+														}
+													</span>
+												</Alert>
+											</Stack>
+										)}
+									</>
 									<label htmlFor='files'></label>
 								</div>
 								<div className='flex items-center justify-between form__style'>
