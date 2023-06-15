@@ -99,7 +99,7 @@ const PdfView = () => {
 				</div>
 			</div>
 			<div
-				className='flex-1 overflow-y-auto sm:w-full w-[370px] boor mx-4 my-2 ml-10'
+				className='flex-1 overflow-y-auto sm:w-full w-[370px] mx-4 my-2 ml-5'
 				ref={pdfRef}>
 				<Document
 					file={`https://pdf-server-809j.onrender.com/${pdfData.path}`}
