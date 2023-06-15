@@ -120,8 +120,18 @@ const PdfDetails = () => {
 				{pdfData ? (
 					<div className='flex justify-around mt-5 flex__col'>
 						<div className='qr-code-section'>
+							{screenSize.width > 700 && (
+								<div className='flex flex-wrap mb-3'>
+									<h1 className='ml-3 font-bold'>Title :</h1>
+									<span className='ml-3'>
+										{pdfData.title}
+									</span>
+								</div>
+							)}
 							<div
-								className=' w-[202px] bg-white ml-8'
+								className={`w-[202px] bg-white ${
+									screenSize.width < 700 && 'ml-8'
+								}`}
 								ref={qrCodeRef}>
 								<QRCode
 									className='w-[200px] h-[200px]'
@@ -129,23 +139,35 @@ const PdfDetails = () => {
 								/>
 							</div>
 							<div className='mt-5 w-full flex-row-reverse  text-xl flex items-center justify-center'>
-								<button onClick={handleDownloadQRCode}>
-									<IoIosDownload
-										size={32}
-										style={{
-											position: 'absolute',
-											marginTop: -16,
-											marginLeft: 50,
-										}}
-									/>
-								</button>
-
-								<div className='flex flex-wrap'>
-									<h1 className='ml-3 font-bold'>Title :</h1>
-									<span className='ml-3'>
-										{pdfData.title}
-									</span>
-								</div>
+								{screenSize.width < 700 && (
+									<button onClick={handleDownloadQRCode}>
+										<IoIosDownload
+											size={32}
+											style={{
+												position: 'absolute',
+												marginTop: -16,
+												marginLeft: 50,
+											}}
+										/>
+									</button>
+								)}
+								{screenSize.width < 700 && (
+									<div className='flex flex-wrap'>
+										<h1 className='ml-3 font-bold'>
+											Title :
+										</h1>
+										<span className='ml-3'>
+											{pdfData.title}
+										</span>
+									</div>
+								)}
+								{screenSize.width > 700 && (
+									<div
+										className='cursor-pointer w-full text-center uppercase text-sm tracking-wide bg-blue-500 text-gray-100 px-2 py-[10px] rounded-md focus:outline-none focus:shadow-outline hover:bg-green-500'
+										onClick={handleDownloadQRCode}>
+										Télècharger
+									</div>
+								)}
 							</div>
 						</div>
 						<div
@@ -158,7 +180,7 @@ const PdfDetails = () => {
 									<span>Open Pdf</span> <IoIosArrowForward />
 								</Link>
 								<div
-									className='cursor-pointer button__left uppercase text-sm tracking-wide bg-blue-500 text-gray-100 px-2 py-[10px] rounded-md focus:outline-none focus:shadow-outline hover:bg-red-500'
+									className='cursor-pointer  uppercase text-sm tracking-wide bg-blue-500 text-gray-100 px-2 py-[10px] rounded-md focus:outline-none focus:shadow-outline hover:bg-red-500'
 									onClick={handleDelete}>
 									Delete
 								</div>

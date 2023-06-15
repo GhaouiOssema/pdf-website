@@ -98,9 +98,6 @@ const PdfFile = () => {
 								<div className=' ml-5 flex '>
 									<Link to={`/pdf/${pdf._id}`}>
 										<button
-											onClick={() =>
-												handleDelete(pdf._id)
-											}
 											type='reset'
 											className='button__left uppercase text-sm tracking-wide bg-green-500 text-gray-100 px-2 py-1 ml-5 rounded-md focus:outline-none focus:shadow-outline hover:bg-red-500'>
 											Details
