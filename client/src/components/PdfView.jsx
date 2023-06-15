@@ -89,7 +89,9 @@ const PdfView = () => {
 							onClick={handleGoBack}>
 							<IoIosArrowBack size={20} />
 						</button>
-						Numéro de Pages: {numPages}
+						{screenSize.width < 700
+							? `Pages: ${numPages}`
+							: `Pages: ${numPages}`}
 					</div>
 					<button
 						className='text-xs items-center text-center text-white focus:outline-none bg-blue-500 rounded-full px-4 py-2'
@@ -99,11 +101,13 @@ const PdfView = () => {
 				</div>
 			</div>
 			<div
-				className='flex-1 overflow-y-auto sm:w-full w-[370px] mx-4 my-2 ml-5'
+				className={`flex-1 overflow-y-auto ${
+					screenSize.width < 700 ? 'w-[323px]' : 'w-[600px]'
+				} mx-4 my-2`}
 				ref={pdfRef}>
 				<Document
 					file={`https://pdf-server-809j.onrender.com/${pdfData.path}`}
-					className='flex flex-col items-center'
+					className='flex flex-col items-center boor'
 					onLoadSuccess={handlePdfLoadSuccess}>
 					{Array.from(new Array(numPages), (el, index) => (
 						<Page
@@ -111,7 +115,7 @@ const PdfView = () => {
 							pageNumber={index + 1}
 							renderTextLayer={false}
 							height={null}
-							width={screenSize.width < 700 ? 400 : 600}
+							width={screenSize.width < 700 ? 320 : 600}
 							className='mt-5'
 						/>
 					))}
