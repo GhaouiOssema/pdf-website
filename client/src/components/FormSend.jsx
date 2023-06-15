@@ -118,9 +118,9 @@ const FormSend = () => {
 				Ajouter un Plan
 			</h1>
 			<form onSubmit={handleSubmit} onReset={handleReset}>
-				<div className='flex justify-center items-center bg-white'>
+				<div className='flex justify-center items-center bg-none'>
 					<div className=' max__size w-[70%] container mx-auto my-4 px-4 lg:px-20'>
-						<div className=' p-8 my-4 mr-auto rounded-2xl shadow-2xl'>
+						<div className=' p-8 my-4 mr-auto rounded-2xl shadow-2xl bg-white'>
 							<div className=' mt-5'>
 								<div className='w-full flex flex-col'>
 									<input

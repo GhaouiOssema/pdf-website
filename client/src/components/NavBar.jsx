@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { IoIosArrowBack } from 'react-icons/io';
-import { FiMenu, FiX } from 'react-icons/fi';
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -9,21 +7,17 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
-// import MenuIcon from 'mui/icons-material/Menu';
 import { IoIosMenu } from 'react-icons/io';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Logo from '../assets/logo.png';
-// import AdbIcon from '@mui/icons-material/Adb';
 
-const pages = ['telecharger', 'mes pLans'];
+const pages = ['telecharger', 'mes plans'];
 
 const ResponsiveAppBar = () => {
-	const [anchorElNav, setAnchorElNav] = React.useState(null);
-	const [anchorElUser, setAnchorElUser] = React.useState(null);
+	const [anchorElNav, setAnchorElNav] = useState(null);
 
 	const handleOpenNavMenu = (event) => {
 		setAnchorElNav(event.currentTarget);
@@ -36,14 +30,10 @@ const ResponsiveAppBar = () => {
 		setAnchorElNav(null);
 	};
 
-	const handleCloseUserMenu = () => {
-		setAnchorElUser(null);
-	};
-
 	return (
 		<AppBar
 			position='static'
-			sx={{ background: 'rgb(30, 58 ,138)', height: '12vh' }}>
+			sx={{ background: 'rgb(30,58,138)', height: '12vh' }}>
 			<Container maxWidth='xl'>
 				<Toolbar disableGutters sx={{ marginTop: 0.5 }}>
 					<Typography
@@ -63,11 +53,30 @@ const ResponsiveAppBar = () => {
 						}}>
 						<img src={Logo} width={80} height={80} />
 					</Typography>
-
+					<Typography
+						variant='h5'
+						noWrap
+						component='a'
+						href=''
+						sx={{
+							mr: 2,
+							display: { xs: 'flex', md: 'none' },
+							flexGrow: 1,
+							fontFamily: 'monospace',
+							fontWeight: 700,
+							letterSpacing: '.3rem',
+							color: 'inherit',
+							textDecoration: 'none',
+							justifyContent: 'start',
+						}}>
+						<img src={Logo} width={90} height={90} />
+					</Typography>
 					<Box
 						sx={{
 							flexGrow: 1,
 							display: { xs: 'flex', md: 'none' },
+							justifyContent: 'end',
+							marginTop: -2,
 						}}>
 						<IconButton
 							size='large'
@@ -83,7 +92,7 @@ const ResponsiveAppBar = () => {
 							anchorEl={anchorElNav}
 							anchorOrigin={{
 								vertical: 'bottom',
-								horizontal: 'left',
+								horizontal: 'rigth',
 							}}
 							keepMounted
 							transformOrigin={{
@@ -111,23 +120,7 @@ const ResponsiveAppBar = () => {
 							</MenuItem>
 						</Menu>
 					</Box>
-					<Typography
-						variant='h5'
-						noWrap
-						component='a'
-						href=''
-						sx={{
-							mr: 2,
-							display: { xs: 'flex', md: 'none' },
-							flexGrow: 1,
-							fontFamily: 'monospace',
-							fontWeight: 700,
-							letterSpacing: '.3rem',
-							color: 'inherit',
-							textDecoration: 'none',
-						}}>
-						<img src={Logo} width={90} height={90} />
-					</Typography>
+
 					<Box
 						sx={{
 							flexGrow: 1,
