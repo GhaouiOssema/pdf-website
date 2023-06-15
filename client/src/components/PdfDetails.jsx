@@ -151,7 +151,6 @@ const PdfDetails = () => {
 							key={pdfData._id}
 							className='flex justify-between flex-col-reverse items-center flex-col ml-5 pt-10 mb-5'>
 							<div className='pdf__footer'>
-								={' '}
 								<Link
 									to={`/pdf/view/${id}`}
 									className='buttons__style_link__h buttons__style_link__left bg-gray-200'>
