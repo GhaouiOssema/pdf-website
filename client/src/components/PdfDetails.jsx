@@ -130,7 +130,7 @@ const PdfDetails = () => {
 							)}
 							<div
 								className={`w-[202px] bg-white ${
-									screenSize.width < 700 && 'ml-8'
+									screenSize.width < 700 && 'ml-9'
 								}`}
 								ref={qrCodeRef}>
 								<QRCode
