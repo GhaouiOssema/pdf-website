@@ -16,6 +16,7 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import Logo from '../assets/logo.png';
 // import AdbIcon from '@mui/icons-material/Adb';
 
 const pages = ['telecharger', 'mes pLans'];
@@ -45,9 +46,6 @@ const ResponsiveAppBar = () => {
 			sx={{ background: 'rgb(30, 58 ,138)', height: '12vh' }}>
 			<Container maxWidth='xl'>
 				<Toolbar disableGutters sx={{ marginTop: 0.5 }}>
-					{/* <AdbIcon
-						sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}
-					/> */}
 					<Typography
 						variant='h6'
 						noWrap
@@ -63,14 +61,13 @@ const ResponsiveAppBar = () => {
 							textDecoration: 'none',
 							ml: { md: 10 },
 						}}>
-						LOGO
+						<img src={Logo} width={80} height={80} />
 					</Typography>
 
 					<Box
 						sx={{
 							flexGrow: 1,
 							display: { xs: 'flex', md: 'none' },
-							mt: { xs: 1 },
 						}}>
 						<IconButton
 							size='large'
@@ -114,9 +111,6 @@ const ResponsiveAppBar = () => {
 							</MenuItem>
 						</Menu>
 					</Box>
-					{/* <AdbIcon
-						sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }}
-					/> */}
 					<Typography
 						variant='h5'
 						noWrap
@@ -131,9 +125,8 @@ const ResponsiveAppBar = () => {
 							letterSpacing: '.3rem',
 							color: 'inherit',
 							textDecoration: 'none',
-							mt: { xs: 1 },
 						}}>
-						LOGO
+						<img src={Logo} width={90} height={90} />
 					</Typography>
 					<Box
 						sx={{
