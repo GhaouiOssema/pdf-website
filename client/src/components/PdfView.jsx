@@ -82,7 +82,10 @@ const PdfView = () => {
 	return (
 		<div className='min-h-screen flex flex-col'>
 			<div className='flex items-center justify-center'>
-				<div className='flex items-center justify-between px-4 py-2 bg-gray-200 sm:w-[600px] w-[350px]'>
+				<div
+					className={`flex items-center justify-between px-4 py-2 bg-gray-200 ${
+						screenSize.width < 700 ? 'w-[350px]' : 'sm:w-[1000px]'
+					}`}>
 					<div className='text-normal flex items-center'>
 						<button
 							className='items-center text-center text-white focus:outline-none bg-black rounded-full mr-5'
@@ -101,7 +104,7 @@ const PdfView = () => {
 			<div
 				className={`flex-1 overflow-y-auto ${
 					screenSize.width < 700 ? 'w-[350px]' : 'sm:max-w-7xl'
-				} `}
+				}`}
 				ref={pdfRef}>
 				<br />
 				<Document
@@ -114,7 +117,7 @@ const PdfView = () => {
 							pageNumber={index + 1}
 							renderTextLayer={false}
 							height={null}
-							width={screenSize.width < 700 ? 349 : 1250}
+							width={screenSize.width < 700 ? 349 : 1000}
 							className='mt-5'
 						/>
 					))}
