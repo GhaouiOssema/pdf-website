@@ -6,6 +6,7 @@ import Navbar from './NavBar';
 import Stack from '@mui/material/Stack';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import CustomizedList from './CustomizedList';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
 	return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />;
@@ -83,6 +84,7 @@ const PdfFile = () => {
 			<h1 className='text-3xl text-center font-bold mb-4 mt-10'>
 				All PDF Files
 			</h1>
+			{/* <CustomizedList /> */}
 			<ul className='grid grid-cols-1 sm:grid-cols-2 gap-6'>
 				{pdfs ? (
 					<>
@@ -103,7 +105,7 @@ const PdfFile = () => {
 									<Link to={`/pdf/${pdf._id}`}>
 										<button
 											type='reset'
-											className='button__left uppercase text-sm tracking-wide bg-green-500 text-gray-100 px-2 py-1 ml-5 rounded-md focus:outline-none focus:shadow-outline hover:bg-red-500'>
+											className='button__left uppercase text-sm tracking-wide bg-green-500 text-gray-100 px-2 py-1 ml-5 rounded-md focus:outline-none focus:shadow-outline hover:bg-blue-500'>
 											Details
 										</button>
 									</Link>

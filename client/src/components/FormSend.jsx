@@ -4,12 +4,19 @@ import { Link, useNavigate } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-import { Alert, CircularProgress } from '@mui/material';
+import {
+	Alert,
+	Button,
+	CircularProgress,
+	FormControl,
+	InputLabel,
+	MenuItem,
+	Select,
+} from '@mui/material';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
-import Navbar from './NavBar';
-import PdfFile from './PdfFile';
+import { Input } from '@mui/material';
 
 const ATert = React.forwardRef(function Alert(props, ref) {
 	return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />;
@@ -123,12 +130,38 @@ const FormSend = () => {
 						<div className=' p-8 my-4 mr-auto rounded-2xl shadow-2xl bg-white'>
 							<div className=' mt-5'>
 								<div className='w-full flex flex-col'>
-									<input
-										className='w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline'
-										type='file'
-										accept='.pdf'
-										onChange={handleFileChange}
-									/>
+									<div class='flex items-center justify-center w-full'>
+										<label
+											for='dropzone-file'
+											className='flex flex-col items-center justify-center w-full h-20 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600'>
+											<div className='flex flex-col items-center justify-center pt-5 pb-2'>
+												<svg
+													aria-hidden='true'
+													className='w-10 h-10 text-gray-400'
+													fill='none'
+													stroke='currentColor'
+													viewBox='0 0 24 24'
+													xmlns='http://www.w3.org/2000/svg'>
+													<path
+														stroke-linecap='round'
+														stroke-linejoin='round'
+														stroke-width='2'
+														d='M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12'></path>
+												</svg>
+												<p className='mb-2 text-sm text-gray-500 dark:text-gray-400'>
+													Selectioner un fichier
+												</p>
+											</div>
+											<input
+												id='dropzone-file'
+												type='file'
+												accept='.pdf'
+												hidden
+												onChange={handleFileChange}
+											/>
+										</label>
+									</div>
+
 									<>
 										{formState.selectedFile && (
 											<Stack
@@ -161,6 +194,7 @@ const FormSend = () => {
 										onChange={handleInputChange}
 										name='title'
 									/>
+
 									<select
 										name='publicOrPrivate'
 										value={formState.publicOrPrivate}
