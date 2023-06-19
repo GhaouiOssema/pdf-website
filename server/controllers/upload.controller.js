@@ -1,31 +1,43 @@
-const PDF = require('../models/PDF');
+const mongoose = require("mongoose");
+const Grid = require("gridfs-stream");
+const PDF = require("../models/PDF");
+const fs = require("fs");
+const path = require("path");
+
+const FETCH = require("../middleware/fetchAllFiles");
+
+// Initialize GridFS
+let gfs;
+const connection = mongoose.connection;
+connection.once("open", () => {
+  gfs = Grid(connection.db, mongoose.mongo);
+  gfs.collection("uploads");
+});
+
+// Your other controller logic goes here
 module.exports = {
-	async uploadPdf(req, res) {
-		// Check if a file was uploaded
-		if (!req.file) {
-			res.status(400).json({ error: 'No file uploaded.' });
-			return;
-		}
+  async uploadPdf(req, res) {
+    try {
+      // Handle file upload logic here using multer middleware
+      // Access the uploaded file using req.file and save it to GridFS
+      const file = req.file;
 
-		const { title, publicOrPrivate } = req.body;
-		const { filename, path } = req.file;
+      if (!file) {
+        throw new Error("No file provided");
+      }
 
-		// Create a new PDF document
-		const newPDF = new PDF({
-			filename,
-			path,
-			title,
-			owner: req.body.owner,
-			publicOrPrivate,
-		});
+      const pdf = new PDF({
+        filename: file.originalname,
+        path: file.filename,
+        title: req.body.title,
+        publicOrPrivate: req.body.publicOrPrivate,
+      });
 
-		try {
-			// Save the PDF document to the database
-			const savedPDF = await newPDF.save();
-			res.status(200).json({ message: 'PDF uploaded successfully.' });
-		} catch (error) {
-			console.error(error);
-			res.status(500).json({ error: 'Failed to upload PDF.' });
-		}
-	},
+      const savedPdf = await pdf.save();
+      res.json({ file: savedPdf });
+      FETCH();
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  },
 };

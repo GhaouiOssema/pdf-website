@@ -1,16 +1,17 @@
-const multer = require('multer');
-var cors = require('cors');
-const path = require('path');
-// Configure multer storage
-const storage = multer.diskStorage({
-	destination: (req, file, cb) => {
-		cb(null, 'uploads/');
-	},
-	filename: (req, file, cb) => {
-		cb(null, file.originalname);
-	},
+const multer = require("multer");
+const { GridFsStorage } = require("multer-gridfs-storage");
+
+// Create storage engine
+const storage = new GridFsStorage({
+  url: "mongodb+srv://PDF01:lm3SxPP9ahk4owsH@cluster0.dtutsqg.mongodb.net/work",
+  file: (req, file) => {
+    return {
+      filename: file.originalname,
+      bucketName: "uploads",
+    };
+  },
 });
 
-const upload = multer({ dest: 'uploads/' });
+const upload = multer({ storage });
 
 module.exports = upload;

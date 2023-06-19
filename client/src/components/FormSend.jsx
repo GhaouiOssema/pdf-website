@@ -13,6 +13,7 @@ import {
   MenuItem,
   Select,
 } from "@mui/material";
+import axios from "axios";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
@@ -74,15 +75,12 @@ const FormSend = () => {
     formData.append("publicOrPrivate", publicOrPrivate);
 
     try {
-      const response = await fetch(
+      const response = await axios.post(
         "https://pdf-server-809j.onrender.com/upload",
-        {
-          method: "POST",
-          body: formData,
-        }
+        formData
       );
 
-      if (response.ok) {
+      if (response.status === 200) {
         setAlertMsg("success");
         handleClick();
         setOpen(true);
