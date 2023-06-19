@@ -189,6 +189,7 @@ const FormSend = () => {
                     value={formState.title}
                     onChange={handleInputChange}
                     name="title"
+                    required
                   />
 
                   <select
