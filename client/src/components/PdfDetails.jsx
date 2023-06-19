@@ -126,7 +126,7 @@ const PdfDetails = () => {
               <div className="qr-code-section">
                 {screenSize.width > 700 && (
                   <div className="flex flex-wrap mb-3">
-                    <h1 className="ml-3 font-bold">Title :</h1>
+                    <h1 className="ml-3 font-bold">Titl :</h1>
                     <span className="ml-3">{pdfData.title}</span>
                   </div>
                 )}
