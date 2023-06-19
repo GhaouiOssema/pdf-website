@@ -39,7 +39,7 @@ const PdfDetails = () => {
         const response = await axios.get(
           `https://pdf-server-809j.onrender.com/pdf/data/${id}`
         );
-        setPdfData(response.data);
+        setPdfData(response.data.pdf);
       } catch (error) {
         console.log("Error retrieving PDF data:", error);
       }
