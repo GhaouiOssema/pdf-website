@@ -37,10 +37,7 @@ const PdfDetails = () => {
     const getPdfData = async () => {
       try {
         const response = await axios.get(
-          `https://pdf-server-809j.onrender.com/pdf/data/${id}`,
-          {
-            responseType: "arraybuffer",
-          }
+          `https://pdf-server-809j.onrender.com/pdf/data/${id}`
         );
         setPdfData(response.data);
       } catch (error) {
