@@ -122,7 +122,7 @@ const FormSend = () => {
   return (
     <>
       <h1 className="text-3xl text-center font-bold mb-4 mt-10">
-        Ajouter un Plans
+        Ajouter un PlanA
       </h1>
       <form onSubmit={handleSubmit} onReset={handleReset}>
         <div className="flex justify-center items-center bg-none">
