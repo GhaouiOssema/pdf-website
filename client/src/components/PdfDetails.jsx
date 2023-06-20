@@ -37,7 +37,7 @@ const PdfDetails = () => {
     const getPdfData = async () => {
       try {
         const response = await axios.get(
-          `https://pdf-server-809j.onrender.com/pdf/data/${id}`
+          `http://localhost:3000/pdf/data/${id}`
         );
         setPdfData(response.data.pdf);
       } catch (error) {
@@ -46,6 +46,7 @@ const PdfDetails = () => {
     };
     getPdfData();
   }, [id]);
+
   const handleDownloadQRCode = () => {
     html2canvas(qrCodeRef.current).then((canvas) => {
       const qrCodeDataURL = canvas.toDataURL();
@@ -57,9 +58,7 @@ const PdfDetails = () => {
   };
   const handleDelete = async () => {
     try {
-      const response = await axios.delete(
-        `https://pdf-server-809j.onrender.com/pdfs/${id}`
-      );
+      const response = await axios.delete(`http://localhost:3000/pdfs/${id}`);
       if (response.status === 200) {
         setAlertMsg("success");
         handleClick();
@@ -86,6 +85,7 @@ const PdfDetails = () => {
       };
     }
   }, [alertMsg]);
+
   const [screenSize, setScreenSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -105,7 +105,7 @@ const PdfDetails = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-  console.log(pdfData);
+
   return (
     <>
       <h1 className="text-3xl text-center font-bold mt-10">PDF Details</h1>
@@ -135,7 +135,7 @@ const PdfDetails = () => {
                 >
                   <QRCode
                     className="w-[200px] h-[200px]"
-                    value={`https://qr-plan.netlify.app/pdf/view/${id}`}
+                    value={`http://localhost:3000/pdf/view/${id}`}
                   />
                 </div>
                 <div className="mt-5 w-full flex-row-reverse  text-xl flex items-center justify-center">
@@ -183,7 +183,7 @@ const PdfDetails = () => {
                 </div>
                 <div className="pdf-preview" key={pdfData._id}>
                   <Document
-                    file={`https://pdf-server-809j.onrender.com/files/${pdfData.path}`}
+                    file={`http://localhost:3000/files/${pdfData.filename}`}
                     onLoadSuccess={handlePdfLoadSuccess}
                     className="hidden__class"
                   >

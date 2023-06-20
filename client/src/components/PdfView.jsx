@@ -17,7 +17,7 @@ const PdfView = () => {
     const getPdfData = async () => {
       try {
         const response = await axios.get(
-          `https://pdf-server-809j.onrender.com/pdf/data/${id}`
+          `http://localhost:3000/pdf/data/${id}`
         );
         setPdfData(response.data.pdf);
       } catch (error) {
@@ -26,6 +26,8 @@ const PdfView = () => {
     };
     getPdfData();
   }, [id]);
+
+  console.log(pdfData);
 
   const handlePdfLoadSuccess = ({ numPages }) => {
     setNumPages(numPages);
@@ -58,7 +60,7 @@ const PdfView = () => {
   };
 
   const handleDownload = () => {
-    const url = `https://pdf-server-809j.onrender.com/files/${pdfData.path}`;
+    const url = `http://localhost:3000/files/${pdfData.filename}`;
     fetch(url)
       .then((response) => response.blob())
       .then((blob) => {
@@ -74,7 +76,7 @@ const PdfView = () => {
       });
   };
 
-  if (!pdfData || !pdfData.path) {
+  if (!pdfData) {
     return <div>Loading PDF...</div>;
   }
 
@@ -111,7 +113,7 @@ const PdfView = () => {
       >
         <br />
         <Document
-          file={`https://pdf-server-809j.onrender.com/files/${pdfData.path}`}
+          file={`http://localhost:3000/files/${pdfData.filename}`}
           className="flex flex-col items-center"
           onLoadSuccess={handlePdfLoadSuccess}
         >

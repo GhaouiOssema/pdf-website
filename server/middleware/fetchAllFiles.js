@@ -2,7 +2,7 @@ const { GridFSBucket, MongoClient } = require("mongodb");
 const fs = require("fs");
 const path = require("path");
 
-async function fetchAllFiles() {
+async function fetchLastFile() {
   try {
     const uri =
       "mongodb+srv://PDF01:lm3SxPP9ahk4owsH@cluster0.dtutsqg.mongodb.net/work";
@@ -23,33 +23,33 @@ async function fetchAllFiles() {
       path.basename(file, path.extname(file))
     );
 
-    const files = await db
+    const file = await db
       .collection(`${collectionName}.files`)
       .find()
-      .toArray();
+      .sort({ _id: -1 })
+      .limit(1)
+      .next();
 
-    if (files.length === 0) {
+    if (!file) {
       console.log("No files found in the database.");
       return;
     }
 
-    const titleMap = new Map(); // Map to track existing titles and their counts
-
-    const file = files[0]; // Fetch the first file
     const title = file.filename.substring(0, file.filename.lastIndexOf("."));
     const fileExt = path.extname(file.filename);
-    let uniqueFilename = file.filename;
+    let uniqueFilename = `${title}_01`; // Start with counter 01
 
-    if (existingFilenames.includes(title)) {
-      const count = titleMap.has(title) ? titleMap.get(title) + 1 : 1;
-      titleMap.set(title, count);
-      const incrementField = count < 10 ? `0${count}` : count;
-      uniqueFilename = `${title}_${incrementField}${fileExt}`;
-    } else {
-      titleMap.set(title, 1);
+    if (existingFilenames.includes(uniqueFilename)) {
+      let counter = 2; // Start with counter 2
+
+      while (existingFilenames.includes(uniqueFilename)) {
+        uniqueFilename = `${title}_${counter.toString().padStart(2, "0")}`;
+        counter++;
+      }
     }
 
-    const filePath = path.join(outputDir, uniqueFilename);
+    const finalFilename = `${uniqueFilename}${fileExt}`;
+    const filePath = path.join(outputDir, finalFilename);
     const downloadStream = bucket.openDownloadStream(file._id);
 
     const writeStream = fs.createWriteStream(filePath);
@@ -61,10 +61,10 @@ async function fetchAllFiles() {
     });
 
     console.log(
-      `File '${file.filename}' downloaded and saved as '${uniqueFilename}'.`
+      `File '${file.filename}' downloaded and saved as '${finalFilename}'.`
     );
 
-    console.log("One file downloaded successfully.");
+    console.log("File downloaded successfully.");
 
     client.close();
   } catch (error) {
@@ -72,4 +72,4 @@ async function fetchAllFiles() {
   }
 }
 
-module.exports = fetchAllFiles;
+module.exports = fetchLastFile;
