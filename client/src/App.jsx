@@ -17,7 +17,6 @@ const App = () => {
       style={{ backgroundImage: `url(${backgroundImg})` }}
     >
       <div className="mx-auto flex flex-col flex-wrap">
-        <Navbar />
         <div className="container mt-10">
           <Routes>
             <Route path="/" element={<FormSend />} />
