@@ -137,7 +137,7 @@ const PdfDetails = () => {
                 >
                   <QRCode
                     className="w-[200px] h-[200px]"
-                    value={`https://pdf-server-809j.onrender.com/pdf/view/${id}`}
+                    value={`https://qr-plan.netlify.app/pdf/view/${id}`}
                   />
                 </div>
                 <div className="mt-5 w-full flex-row-reverse  text-xl flex items-center justify-center">
