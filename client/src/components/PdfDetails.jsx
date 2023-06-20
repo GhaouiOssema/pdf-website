@@ -37,7 +37,7 @@ const PdfDetails = () => {
     const getPdfData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/pdf/data/${id}`
+          `https://pdf-server-809j.onrender.com/pdf/data/${id}`
         );
         setPdfData(response.data.pdf);
       } catch (error) {
@@ -58,7 +58,9 @@ const PdfDetails = () => {
   };
   const handleDelete = async () => {
     try {
-      const response = await axios.delete(`http://localhost:3000/pdfs/${id}`);
+      const response = await axios.delete(
+        `https://pdf-server-809j.onrender.com/pdfs/${id}`
+      );
       if (response.status === 200) {
         setAlertMsg("success");
         handleClick();
@@ -135,7 +137,7 @@ const PdfDetails = () => {
                 >
                   <QRCode
                     className="w-[200px] h-[200px]"
-                    value={`http://localhost:3000/pdf/view/${id}`}
+                    value={`https://pdf-server-809j.onrender.com/pdf/view/${id}`}
                   />
                 </div>
                 <div className="mt-5 w-full flex-row-reverse  text-xl flex items-center justify-center">
@@ -183,7 +185,7 @@ const PdfDetails = () => {
                 </div>
                 <div className="pdf-preview" key={pdfData._id}>
                   <Document
-                    file={`http://localhost:3000/files/${pdfData.filename}`}
+                    file={`https://pdf-server-809j.onrender.com/files/${pdfData.filename}`}
                     onLoadSuccess={handlePdfLoadSuccess}
                     className="hidden__class"
                   >

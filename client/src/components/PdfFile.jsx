@@ -30,7 +30,9 @@ const PdfFile = () => {
   useEffect(() => {
     const getPdfData = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/pdfs");
+        const response = await axios.get(
+          "https://pdf-server-809j.onrender.com/pdfs"
+        );
         setPdfs(response.data.pdfs);
       } catch (error) {
         console.log("Error retrieving PDF data:", error);
@@ -43,7 +45,9 @@ const PdfFile = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:3000/pdfs/${id}`);
+      const response = await axios.delete(
+        `https://pdf-server-809j.onrender.com/pdfs/${id}`
+      );
 
       if (response.status === 200) {
         setAlertMsg("success");
