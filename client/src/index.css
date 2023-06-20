@@ -2,170 +2,184 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.background-container {
+  margin: 0;
+  padding: 0;
+  background-image: url("./assets/bg.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100vh; /* Set the container's height to the viewport height */
+}
 @media (max-width: 640px) {
-	.hidden__class {
-		display: none;
-	}
-	.flex__row {
-		display: flex;
-		flex-direction: row;
-	}
-	.flex__col {
-		display: flex;
-		flex-direction: column;
-	}
-	.qr__code__style {
-		@apply flex flex-col items-center;
-	}
-	.space_top {
-		padding-top: 10px;
-	}
-	.container {
-		padding: 20px;
-	}
+  .hidden__class {
+    display: none;
+  }
+  .flex__row {
+    display: flex;
+    flex-direction: row;
+  }
+  .flex__col {
+    display: flex;
+    flex-direction: column;
+  }
+  .qr__code__style {
+    @apply flex flex-col items-center;
+  }
+  .space_top {
+    padding-top: 10px;
+  }
+  .container {
+    padding: 20px;
+  }
 
-	.header {
-		text-align: center;
-		margin-bottom: 10px;
-	}
+  .header {
+    text-align: center;
+    margin-bottom: 10px;
+  }
 
-	.button-group {
-		display: flex;
-		align-items: center;
-		margin-top: -16px;
-	}
+  .button-group {
+    display: flex;
+    align-items: center;
+    margin-top: -16px;
+  }
 
-	.button-group button {
-		margin-top: 5px;
-		padding: 5px 10px;
-		font-size: 12px;
-	}
+  .button-group button {
+    margin-top: 5px;
+    padding: 5px 10px;
+    font-size: 12px;
+  }
 
-	.qr-code-section {
-		text-align: center;
-		margin-top: 20px;
-		@apply shadow-md shadow-black/20 p-4 rounded-xl w-full;
-	}
+  .qr-code-section {
+    text-align: center;
+    margin-top: 20px;
+    @apply shadow-md shadow-black/20 p-4 rounded-xl w-full;
+  }
 
-	.pdf-details-info {
-		margin-top: 20px;
-	}
+  .pdf-details-info {
+    margin-top: 20px;
+  }
 
-	.pdf-details .title {
-		display: flex;
-	}
+  .pdf-details .title {
+    display: flex;
+  }
 
-	.pdf-details .open-pdf-link .open-pdf span {
-		padding-right: 5px;
-	}
+  .pdf-details .open-pdf-link .open-pdf span {
+    padding-right: 5px;
+  }
 
-	.pdf-details .pdf-preview {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		margin-top: 20px;
-	}
+  .pdf-details .pdf-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+  }
 
-	.boor {
-		border: 1px solid black;
-	}
+  .boor {
+    border: 1px solid black;
+  }
 
-	.pdf__footer {
-		@apply w-full flex justify-around items-center;
-	}
+  .pdf__footer {
+    @apply w-full flex justify-around items-center;
+  }
 
-	.buttons__style_link__h {
-		margin-left: -20px;
-		@apply flex items-center;
-	}
-	.buttons__style_link__left {
-		@apply w-[200px] p-2 text-black cursor-pointer rounded-lg;
-	}
-	.buttons__style_link__left span {
-		@apply w-[200px] justify-around text-center;
-	}
-	.buttons__style_link__right {
-		@apply bg-red-500 p-2 ml-3 text-white cursor-pointer rounded-lg;
-	}
+  .buttons__style_link__h {
+    margin-left: -20px;
+    @apply flex items-center;
+  }
+  .buttons__style_link__left {
+    @apply w-[200px] p-2 text-black cursor-pointer rounded-lg;
+  }
+  .buttons__style_link__left span {
+    @apply w-[200px] justify-around text-center;
+  }
+  .buttons__style_link__right {
+    @apply bg-red-500 p-2 ml-3 text-white cursor-pointer rounded-lg;
+  }
 
-	.pdf-details .pdf-preview .pdf-page {
-		width: 100%;
-		max-width: 200px;
-	}
-	.form__style {
-		@apply flex flex-col w-full;
-	}
-	.max {
-		width: 100%;
-	}
-	.max__size {
-		width: 350px;
-		@apply flex justify-center;
-	}
-	.button__style {
-		@apply w-full justify-center items-center;
-		margin-left: 0;
-	}
-	.button__left {
-		margin-left: 8px;
-	}
-	.row__card__main {
-		width: 300px;
-	}
-	.pdf__file__name {
-		width: 9rem;
-		@apply justify-between;
-	}
+  .pdf-details .pdf-preview .pdf-page {
+    width: 100%;
+    max-width: 200px;
+  }
+  .form__style {
+    @apply flex flex-col w-full;
+  }
+  .max {
+    width: 100%;
+  }
+  .max__size {
+    width: 350px;
+    @apply flex justify-center;
+  }
+  .button__style {
+    @apply w-full justify-center items-center;
+    margin-left: 0;
+  }
+  .button__left {
+    margin-left: 8px;
+  }
+  .row__card__main {
+    width: 300px;
+  }
+  .pdf__file__name {
+    width: 9rem;
+    @apply justify-between;
+  }
 }
 
 @media (min-width: 1000px) {
-	.space_top {
-		@apply mb-4;
-	}
-	.qr__code__style {
-		@apply flex flex-col items-center;
-	}
-	.qr-code {
-		width: 200px;
-		height: 200px;
-		margin: 0 auto;
-	}
-	.qr__code__style {
-		@apply flex flex-col items-center;
-	}
+  .space_top {
+    @apply mb-4;
+  }
+  .qr__code__style {
+    @apply flex flex-col items-center;
+  }
+  .qr-code {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+  }
+  .qr__code__style {
+    @apply flex flex-col items-center;
+  }
 
-	.pdf__footer {
-		@apply w-[230px] flex justify-between items-center mt-2;
-	}
+  .pdf__footer {
+    @apply w-[230px] flex justify-between items-center mt-2;
+  }
 
-	.buttons__style_link__h {
-		@apply flex items-center;
-	}
-	.buttons__style_link__left {
-		@apply w-[150px] p-2 text-black cursor-pointer rounded-lg;
-		height: 38px;
-	}
-	.buttons__style_link__left span {
-		@apply w-[200px] justify-around text-center;
-	}
-	.buttons__style_link__right {
-		@apply p-2 text-white cursor-pointer rounded-lg;
-	}
-	.title {
-		@apply mb-5;
-	}
-	.qr-code-sec {
-		text-align: center;
-		margin-top: 20px;
-		@apply shadow-md shadow-black/20 p-4 rounded-xl w-11/12 ml-6;
-	}
-	.button__left {
-		height: 30px;
-	}
-	.qr-code-section {
-		@apply shadow-md shadow-black/20 p-4 rounded-xl h-[50vh];
-	}
-	.boor {
-		border: 1px solid black;
-	}
+  .buttons__style_link__h {
+    @apply flex items-center;
+  }
+  .buttons__style_link__left {
+    @apply w-[150px] p-2 text-black cursor-pointer rounded-lg;
+    height: 38px;
+  }
+  .buttons__style_link__left span {
+    @apply w-[200px] justify-around text-center;
+  }
+  .buttons__style_link__right {
+    @apply p-2 text-white cursor-pointer rounded-lg;
+  }
+  .title {
+    @apply mb-5;
+  }
+  .qr-code-sec {
+    text-align: center;
+    margin-top: 20px;
+    @apply shadow-md shadow-black/20 p-4 rounded-xl w-11/12 ml-6;
+  }
+  .button__left {
+    height: 30px;
+  }
+  .qr-code-section {
+    @apply shadow-md shadow-black/20 p-4 rounded-xl h-[50vh];
+  }
+  .boor {
+    border: 1px solid black;
+  }
 }
