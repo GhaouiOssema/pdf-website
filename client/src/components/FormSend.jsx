@@ -14,10 +14,10 @@ import {
   Select,
 } from "@mui/material";
 import axios from "axios";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
-import { Input } from "@mui/material";
 
 const ATert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -182,6 +182,20 @@ const FormSend = () => {
                   <label htmlFor="files"></label>
                 </div>
                 <div className="flex items-center justify-between form__style">
+                  <select
+                    name="publicOrPrivate"
+                    value={formState.publicOrPrivate}
+                    onChange={handleInputChange}
+                    className="max w-[38%] bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline pl-5"
+                  >
+                    <option value="Chauffage">Chauffage</option>
+                    <option value="Climatiseur">Climatiseur</option>
+                    <option value="Ventilateur">Ventilateur</option>
+                    <option value="Armoire Electrique">
+                      Armoire Electrique
+                    </option>
+                    <option value="add">Ajouter</option>
+                  </select>
                   <input
                     className="w-[60%] bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline max"
                     type="text"
@@ -198,8 +212,13 @@ const FormSend = () => {
                     onChange={handleInputChange}
                     className="max w-[38%] bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline pl-5"
                   >
-                    <option value="public">Publique</option>
-                    <option value="private">Privé</option>
+                    <option value="Chauffage">Chauffage</option>
+                    <option value="Climatiseur">Climatiseur</option>
+                    <option value="Ventilateur">Ventilateur</option>
+                    <option value="Armoire Electrique">
+                      Armoire Electrique
+                    </option>
+                    <option value="add">Ajouter</option>
                   </select>
                 </div>
               </div>

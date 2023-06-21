@@ -2,20 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-.background-container {
-  margin: 0;
-  padding: 0;
-  background-image: url("./assets/bg.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  height: 100vh; /* Set the container's height to the viewport height */
-}
 @media (max-width: 640px) {
   .hidden__class {
     display: none;

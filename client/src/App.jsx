@@ -9,6 +9,7 @@ import Navbar from "./components/NavBar";
 import PdfView from "./components/PdfView";
 
 import backgroundImg from "./assets/bg.png";
+import Sites from "./components/Sites";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
           <Route path="/pdf" element={<PdfFile />} />
           <Route path="pdf/:id" element={<PdfDetails />} />
           <Route path="/pdf/view/:id" element={<PdfView />} />
+          <Route path="/sites" element={<Sites />} />
         </Routes>
       </div>
     </div>

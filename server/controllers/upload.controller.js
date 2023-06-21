@@ -67,7 +67,7 @@ module.exports = {
 
       const savedPdf = await pdf.save();
       res.json({ file: savedPdf });
-      await FETCH();
+      FETCH();
     } catch (err) {
       res.status(500).json({ message: err.message });
     }

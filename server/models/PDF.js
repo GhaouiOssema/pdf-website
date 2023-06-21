@@ -6,7 +6,11 @@ const pdfSchema = new mongoose.Schema({
   title: String,
   owner: String,
   creationDate: { type: Date, default: Date.now },
-  publicOrPrivate: { type: String, enum: ["public", "private"] },
+  dossier: {
+    type: String,
+    enum: ["Chauffage", "Climatiseur", "Ventilateur", "Armoire Electrique"],
+  },
+  folder: { type: mongoose.Schema.Types.ObjectId, ref: "Folder" },
 });
 
 // Create a mongoose model for the PDF
