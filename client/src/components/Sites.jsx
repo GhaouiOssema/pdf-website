@@ -1,16 +1,29 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import TreeView from "@mui/lab/TreeView";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import TreeItem from "@mui/lab/TreeItem";
-import { Box } from "@mui/material";
+import { Backdrop, Box, Button, Snackbar, Stack } from "@mui/material";
+import HvacIcon from "@mui/icons-material/Hvac";
+import AcUnitIcon from "@mui/icons-material/AcUnit";
+import KitchenIcon from "@mui/icons-material/Kitchen";
+import HeatPumpIcon from "@mui/icons-material/HeatPump";
+import View from "./View";
+import MuiAlert from "@mui/material/Alert";
+import axios from "axios";
 
-function MultiSelectTreeView() {
+function MultiSelectTreeView({ folders }) {
   const [expanded, setExpanded] = useState([]);
   const contentRef = useRef(null);
 
   const handleToggle = (event, nodeIds) => {
-    setExpanded(nodeIds);
+    const nodeId = nodeIds[0];
+    const isNodeExpanded = isExpanded(nodeId);
+    if (isNodeExpanded) {
+      setExpanded(expanded.filter((id) => id !== nodeId));
+    } else {
+      setExpanded([...expanded, nodeId]);
+    }
   };
 
   const isExpanded = (nodeId) => {
@@ -20,13 +33,20 @@ function MultiSelectTreeView() {
   useEffect(() => {
     if (contentRef.current) {
       const contentHeight = contentRef.current.clientHeight;
-      if (isExpanded("1")) {
+      if (isExpanded(folders._id)) {
         contentRef.current.style.height = `${contentHeight}px`;
       } else {
-        contentRef.current.style.height = "auto";
+        contentRef.current.style.height = "0px";
       }
     }
-  }, [expanded, isExpanded]);
+  }, [expanded, isExpanded, folders._id]);
+
+  let labelFormat = (
+    <div className="flex justify-between">
+      <span>{`${folders.adresse}`}</span>
+      <span>CP:{`${folders.code_postal}`}</span>
+    </div>
+  );
 
   return (
     <Box
@@ -35,7 +55,7 @@ function MultiSelectTreeView() {
         borderRadius: "8px",
         overflow: "hidden",
         transition: "height 0.3s",
-        height: isExpanded("1") ? "auto" : "32px",
+        height: isExpanded(folders._id) ? "auto" : "32px",
       }}
     >
       <TreeView
@@ -45,45 +65,51 @@ function MultiSelectTreeView() {
         multiSelect
         expanded={expanded}
         onNodeToggle={handleToggle}
-        sx={{ height: "100%" }}
+        sx={{ height: "100%", flexDirection: "row-reverse" }}
       >
-        <TreeItem nodeId="1" label="Applications">
-          <TreeItem nodeId="2" label="Calendar" />
-          <TreeItem nodeId="3" label="Chrome" />
-          <TreeItem nodeId="4" label="Webstorm" />
-          <TreeItem nodeId="5" label="Webstorm" />
-          <TreeItem nodeId="6" label="Webstorm" />
+        <TreeItem
+          key={folders._id}
+          nodeId={folders._id}
+          label={labelFormat}
+          icon={<ChevronRightIcon />}
+          onClick={() => handleToggle(null, [folders._id])}
+        >
+          {folders.content.map((subFolder) => (
+            <TreeItem
+              key={subFolder._id}
+              nodeId={subFolder._id}
+              label={subFolder.subFolder.name}
+            />
+          ))}
         </TreeItem>
       </TreeView>
-      <div style={{ height: 0, overflow: "hidden" }}>
-        <TreeView
-          aria-label="multi-select"
-          defaultCollapseIcon={<ExpandMoreIcon />}
-          defaultExpandIcon={<ChevronRightIcon />}
-          multiSelect
-          expanded={expanded}
-          onNodeToggle={handleToggle}
-          ref={contentRef}
-          sx={{ height: "auto" }}
-        >
-          <TreeItem nodeId="1" label="Applications">
-            <TreeItem nodeId="2" label="Calendar" />
-            <TreeItem nodeId="3" label="Chrome" />
-            <TreeItem nodeId="4" label="Webstorm" />
-            <TreeItem nodeId="5" label="Webstorm" />
-            <TreeItem nodeId="6" label="Webstorm" />
-          </TreeItem>
-        </TreeView>
-      </div>
     </Box>
   );
 }
+
+const ATert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const Sites = () => {
   const [screenSize, setScreenSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
   });
+  const [openSection, setOpenSection] = useState(false);
+  const [folders, setFolders] = useState();
+  const [open, setOpen] = useState(false);
+  const [alertMsg, setAlertMsg] = useState(null);
+
+  const handleCloseAlert = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+  const handleClick = () => {
+    setOpen(true);
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -99,27 +125,96 @@ const Sites = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  useEffect(() => {
+    const fetchFolders = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/sites");
+        setFolders(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchFolders();
+  }, []);
+
+  const handleClose = () => {
+    setOpenSection(false);
+  };
+
   return (
     <>
-      <h1 className=" w-screen text-3xl text-center font-bold mt-10">
-        votre Sites
-      </h1>
-      <div className={`mt-10 ${screenSize.width < 700 ? "w-[20rem]" : null} `}>
+      <Backdrop
+        sx={{
+          color: "#fff",
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+        }}
+        open={openSection}
+      >
+        <View
+          type="siteButton"
+          close={handleClose}
+          setOpen={setOpen}
+          setAlertMsg={setAlertMsg}
+          handleClick={handleClick}
+          alertMsg={alertMsg}
+        />
+        <Stack spacing={2} sx={{ width: "100%" }}>
+          <Snackbar
+            open={open}
+            autoHideDuration={6000}
+            onClose={handleCloseAlert}
+          >
+            {alertMsg === "success" ? (
+              <ATert
+                onClose={handleClose}
+                severity="success"
+                sx={{ width: "100%" }}
+              >
+                Fichier ajouté avec succès
+              </ATert>
+            ) : alertMsg === "error" ? (
+              <ATert
+                onClose={handleClose}
+                severity="error"
+                sx={{ width: "100%" }}
+              >
+                Veuillez insérer un fichier!
+              </ATert>
+            ) : null}
+          </Snackbar>
+        </Stack>
+      </Backdrop>
+      <div className="flex justify-center items-center w-screen">
+        <h1 className="w-screen text-3xl text-center font-bold">Votre Sites</h1>
+        <button
+          onClick={() => setOpenSection(true)}
+          className="w-[12rem] p-3 mr-10 uppercase text-xs font-bold tracking-wide bg-blue-900 text-gray-100 rounded-lg focus:outline-none focus:shadow-outline hover:bg-green-500"
+        >
+          Ajouter un site
+        </button>
+      </div>
+      <div
+        className={`mt-10 ${
+          screenSize.width < 700
+            ? "w-[20rem]"
+            : "flex justify-center items-center"
+        } `}
+      >
         <div
           className={`${
-            screenSize.width < 700
-              ? "h-screen "
-              : "flex justify-arround flex-wrap gap-4"
+            screenSize.width < 700 ? "h-screen " : "flex flex-wrap w-full ml-10"
           }`}
         >
-          {[1, 2, 3, 4].map((el, i) => (
+          {folders?.map((folder, index) => (
             <div
               className={`${
-                screenSize.width < 700 ? "w-[100%] mt-5" : "w-[20%]"
+                screenSize.width < 700 ? "w-full mt-5" : "w-1/3 px-4 mt-4"
               }`}
-              key={i}
+              key={index}
             >
-              <MultiSelectTreeView />
+              <MultiSelectTreeView folders={folder} />
             </div>
           ))}
         </div>

@@ -1,12 +1,21 @@
 const mongoose = require("mongoose");
 
 const folderSchema = new mongoose.Schema({
-  name: String,
+  adresse: {
+    type: String,
+    set: function (value) {
+      if (value.startsWith("site :")) {
+        return value;
+      }
+      return "site " + value;
+    },
+  },
+  code_postal: String,
   folderId: { type: mongoose.Schema.Types.ObjectId, ref: "Folder" },
   content: [
     {
       subFolder: {
-        name: String, // Add a name field
+        name: String,
         type: { type: String, enum: ["folder"] },
         ref: [{ type: mongoose.Schema.Types.ObjectId, ref: "Folder" }],
         total: { type: Number, default: 0 },
@@ -18,4 +27,4 @@ const folderSchema = new mongoose.Schema({
 
 const Folder = mongoose.model("Folder", folderSchema);
 
-module.exports = { Folder, PDF };
+module.exports = Folder;

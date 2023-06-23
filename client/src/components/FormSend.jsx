@@ -76,7 +76,7 @@ const FormSend = () => {
 
     try {
       const response = await axios.post(
-        "https://pdf-server-809j.onrender.com/upload",
+        "http://localhost:3000/upload",
         formData
       );
 
@@ -116,6 +116,20 @@ const FormSend = () => {
       publicOrPrivate: "public",
     });
   };
+
+  const [folders, setFolders] = useState();
+  useEffect(() => {
+    const fetchFolders = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/sites");
+        setFolders(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchFolders();
+  }, []);
 
   return (
     <>
@@ -188,13 +202,12 @@ const FormSend = () => {
                     onChange={handleInputChange}
                     className="max w-[38%] bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline pl-5"
                   >
-                    <option value="Chauffage">Chauffage</option>
-                    <option value="Climatiseur">Climatiseur</option>
-                    <option value="Ventilateur">Ventilateur</option>
-                    <option value="Armoire Electrique">
-                      Armoire Electrique
-                    </option>
-                    <option value="add">Ajouter</option>
+                    <option value="sites">Sites</option>
+                    {folders?.map((folder, index) => (
+                      <option value={folder.adresse} key={index}>
+                        {folder.adresse}
+                      </option>
+                    ))}
                   </select>
                   <input
                     className="w-[60%] bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline max"
@@ -212,13 +225,13 @@ const FormSend = () => {
                     onChange={handleInputChange}
                     className="max w-[38%] bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline pl-5"
                   >
+                    <option value="add">Dossier</option>
                     <option value="Chauffage">Chauffage</option>
                     <option value="Climatiseur">Climatiseur</option>
                     <option value="Ventilateur">Ventilateur</option>
                     <option value="Armoire Electrique">
                       Armoire Electrique
                     </option>
-                    <option value="add">Ajouter</option>
                   </select>
                 </div>
               </div>

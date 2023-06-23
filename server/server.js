@@ -1,7 +1,9 @@
+require("dotenv").config();
+
 const express = require("express");
-const multer = require("multer");
 var cors = require("cors");
 const path = require("path");
+const bodyParser = require("body-parser");
 
 // Create a connection to MongoDB
 const connectDB = require("./config/Database.config");
@@ -9,7 +11,7 @@ connectDB();
 
 const app = express();
 app.use(cors({ origin: true, credentials: true }));
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use(bodyParser.json());
 app.use("/files", express.static(path.join(__dirname, "files")));
 
 app.use(require("./routes"));
