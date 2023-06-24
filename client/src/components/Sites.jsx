@@ -142,7 +142,17 @@ const Sites = () => {
   const handleClose = () => {
     setOpenSection(false);
   };
+  const handleDelete = async () => {
+    try {
+      const address = "your_folder_address";
 
+      await axios.delete(`http://localhost:3000/site/${address}`);
+
+      console.log("Folder deleted successfully");
+    } catch (error) {
+      console.error("Error deleting folder:", error);
+    }
+  };
   return (
     <>
       <Backdrop
@@ -193,6 +203,12 @@ const Sites = () => {
           className="w-[12rem] p-3 mr-10 uppercase text-xs font-bold tracking-wide bg-blue-900 text-gray-100 rounded-lg focus:outline-none focus:shadow-outline hover:bg-green-500"
         >
           Ajouter un site
+        </button>
+        <button
+          onClick={handleDelete()}
+          className="w-[12rem] p-3 mr-10 uppercase text-xs font-bold tracking-wide bg-blue-900 text-gray-100 rounded-lg focus:outline-none focus:shadow-outline hover:bg-green-500"
+        >
+          Supprimer un site
         </button>
       </div>
       <div

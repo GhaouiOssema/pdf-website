@@ -10,8 +10,6 @@ const isEmailValid = (email) => {
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const Navigate = useNavigate();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -25,14 +23,26 @@ const Login = () => {
         email,
         password,
       });
+
       const { token } = response.data;
       localStorage.setItem("token", token);
-      Navigate("/");
+
+      // Clear form fields
+      setEmail("");
+      setPassword("");
+
+      // Show success message or perform other actions
+      alert("Login successful!");
+
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      window.location.href = "/";
     } catch (err) {
       setError("Invalid credentials");
       console.error(err);
     }
   };
+
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
   return (

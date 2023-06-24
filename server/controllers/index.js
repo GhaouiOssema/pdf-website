@@ -7,4 +7,5 @@ module.exports = {
   allSites: require("./getAllSites.controller"),
   userLogin: require("./userLogin.controller"),
   userRegister: require("./userRegister.controller"),
+  deleteSite: require("./deleteSite.controller"),
 };

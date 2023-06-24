@@ -11,5 +11,6 @@ router.post("/sites/creation", controllers.createSites.addSite);
 router.get("/sites", controllers.allSites.sites);
 router.post("/seconnecter", controllers.userLogin.login);
 router.post("/inscription", controllers.userRegister.register);
+router.delete("/site/:address", controllers.deleteSite.delete);
 
 module.exports = router;

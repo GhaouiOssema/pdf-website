@@ -6,11 +6,8 @@ const pdfSchema = new mongoose.Schema({
   title: String,
   owner: String,
   creationDate: { type: Date, default: Date.now },
-  dossier: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Folder.content.subFolder",
-  },
+  dossier: { type: mongoose.Schema.Types.ObjectId, ref: "Folder" },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "UserAccount" },
 });
 
-// Create a mongoose model for the PDF
 module.exports = mongoose.model("PDFs", pdfSchema);

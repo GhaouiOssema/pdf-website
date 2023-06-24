@@ -25,6 +25,8 @@ const UserSchema = new mongoose.Schema({
     enum: ["user", "admin", "superadmin"],
     default: "user",
   },
+  allPdfs: [{ type: mongoose.Schema.Types.ObjectId, ref: "PDFs" }],
+  folders: [{ type: mongoose.Schema.Types.ObjectId, ref: "Folder" }],
 });
 
 UserSchema.pre("save", function (next) {

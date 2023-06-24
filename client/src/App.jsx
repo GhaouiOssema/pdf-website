@@ -37,7 +37,7 @@ const App = () => {
   }, []);
 
   return (
-    <div className="mx-auto flex flex-col flex-wrap">
+    <div className="mx-auto flex flex-col flex-wrap bg-gradient-to-r from-[#caf7ca] to-[#b0efff] ">
       <Navbar isAuthenticated={isAuthenticated} />
       <div className="container mt-10">
         <Routes>
@@ -50,13 +50,13 @@ const App = () => {
               <Route path="/pdf" element={<PdfFile />} />
               <Route path="/pdf/:id" element={<PdfDetails />} />
               <Route path="/pdf/view/:id" element={<PdfView />} />
-              <Route path="/mesites/:id" element={<Sites />} />
+              <Route path="/mesites" element={<Sites />} />
             </>
           )}
           {/* {!isAuthenticated && <Navigate to="/seconnecter" replace={true} />} */}
         </Routes>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };
