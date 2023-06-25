@@ -37,7 +37,7 @@ const App = () => {
   }, []);
 
   return (
-    <div className="mx-auto flex flex-col flex-wrap bg-gradient-to-r from-[#caf7ca] to-[#b0efff] ">
+    <div className="mx-auto flex flex-col flex-wrap bg-[#f3f3ff]">
       <Navbar isAuthenticated={isAuthenticated} />
       <div className="container mt-10">
         <Routes>
@@ -53,10 +53,9 @@ const App = () => {
               <Route path="/mesites" element={<Sites />} />
             </>
           )}
-          {/* {!isAuthenticated && <Navigate to="/seconnecter" replace={true} />} */}
         </Routes>
       </div>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 };

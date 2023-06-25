@@ -1,71 +1,173 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import "./home.css";
-import IMG from "../../assets/test.png";
+import IMG from "../../assets/ligne.png";
+import IMG_1 from "../../assets/IMG_1.jpg";
+import IMG_2 from "../../assets/IMG_2.jpg";
+import { motion, useAnimation } from "framer-motion";
 
 const Home = () => {
   return (
     <div>
-      <section className="dark:bg-gray-900 md:h-[90vh] md:py-10 mt-4 md:w-[68.9rem]">
-        <div className="grid py-8 px-10 mx-auto max-w-screen-xl lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
-          <div className="place-self-center mr-auto lg:col-span-7">
-            <h1 className="mb-4 max-w-2xl text-4xl text-black font-extrabold leading-none md:text-3xl xl:text-6xl ">
-              Simplifiez la maintenance de vos équipements industriels avec
-              notre solution intelligente.
-            </h1>
-            <p className="text-justify mb-6 max-w-2xl font-normal text-gray-500 lg:mb-8 md:text-lg lg:text-sm dark:text-gray-400">
-              Notre solution intelligente de maintenance vous permet de gérer
-              efficacement tous vos équipements industriels, qu'il s'agisse de
-              machines, de climatiseurs, de chauffages, de ventilateurs ou
-              d'armoires électriques. Importez les plans et les spécifications
-              techniques, générez des QR codes personnalisés et permettez à vos
-              techniciens de scanner facilement les codes pour accéder à toutes
-              les informations pertinentes.Découvrez comment notre solution peut
-              optimiser la maintenance de vos équipements industriels dès
-              aujourd'hui.
-            </p>
-            <a
-              href="#"
-              className="inline-flex justify-center items-center py-3 px-5 mr-3 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900"
+      <motion.section
+        className="flex flex-col items-center justify-center md:mt-10 md:h-[80vh] md:w-[68.96rem]"
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
+        <div className="flex flex-col items-center justify-center px-9 mx-auto max-w-screen-xl w-full lg:gap-8 xl:gap-0 lg:py-16 lg:flex-row">
+          <div className="absolute place-self-center py-8 px-10 max-w-screen-xl rounded-xl">
+            <div
+              className="w-[450px] h-[350px] ml-[450px] absolute md:mt-[-250px]"
+              style={{
+                background:
+                  "linear-gradient(to bottom, #3291F0 40%, #3291F0 50%)",
+                opacity: 0.3,
+                filter: "blur(120px)",
+                display: "flex",
+                justifyContent: "flex-end",
+              }}
+            />
+            <motion.h1
+              className="md:h-[21vh] gradient-text text-4xl text-black text-center font-extrabold md:text-5xl xl:text-6xl"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
             >
-              Get started
-              <svg
-                className="ml-2 -mr-1 w-5 h-5"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
+              <h3 className="md:pb-[20px]">
+                Une maintenance simplifiée{" "}
+                <img
+                  alt="scribble"
+                  src={IMG}
+                  className="mx-auto absolute md:ml-[30rem] md:h-[3rem] md:mt-[-23px] md:w-[300px]"
+                />
+              </h3>
+              <span>dès aujourd'hui.</span>
+            </motion.h1>
+            <br />
+            <motion.div
+              className="md:h-[13vh] mb-6"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
+              <p className="flex flex-col text-justify md:w-[50rem]">
+                Maximisez l'efficacité de votre gestion et entretien
+                d'équipements grâce à notre solution QR . Bénéficiez d'une
+                maintenance simplifiée qui assure une performance optimale de
+                vos <span className="text-center">installations.</span>
+              </p>
+            </motion.div>
+            <motion.div
+              className="flex items-center justify-center"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
+              <a
+                href="#decouvrir"
+                className="inline-flex justify-center items-center py-3 px-5 mr-3 text-base font-medium text-center text-white rounded-lg custome__border__blue bg-[#F0854A] hover:bg-[#F0854A]"
               >
-                <path
-                  fill-rule="evenodd"
-                  d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-            </a>
-            <a
-              href="#"
-              className="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-            >
-              Speak to Sales
-            </a>
+                Découvrir plus
+                <svg
+                  className="ml-2 -mr-1 w-5 h-5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  ></path>
+                </svg>
+              </a>
+              <motion.button
+                className="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-[#125ba3] hover:text-white rounded-lg custome__border border-[#125ba3] hover:bg-[#125ba3]"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+              >
+                Nous contacter
+              </motion.button>
+            </motion.div>
           </div>
-          <div className="hidden lg:mt-0 lg:col-span-5 lg:flex">
-            <img src={IMG} alt="mockup" width={500} height={100} />
-          </div>
+          <div className="hidden lg:flex lg:col-span-5"></div>
         </div>
-      </section>
+      </motion.section>
 
-      <section className="bg-gray-50 dark:bg-gray-800">
-        <div className="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
-          <div className="mb-8 max-w-screen-md lg:mb-16">
+      <motion.section
+        className="mb-[10rem] md:w-[68rem] rounded-e-[3rem] relative"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+      >
+        <div className="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
+          <motion.div
+            className="font-light text-gray-500 sm:text-lg dark:text-gray-400"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
             <h2 className="mb-4 text-4xl font-extrabold text-gray-900 dark:text-white">
-              Designed for business teams like yours
+              Une solution qui s'adapte à tous vos équipements industriels
             </h2>
-            <p className="text-gray-500 sm:text-xl dark:text-gray-400">
-              Here at Flowbite we focus on markets where technology, innovation,
-              and capital can unlock long-term value and drive economic growth.
+            <p className="mb-4">
+              Qu'il s'agisse de machines complexes, de systèmes de
+              climatisation, de chauffage, de ventilation ou d'armoires
+              électriques, notre solution de maintenance s'adapte à divers types
+              d'équipements industriels.
+            </p>
+            <p>
+              Nous vous offrons une gestion centralisée et simplifiée de la
+              maintenance, fournissant des informations précises et un suivi en
+              temps réel pour une efficacité accrue.
+            </p>
+          </motion.div>
+          <motion.div
+            className="grid grid-cols-2 gap-4 mt-8"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+          >
+            <motion.img
+              className="w-full rounded-lg"
+              src={IMG_1}
+              alt="office content 1"
+              whileHover={{ scale: 1.05 }}
+            />
+            <motion.img
+              className="mt-4 w-full rounded-lg lg:mt-10"
+              src={IMG_2}
+              alt="office content 2"
+              whileHover={{ scale: 1.05 }}
+            />
+          </motion.div>
+        </div>
+      </motion.section>
+
+      <section
+        className="md:w-lg md:h-[77vh] md:ml-11 mb-[5rem] "
+        id="decouvrir"
+      >
+        <div
+          className="circle relative"
+          style={{
+            background: "linear-gradient(to bottom, #125BA3 40%, #3291F0 50%)",
+            opacity: 0.5,
+            filter: "blur(120px)",
+            display: "flex",
+            justifyContent: "flex-end",
+          }}
+        />
+        <div className="absolute bg-[#f3f3ff] bg-opacity-60 rounded-3xl shadow-lg md:mt-[-430px] py-8 px-4 md:h-[83vh] mx-auto md:max-w-screen-lg sm:py-16 lg:px-6">
+          <div className="mb-8 max-w-screen-xl lg:mb-16 md:mt-[-20px]">
+            <h2 className="text-center mb-4 text-4xl font-extrabold text-gray-900 dark:text-white">
+              Avantages clés
+            </h2>
+            <p className="text-gray-500 text-center sm:text-xl dark:text-gray-400">
+              Boostez l'efficacité de votre maintenance:
             </p>
           </div>
-          <div className="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
+          <motion.div
+            className="grid grid-cols-4 gap-8"
+            initial={{ opacity: 0, x: -100 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+          >
             <div>
               <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
                 <svg
@@ -82,12 +184,11 @@ const Home = () => {
                 </svg>
               </div>
               <h3 className="mb-2 text-xl font-bold dark:text-white">
-                Marketing
+                Gagnez du temps
               </h3>
-              <p className="text-gray-500 dark:text-gray-400">
-                Plan it, create it, launch it. Collaborate seamlessly with all
-                the organization and hit your marketing goals every month with
-                our marketing plan.
+              <p className="text-gray-500 text-sm">
+                Notre solution simplifie et accélère le processus de
+                maintenance, réduisant ainsi les temps d'arrêt de production.{" "}
               </p>
             </div>
             <div>
@@ -101,10 +202,13 @@ const Home = () => {
                   <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"></path>
                 </svg>
               </div>
-              <h3 className="mb-2 text-xl font-bold dark:text-white">Legal</h3>
-              <p className="text-gray-500 dark:text-gray-400">
-                Protect your organization, devices and stay compliant with our
-                structured workflows and custom permissions made for you.
+              <h3 className="mb-2 text-xl font-bold dark:text-white">
+                Réduisez les coûts
+              </h3>
+              <p className="text-gray-500 text-sm">
+                Une maintenance préventive basée sur des données précises aide à
+                prévenir les pannes coûteuses et prolonge la durée de vie de vos
+                machines.
               </p>
             </div>
             <div>
@@ -124,11 +228,13 @@ const Home = () => {
                 </svg>
               </div>
               <h3 className="mb-2 text-xl font-bold dark:text-white">
-                Business Automation
+                Suivi centralisé
               </h3>
-              <p className="text-gray-500 dark:text-gray-400">
-                Auto-assign tasks, send Slack messages, and much more. Now power
-                up with hundreds of new templates to help you get started.
+              <p className="text-gray-500 text-sm">
+                Tous les rapports de maintenance sont automatiquement
+                enregistrés dans notre système, vous permettant de suivre
+                l'historique de chaque machine et de planifier les interventions
+                futures.
               </p>
             </div>
             <div>
@@ -148,92 +254,17 @@ const Home = () => {
                 </svg>
               </div>
               <h3 className="mb-2 text-xl font-bold dark:text-white">
-                Finance
+                Facilité d'utilisation
               </h3>
-              <p className="text-gray-500 dark:text-gray-400">
-                Audit-proof software built for critical financial operations
-                like month-end close and quarterly budgeting.
+              <p className="text-gray-500 text-sm">
+                une installation simple des codes QR et une interface
+                conviviale, facilitant ainsi leur utilisation.
               </p>
             </div>
-            <div>
-              <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
-                <svg
-                  className="w-5 h-5 text-primary-600 lg:w-6 lg:h-6 dark:text-primary-300"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"></path>
-                </svg>
-              </div>
-              <h3 className="mb-2 text-xl font-bold dark:text-white">
-                Enterprise Design
-              </h3>
-              <p className="text-gray-500 dark:text-gray-400">
-                Craft beautiful, delightful experiences for both marketing and
-                product with real cross-company collaboration.
-              </p>
-            </div>
-            <div>
-              <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
-                <svg
-                  className="w-5 h-5 text-primary-600 lg:w-6 lg:h-6 dark:text-primary-300"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-              </div>
-              <h3 className="mb-2 text-xl font-bold dark:text-white">
-                Operations
-              </h3>
-              <p className="text-gray-500 dark:text-gray-400">
-                Keep your company’s lights on with customizable, iterative, and
-                structured workflows built for all efficient teams and
-                individual.
-              </p>
-            </div>
-          </div>
+          </motion.div>
         </div>
       </section>
-      <section className="dark:bg-gray-900">
-        <div className="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
-          <div className="font-light text-gray-500 sm:text-lg dark:text-gray-400">
-            <h2 className="mb-4 text-4xl font-extrabold text-gray-900 dark:text-white">
-              We didn't reinvent the wheel
-            </h2>
-            <p className="mb-4">
-              We are strategists, designers and developers. Innovators and
-              problem solvers. Small enough to be simple and quick, but big
-              enough to deliver the scope you want at the pace you need. Small
-              enough to be simple and quick, but big enough to deliver the scope
-              you want at the pace you need.
-            </p>
-            <p>
-              We are strategists, designers and developers. Innovators and
-              problem solvers. Small enough to be simple and quick.
-            </p>
-          </div>
-          <div className="grid grid-cols-2 gap-4 mt-8">
-            <img
-              className="w-full rounded-lg"
-              src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/office-long-2.png"
-              alt="office content 1"
-            />
-            <img
-              className="mt-4 w-full rounded-lg lg:mt-10"
-              src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/office-long-1.png"
-              alt="office content 2"
-            />
-          </div>
-        </div>
-      </section>
-      <section className="bg-gray-50 dark:bg-gray-900 dark:bg-gray-800">
+      <section className="bg-gray-50  dark:bg-gray-800">
         <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
           <div className="max-w-screen-lg text-gray-500 sm:text-lg dark:text-gray-400">
             <h2 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
@@ -278,16 +309,16 @@ const Home = () => {
         <div className="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
           <div className="mx-auto max-w-screen-sm text-center">
             <h2 className="mb-4 text-4xl font-extrabold leading-tight text-gray-900 dark:text-white">
-              Start your free trial today
+              Boostez l'efficacité de votre maintenance dès à présent !
             </h2>
             <p className="mb-6 font-light text-gray-500 dark:text-gray-400 md:text-lg">
-              Try Flowbite Platform for 30 days. No credit card required.
+              Prêt à transformer votre gestion de maintenance ?
             </p>
             <a
               href="#"
               className="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
             >
-              Free trial for 30 days
+              s'inscrire
             </a>
           </div>
         </div>

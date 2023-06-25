@@ -1,6 +1,100 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.clignotant {
+  background-color: #f0854a;
+  display: inline-block;
+  animation: clignoter 1s infinite;
+}
+
+.clignotant:hover {
+  animation: none;
+  background-color: #f0854a;
+  color: white;
+}
+
+@keyframes clignoter {
+  0% {
+    background-color: #f0854a;
+  }
+  50% {
+    background-color: transparent;
+  }
+  100% {
+    background-color: #f0854a;
+  }
+}
+
+.line-container {
+  position: relative;
+}
+
+.line-container::after {
+  content: "";
+  position: absolute;
+  margin-left: -45px;
+  width: 60%;
+  height: 3px;
+  background-color: #f0854a;
+  border-radius: 4px;
+  margin-top: 37px;
+}
+.line-container-1 {
+  position: relative;
+}
+
+.line-container-1::after {
+  content: "";
+  position: absolute;
+  margin-left: -80px;
+  width: 80%;
+  height: 3px;
+  background-color: #f0854a;
+  border-radius: 4px;
+  margin-top: 37px;
+}
+.line-container-2 {
+  position: relative;
+}
+
+.line-container-2::after {
+  content: "";
+  position: absolute;
+  margin-left: -80px;
+  width: 80%;
+  height: 3px;
+  background-color: #f0854a;
+  border-radius: 4px;
+  margin-top: 37px;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+.circle {
+  @apply w-[450px] h-[350px] ml-[400px];
+}
+.custome__border {
+  border: 2px solid #125ba3;
+}
+.custome__border:hover {
+  border: 2px solid #125ba3;
+  background: #125ba3;
+}
+.custome__border__blue {
+  border: 2px solid #f0854a;
+}
+
+.gradient-text {
+  background: linear-gradient(75deg, #125ba3, #125ba3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1; /* Adjust the value as needed */
+}
 
 @media (max-width: 640px) {
   .hidden__class {
