@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import "./home.css";
 import IMG from "../../assets/ligne.png";
-import IMG_1 from "../../assets/IMG_1.jpg";
-import IMG_2 from "../../assets/IMG_2.jpg";
+import IMG_1 from "../../assets/img_1.jpg";
+import IMG_2 from "../../assets/img_2.jpg";
 import { motion, useAnimation } from "framer-motion";
 
 const Home = () => {
