@@ -1,22 +1,48 @@
-import React, { useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "./home.css";
 import IMG from "../../assets/ligne.png";
 import IMG_1 from "../../assets/img_1.jpg";
-import IMG_2 from "../../assets/img_2.jpg";
+import IMG_2 from "../../assets/img_4.jpg";
 import { motion, useAnimation } from "framer-motion";
+import Tabs from "@mui/joy/Tabs";
+import TabList from "@mui/joy/TabList";
+import Tab from "@mui/joy/Tab";
+import TabPanel from "@mui/joy/TabPanel";
+import Box from "@mui/material/Box";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+import StepContent from "@mui/material/StepContent";
+import Button from "@mui/material/Button";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import { infoSteps } from "../../utils";
 
 const Home = () => {
+  const [activeStep, setActiveStep] = useState(0);
+
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const handleReset = () => {
+    setActiveStep(0);
+  };
   return (
     <div>
       <motion.section
-        className="flex flex-col items-center justify-center md:mt-10 md:h-[80vh] md:w-[68.96rem]"
+        className="flex flex-col items-center justify-center md:mt-10 md:h-[80vh] md:w-full"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
       >
         <div className="flex flex-col items-center justify-center px-9 mx-auto max-w-screen-xl w-full lg:gap-8 xl:gap-0 lg:py-16 lg:flex-row">
-          <div className="absolute place-self-center py-8 px-10 max-w-screen-xl rounded-xl">
+          <div className="md:absolute place-self-center py-8 px-10 max-w-screen-xl rounded-xl">
             <div
-              className="w-[450px] h-[350px] ml-[450px] absolute md:mt-[-250px]"
+              className="w-[450px] h-[350px] ml-[450px] md:absolute md:mt-[-250px]"
               style={{
                 background:
                   "linear-gradient(to bottom, #3291F0 40%, #3291F0 50%)",
@@ -27,16 +53,16 @@ const Home = () => {
               }}
             />
             <motion.h1
-              className="md:h-[21vh] gradient-text text-4xl text-black text-center font-extrabold md:text-5xl xl:text-6xl"
+              className="md:h-[23vh] gradient-text text-4xl text-black text-center font-extrabold md:text-5xl xl:text-6xl"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
             >
-              <h3 className="md:pb-[20px]">
+              <h3 className="md:pb-[5px]">
                 Une maintenance simplifiée{" "}
                 <img
                   alt="scribble"
                   src={IMG}
-                  className="mx-auto absolute md:ml-[30rem] md:h-[3rem] md:mt-[-23px] md:w-[300px]"
+                  className="mx-auto md:absolute md:ml-[30rem] md:h-[3rem] md:mt-[-23px] md:w-[300px]"
                 />
               </h3>
               <span>dès aujourd'hui.</span>
@@ -91,56 +117,39 @@ const Home = () => {
       </motion.section>
 
       <motion.section
-        className="mb-[10rem] md:w-[68rem] rounded-e-[3rem] relative"
+        className="mb-[10rem] md:w-full md:h-full relative "
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
       >
-        <div className="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
+        <div className="gap-16 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2">
           <motion.div
-            className="font-light text-gray-500 sm:text-lg dark:text-gray-400"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            className="bg-white md:h-full md:w-full font-light text-gray-500 md:pt-20 rounded-l-lg"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
           >
-            <h2 className="mb-4 text-4xl font-extrabold text-gray-900 dark:text-white">
-              Une solution qui s'adapte à tous vos équipements industriels
+            <h2 className="mb-4 text-3xl text-justify font-extrabold text-gray-900 dark:text-white">
+              Importez facilement les plans détaillés de vos machines et gérez
+              leur maintenance de manière efficace et structurée.
             </h2>
-            <p className="mb-4">
-              Qu'il s'agisse de machines complexes, de systèmes de
-              climatisation, de chauffage, de ventilation ou d'armoires
-              électriques, notre solution de maintenance s'adapte à divers types
-              d'équipements industriels.
-            </p>
-            <p>
-              Nous vous offrons une gestion centralisée et simplifiée de la
-              maintenance, fournissant des informations précises et un suivi en
-              temps réel pour une efficacité accrue.
-            </p>
           </motion.div>
           <motion.div
-            className="grid grid-cols-2 gap-4 mt-8"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            className=" w-full h-full grid grid-cols-1 gap-2"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.4 }}
           >
             <motion.img
-              className="w-full rounded-lg"
-              src={IMG_1}
-              alt="office content 1"
-              whileHover={{ scale: 1.05 }}
-            />
-            <motion.img
-              className="mt-4 w-full rounded-lg lg:mt-10"
+              className="md:w-full md:h-full rounded-lg"
               src={IMG_2}
-              alt="office content 2"
-              whileHover={{ scale: 1.05 }}
+              alt="office content 1"
             />
           </motion.div>
         </div>
       </motion.section>
 
       <section
-        className="md:w-lg md:h-[77vh] md:ml-11 mb-[5rem] "
+        className=" md:w-lg md:h-[77vh] mb-[5rem] ml-[8rem]"
         id="decouvrir"
       >
         <div
@@ -153,7 +162,7 @@ const Home = () => {
             justifyContent: "flex-end",
           }}
         />
-        <div className="absolute bg-[#f3f3ff] bg-opacity-60 rounded-3xl shadow-lg md:mt-[-430px] py-8 px-4 md:h-[83vh] mx-auto md:max-w-screen-lg sm:py-16 lg:px-6">
+        <div className=" md:absolute bg-[#f3f3ff] bg-opacity-60 rounded-3xl shadow-lg md:mt-[-430px] py-8 px-4 md:h-[83vh] mx-auto md:max-w-screen-lg sm:py-16 lg:px-6">
           <div className="mb-8 max-w-screen-xl lg:mb-16 md:mt-[-20px]">
             <h2 className="text-center mb-4 text-4xl font-extrabold text-gray-900 dark:text-white">
               Avantages clés
@@ -264,6 +273,78 @@ const Home = () => {
           </motion.div>
         </div>
       </section>
+
+      <section className="flex flex-col items-center justify-center md:mt-10 md:h-[80vh] md:w-full">
+        <Tabs
+          aria-label="Vertical tabs"
+          orientation="vertical"
+          sx={{
+            width: "100%",
+            height: "100%",
+            borderRadius: 0,
+            backgroundColor: "#eee",
+          }}
+        >
+          <TabList
+            sx={{
+              backgroundColor: "#eee",
+              padding: "0.5rem",
+              color: "#000",
+              borderRadius: 0,
+            }}
+          >
+            <Tab sx={{ color: "#000", width: 300 }}>First tab</Tab>
+            <Tab sx={{ color: "#000", width: 300 }}>Second tab</Tab>
+            <Tab sx={{ color: "#000", width: 300 }}>Third tab</Tab>
+          </TabList>
+          <TabPanel
+            sx={{
+              p: 2,
+              minHeight: "100%",
+              backgroundColor: "#eee",
+              color: "#000",
+            }}
+          >
+            <b>First tab : </b> <br />
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus
+            quisquam soluta quo ullam eligendi cumque nemo repellat nisi sit
+            pariatur. Corporis nostrum reiciendis magni mollitia sed ea eveniet,
+            voluptatibus unde!
+          </TabPanel>
+          <TabPanel
+            value={1}
+            sx={{
+              p: 2,
+              minHeight: "100%",
+              backgroundColor: "#eee",
+              color: "#000",
+            }}
+          >
+            <b>Second tab : </b> <br />
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod dolore
+            cumque fugit. Nulla non, provident et tempore sequi recusandae,
+            iusto dignissimos, enim quas delectus fuga? Quia cumque laudantium
+            ad dolor?
+          </TabPanel>
+          <TabPanel
+            value={2}
+            sx={{
+              p: 2,
+              minHeight: "100%",
+              backgroundColor: "#eee",
+              color: "#000",
+            }}
+          >
+            <b>Third tab : </b>
+            <br />
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maiores,
+            voluptatum odit, ullam natus consequuntur possimus est placeat
+            delectus repellat deserunt hic vel error, assumenda laudantium
+            illum. Reiciendis cumque repellendus cupiditate?
+          </TabPanel>
+        </Tabs>
+      </section>
+
       <section className="bg-gray-50  dark:bg-gray-800">
         <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
           <div className="max-w-screen-lg text-gray-500 sm:text-lg dark:text-gray-400">
