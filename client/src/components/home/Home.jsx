@@ -8,34 +8,13 @@ import Tabs from "@mui/joy/Tabs";
 import TabList from "@mui/joy/TabList";
 import Tab from "@mui/joy/Tab";
 import TabPanel from "@mui/joy/TabPanel";
-import Box from "@mui/material/Box";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
-import StepContent from "@mui/material/StepContent";
-import Button from "@mui/material/Button";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import { infoSteps } from "../../utils";
+import DefaultCarousel from "../DefaultCarousel";
 
 const Home = () => {
-  const [activeStep, setActiveStep] = useState(0);
-
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const handleReset = () => {
-    setActiveStep(0);
-  };
   return (
     <div>
       <motion.section
-        className="flex flex-col items-center justify-center md:mt-10 md:h-[80vh] md:w-full"
+        className="flex flex-col items-center justify-center md:mt-10 md:h-[90.5vh] md:w-full"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
       >
@@ -116,37 +95,66 @@ const Home = () => {
         </div>
       </motion.section>
 
-      <motion.section
-        className="mb-[10rem] md:w-full md:h-full relative "
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-      >
-        <div className="gap-16 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2">
-          <motion.div
-            className="bg-white md:h-full md:w-full font-light text-gray-500 md:pt-20 rounded-l-lg"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 }}
-          >
-            <h2 className="mb-4 text-3xl text-justify font-extrabold text-gray-900 dark:text-white">
-              Importez facilement les plans détaillés de vos machines et gérez
-              leur maintenance de manière efficace et structurée.
-            </h2>
-          </motion.div>
-          <motion.div
-            className=" w-full h-full grid grid-cols-1 gap-2"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.4 }}
-          >
-            <motion.img
-              className="md:w-full md:h-full rounded-lg"
-              src={IMG_2}
-              alt="office content 1"
-            />
-          </motion.div>
-        </div>
+      <motion.section className=" md:w-lg md:h-[77vh] mb-[5rem] ">
+        <DefaultCarousel />
       </motion.section>
+
+      <section className="p-6 bg-gray-800 text-gray-100 md:w-lg md:h-[90vh] mb-[15rem]">
+        <div className="container mx-auto">
+          <span className="block mb-2 text-xs font-medium tracki text-center uppercase text-violet-400">
+            How it works
+          </span>
+          <h2 className="text-5xl font-bold text-center text-gray-50">
+            Building with Mamba is simple
+          </h2>
+          <div className="grid gap-6 my-16 lg:grid-cols-3 slides pb-9">
+            <div className="flex flex-col p-8 space-y-4 rounded-md bg-gray-900">
+              <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
+                1
+              </div>
+              <p className="text-2xl font-semibold">
+                <b>Nulla.</b>Nostrum, corrupti blanditiis. Illum, architecto?
+              </p>
+            </div>
+            <div className="flex flex-col p-8 space-y-4 rounded-md bg-gray-900">
+              <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
+                2
+              </div>
+              <p className="text-2xl font-semibold">
+                <b>Accusantium.</b>Vitae saepe atque neque sunt eius dolor
+                veniam alias debitis?
+              </p>
+            </div>
+            <div className="flex flex-col p-8 space-y-4 rounded-md bg-gray-900">
+              <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
+                3
+              </div>
+              <p className="text-2xl font-semibold">
+                <b>Maxime.</b>Expedita temporibus culpa reprehenderit doloribus
+                consectetur odio!
+              </p>
+            </div>
+            <div className="flex flex-col p-8 space-y-4 rounded-md bg-gray-900">
+              <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
+                3
+              </div>
+              <p className="text-2xl font-semibold">
+                <b>Maxime.</b>Expedita temporibus culpa reprehenderit doloribus
+                consectetur odio!
+              </p>
+            </div>
+            <div className="flex flex-col p-8 space-y-4 rounded-md bg-gray-900">
+              <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
+                3
+              </div>
+              <p className="text-2xl font-semibold">
+                <b>Maxime.</b>Expedita temporibus culpa reprehenderit doloribus
+                consectetur odio!
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section
         className=" md:w-lg md:h-[77vh] mb-[5rem] ml-[8rem]"
