@@ -95,7 +95,7 @@ const Home = () => {
         </div>
       </motion.section>
 
-      <motion.section className=" md:w-lg md:h-[77vh] mb-[5rem] ">
+      <motion.section className=" md:w-lg md:h-[80vh] mb-[5rem]">
         <DefaultCarousel />
       </motion.section>
 

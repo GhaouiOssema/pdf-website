@@ -10,8 +10,44 @@ const DefaultCarousel = () => {
     <Carousel>
       <div className="relative">
         <img alt="..." src={IMG_1} className="object-cover w-full" />
-        <div className="absolute top-0 left-0 w-1/2 h-full flex items-center justify-center bg-white bg-transparent border-xl rounded-xl">
-          <h1 className="text-black text-4xl font-bold p-4">Absolute Text 1</h1>
+        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-between">
+          <div className="absolute bg-white w-[45%] h-[31rem] rounded-e-[40rem] z-10">
+            <h1 className="text-black text-4xl font-bold">
+              <p className="p-4 mt-[120px] text-start">
+                Importez facilement les plans détaillès de vos machines et gérez
+                leur maintenance de manière efficace et structurée
+              </p>
+            </h1>
+          </div>
+          <div className="relative w-full h-full bg-white bg-transparent opacity-40"></div>
+        </div>
+      </div>
+      <div className="relative">
+        <img alt="..." src={IMG_1} className="object-cover w-full" />
+        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-between">
+          <div className="absolute bg-white w-[45%] h-[31rem] rounded-e-[40rem] z-10">
+            <h1 className="text-black text-4xl font-bold">
+              <p className="p-4 mt-[120px] text-start">
+                Importez facilement les plans détaillès de vos machines et gérez
+                leur maintenance de manière efficace et structurée
+              </p>
+            </h1>
+          </div>
+          <div className="relative w-full h-full bg-white bg-transparent opacity-40"></div>
+        </div>
+      </div>
+      <div className="relative">
+        <img alt="..." src={IMG_1} className="object-cover w-full" />
+        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-between">
+          <div className="absolute bg-white w-[45%] h-[31rem] rounded-e-[40rem] z-10">
+            <h1 className="text-black text-4xl font-bold">
+              <p className="p-4 mt-[120px] text-start">
+                Importez facilement les plans détaillès de vos machines et gérez
+                leur maintenance de manière efficace et structurée
+              </p>
+            </h1>
+          </div>
+          <div className="relative w-full h-full bg-white bg-transparent opacity-40"></div>
         </div>
       </div>
     </Carousel>
