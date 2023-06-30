@@ -11,6 +11,7 @@ import PdfView from "./components/PdfView";
 import Sites from "./components/Sites";
 import Home from "./components/home/Home";
 import Footer from "./components/Footer";
+import Profile from "./components/Profile";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -32,7 +33,7 @@ const App = () => {
   }, []);
 
   return (
-    <div className="mx-auto flex flex-col flex-wrap bg-[#f3f3ff]">
+    <div className="mx-auto flex flex-col flex-wrap bg-white">
       <Navbar isAuthenticated={isAuthenticated} />
       <div className="container mt-20">
         <Routes>
@@ -46,6 +47,7 @@ const App = () => {
               <Route path="/pdf/:id" element={<PdfDetails />} />
               <Route path="/pdf/view/:id" element={<PdfView />} />
               <Route path="/mesites" element={<Sites />} />
+              <Route path="/profile" element={<Profile />} />
             </>
           )}
         </Routes>

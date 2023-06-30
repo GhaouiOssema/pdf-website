@@ -109,7 +109,7 @@ const ResponsiveAppBar = () => {
             {isAuthenticated && (
               <div className="flex items-center justify-around boor w-[30rem]">
                 <Link
-                  to={"/profile/:id"}
+                  to={"/profile"}
                   className={`block py-2 pr-4 pl-3 rounded ${
                     isActiveNavItem("profile/:id")
                       ? "active"
