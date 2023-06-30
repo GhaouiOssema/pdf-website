@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import "./home.css";
 import IMG from "../../assets/ligne.png";
-import IMG_1 from "../../assets/img_1.jpg";
 import IMG_2 from "../../assets/img_4.jpg";
 import { motion, useAnimation } from "framer-motion";
 import Tabs from "@mui/joy/Tabs";
@@ -9,6 +8,7 @@ import TabList from "@mui/joy/TabList";
 import Tab from "@mui/joy/Tab";
 import TabPanel from "@mui/joy/TabPanel";
 import DefaultCarousel from "../DefaultCarousel";
+import { Accordion } from "flowbite-react";
 
 const Home = () => {
   return (
@@ -95,9 +95,111 @@ const Home = () => {
         </div>
       </motion.section>
 
-      <motion.section className=" md:w-lg md:h-[80vh] mb-[5rem]">
+      <motion.section className="  md:h-[300px] mb-[5rem]">
         <DefaultCarousel />
       </motion.section>
+
+      <section className="p-6 bg-[#f0854a] text-gray-100 mb-[5rem]">
+        <Accordion collapseAll>
+          <Accordion.Panel>
+            <Accordion.Title style={{ color: "#fff" }} className="hover-black">
+              What is Flowbite?
+            </Accordion.Title>
+            <Accordion.Content>
+              <p className="mb-2 text-white">
+                <p>
+                  Flowbite is an open-source library of interactive components
+                  built on top of Tailwind CSS including buttons, dropdowns,
+                  modals, navbars, and more.
+                </p>
+              </p>
+              <p className="text-white">
+                <p>Check out this guide to learn how to</p>
+                <a
+                  className="text-white"
+                  href="https://flowbite.com/docs/getting-started/introduction/"
+                >
+                  <p>get started</p>
+                </a>
+                <p>
+                  and start developing websites even faster with components on
+                  top of Tailwind CSS.
+                </p>
+              </p>
+            </Accordion.Content>
+          </Accordion.Panel>
+          <Accordion.Panel>
+            <Accordion.Title
+              style={{ color: "#fff", ":hover": { color: "#000" } }}
+            >
+              Is there a Figma file available?
+            </Accordion.Title>
+            <Accordion.Content>
+              <p className="mb-2 text-white">
+                <p>
+                  Flowbite is first conceptualized and designed using the Figma
+                  software so everything you see in the library has a design
+                  equivalent in our Figma file.
+                </p>
+              </p>
+              <p className="text-white">
+                <p>Check out the</p>
+                <a className="text-white" href="https://flowbite.com/figma/">
+                  <p>Figma design system</p>
+                </a>
+                <p>
+                  based on the utility classes from Tailwind CSS and components
+                  from Flowbite.
+                </p>
+              </p>
+            </Accordion.Content>
+          </Accordion.Panel>
+          <Accordion.Panel>
+            <Accordion.Title
+              style={{ color: "#fff", ":hover": { color: "#000" } }}
+            >
+              What are the differences between Flowbite and Tailwind UI?
+            </Accordion.Title>
+            <Accordion.Content>
+              <p className="mb-2 text-white">
+                <p>
+                  The main difference is that the core components from Flowbite
+                  are open source under the MIT license, whereas Tailwind UI is
+                  a paid product. Another difference is that Flowbite relies on
+                  smaller and standalone components, whereas Tailwind UI offers
+                  sections of pages.
+                </p>
+              </p>
+              <p className="mb-2 text-white">
+                <p>
+                  However, we actually recommend using both Flowbite, Flowbite
+                  Pro, and even Tailwind UI as there is no technical reason
+                  stopping you from using the best of two worlds.
+                </p>
+              </p>
+              <p className="mb-2 text-white">
+                Learn more about these technologies:
+              </p>
+              <ul className="list-disc pl-5 text-gray-500 dark:text-gray-400">
+                <li>
+                  <a className="text-white" href="https://flowbite.com/pro/">
+                    <p>Flowbite Pro</p>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="text-white"
+                    href="https://tailwindui.com/"
+                    rel="nofollow"
+                  >
+                    <p>Tailwind UI</p>
+                  </a>
+                </li>
+              </ul>
+            </Accordion.Content>
+          </Accordion.Panel>
+        </Accordion>
+      </section>
 
       <section className="p-6 bg-gray-800 text-gray-100 md:w-lg md:h-[90vh] mb-[15rem]">
         <div className="container mx-auto">
@@ -298,18 +400,57 @@ const Home = () => {
               backgroundColor: "#eee",
               padding: "0.5rem",
               color: "#000",
-              borderRadius: 0,
+              padding: 0, // Remove padding
+              margin: 0,
             }}
           >
-            <Tab sx={{ color: "#000", width: 300 }}>First tab</Tab>
-            <Tab sx={{ color: "#000", width: 300 }}>Second tab</Tab>
-            <Tab sx={{ color: "#000", width: 300 }}>Third tab</Tab>
+            <Tab
+              sx={{
+                color: "#000",
+                width: 300,
+                borderRadius: 0,
+                boxShadow: "none",
+              }}
+            >
+              FAQ :
+            </Tab>
+            <Tab
+              sx={{
+                color: "#000",
+                width: 300,
+                borderRadius: 0,
+                boxShadow: "none",
+              }}
+            >
+              utilisation :
+            </Tab>
+            <Tab
+              sx={{
+                color: "#000",
+                width: 300,
+                borderRadius: 0,
+                boxShadow: "none",
+              }}
+            >
+              Avantages clés
+            </Tab>
+            <Tab
+              sx={{
+                color: "#000",
+                width: 300,
+                borderRadius: 0,
+                boxShadow: "none",
+              }}
+            >
+              a propos :
+            </Tab>
           </TabList>
           <TabPanel
+            value={0}
             sx={{
               p: 2,
               minHeight: "100%",
-              backgroundColor: "#eee",
+              backgroundColor: "#fff",
               color: "#000",
             }}
           >
@@ -324,7 +465,7 @@ const Home = () => {
             sx={{
               p: 2,
               minHeight: "100%",
-              backgroundColor: "#eee",
+              backgroundColor: "#fff",
               color: "#000",
             }}
           >
@@ -339,7 +480,23 @@ const Home = () => {
             sx={{
               p: 2,
               minHeight: "100%",
-              backgroundColor: "#eee",
+              backgroundColor: "#fff",
+              color: "#000",
+            }}
+          >
+            <b>Third tab : </b>
+            <br />
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maiores,
+            voluptatum odit, ullam natus consequuntur possimus est placeat
+            delectus repellat deserunt hic vel error, assumenda laudantium
+            illum. Reiciendis cumque repellendus cupiditate?
+          </TabPanel>
+          <TabPanel
+            value={3}
+            sx={{
+              p: 2,
+              minHeight: "100%",
+              backgroundColor: "#fff",
               color: "#000",
             }}
           >

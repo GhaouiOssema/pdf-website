@@ -11,8 +11,17 @@ import HeatPumpIcon from "@mui/icons-material/HeatPump";
 import View from "./View";
 import MuiAlert from "@mui/material/Alert";
 import axios from "axios";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { Link } from "react-router-dom";
+import SiteOption from "./SiteOption";
 
-function MultiSelectTreeView({ folders }) {
+function MultiSelectTreeView({
+  folders,
+  setOpenSection,
+  setButtonType,
+  setFolderIdUpdate,
+}) {
+  const ID = folders._id;
   const [expanded, setExpanded] = useState([]);
   const contentRef = useRef(null);
 
@@ -42,9 +51,16 @@ function MultiSelectTreeView({ folders }) {
   }, [expanded, isExpanded, folders._id]);
 
   let labelFormat = (
-    <div className="flex justify-between">
+    <div className="flex w-full items-center justify-between">
       <span>{`${folders.adresse}`}</span>
       <span>CP:{`${folders.code_postal}`}</span>
+      <SiteOption
+        folders={folders}
+        setOpenSection={setOpenSection}
+        setButtonType={setButtonType}
+        setFolderIdUpdate={setFolderIdUpdate}
+        ID={ID}
+      />
     </div>
   );
 
@@ -55,7 +71,7 @@ function MultiSelectTreeView({ folders }) {
         borderRadius: "8px",
         overflow: "hidden",
         transition: "height 0.3s",
-        height: isExpanded(folders._id) ? "auto" : "32px",
+        height: isExpanded(folders._id) ? "auto" : "40px",
       }}
     >
       <TreeView
@@ -72,14 +88,18 @@ function MultiSelectTreeView({ folders }) {
           nodeId={folders._id}
           label={labelFormat}
           icon={<ChevronRightIcon />}
-          onClick={() => handleToggle(null, [folders._id])}
+          onClick={() => {
+            handleToggle(null, [folders._id]);
+          }}
         >
           {folders.content.map((subFolder) => (
-            <TreeItem
-              key={subFolder._id}
-              nodeId={subFolder._id}
-              label={subFolder.subFolder.name}
-            />
+            <Link to={`/${folders.adresse}/${subFolder.subFolder.name}/pdf`}>
+              <TreeItem
+                key={subFolder._id}
+                nodeId={subFolder._id}
+                label={subFolder.subFolder.name}
+              />
+            </Link>
           ))}
         </TreeItem>
       </TreeView>
@@ -97,9 +117,11 @@ const Sites = () => {
     height: window.innerHeight,
   });
   const [openSection, setOpenSection] = useState(false);
-  const [folders, setFolders] = useState();
+  const [folders, setFolders] = useState(null);
   const [open, setOpen] = useState(false);
   const [alertMsg, setAlertMsg] = useState(null);
+  const [buttonType, setButtonType] = useState("");
+  const [folderIdUpdate, setFolderIdUpdate] = useState();
 
   const handleCloseAlert = (event, reason) => {
     if (reason === "clickaway") {
@@ -129,7 +151,18 @@ const Sites = () => {
   useEffect(() => {
     const fetchFolders = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/sites");
+        const token = localStorage.getItem("token");
+        if (!token) {
+          return;
+        }
+
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+
+        const response = await axios.get("http://localhost:3000/sites", config);
         setFolders(response.data);
       } catch (error) {
         console.error(error);
@@ -142,17 +175,7 @@ const Sites = () => {
   const handleClose = () => {
     setOpenSection(false);
   };
-  const handleDelete = async () => {
-    try {
-      const address = "your_folder_address";
 
-      await axios.delete(`http://localhost:3000/site/${address}`);
-
-      console.log("Folder deleted successfully");
-    } catch (error) {
-      console.error("Error deleting folder:", error);
-    }
-  };
   return (
     <>
       <Backdrop
@@ -163,12 +186,13 @@ const Sites = () => {
         open={openSection}
       >
         <View
-          type="siteButton"
+          type={buttonType}
           close={handleClose}
           setOpen={setOpen}
           setAlertMsg={setAlertMsg}
           handleClick={handleClick}
           alertMsg={alertMsg}
+          folderIdUpdate={folderIdUpdate}
         />
         <Stack spacing={2} sx={{ width: "100%" }}>
           <Snackbar
@@ -198,17 +222,15 @@ const Sites = () => {
       </Backdrop>
       <div className="flex justify-center items-center w-screen">
         <h1 className="w-screen text-3xl text-center font-bold">Votre Sites</h1>
+
         <button
-          onClick={() => setOpenSection(true)}
+          onClick={() => {
+            setButtonType("siteButton");
+            setOpenSection(true);
+          }}
           className="w-[12rem] p-3 mr-10 uppercase text-xs font-bold tracking-wide bg-blue-900 text-gray-100 rounded-lg focus:outline-none focus:shadow-outline hover:bg-green-500"
         >
           Ajouter un site
-        </button>
-        <button
-          onClick={handleDelete()}
-          className="w-[12rem] p-3 mr-10 uppercase text-xs font-bold tracking-wide bg-blue-900 text-gray-100 rounded-lg focus:outline-none focus:shadow-outline hover:bg-green-500"
-        >
-          Supprimer un site
         </button>
       </div>
       <div
@@ -223,16 +245,26 @@ const Sites = () => {
             screenSize.width < 700 ? "h-screen " : "flex flex-wrap w-full ml-10"
           }`}
         >
-          {folders?.map((folder, index) => (
-            <div
-              className={`${
-                screenSize.width < 700 ? "w-full mt-5" : "w-1/3 px-4 mt-4"
-              }`}
-              key={index}
-            >
-              <MultiSelectTreeView folders={folder} />
-            </div>
-          ))}
+          {folders && folders.length ? (
+            folders?.map((folder, index) => (
+              <div
+                className={`${
+                  screenSize.width < 700 ? "w-full mt-5" : "w-1/3 px-4 mt-4"
+                }`}
+                key={index}
+              >
+                <MultiSelectTreeView
+                  folders={folder}
+                  key={index}
+                  setOpenSection={setOpenSection}
+                  setButtonType={setButtonType}
+                  setFolderIdUpdate={setFolderIdUpdate}
+                />
+              </div>
+            ))
+          ) : (
+            <p>No folders exsist</p>
+          )}
         </div>
       </div>
     </>

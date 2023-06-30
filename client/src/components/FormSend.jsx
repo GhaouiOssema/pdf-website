@@ -36,6 +36,17 @@ const FormSend = () => {
   const [open, setOpen] = useState(false);
   const [alertMsg, setAlertMsg] = useState(null);
 
+  const token = localStorage.getItem("token");
+  if (!token) {
+    return;
+  }
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
   const handleClick = () => {
     setOpen(true);
   };
@@ -121,7 +132,7 @@ const FormSend = () => {
   useEffect(() => {
     const fetchFolders = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/sites");
+        const response = await axios.get("http://localhost:3000/sites", config);
         setFolders(response.data);
       } catch (error) {
         console.error(error);

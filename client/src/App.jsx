@@ -16,22 +16,17 @@ const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    // Check if user is authenticated
     const token = localStorage.getItem("token");
     if (token) {
-      // Verify token expiration
       const decoded = jwt_decode(token);
       const currentTime = Date.now() / 1000;
       if (decoded.exp < currentTime) {
-        // Token has expired
         setIsAuthenticated(false);
         localStorage.removeItem("token");
       } else {
-        // Token is valid
         setIsAuthenticated(true);
       }
     } else {
-      // No token found
       setIsAuthenticated(false);
     }
   }, []);
@@ -39,7 +34,7 @@ const App = () => {
   return (
     <div className="mx-auto flex flex-col flex-wrap bg-[#f3f3ff]">
       <Navbar isAuthenticated={isAuthenticated} />
-      <div className="container mt-10">
+      <div className="container mt-20">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/seconnecter" element={<Login />} />
@@ -47,7 +42,7 @@ const App = () => {
           {isAuthenticated && (
             <>
               <Route path="/telecharger" element={<FormSend />} />
-              <Route path="/pdf" element={<PdfFile />} />
+              <Route path="/:site/:dossier/pdf" element={<PdfFile />} />
               <Route path="/pdf/:id" element={<PdfDetails />} />
               <Route path="/pdf/view/:id" element={<PdfView />} />
               <Route path="/mesites" element={<Sites />} />
@@ -55,7 +50,7 @@ const App = () => {
           )}
         </Routes>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

@@ -22,15 +22,12 @@
 
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
-
-  /*
-  scroll-snap-points-x: repeat(300px);
-  scroll-snap-type: mandatory;
-  */
 }
 .slides::-webkit-scrollbar {
   width: 10px;
   height: 10px;
+  @apply bg-gray-300;
+  border-radius: 10px;
 }
 .slides::-webkit-scrollbar-thumb {
   background: white;
@@ -130,6 +127,9 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   line-height: 1; /* Adjust the value as needed */
+}
+.hover-black:hover {
+  color: black;
 }
 
 @media (max-width: 640px) {

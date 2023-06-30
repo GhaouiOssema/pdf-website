@@ -16,6 +16,7 @@ const PdfFile = () => {
   const [open, setOpen] = useState(false);
   const [alertMsg, setAlertMsg] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const { dossier } = useParams();
 
   const handleClick = () => {
     setOpen(true);
@@ -84,14 +85,13 @@ const PdfFile = () => {
   return (
     <div>
       <h1 className="text-3xl text-center font-bold mb-4 mt-10">
-        All PDF Files
+        All PDF Files {dossier}
       </h1>
       <Container
         maxWidth="md"
         sx={{
           mt: 4,
           mb: 4,
-          md: { width: "100%" },
           display: "flex",
           justifyContent: "center",
         }}
@@ -102,7 +102,7 @@ const PdfFile = () => {
           label="Search"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          sx={{ width: 600 }}
+          sx={{ width: "100%", maxWidth: "100%" }}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -111,7 +111,7 @@ const PdfFile = () => {
             ),
           }}
         />
-      </Container>{" "}
+      </Container>
       <ul className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {searchTerm === "" ? (
           pdfs.length > 0 ? (

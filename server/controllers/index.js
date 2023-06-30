@@ -8,4 +8,5 @@ module.exports = {
   userLogin: require("./userLogin.controller"),
   userRegister: require("./userRegister.controller"),
   deleteSite: require("./deleteSite.controller"),
+  updateSite: require("./updateSite.controller"),
 };

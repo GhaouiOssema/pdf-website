@@ -54,7 +54,11 @@ const ResponsiveAppBar = () => {
           <a href="https://flowbite.com" className="flex items-center">
             <img src={LOGO} className="mr-3 h-6 sm:h-9" alt="Flowbite Logo" />
           </a>
-          <div className="flex items-center lg:order-2">
+          <div
+            className={`flex items-center ${
+              isAuthenticated && "justify-between w-[50rem] flex-row-reverse"
+            }  `}
+          >
             {!isAuthenticated ? (
               <>
                 <div>
@@ -103,7 +107,7 @@ const ResponsiveAppBar = () => {
               </Link>
             )}
             {isAuthenticated && (
-              <>
+              <div className="flex items-center justify-around boor w-[30rem]">
                 <Link
                   to={"/profile/:id"}
                   className={`block py-2 pr-4 pl-3 rounded ${
@@ -125,7 +129,17 @@ const ResponsiveAppBar = () => {
                 >
                   Ajouter un plan
                 </Link>
-              </>
+                <Link
+                  to={"/mesites"}
+                  className={`block py-2 pr-4 pl-3 rounded ${
+                    isActiveNavItem("telecharger")
+                      ? "active"
+                      : "text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
+                  } lg:p-0 dark:text-white`}
+                >
+                  Mes sites
+                </Link>
+              </div>
             )}
             <button
               type="button"
