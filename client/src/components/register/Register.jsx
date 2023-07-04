@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Register = () => {
@@ -21,13 +21,7 @@ const Register = () => {
         userRole,
       });
 
-      const { token } = response.data;
-
-      // Store the token in local storage
-      localStorage.setItem("token", token);
-
-      // Navigate to a different route
-      navigate("/dashboard");
+      navigate("/seconnecter");
     } catch (err) {
       setError("Registration failed");
       console.error(err);
@@ -35,118 +29,87 @@ const Register = () => {
   };
 
   return (
-    <div className="font-mono ">
-      <div className="container mx-auto">
-        <div className="flex justify-center px-6 my-12">
-          <div className="w-full lg:w-7/12 bg-white p-5 rounded-lg lg:rounded-l-none">
-            <h3 className="pt-4 text-2xl text-center">Create an Account!</h3>
-            <form className="px-8 pt-6 pb-8 mb-4 bg-white rounded">
-              <div className="mb-4 md:flex md:justify-between">
-                <div className="mb-4 md:mr-2 md:mb-0">
-                  <label
-                    className="block mb-2 text-sm font-bold text-gray-700"
-                    for="firstName"
-                  >
-                    First Name
-                  </label>
-                  <input
-                    className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                    id="firstName"
-                    type="text"
-                    placeholder="First Name"
-                  />
-                </div>
-                <div className="md:ml-2">
-                  <label
-                    className="block mb-2 text-sm font-bold text-gray-700"
-                    for="lastName"
-                  >
-                    Last Name
-                  </label>
-                  <input
-                    className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                    id="lastName"
-                    type="text"
-                    placeholder="Last Name"
-                  />
-                </div>
-              </div>
-              <div className="mb-4">
-                <label
-                  className="block mb-2 text-sm font-bold text-gray-700"
-                  for="email"
-                >
-                  Email
-                </label>
-                <input
-                  className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                  id="email"
-                  type="email"
-                  placeholder="Email"
-                />
-              </div>
-              <div className="mb-4 md:flex md:justify-between">
-                <div className="mb-4 md:mr-2 md:mb-0">
-                  <label
-                    className="block mb-2 text-sm font-bold text-gray-700"
-                    for="password"
-                  >
-                    Password
-                  </label>
-                  <input
-                    className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border border-red-500 rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                    id="password"
-                    type="password"
-                    placeholder="******************"
-                  />
-                  <p className="text-xs italic text-red-500">
-                    Please choose a password.
-                  </p>
-                </div>
-                <div className="md:ml-2">
-                  <label
-                    className="block mb-2 text-sm font-bold text-gray-700"
-                    for="c_password"
-                  >
-                    Confirm Password
-                  </label>
-                  <input
-                    className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                    id="c_password"
-                    type="password"
-                    placeholder="******************"
-                  />
-                </div>
-              </div>
-              <div className="mb-6 text-center">
-                <button
-                  className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
-                  type="button"
-                >
-                  Register Account
-                </button>
-              </div>
-              <hr className="mb-6 border-t" />
-              <div className="text-center">
-                <a
-                  className="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800"
-                  href="#"
-                >
-                  Forgot Password?
-                </a>
-              </div>
-              <div className="text-center">
-                <a
-                  className="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800"
-                  href="./index.html"
-                >
-                  Already have an account? Login!
-                </a>
-              </div>
-            </form>
-          </div>
+    <div className="flex justify-center items-center h-screen">
+      <form
+        className="w-1/3 p-6 bg-white rounded shadow-lg"
+        onSubmit={handleSubmit}
+      >
+        <h2 className="text-2xl font-bold mb-6">Register</h2>
+        {error && <p className="text-red-500 mb-4">{error}</p>}
+        <div className="mb-4">
+          <label
+            htmlFor="userName"
+            className="block text-gray-700 font-bold mb-2"
+          >
+            Username
+          </label>
+          <input
+            type="text"
+            id="userName"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring"
+            placeholder="Enter your username"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+            required
+          />
         </div>
-      </div>
+        <div className="mb-4">
+          <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
+            Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label
+            htmlFor="password"
+            className="block text-gray-700 font-bold mb-2"
+          >
+            Password
+          </label>
+          <input
+            type="password"
+            id="password"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring"
+            placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+        <div className="mb-6">
+          <label
+            htmlFor="userRole"
+            className="block text-gray-700 font-bold mb-2"
+          >
+            User Role
+          </label>
+          <input
+            type="text"
+            id="userRole"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring"
+            placeholder="Enter your user role"
+            value={userRole}
+            onChange={(e) => setUserRole(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700"
+          >
+            Register
+          </button>
+        </div>
+      </form>
     </div>
   );
 };

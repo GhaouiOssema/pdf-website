@@ -88,6 +88,7 @@ const RaportView = ({
       };
 
       const token = localStorage.getItem("token");
+      console.log(formData);
 
       if (!token) {
         return;
@@ -115,8 +116,6 @@ const RaportView = ({
       console.error(error);
     }
   };
-
-  console.log(folderIdUpdate);
 
   const updateSite = async (e) => {
     e.preventDefault();

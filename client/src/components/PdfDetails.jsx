@@ -18,26 +18,41 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 
 const PdfDetails = () => {
-  const { id } = useParams();
+  const { site, dossier, id } = useParams();
   const [pdfData, setPdfData] = useState(null);
   const [open, setOpen] = useState(false);
   const qrCodeRef = useRef(null);
   const Navigate = useNavigate();
   const [alertMsg, setAlertMsg] = useState("");
+
+  const token = localStorage.getItem("token");
+  if (!token) {
+    return;
+  }
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
   const handleClick = () => {
     setOpen(true);
   };
+
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
     setOpen(false);
   };
+
   useEffect(() => {
     const getPdfData = async () => {
       try {
         const response = await axios.get(
-          `https://pdf-server-809j.onrender.com/pdf/data/${id}`
+          `http://localhost:3000/site/folder/pdf/details/${id}`,
+          config
         );
         setPdfData(response.data.pdf);
       } catch (error) {
@@ -45,7 +60,9 @@ const PdfDetails = () => {
       }
     };
     getPdfData();
-  }, [id]);
+  }, [site, dossier, id]);
+  console.log(pdfData);
+  console.log(id);
 
   const handleDownloadQRCode = () => {
     html2canvas(qrCodeRef.current).then((canvas) => {
@@ -59,7 +76,8 @@ const PdfDetails = () => {
   const handleDelete = async () => {
     try {
       const response = await axios.delete(
-        `https://pdf-server-809j.onrender.com/pdfs/${id}`
+        `http://localhost:3000/${site}/${dossier}/pdfs/${pdfData.title}`,
+        config
       );
       if (response.status === 200) {
         setAlertMsg("success");
@@ -79,7 +97,7 @@ const PdfDetails = () => {
   useEffect(() => {
     if (alertMsg === "success") {
       const performActionAfterInterval = () => {
-        Navigate("/pdf");
+        Navigate(-1);
       };
       const timeout = setTimeout(performActionAfterInterval, 2000);
       return () => {
@@ -137,7 +155,7 @@ const PdfDetails = () => {
                 >
                   <QRCode
                     className="w-[200px] h-[200px]"
-                    value={`https://qr-plan.netlify.app/pdf/view/${id}`}
+                    value={`http://localhost:5173/${site}/${dossier}/pdf/view/${id}/verify`}
                   />
                 </div>
                 <div className="mt-5 w-full flex-row-reverse  text-xl flex items-center justify-center">
@@ -162,6 +180,7 @@ const PdfDetails = () => {
               {screenSize.width > 900 && (
                 <div>
                   <CustomizedFileFolder PdfData={pdfData} />
+                  <CustomizedFileFolder PdfData={pdfData} />
                 </div>
               )}
               <div
@@ -170,10 +189,10 @@ const PdfDetails = () => {
               >
                 <div className="pdf__footer">
                   <Link
-                    to={`/pdf/view/${id}`}
+                    to={`/${site}/${dossier}/pdf/view/${id}`}
                     className="buttons__style_link__h buttons__style_link__left bg-gray-200"
                   >
-                    <span>Open Pdf</span>
+                    <span>Open Pdf </span>
                     <IoIosArrowForward />
                   </Link>
                   <div
@@ -185,7 +204,7 @@ const PdfDetails = () => {
                 </div>
                 <div className="pdf-preview" key={pdfData._id}>
                   <Document
-                    file={`https://pdf-server-809j.onrender.com/files/${pdfData.filename}`}
+                    file={`http://localhost:3000/files/${pdfData.filename}`}
                     onLoadSuccess={handlePdfLoadSuccess}
                     className="hidden__class"
                   >

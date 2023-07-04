@@ -25,7 +25,6 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import DOEButtonsGroup from "./DOEButtonsGroup";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -100,7 +99,7 @@ const TransitionsModal = ({ open, handleClose, handleOpen }) => {
   );
 };
 
-const PdfView = () => {
+const PublicPdfView = () => {
   const { id } = useParams();
   const [pdfData, setPdfData] = useState(null);
   const [numPages, setNumPages] = useState(null);
@@ -113,17 +112,6 @@ const PdfView = () => {
   const [partChanged, setPartChanged] = useState("");
   const [nextMaintenanceDate, setNextMaintenanceDate] = useState("");
   const [raports, setRaports] = useState(null);
-
-  const token = localStorage.getItem("token");
-  if (!token) {
-    return;
-  }
-
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
 
   useEffect(() => {
     const getPdfData = async () => {
@@ -183,7 +171,7 @@ const PdfView = () => {
   };
 
   const theme = useTheme();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(2);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -193,12 +181,8 @@ const PdfView = () => {
     setValue(index);
   };
 
-  const createData = (
-    Sociéte,
-    Date_du_dernier_entretien,
-    Date_du_prochain_entretien
-  ) => {
-    return { Sociéte, Date_du_dernier_entretien, Date_du_prochain_entretien };
+  const createData = (name, calories, fat) => {
+    return { name, calories, fat };
   };
 
   const rows = [createData("Frozen yoghurt", 159, 6.0)];
@@ -214,13 +198,11 @@ const PdfView = () => {
 
       const response = await axios.post(
         `http://localhost:3000/pdfs/${id}/raport`,
-        requestData,
-        config
+        requestData
       );
       if (response.status === 200) {
         alert("raport sended");
         setValue(2);
-        window.location.reload();
       } else {
         alert("error raport");
       }
@@ -228,7 +210,6 @@ const PdfView = () => {
       console.log("Error sending report:", error);
     }
   };
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -244,6 +225,9 @@ const PdfView = () => {
 
     fetchData();
   }, [pdfData]);
+
+  console.log("RAPORTS : ", raports);
+  console.log("PDFDATA : ", pdfData);
 
   if (!pdfData) {
     return <div>Loading PDF...</div>;
@@ -305,7 +289,7 @@ const PdfView = () => {
                 }}
               />
               <Tab
-                label="Carnet de verification"
+                label="Carnet de maintenance"
                 {...a11yProps(2)}
                 sx={{
                   color: "white",
@@ -328,7 +312,7 @@ const PdfView = () => {
             className="text-black"
           >
             <TabPanel value={value} index={0} dir={theme.direction}>
-              <DOEButtonsGroup fileName={pdfData.filename} />
+              Item One
             </TabPanel>
             <TabPanel value={value} index={1} dir={theme.direction}>
               <div
@@ -411,7 +395,6 @@ const PdfView = () => {
                 </Table>
               </TableContainer>
             </TabPanel>
-
             <TabPanel value={value} index={3} dir={theme.direction}>
               <Typography variant="h5" gutterBottom>
                 Raport
@@ -498,4 +481,4 @@ const PdfView = () => {
   );
 };
 
-export default PdfView;
+export default PublicPdfView;

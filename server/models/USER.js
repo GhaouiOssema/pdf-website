@@ -25,6 +25,9 @@ const UserSchema = new mongoose.Schema({
     enum: ["user", "admin", "superadmin"],
     default: "user",
   },
+  verification_code: {
+    type: String,
+  },
   allPdfs: [{ type: mongoose.Schema.Types.ObjectId, ref: "PDFs" }],
   folders: [{ type: mongoose.Schema.Types.ObjectId, ref: "Folder" }],
 });
@@ -33,6 +36,13 @@ UserSchema.pre("save", function (next) {
   if (!this.userId) {
     this.userId = this._id;
   }
+
+  const username = this.userName.toLowerCase();
+  const role = this.userRole.charAt(0).toLowerCase();
+  const randomNum = Math.floor(Math.random() * 10000) + 1;
+
+  this.verification_code = `maintenance_${username.slice(0, 3)}${randomNum}`;
+
   next();
 });
 

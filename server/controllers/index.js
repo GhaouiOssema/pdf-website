@@ -9,4 +9,9 @@ module.exports = {
   userRegister: require("./userRegister.controller"),
   deleteSite: require("./deleteSite.controller"),
   updateSite: require("./updateSite.controller"),
+  verifyViewCode: require("./verifyCode.controller"),
+  createPdfRaport: require("./createRaport.controller"),
+  getRaports: require("./getPdfRaportsById.controller"),
+  multiUpload: require("./uploadPdfList.controller"),
+  getDOEData: require("./getDOEFiles.controller"),
 };
