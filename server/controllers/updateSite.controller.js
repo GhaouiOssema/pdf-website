@@ -46,15 +46,18 @@ module.exports = {
 
       if (subfolders && Array.isArray(subfolders)) {
         // Update subfolders if provided
-        folder.content = subfolders.map((name) => ({
-          subFolder: {
-            name,
-            type: "folder",
-            ref: [],
-            total: 0,
-            pdfFiles: [],
-          },
-        }));
+        folder.content = [
+          ...folder.content,
+          ...subfolders.map((name) => ({
+            subFolder: {
+              name,
+              type: "folder",
+              ref: [],
+              total: 0,
+              pdfFiles: [],
+            },
+          })),
+        ];
       }
 
       await folder.save();

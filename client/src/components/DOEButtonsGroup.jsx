@@ -14,6 +14,10 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
+import jwt_decode from "jwt-decode";
+import { Document, Page, pdfjs } from "react-pdf";
+
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -47,11 +51,10 @@ function a11yProps(index) {
     "aria-controls": index,
   };
 }
-const DOEButtonsGroup = ({ fileName }) => {
+const DOEButtonsGroup = ({ pdfData }) => {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
   const { id } = useParams();
-  console.log("PDF ID : ", fileName);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -75,25 +78,39 @@ const DOEButtonsGroup = ({ fileName }) => {
     },
   };
 
-  const [filteredData, setFilteredData] = useState([]);
+  const [username, setUsername] = useState("");
+
   useEffect(() => {
-    const fetchPDFDOE = async () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decoded = jwt_decode(token);
+      const { userName } = decoded;
+      setUsername(userName);
+    } else {
+      setIsAuthenticated(false);
+    }
+  }, []);
+
+  const [fileStructure, setFileStructure] = useState([]);
+
+  useEffect(() => {
+    const fetchFileStructure = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/pdf/doe");
-        const data = response.data;
-
-        // Filter the data based on filename
-
-        // Store the filtered data in the state
-        setFilteredData(response);
+        const response = await axios.get(
+          `http://localhost:3000/DOE/${username}/${pdfData.title}`
+        );
+        const { fileStructure } = response.data;
+        setFileStructure(fileStructure);
       } catch (error) {
-        console.log(error);
+        console.error("Error fetching file structure:", error);
       }
     };
+    fetchFileStructure();
+  }, []);
 
-    fetchPDFDOE();
-  }, [id, fileName]);
-  console.log("FITER : ", filteredData);
+  console.log(`${username}/${pdfData.title}`);
+
+  console.log(fileStructure);
 
   return (
     <Box sx={{ bgcolor: "background.paper", width: "100%" }}>
@@ -136,7 +153,12 @@ const DOEButtonsGroup = ({ fileName }) => {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          Item One
+          <Document
+            file={`http://localhost:3000/oussema/rr/download_01.pdf`}
+            className="hidden__class"
+          >
+            <Page pageNumber={1} renderTextLayer={false} className="pdf-page" />
+          </Document>
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
           Item Two

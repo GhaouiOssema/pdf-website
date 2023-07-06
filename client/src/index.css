@@ -205,7 +205,7 @@ body {
   }
 
   .pdf__footer {
-    @apply w-full flex justify-around items-center;
+    @apply flex justify-around items-center;
   }
 
   .buttons__style_link__h {
@@ -269,16 +269,17 @@ body {
   }
 
   .pdf__footer {
-    @apply w-[230px] flex justify-between items-center mt-2;
+    @apply w-[400px] flex justify-between items-center mt-2;
   }
 
   .buttons__style_link__h {
     @apply flex items-center;
   }
   .buttons__style_link__left {
-    @apply w-[150px] p-2 text-black cursor-pointer rounded-lg;
+    @apply w-[190px] p-2 text-black cursor-pointer rounded-lg;
     height: 38px;
   }
+
   .buttons__style_link__left span {
     @apply w-[200px] justify-around text-center;
   }
@@ -297,7 +298,7 @@ body {
     height: 30px;
   }
   .qr-code-section {
-    @apply shadow-md shadow-black/20 p-4 rounded-xl h-[50vh];
+    @apply shadow-md shadow-black/20 p-4 rounded-xl h-[45vh];
   }
   .boor {
     border: 1px solid black;

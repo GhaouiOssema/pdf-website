@@ -168,7 +168,7 @@ const RaportView = ({
 
   return (
     <>
-      <div className="w-full">
+      <div className="w-[100%] boor">
         <CssBaseline />
         <form>
           <Container fixed>

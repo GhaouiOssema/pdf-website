@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route, redirect, useNavigate } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  redirect,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import Navbar from "./components/NavBar";
 import Login from "./components/login/Login";
@@ -14,11 +20,12 @@ import Footer from "./components/Footer";
 import Profile from "./components/Profile";
 import VerificationCode from "./components/VerificationCode";
 import PublicPdfView from "./components/PublicPdfView";
+import SideBar from "./components/SideBar";
+import Plan from "./components/Plan";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [confirmed, setConfirmed] = useState(false);
-  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -37,53 +44,43 @@ const App = () => {
   }, []);
 
   return (
-    <div className="mx-auto flex flex-col flex-wrap bg-white">
-      <Navbar isAuthenticated={isAuthenticated} />
-      <div className="container mt-20">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/seconnecter" element={<Login />} />
-          <Route path="/inscription" element={<Register />} />
-          <Route
-            path="/:site/:dossier/pdf/view/:id/verify"
-            element={<VerificationCode setConfirmed={setConfirmed} />}
-          />
+    <div className="flex">
+      {isAuthenticated && <SideBar isAuthenticated={isAuthenticated} />}
 
-          {confirmed && (
+      <div className="flex-grow">
+        {!isAuthenticated && <Navbar isAuthenticated={isAuthenticated} />}
+
+        <div className="container bg-gray-100 h-screen">
+          <Routes>
+            <Route path="/" element={isAuthenticated ? null : <Home />} />
+            <Route path="/seconnecter" element={<Login />} />
+            <Route path="/inscription" element={<Register />} />
             <Route
-              path={
-                confirmed
-                  ? "/publique/:site/:dossier/pdf/view/:id"
-                  : "/:site/:dossier/pdf/view/:id/verify"
-              }
-              element={
-                confirmed ? (
-                  <PublicPdfView />
-                ) : (
-                  <VerificationCode setConfirmed={setConfirmed} />
-                )
-              }
+              path="/:site/:dossier/pdf/view/:id/verify"
+              element={<VerificationCode />}
             />
-          )}
-          {isAuthenticated && (
-            <>
-              <Route path="/telecharger" element={<FormSend />} />
-              <Route path="/:site/:dossier/pdf" element={<PdfFile />} />
-              <Route
-                path="/:site/:dossier/pdf/détails/:id"
-                element={<PdfDetails />}
-              />
-              <Route
-                path="/:site/:dossier/pdf/view/:id"
-                element={<PdfView />}
-              />
-              <Route path="/mesites" element={<Sites />} />
-              <Route path="/profile" element={<Profile />} />
-            </>
-          )}
-        </Routes>
+
+            {isAuthenticated && (
+              <>
+                <Route path="/telecharger" element={<FormSend />} />
+                <Route path="/:site/:dossier/pdf" element={<PdfFile />} />
+                <Route
+                  path="/:site/:dossier/pdf/détails/:id"
+                  element={<PdfDetails />}
+                />
+                <Route
+                  path="/:site/:dossier/pdf/view/:id"
+                  element={<PdfView />}
+                />
+                <Route path="/messites" element={<Sites />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/plan/:fichier" element={<Plan />} />
+              </>
+            )}
+          </Routes>
+        </div>
+        {/* <Footer /> */}
       </div>
-      {/* <Footer /> */}
     </div>
   );
 };

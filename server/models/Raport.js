@@ -16,6 +16,23 @@ const pdfReportSchema = new mongoose.Schema({
   },
   dateDernierEntretien: { type: Date, default: Date.now },
   pdf: { type: mongoose.Schema.Types.ObjectId, ref: "PDFs" },
-  user: { type: mongoose.Schema.Types.Mixed, default: null },
+  user: {
+    type: mongoose.Schema.Types.Mixed,
+    default: null,
+    validate: {
+      validator: function (value) {
+        return value !== null || value !== "";
+      },
+      message: "Invalid user field",
+    },
+  },
 });
+
+pdfReportSchema.pre("save", function (next) {
+  if (!this.user || this.user === null || this.user === "") {
+    this.user = "technicien";
+  }
+  next();
+});
+
 module.exports = mongoose.model("Raport", pdfReportSchema);

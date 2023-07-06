@@ -14,4 +14,5 @@ module.exports = {
   getRaports: require("./getPdfRaportsById.controller"),
   multiUpload: require("./uploadPdfList.controller"),
   getDOEData: require("./getDOEFiles.controller"),
+  getUserDataById: require("./fetchUserData.controller"),
 };

@@ -10,6 +10,8 @@ module.exports = {
       const { société, observation, piècesChangées, dateProchainEntretien } =
         req.body;
 
+      console.log(dateProchainEntretien);
+
       const token = req?.headers?.authorization?.split(" ")[1] || null;
 
       if (token) {
@@ -32,7 +34,7 @@ module.exports = {
           piècesChangées,
           dateProchainEntretien,
           dateDernierEntretien: new Date(),
-          pdf: pdfID,
+          pdf: req.body.id,
           user: user._id,
         });
 
@@ -41,16 +43,24 @@ module.exports = {
         await pdf.save();
         res.status(200).json(savedRaport);
       } else {
+        const pdf = await PDF.findById(pdfID);
+        if (!pdf) {
+          return res.status(404).json({ error: "PDF not found." });
+        }
+
         const newRaport = new Raport({
           société,
           observation,
           piècesChangées,
           dateProchainEntretien,
           dateDernierEntretien: new Date(),
-          pdf: pdfID,
+          pdf: req.body.id,
+          user: "",
         });
 
         const savedRaport = await newRaport.save();
+        pdf.raports.push(savedRaport._id);
+        await pdf.save();
         res.status(200).json(savedRaport);
       }
     } catch (error) {

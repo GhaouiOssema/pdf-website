@@ -1,54 +1,80 @@
-const PDF = require("../models/PDF");
+const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
+const User = require("../models/USER");
+const Folder = require("../models/Folder");
 const FETCH = require("../middleware/fetchDOE");
+const { GridFSBucket } = require("mongodb");
+
+const DOE = require("../models/DOE");
+const PDF = require("../models/PDF");
 
 module.exports = {
   async uploadPdfList(req, res) {
+    const { fileName } = req.body;
+
     try {
       const files = req.files;
 
-      if (!files || files.length === 0) {
-        throw new Error("No files provided");
+      if (!files) {
+        return res.status(400).json({ message: "No files were uploaded." });
       }
 
-      const savedPDFs = [];
+      const session = await mongoose.startSession();
+      session.startTransaction();
 
-      for (const file of files) {
-        const originalFilename = file.originalname;
-
-        let counter = 1;
-        let newTitle = `${originalFilename.substring(
-          0,
-          originalFilename.lastIndexOf(".")
-        )}_${counter.toString().padStart(2, "0")}.pdf`;
-
-        const pdf = new PDF({
-          filename: newTitle,
-          path: file.path,
-          title: req.body.pdfTitle,
+      try {
+        const bucket = new GridFSBucket(mongoose.connection.db, {
+          bucketName: "DOEFILES",
         });
 
-        const savedPdf = await pdf.save();
-        savedPDFs.push(savedPdf);
+        const uploadedFileIds = [];
+
+        for (let i = 0; i < files.length; i++) {
+          const file = files[i];
+
+          const uploadStream = bucket.openUploadStream(file.originalname, {
+            contentType: file.mimetype,
+          });
+
+          uploadStream.write(file.buffer);
+          uploadStream.end();
+
+          uploadedFileIds.push(uploadStream.id);
+        }
+        const updatedDOE = await DOE.findOneAndUpdate(
+          { fileName },
+          {
+            $push: { files: { $each: uploadedFileIds } },
+            $inc: { Tnumber: uploadedFileIds.length },
+            $set: { fileName },
+          },
+          { new: true, upsert: true }
+        );
+
+        await PDF.updateMany(
+          { title: fileName },
+          { $set: { DOE: uploadedFileIds } }
+        );
+
+        await updatedDOE.save();
+
+        await session.commitTransaction();
+        session.endSession();
+
+        await FETCH(files.length);
+
+        return res.json({
+          message: "Files uploaded successfully.",
+          updatedDOE,
+        });
+      } catch (error) {
+        await session.abortTransaction();
+        session.endSession();
+        throw error;
       }
-
-      const pdfToUpdate = await PDF.findOne({ title: req.body.pdfTitle });
-
-      if (!pdfToUpdate) {
-        throw new Error("PDF not found");
-      }
-
-      const updatedPDF = await PDF.findOneAndUpdate(
-        { title: req.body.pdfTitle },
-        { $addToSet: { DOE: { $each: savedPDFs } } },
-        { new: true }
-      );
-
-      FETCH(files.length);
-
-      res.json({ files: savedPDFs, updatedPDF });
-    } catch (err) {
-      console.log(err);
-      res.status(500).json({ message: err.message });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ message: "Internal server error." });
     }
   },
 };

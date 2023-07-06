@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
@@ -21,7 +21,7 @@ const style = {
   p: 4,
 };
 
-const VerificationCode = ({ setConfirmed }) => {
+const VerificationCode = () => {
   const [verificationCode, setVerificationCode] = useState("");
   const [open, setOpen] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
@@ -44,7 +44,7 @@ const VerificationCode = ({ setConfirmed }) => {
       const { verified } = response.data;
       if (verified) {
         alert(verified);
-        setConfirmed(true);
+        localStorage.setItem("confirmed", "true");
         navigate(`/publique/${site}/${dossier}/pdf/view/${id}`);
       } else {
         alert(verified);

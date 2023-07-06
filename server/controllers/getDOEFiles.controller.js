@@ -1,38 +1,54 @@
-const PDF = require("../models/PDF");
-const jwt = require("jsonwebtoken");
-const { GridFSBucket, MongoClient } = require("mongodb");
-const mongoose = require("mongoose");
-const path = require("path");
-const fs = require("fs");
+const { MongoClient, ObjectId } = require("mongodb");
+const { GridFSBucket } = require("mongodb");
+
+const url = "mongodb+srv://PDF01:lm3SxPP9ahk4owsH@cluster0.dtutsqg.mongodb.net";
+const dbName = "work";
+const collectionName = "DOEFile";
 
 module.exports = {
   async getFile(req, res) {
     try {
-      const uri =
-        "mongodb+srv://PDF01:lm3SxPP9ahk4owsH@cluster0.dtutsqg.mongodb.net/work";
-      const dbName = "work";
-      const collectionName = "uploads";
-      const outputDir = path.join(__dirname, "..", "files");
+      // Get the ID of the PDF file.
+      const id = req.params.id;
+      console.log(id);
 
-      if (!fs.existsSync(outputDir)) {
-        fs.mkdirSync(outputDir);
-      }
-
-      const client = await MongoClient.connect(uri, {
+      const client = new MongoClient(url, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
       });
+
+      // Connect to the MongoDB server.
+      await client.connect();
+
       const db = client.db(dbName);
-      const bucket = new GridFSBucket(db, { bucketName: collectionName });
+      const bucket = new GridFSBucket(db);
 
-      // Fetch all files from the GridFS bucket
-      const files = await bucket.find().toArray();
+      // Find the PDF file in the GridFS bucket.
+      const file = await bucket.find({ _id: new ObjectId(id) }).toArray();
 
-      // Return the files data as a response
-      res.json(files);
+      // Check if the PDF file was found.
+      if (file.length === 0) {
+        res.status(404).send("PDF file not found.");
+        return;
+      }
+
+      // Get the PDF file data.
+      const data = [];
+      const downloadStream = bucket.openDownloadStream(new ObjectId(id));
+      downloadStream.on("data", (chunk) => {
+        data.push(chunk);
+      });
+      downloadStream.on("end", () => {
+        const fileData = Buffer.concat(data);
+        res.contentType("application/pdf");
+        res.send(fileData);
+      });
+
+      // Close the MongoDB client connection.
+      await client.close();
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: "Failed to fetch files" });
+      console.log(error);
+      res.status(500).json({ error: "An error occurred" });
     }
   },
 };

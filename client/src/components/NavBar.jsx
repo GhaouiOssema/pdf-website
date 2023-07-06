@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import jwt_decode from "jwt-decode";
-import Sidebar from "./SideBar";
 import LOGO from "../assets/logo2.png";
 
 const pages = ["telecharger", "mes plans", "connexion", "inscription"];
 
-const ResponsiveAppBar = () => {
+const Navbar = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   const location = useLocation();
@@ -161,9 +160,8 @@ const ResponsiveAppBar = () => {
           </div>
         </div>
       </nav>
-      <Sidebar open={openMenu} handleOpenMenu={handleOpenMenu} />
     </header>
   );
 };
 
-export default ResponsiveAppBar;
+export default Navbar;

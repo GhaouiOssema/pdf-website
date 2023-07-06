@@ -12,6 +12,14 @@ import MuiAlert from "@mui/material/Alert";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import CustomizedFileFolder from "./CustomizedFileFolder";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+} from "@mui/material";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -24,6 +32,7 @@ const PdfDetails = () => {
   const qrCodeRef = useRef(null);
   const Navigate = useNavigate();
   const [alertMsg, setAlertMsg] = useState("");
+  const [raports, setRaports] = useState(null);
 
   const token = localStorage.getItem("token");
   if (!token) {
@@ -46,6 +55,9 @@ const PdfDetails = () => {
     }
     setOpen(false);
   };
+
+  const handleOpenTable = () => setOpen(true);
+  const handleCloseTable = () => setOpen(false);
 
   useEffect(() => {
     const getPdfData = async () => {
@@ -126,10 +138,35 @@ const PdfDetails = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/pdf/raports`,
+          config
+        );
+        const filteredRaports = response.data.filter((raport) =>
+          pdfData.raports.includes(raport._id)
+        );
+        setRaports(filteredRaports);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, [pdfData]);
+
   return (
     <>
-      <h1 className="text-3xl text-center font-bold mt-10">PDF Details</h1>
-      <div className={`container ${screenSize.width < 700 ? "h-screen" : ""}`}>
+      <h1 className="text-3xl text-center font-bold pt-10">
+        <span className=""> Fiche d'equipement</span>
+      </h1>
+      <div
+        className={`container pt-20 ${
+          screenSize.width < 700 ? "h-screen" : ""
+        }`}
+      >
         {pdfData ? (
           <>
             {screenSize.width < 700 && (
@@ -140,7 +177,7 @@ const PdfDetails = () => {
             )}
 
             <div className="flex justify-around items-center flex__col">
-              <div className="qr-code-section">
+              <div className="qr-code-section bg-white">
                 {screenSize.width > 700 && (
                   <div className="flex flex-wrap mb-3">
                     <h1 className="ml-3 font-bold">Titl :</h1>
@@ -177,48 +214,61 @@ const PdfDetails = () => {
                   )}
                 </div>
               </div>
-              {screenSize.width > 900 && (
-                <div>
-                  <CustomizedFileFolder PdfData={pdfData} />
-                  <CustomizedFileFolder PdfData={pdfData} />
-                </div>
-              )}
-              <div
-                key={pdfData._id}
-                className="flex justify-between flex-col-reverse items-center flex-col ml-5 pt-5 mb-5"
-              >
-                <div className="pdf__footer">
-                  <Link
-                    to={`/${site}/${dossier}/pdf/view/${id}`}
-                    className="buttons__style_link__h buttons__style_link__left bg-gray-200"
+
+              <div className="flex justify-between items-center flex-col ml-5 pt-5 mt-[-250px] ">
+                <p className="font-bold text-lg mb-5  ">Tableau des Raport</p>
+
+                <div className="pdf-preview bg-white " key={pdfData._id}>
+                  <Table
+                    sx={{ minWidth: 650 }}
+                    size="small"
+                    aria-label="a dense table"
                   >
-                    <span>Open Pdf </span>
-                    <IoIosArrowForward />
-                  </Link>
-                  <div
-                    className="cursor-pointer  uppercase text-sm tracking-wide bg-blue-500 text-gray-100 px-2 py-[10px] rounded-md focus:outline-none focus:shadow-outline hover:bg-red-500"
-                    onClick={handleDelete}
-                  >
-                    Delete
-                  </div>
-                </div>
-                <div className="pdf-preview" key={pdfData._id}>
-                  <Document
-                    file={`http://localhost:3000/files/${pdfData.filename}`}
-                    onLoadSuccess={handlePdfLoadSuccess}
-                    className="hidden__class"
-                  >
-                    {pdfLoaded && (
-                      <Page
-                        pageNumber={1}
-                        width={screenSize.width < 700 ? 400 : 230}
-                        renderTextLayer={false}
-                        className="pdf-page"
-                      />
-                    )}
-                  </Document>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell align="center">Sociéte</TableCell>
+                        <TableCell align="center">
+                          Date du dernier entretien
+                        </TableCell>
+                        <TableCell align="center">
+                          Date du prochain entretien
+                        </TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {raports &&
+                        raports.map((raport) => (
+                          <TableRow
+                            key={raport.id}
+                            sx={{
+                              "&:last-child td, &:last-child th": { border: 0 },
+                            }}
+                          >
+                            <TableCell component="th" scope="row">
+                              {raport.société}
+                            </TableCell>
+                            <TableCell align="center">
+                              {raport.dateDernierEntretien}
+                            </TableCell>
+                            <TableCell align="center">
+                              {raport.dateProchainEntretien}
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              sx={{ cursor: "pointer" }}
+                            >
+                              <InfoOutlinedIcon
+                                sx={{ color: "#3291F0" }}
+                                onClick={handleOpenTable}
+                              />
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                    </TableBody>
+                  </Table>
                 </div>
               </div>
+
               {screenSize.width < 700 && (
                 <div>
                   <CustomizedFileFolder PdfData={pdfData} />
@@ -230,6 +280,46 @@ const PdfDetails = () => {
           <p>Loading PDF data...</p>
         )}
       </div>
+      {pdfData ? (
+        <div className="flex justify-center mt-20">
+          <div className="pdf__footer mb-10 w-[50rem]">
+            <div className="">
+              <Link
+                to={`/${site}/${dossier}/pdf/view/${id}`}
+                className="buttons__style_link__h buttons__style_link__left bg-gray-200 mt-3"
+              >
+                <span>Ouvrir les DEO</span>
+                <IoIosArrowForward />
+              </Link>
+              <Link
+                to={`/plan/${id}`}
+                className="buttons__style_link__h buttons__style_link__left bg-gray-200 mt-3"
+              >
+                <span>Ouvrir le plan </span>
+                <IoIosArrowForward />
+              </Link>
+            </div>
+            <div>
+              <Link
+                to={`/${site}/${dossier}/pdf/view/${id}`}
+                className="buttons__style_link__h buttons__style_link__left bg-gray-200 mt-3"
+              >
+                <span>fiche technicien</span>
+                <IoIosArrowForward />
+              </Link>
+              <Link
+                className="buttons__style_link__h buttons__style_link__left bg-gray-200 mt-3 hover:bg-red-700 hover:text-white"
+                onClick={handleDelete}
+              >
+                <span>Supprimer </span>
+                <IoIosArrowForward />
+              </Link>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <p></p>
+      )}
       <Stack spacing={2} sx={{ width: "100%" }}>
         <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
           <Alert

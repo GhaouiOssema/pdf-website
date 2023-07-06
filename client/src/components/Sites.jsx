@@ -3,7 +3,20 @@ import TreeView from "@mui/lab/TreeView";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import TreeItem from "@mui/lab/TreeItem";
-import { Backdrop, Box, Button, Snackbar, Stack } from "@mui/material";
+import {
+  Backdrop,
+  Box,
+  Button,
+  Checkbox,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  FormControl,
+  FormControlLabel,
+  FormGroup,
+  Snackbar,
+  Stack,
+} from "@mui/material";
 import HvacIcon from "@mui/icons-material/Hvac";
 import AcUnitIcon from "@mui/icons-material/AcUnit";
 import KitchenIcon from "@mui/icons-material/Kitchen";
@@ -14,6 +27,7 @@ import axios from "axios";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Link } from "react-router-dom";
 import SiteOption from "./SiteOption";
+import FilterListIcon from "@mui/icons-material/FilterList";
 
 function MultiSelectTreeView({
   folders,
@@ -52,8 +66,8 @@ function MultiSelectTreeView({
 
   let labelFormat = (
     <div className="flex w-full items-center justify-between">
-      <span>{`${folders.adresse}`}</span>
-      <span>CP:{`${folders.code_postal}`}</span>
+      <span className=" w-[50%] ">{`${folders.adresse}`}</span>
+      <span className=" w-[21%] ">CP:{`${folders.code_postal}`}</span>
       <SiteOption
         folders={folders}
         setOpenSection={setOpenSection}
@@ -72,6 +86,7 @@ function MultiSelectTreeView({
         overflow: "hidden",
         transition: "height 0.3s",
         height: isExpanded(folders._id) ? "auto" : "40px",
+        backgroundColor: "white",
       }}
     >
       <TreeView
@@ -93,7 +108,19 @@ function MultiSelectTreeView({
           }}
         >
           {folders.content.map((subFolder) => (
-            <Link to={`/${folders.adresse}/${subFolder.subFolder.name}/pdf`}>
+            <Link
+              to={`/${folders.adresse}/${subFolder.subFolder.name}/pdf`}
+              className="flex item-center"
+            >
+              {subFolder.subFolder.name === "chauffage" ? (
+                <HvacIcon sx={{ color: "blue" }} />
+              ) : subFolder.subFolder.name === "climatiseur" ? (
+                <AcUnitIcon sx={{ color: "blue" }} />
+              ) : subFolder.subFolder.name === "Ventilateur" ? (
+                <HeatPumpIcon sx={{ color: "blue" }} />
+              ) : subFolder.subFolder.name === "Armoire electrique" ? (
+                <KitchenIcon sx={{ color: "blue" }} />
+              ) : null}
               <TreeItem
                 key={subFolder._id}
                 nodeId={subFolder._id}
@@ -122,6 +149,14 @@ const Sites = () => {
   const [alertMsg, setAlertMsg] = useState(null);
   const [buttonType, setButtonType] = useState("");
   const [folderIdUpdate, setFolderIdUpdate] = useState();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filterOpen, setFilterOpen] = useState(false);
+  const [filterOptions, setFilterOptions] = useState({
+    address: true,
+    code_postal: true,
+    subfolder: true,
+  });
+  const [filterQuery, setFilterQuery] = useState("");
 
   const handleCloseAlert = (event, reason) => {
     if (reason === "clickaway") {
@@ -172,12 +207,134 @@ const Sites = () => {
     fetchFolders();
   }, []);
 
+  const handleSearchQueryChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
   const handleClose = () => {
     setOpenSection(false);
   };
 
+  const handleOpenFilter = () => {
+    setFilterOpen(true);
+  };
+
+  const handleCloseFilter = () => {
+    setFilterOpen(false);
+  };
+
   return (
     <>
+      <Dialog open={filterOpen} onClose={handleCloseFilter}>
+        <DialogTitle>Filter Options</DialogTitle>
+        <DialogContent>
+          <FormControl component="fieldset">
+            <FormGroup>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={filterOptions.address}
+                    onChange={(e) =>
+                      setFilterOptions((prevState) => ({
+                        ...prevState,
+                        address: e.target.checked,
+                      }))
+                    }
+                  />
+                }
+                label="Filter by Address"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={filterOptions.code_postal}
+                    onChange={(e) =>
+                      setFilterOptions((prevState) => ({
+                        ...prevState,
+                        code_postal: e.target.checked,
+                      }))
+                    }
+                  />
+                }
+                label="Filter by Code Postal"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={filterOptions.subfolder}
+                    onChange={(e) =>
+                      setFilterOptions((prevState) => ({
+                        ...prevState,
+                        subfolder: e.target.checked,
+                      }))
+                    }
+                  />
+                }
+                label="Filter by Subfolder"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={filterOptions.chauffage}
+                    onChange={(e) =>
+                      setFilterOptions((prevState) => ({
+                        ...prevState,
+                        chauffage: e.target.checked,
+                      }))
+                    }
+                  />
+                }
+                label="Filter by Chauffage"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={filterOptions.climatiseur}
+                    onChange={(e) =>
+                      setFilterOptions((prevState) => ({
+                        ...prevState,
+                        climatiseur: e.target.checked,
+                      }))
+                    }
+                  />
+                }
+                label="Filter by Climatiseur"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={filterOptions.ventilateur}
+                    onChange={(e) =>
+                      setFilterOptions((prevState) => ({
+                        ...prevState,
+                        ventilateur: e.target.checked,
+                      }))
+                    }
+                  />
+                }
+                label="Filter by Ventilateur"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={filterOptions.armoireElectrique}
+                    onChange={(e) =>
+                      setFilterOptions((prevState) => ({
+                        ...prevState,
+                        armoireElectrique: e.target.checked,
+                      }))
+                    }
+                  />
+                }
+                label="Filter by Armoire Electrique"
+              />
+            </FormGroup>
+          </FormControl>
+          <Button variant="contained" onClick={handleCloseFilter}>
+            Apply Filter
+          </Button>
+        </DialogContent>
+      </Dialog>
       <Backdrop
         sx={{
           color: "#fff",
@@ -220,48 +377,139 @@ const Sites = () => {
           </Snackbar>
         </Stack>
       </Backdrop>
-      <div className="flex justify-center items-center w-screen">
-        <h1 className="w-screen text-3xl text-center font-bold">Votre Sites</h1>
-
-        <button
-          onClick={() => {
-            setButtonType("siteButton");
-            setOpenSection(true);
-          }}
-          className="w-[12rem] p-3 mr-10 uppercase text-xs font-bold tracking-wide bg-blue-900 text-gray-100 rounded-lg focus:outline-none focus:shadow-outline hover:bg-green-500"
-        >
-          Ajouter un site
-        </button>
+      <div className="pt-10">
+        <div className="flex justify-center items-center">
+          <h1 className="text-3xl text-center font-bold pr-10">Votre Sites</h1>
+        </div>
       </div>
+
+      {/* SEARCH SECTION */}
+      <div className="flex  mt-10 justify-center">
+        <div className="flex items-center justify-between w-[90%] ">
+          <div className="w-[40%] items-center">
+            <form className="flex items-center">
+              <label htmlFor="simple-search" className="sr-only">
+                Search
+              </label>
+              <div className="relative w-full">
+                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                  <svg
+                    aria-hidden="true"
+                    className="w-5 h-5 text-gray-500 dark:text-gray-400"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </div>
+                <input
+                  type="text"
+                  id="simple-search"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                  placeholder="Search"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  required
+                />
+              </div>
+            </form>
+          </div>
+          <div className="flex justify-between items-center w-[20%]">
+            <div className="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
+              <button
+                type="button"
+                className="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+                o
+                onClick={() => {
+                  setButtonType("siteButton");
+                  setOpenSection(true);
+                }}
+              >
+                <svg
+                  className="h-3.5 w-3.5 mr-2"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                >
+                  <path
+                    clipRule="evenodd"
+                    fillRule="evenodd"
+                    d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                  />
+                </svg>
+                Ajouter un fichier
+              </button>
+            </div>
+            <FilterListIcon
+              onClick={() => handleOpenFilter()}
+              sx={{ cursor: "pointer" }}
+            />
+          </div>
+        </div>
+        {/* SEARCH SECTION */}
+      </div>
+
       <div
         className={`mt-10 ${
           screenSize.width < 700
             ? "w-[20rem]"
-            : "flex justify-center items-center"
+            : "flex justify-center items-center w-full"
         } `}
       >
         <div
           className={`${
-            screenSize.width < 700 ? "h-screen " : "flex flex-wrap w-full ml-10"
+            screenSize.width < 700 ? "h-screen " : "flex flex-wrap w-[80rem] "
           }`}
         >
           {folders && folders.length ? (
-            folders?.map((folder, index) => (
-              <div
-                className={`${
-                  screenSize.width < 700 ? "w-full mt-5" : "w-1/3 px-4 mt-4"
-                }`}
-                key={index}
-              >
-                <MultiSelectTreeView
-                  folders={folder}
+            folders
+              ?.filter((folder) => {
+                const lowerCaseSearchQuery = searchQuery.toLowerCase();
+
+                // Apply filters based on filterOptions
+                const shouldFilterByAddress =
+                  filterOptions.address &&
+                  folder.adresse.toLowerCase().includes(lowerCaseSearchQuery);
+                const shouldFilterByCodePostal =
+                  filterOptions.code_postal &&
+                  folder.code_postal.includes(lowerCaseSearchQuery);
+                const shouldFilterBySubfolder =
+                  filterOptions.subfolder &&
+                  folder.content.some((subFolder) =>
+                    subFolder.subFolder.name
+                      .toLowerCase()
+                      .includes(lowerCaseSearchQuery)
+                  );
+
+                // Return true if any of the filters match
+                return (
+                  shouldFilterByAddress ||
+                  shouldFilterByCodePostal ||
+                  shouldFilterBySubfolder
+                );
+              })
+              .map((folder, index) => (
+                <div
+                  className={`${
+                    screenSize.width < 700 ? "w-full mt-5" : "w-1/3 px-4 mt-4"
+                  }`}
                   key={index}
-                  setOpenSection={setOpenSection}
-                  setButtonType={setButtonType}
-                  setFolderIdUpdate={setFolderIdUpdate}
-                />
-              </div>
-            ))
+                >
+                  <MultiSelectTreeView
+                    folders={folder}
+                    key={index}
+                    setOpenSection={setOpenSection}
+                    setButtonType={setButtonType}
+                    setFolderIdUpdate={setFolderIdUpdate}
+                  />
+                </div>
+              ))
           ) : (
             <p>No folders exsist</p>
           )}

@@ -28,8 +28,12 @@ const FormSend = () => {
     selectedFile: null,
     title: "",
     owner: "",
-    publicOrPrivate: "public",
+    subFolder: "public",
+    site: "",
   });
+
+  console.log(formState);
+
   const [loading, setLoading] = useState(false);
   const Navigate = useNavigate();
 
@@ -144,13 +148,13 @@ const FormSend = () => {
 
   return (
     <>
-      <h1 className="text-3xl text-center font-bold mb-4 mt-10">
+      <h1 className="text-3xl text-center font-bold mb-4 pt-20">
         Ajouter un PlanA
       </h1>
-      <form onSubmit={handleSubmit} onReset={handleReset}>
-        <div className="flex justify-center items-center bg-none">
-          <div className=" max__size w-[70%] container mx-auto my-4 px-4 lg:px-20">
-            <div className=" p-8 my-4 mr-auto rounded-2xl shadow-2xl bg-none">
+      <form onSubmit={handleSubmit} onReset={handleReset} className="mt-[3rem]">
+        <div className="flex justify-center items-center">
+          <div className=" max__size w-[70%] container mx-auto my-4 px-4 lg:px-20 ">
+            <div className=" p-8 my-4 mr-auto rounded-2xl shadow-2xl bg-white">
               <div className=" mt-5">
                 <div className="w-full flex flex-col">
                   <div class="flex items-center justify-center w-full">
@@ -211,7 +215,7 @@ const FormSend = () => {
                     name="publicOrPrivate"
                     value={formState.publicOrPrivate}
                     onChange={handleInputChange}
-                    className="max w-[38%] bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline pl-5"
+                    className="max w-[28%] bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg pl-5 "
                   >
                     <option value="sites">Sites</option>
                     {folders?.map((folder, index) => (
@@ -221,9 +225,9 @@ const FormSend = () => {
                     ))}
                   </select>
                   <input
-                    className="w-[60%] bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline max"
+                    className="w-[15rem] bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg pl-5 "
                     type="text"
-                    placeholder="Nom du fichier"
+                    placeholder="Nom d'equipement"
                     value={formState.title}
                     onChange={handleInputChange}
                     name="title"
@@ -234,7 +238,7 @@ const FormSend = () => {
                     name="publicOrPrivate"
                     value={formState.publicOrPrivate}
                     onChange={handleInputChange}
-                    className="max w-[38%] bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline pl-5"
+                    className="max w-[28%] bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg pl-5"
                   >
                     <option value="add">Dossier</option>
                     <option value="Chauffage">Chauffage</option>

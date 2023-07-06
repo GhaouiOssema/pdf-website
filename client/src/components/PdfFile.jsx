@@ -87,7 +87,7 @@ const CircularIndeterminate = () => {
   );
 };
 
-const SpringModal = ({ open, setOpen, handleClickAlert, setAlertMsg }) => {
+const SpringModal = ({ open, setOpen, handleClickAlert, setAlertMsg, pdf }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [fileName, setFileName] = useState("");
   const [uploadError, setUploadError] = useState(null);
@@ -128,20 +128,34 @@ const SpringModal = ({ open, setOpen, handleClickAlert, setAlertMsg }) => {
       for (let i = 0; i < selectedFiles.length; i++) {
         formData.append("files", selectedFiles[i]);
       }
-      formData.append("pdfTitle", fileName);
+      formData.append("fileName", fileName);
 
-      // Replace 'your-upload-url' with the actual URL to your backend route
       const response = await axios.post(
-        `http://localhost:3000/multiUpload`,
-        formData
+        `http://localhost:3000/multiupload`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       if (response.status === 200) {
+        setAlertMsg("success");
+        handleClickAlert();
         window.location.reload();
+      } else {
+        setAlertMsg("error");
+        handleClickAlert();
       }
+
+      setSelectedFiles([]);
+      setFileName("");
+      handleClose();
+      setUploadError(null);
     } catch (error) {
       console.log("Error uploading files:", error);
-      // Handle the error as needed
     }
   };
 
@@ -188,11 +202,9 @@ const SpringModal = ({ open, setOpen, handleClickAlert, setAlertMsg }) => {
     setFileName(null);
     setSelectedFile(null);
   };
-  console.log(fileName);
 
   return (
     <div>
-      <Button onClick={handleOpen}>Open modal</Button>
       <Modal
         aria-labelledby="spring-modal-title"
         aria-describedby="spring-modal-description"
@@ -433,6 +445,7 @@ const PdfFile = () => {
           setAlertMsg={setAlertMsg}
           handleClickAlert={handleClickAlert}
           handleCloseAlert={handleCloseAlert}
+          pdf={pdfs}
         />
       ) : null}
       <section className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">

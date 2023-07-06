@@ -34,7 +34,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: 600,
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -74,7 +74,7 @@ const a11yProps = (index) => {
   };
 };
 
-const TransitionsModal = ({ open, handleClose, handleOpen }) => {
+const TransitionsModal = ({ open, handleClose, raports, filteredRaports }) => {
   return (
     <div>
       <Modal
@@ -92,7 +92,88 @@ const TransitionsModal = ({ open, handleClose, handleOpen }) => {
       >
         <Fade in={open}>
           <Box sx={style}>
-            <h1>d</h1>
+            {filteredRaports &&
+              filteredRaports.map((raport, index) => (
+                <Box sx={{ maxHeight: "400px", overflow: "auto" }} key={index}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <Typography variant="h7" gutterBottom>
+                      {raport.société}
+                    </Typography>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "start",
+                      justifyContent: "space-between",
+                      flexWrap: "wrap",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Typography variant="h6" gutterBottom>
+                      Observation
+                    </Typography>
+                    <Typography
+                      variant="h7"
+                      gutterBottom
+                      className="text-gray-500"
+                    >
+                      {raport.observation}
+                    </Typography>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <Typography variant="h6" gutterBottom>
+                      Pièces Changées
+                    </Typography>
+                    <Typography variant="h7" gutterBottom>
+                      {raport.piècesChangées}
+                    </Typography>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <Typography variant="h6" gutterBottom>
+                      Date prochain entretien
+                    </Typography>
+                    <Typography variant="h7" gutterBottom>
+                      {raport.dateProchainEntretien}
+                    </Typography>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <Typography variant="h6" gutterBottom>
+                      Date dernier entretien
+                    </Typography>
+                    <Typography variant="h7" gutterBottom>
+                      {raport.dateDernierEntretien}
+                    </Typography>
+                  </Box>
+                </Box>
+              ))}
           </Box>
         </Fade>
       </Modal>
@@ -106,13 +187,22 @@ const PdfView = () => {
   const [numPages, setNumPages] = useState(null);
   const pdfRef = useRef();
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [company, setCompany] = useState("");
   const [observation, setObservation] = useState("");
   const [partChanged, setPartChanged] = useState("");
   const [nextMaintenanceDate, setNextMaintenanceDate] = useState("");
   const [raports, setRaports] = useState(null);
+  const [socIndex, setSocIndex] = useState(null);
+  const [filteredRaports, setFilteredRaports] = useState([]);
+
+  const handleOpen = (soc) => {
+    setOpen(true);
+    const filteredReports = raports.filter((raport) => raport.société === soc);
+    setFilteredRaports(filteredReports);
+  };
+
+  console.log(filteredRaports);
 
   const token = localStorage.getItem("token");
   if (!token) {
@@ -202,7 +292,7 @@ const PdfView = () => {
   };
 
   const rows = [createData("Frozen yoghurt", 159, 6.0)];
-
+  console.log(nextMaintenanceDate);
   const sendRaport = async () => {
     try {
       const requestData = {
@@ -232,7 +322,10 @@ const PdfView = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/pdf/raports`);
+        const response = await axios.get(
+          `http://localhost:3000/pdf/raports`,
+          config
+        );
         const filteredRaports = response.data.filter((raport) =>
           pdfData.raports.includes(raport._id)
         );
@@ -250,18 +343,21 @@ const PdfView = () => {
   }
 
   return (
-    <section className="flex flex-col md:w-screen">
+    <section className="flex flex-col max-w-screen-2xl	">
       {open && (
         <TransitionsModal
           open={open}
           handleClose={handleClose}
           handleOpen={handleOpen}
+          raports={raports}
+          SOC={socIndex}
+          filteredRaports={filteredRaports}
         />
       )}
       <h1 className="text-3xl text-center font-bold mt-5 mb-5">
         Fiche de Maintenance
       </h1>
-      <div className="flex justify-center">
+      <div className="flex justify-center bg-gray-100">
         <Box sx={{ bgcolor: "", width: "80%", color: "white" }}>
           <Box
             sx={{
@@ -328,7 +424,7 @@ const PdfView = () => {
             className="text-black"
           >
             <TabPanel value={value} index={0} dir={theme.direction}>
-              <DOEButtonsGroup fileName={pdfData.filename} />
+              <DOEButtonsGroup pdfData={pdfData} />
             </TabPanel>
             <TabPanel value={value} index={1} dir={theme.direction}>
               <div
@@ -383,7 +479,7 @@ const PdfView = () => {
                   </TableHead>
                   <TableBody>
                     {raports &&
-                      raports.map((raport) => (
+                      raports.map((raport, index) => (
                         <TableRow
                           key={raport.id}
                           sx={{
@@ -402,7 +498,7 @@ const PdfView = () => {
                           <TableCell align="center" sx={{ cursor: "pointer" }}>
                             <InfoOutlinedIcon
                               sx={{ color: "#3291F0" }}
-                              onClick={handleOpen}
+                              onClick={() => handleOpen(raport.société)}
                             />
                           </TableCell>
                         </TableRow>
@@ -412,84 +508,89 @@ const PdfView = () => {
               </TableContainer>
             </TabPanel>
 
-            <TabPanel value={value} index={3} dir={theme.direction}>
-              <Typography variant="h5" gutterBottom>
-                Raport
-              </Typography>
-              <div className="mb-6 mt-5">
-                <label
-                  htmlFor="email"
-                  className="block mb-2 text-md font-medium text-gray-900 dark:text-white"
+            <TabPanel
+              value={value}
+              index={3}
+              dir={theme.direction}
+              className="bg-white"
+            >
+              <div>
+                <Typography variant="h5" gutterBottom>
+                  Raport
+                </Typography>
+                <div className="mb-6 mt-5">
+                  <label
+                    htmlFor="email"
+                    className="block mb-2 text-md font-medium text-gray-900 dark:text-white"
+                  >
+                    Sociéte
+                  </label>
+                  <input
+                    type="text"
+                    className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:shadow-sm-light"
+                    placeholder="le nom du sociéte"
+                    required
+                    value={company}
+                    onChange={(e) => setCompany(e.target.value)}
+                  />
+                </div>
+                <div className="mb-6">
+                  <label
+                    for="message"
+                    className="block mb-2 text-md font-medium text-gray-900 dark:text-white"
+                  >
+                    Observation
+                  </label>
+                  <textarea
+                    rows="4"
+                    className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                    placeholder="Leave a comment..."
+                    value={observation}
+                    onChange={(e) => setObservation(e.target.value)}
+                    required
+                  ></textarea>
+                </div>
+                <div className="mb-6">
+                  <label
+                    htmlFor="repeat-password"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Piéce changée
+                  </label>
+                  <input
+                    type="text"
+                    className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:shadow-sm-light"
+                    required
+                    value={partChanged}
+                    onChange={(e) => setPartChanged(e.target.value)}
+                  />
+                </div>
+                <div className="block mb-6 w-1/2">
+                  <label
+                    for="date"
+                    className="w-full text-md font-medium text-gray-900 dark:text-white flex flex-wrap gap-2"
+                  >
+                    Date du prochain entretie :
+                  </label>
+                  <input
+                    date-rangepicker
+                    name="date"
+                    type="date"
+                    className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                    placeholder="Select date start"
+                    value={nextMaintenanceDate}
+                    onChange={(e) => setNextMaintenanceDate(e.target.value)}
+                    required
+                  />
+                </div>
+                <button
+                  type="submit"
+                  onClick={sendRaport}
+                  className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700"
                 >
-                  Sociéte
-                </label>
-                <input
-                  type="text"
-                  className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:shadow-sm-light"
-                  placeholder="le nom du sociéte"
-                  required
-                  value={company}
-                  onChange={(e) => setCompany(e.target.value)}
-                />
+                  Register new account
+                </button>
               </div>
-              <div className="mb-6">
-                <label
-                  for="message"
-                  className="block mb-2 text-md font-medium text-gray-900 dark:text-white"
-                >
-                  Observation
-                </label>
-                <textarea
-                  rows="4"
-                  className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                  placeholder="Leave a comment..."
-                  value={observation}
-                  onChange={(e) => setObservation(e.target.value)}
-                  required
-                ></textarea>
-              </div>
-              <div className="mb-6">
-                <label
-                  htmlFor="repeat-password"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Piéce changée
-                </label>
-                <input
-                  type="text"
-                  className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:shadow-sm-light"
-                  required
-                  value={partChanged}
-                  onChange={(e) => setPartChanged(e.target.value)}
-                />
-              </div>
-
-              <div className="block mb-6 w-1/2">
-                <label
-                  for="date"
-                  className="w-full text-md font-medium text-gray-900 dark:text-white flex flex-wrap gap-2"
-                >
-                  Date du prochain entretie :
-                </label>
-                <input
-                  date-rangepicker
-                  name="date"
-                  type="date"
-                  className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                  placeholder="Select date start"
-                  value={nextMaintenanceDate}
-                  onChange={(e) => setNextMaintenanceDate(e.target.value)}
-                  required
-                />
-              </div>
-
-              <button
-                type="submit"
-                onClick={sendRaport}
-                className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700"
-              >
-                Register new account
-              </button>
             </TabPanel>
           </SwipeableViews>
         </Box>

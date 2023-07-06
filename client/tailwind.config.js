@@ -7,6 +7,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["Poppins", "Arial", "sans-serif"],
+      },
       colors: {
         borderColor: "#3B8AF6",
         primary: {
