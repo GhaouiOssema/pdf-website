@@ -19,10 +19,13 @@ const Login = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:3000/seconnecter", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "https://qr-server-6xmb.onrender.com/seconnecter",
+        {
+          email,
+          password,
+        }
+      );
 
       const { token } = response.data;
       localStorage.setItem("token", token);

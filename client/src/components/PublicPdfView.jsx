@@ -214,7 +214,7 @@ const PublicPdfView = () => {
     const getPdfData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/site/folder/pdf/details/${id}`
+          `https://qr-server-6xmb.onrender.com/site/folder/pdf/details/${id}`
         );
         setPdfData(response.data.pdf);
       } catch (error) {
@@ -251,7 +251,7 @@ const PublicPdfView = () => {
   const navigate = useNavigate();
 
   const handleDownload = () => {
-    const url = `http://localhost:3000/files/${pdfData.filename}`;
+    const url = `https://qr-server-6xmb.onrender.com/files/${pdfData.filename}`;
     fetch(url)
       .then((response) => response.blob())
       .then((blob) => {
@@ -300,7 +300,7 @@ const PublicPdfView = () => {
       };
 
       const response = await axios.post(
-        `http://localhost:3000/pdfs/${id}/raport`,
+        `https://qr-server-6xmb.onrender.com/pdfs/${id}/raport`,
         requestData
       );
       if (response.status === 200) {
@@ -318,7 +318,9 @@ const PublicPdfView = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/pdf/raports`);
+        const response = await axios.get(
+          `https://qr-server-6xmb.onrender.com/pdf/raports`
+        );
         const filteredRaports = response.data.filter((raport) =>
           pdfData.raports.includes(raport._id)
         );
@@ -454,7 +456,7 @@ const PublicPdfView = () => {
                       </button>
                     </div>
                     <Document
-                      file={`http://localhost:3000/files/${pdfData.filename}`}
+                      file={`https://qr-server-6xmb.onrender.com/files/${pdfData.filename}`}
                       className="flex flex-col items-center"
                       onLoadSuccess={handlePdfLoadSuccess}
                     >

@@ -91,7 +91,7 @@ const FormSend = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/upload",
+        "https://qr-server-6xmb.onrender.com/upload",
         formData
       );
 
@@ -136,7 +136,10 @@ const FormSend = () => {
   useEffect(() => {
     const fetchFolders = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/sites", config);
+        const response = await axios.get(
+          "https://qr-server-6xmb.onrender.com/sites",
+          config
+        );
         setFolders(response.data);
       } catch (error) {
         console.error(error);

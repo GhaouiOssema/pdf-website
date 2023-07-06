@@ -14,11 +14,14 @@ const Profile = () => {
           return;
         }
 
-        const response = await axios.get("http://localhost:3000/profile/user", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await axios.get(
+          "https://qr-server-6xmb.onrender.com/profile/user",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         setUserData(response.data.userData);
       } catch (error) {

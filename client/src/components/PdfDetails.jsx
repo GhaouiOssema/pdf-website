@@ -63,7 +63,7 @@ const PdfDetails = () => {
     const getPdfData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/site/folder/pdf/details/${id}`,
+          `https://qr-server-6xmb.onrender.com/site/folder/pdf/details/${id}`,
           config
         );
         setPdfData(response.data.pdf);
@@ -88,7 +88,7 @@ const PdfDetails = () => {
   const handleDelete = async () => {
     try {
       const response = await axios.delete(
-        `http://localhost:3000/${site}/${dossier}/pdfs/${pdfData.title}`,
+        `https://qr-server-6xmb.onrender.com/${site}/${dossier}/pdfs/${pdfData.title}`,
         config
       );
       if (response.status === 200) {
@@ -142,7 +142,7 @@ const PdfDetails = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/pdf/raports`,
+          `https://qr-server-6xmb.onrender.com/pdf/raports`,
           config
         );
         const filteredRaports = response.data.filter((raport) =>

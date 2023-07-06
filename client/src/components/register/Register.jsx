@@ -14,12 +14,15 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:3000/inscription", {
-        userName,
-        email,
-        password,
-        userRole,
-      });
+      const response = await axios.post(
+        "https://qr-server-6xmb.onrender.com/inscription",
+        {
+          userName,
+          email,
+          password,
+          userRole,
+        }
+      );
 
       navigate("/seconnecter");
     } catch (err) {

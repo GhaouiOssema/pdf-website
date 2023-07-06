@@ -22,7 +22,7 @@ const Plan = () => {
     const getPdfData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/site/folder/pdf/details/${fichier}`
+          `https://qr-server-6xmb.onrender.com/site/folder/pdf/details/${fichier}`
         );
         setPdfData(response.data.pdf);
       } catch (error) {
@@ -56,7 +56,7 @@ const Plan = () => {
     <div className="bg-gray-100 boor flex justify-center items-center ">
       {pdfData ? (
         <Document
-          file={`http://localhost:3000/files/${pdfData.filename}`}
+          file={`https://qr-server-6xmb.onrender.com/files/${pdfData.filename}`}
           className="flex flex-col items-center"
           onLoadSuccess={handlePdfLoadSuccess}
         >

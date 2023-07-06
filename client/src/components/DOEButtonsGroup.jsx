@@ -97,7 +97,7 @@ const DOEButtonsGroup = ({ pdfData }) => {
     const fetchFileStructure = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/DOE/${username}/${pdfData.title}`
+          `https://qr-server-6xmb.onrender.com/DOE/${username}/${pdfData.title}`
         );
         const { fileStructure } = response.data;
         setFileStructure(fileStructure);
@@ -154,7 +154,7 @@ const DOEButtonsGroup = ({ pdfData }) => {
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
           <Document
-            file={`http://localhost:3000/oussema/rr/download_01.pdf`}
+            file={`https://qr-server-6xmb.onrender.com/oussema/rr/download_01.pdf`}
             className="hidden__class"
           >
             <Page pageNumber={1} renderTextLayer={false} className="pdf-page" />

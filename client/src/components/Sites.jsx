@@ -197,7 +197,10 @@ const Sites = () => {
           },
         };
 
-        const response = await axios.get("http://localhost:3000/sites", config);
+        const response = await axios.get(
+          "https://qr-server-6xmb.onrender.com/sites",
+          config
+        );
         setFolders(response.data);
       } catch (error) {
         console.error(error);
