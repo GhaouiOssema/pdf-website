@@ -77,32 +77,6 @@ const SideBar = () => {
             </Sidebar.ItemGroup>
           </Sidebar.ItemGroup>
         </Sidebar.Items>
-        <Sidebar.CTA style={{ width: "200px" }} className=" absolute bottom-0">
-          <div className="flex items-center">
-            <Badge color="warning">Beta</Badge>
-            <button
-              aria-label="Close"
-              className="-m-1.5 ml-auto inline-flex h-6 w-6 rounded-lg bg-gray-100 p-1 text-cyan-900 hover:bg-gray-200 focus:ring-2 focus:ring-gray-400 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-600"
-              type="button"
-            >
-              {/* <SeeSourceCodeForSVG /> */}
-            </button>
-          </div>
-          <div className="mb-3 text-sm text-cyan-900 dark:text-gray-400">
-            <p>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cumque
-              aliquam, nesciunt voluptatibus rem voluptas mollitia ut ipsum
-              saepe optio vel praesentium blanditiis delectus magnam officia
-              dignissimos sunt numquam dolorem ducimus.
-            </p>
-          </div>
-          <a
-            className="text-sm text-cyan-900 underline hover:text-cyan-800 dark:text-gray-400 dark:hover:text-gray-300"
-            href="#"
-          >
-            <p>Turn new navigation off</p>
-          </a>
-        </Sidebar.CTA>
       </Sidebar>
     </div>
   );

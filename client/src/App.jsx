@@ -44,13 +44,13 @@ const App = () => {
   }, []);
 
   return (
-    <div className="flex">
+    <div className="flex ">
       {isAuthenticated && <SideBar isAuthenticated={isAuthenticated} />}
 
       <div className="flex-grow">
         {!isAuthenticated && <Navbar isAuthenticated={isAuthenticated} />}
 
-        <div className="container bg-gray-100 h-screen">
+        <div className="container bg-gray-100 h-full">
           <Routes>
             <Route path="/" element={isAuthenticated ? null : <Home />} />
             <Route path="/seconnecter" element={<Login />} />
@@ -58,6 +58,10 @@ const App = () => {
             <Route
               path="/:site/:dossier/pdf/view/:id/verify"
               element={<VerificationCode />}
+            />
+            <Route
+              path="/publique/:site/:dossier/pdf/view/:id"
+              element={<PublicPdfView />}
             />
 
             {isAuthenticated && (
@@ -79,7 +83,7 @@ const App = () => {
             )}
           </Routes>
         </div>
-        {/* <Footer /> */}
+        {!isAuthenticated && <Footer />}
       </div>
     </div>
   );

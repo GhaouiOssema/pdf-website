@@ -384,6 +384,7 @@ const PdfView = () => {
                 "& .Mui-selected": {
                   background: "white",
                 },
+                borderRadius: 2,
               }}
             >
               <Tab

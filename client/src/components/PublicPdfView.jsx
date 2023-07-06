@@ -36,7 +36,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: 700,
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -76,7 +76,7 @@ const a11yProps = (index) => {
   };
 };
 
-const TransitionsModal = ({ open, handleClose, handleOpen }) => {
+const TransitionsModal = ({ open, handleClose, raports, filteredRaports }) => {
   return (
     <div>
       <Modal
@@ -94,7 +94,88 @@ const TransitionsModal = ({ open, handleClose, handleOpen }) => {
       >
         <Fade in={open}>
           <Box sx={style}>
-            <h1>d</h1>
+            {filteredRaports &&
+              filteredRaports.map((raport, index) => (
+                <Box sx={{ maxHeight: "400px", overflow: "auto" }} key={index}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <Typography variant="h7" gutterBottom>
+                      {raport.société}
+                    </Typography>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "start",
+                      justifyContent: "space-between",
+                      flexWrap: "wrap",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Typography variant="h6" gutterBottom>
+                      Observation
+                    </Typography>
+                    <Typography
+                      variant="h7"
+                      gutterBottom
+                      className="text-gray-500"
+                    >
+                      {raport.observation}
+                    </Typography>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <Typography variant="h6" gutterBottom>
+                      Pièces Changées
+                    </Typography>
+                    <Typography variant="h7" gutterBottom>
+                      {raport.piècesChangées}
+                    </Typography>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <Typography variant="h6" gutterBottom>
+                      Date prochain entretien
+                    </Typography>
+                    <Typography variant="h7" gutterBottom>
+                      {raport.dateProchainEntretien}
+                    </Typography>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <Typography variant="h6" gutterBottom>
+                      Date dernier entretien
+                    </Typography>
+                    <Typography variant="h7" gutterBottom>
+                      {raport.dateDernierEntretien}
+                    </Typography>
+                  </Box>
+                </Box>
+              ))}
           </Box>
         </Fade>
       </Modal>
@@ -108,7 +189,6 @@ const PublicPdfView = () => {
   const [numPages, setNumPages] = useState(null);
   const pdfRef = useRef();
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [company, setCompany] = useState("");
   const [observation, setObservation] = useState("");
@@ -117,6 +197,13 @@ const PublicPdfView = () => {
   const [raports, setRaports] = useState(null);
 
   const [storedConfirmed, setStoredConfirmed] = useState(null);
+  const [filteredRaports, setFilteredRaports] = useState([]);
+
+  const handleOpen = (soc) => {
+    setOpen(true);
+    const filteredReports = raports.filter((raport) => raport.société === soc);
+    setFilteredRaports(filteredReports);
+  };
 
   useEffect(() => {
     const confirmed = localStorage.getItem("confirmed");
@@ -262,6 +349,8 @@ const PublicPdfView = () => {
               open={open}
               handleClose={handleClose}
               handleOpen={handleOpen}
+              raports={raports}
+              filteredRaports={filteredRaports}
             />
           )}
           <h1 className="text-3xl text-center font-bold mt-5 mb-5">
@@ -299,6 +388,7 @@ const PublicPdfView = () => {
                   sx={{
                     width: "100%",
                     bgcolor: "rgb(50, 145, 240)",
+                    borderRadius: 2,
                     color: "white",
                     "& .MuiTabs-indicator": {
                       backgroundColor: "white",
@@ -357,7 +447,7 @@ const PublicPdfView = () => {
                   >
                     <div className="flex justify-end">
                       <button
-                        className="boor text-xs items-center text-center text-white bg-blue-500 rounded-full px-4 py-2"
+                        className=" text-xs items-center text-center text-white bg-blue-500 rounded-full px-4 py-2"
                         onClick={handleDownload}
                       >
                         Télécharger
@@ -425,7 +515,7 @@ const PublicPdfView = () => {
                               >
                                 <InfoOutlinedIcon
                                   sx={{ color: "#3291F0" }}
-                                  onClick={handleOpen}
+                                  onClick={() => handleOpen(raport.société)}
                                 />
                               </TableCell>
                             </TableRow>

@@ -215,7 +215,7 @@ const PdfDetails = () => {
                 </div>
               </div>
 
-              <div className="flex justify-between items-center flex-col ml-5 pt-5 mt-[-250px] ">
+              <div className="flex justify-between items-center flex-col ml-5 pt-5 mt-[-100px] ">
                 <p className="font-bold text-lg mb-5  ">Tableau des Raport</p>
 
                 <div className="pdf-preview bg-white " key={pdfData._id}>

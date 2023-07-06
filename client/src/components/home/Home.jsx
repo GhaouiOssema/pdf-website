@@ -41,7 +41,7 @@ const Home = () => {
                 <img
                   alt="scribble"
                   src={IMG}
-                  className="mx-auto md:absolute md:ml-[30rem] md:h-[3rem] md:mt-[-23px] md:w-[300px]"
+                  className="mx-auto md:absolute md:ml-[35rem] md:h-[3rem] md:mt-[-23px] md:w-[300px]"
                 />
               </h3>
               <span>dès aujourd'hui.</span>
@@ -99,103 +99,82 @@ const Home = () => {
         <DefaultCarousel />
       </motion.section>
 
-      <section className="p-6 bg-[#f0854a] text-gray-100 mb-[5rem]">
+      <section className="p-6 bg-gray-100 text-black-100 mb-[5rem]">
         <Accordion collapseAll>
           <Accordion.Panel>
-            <Accordion.Title style={{ color: "#fff" }} className="hover-black">
-              What is Flowbite?
+            <Accordion.Title style={{ color: "#000" }}>
+              wLorem ipsum dolor sit amet consectetur adipisicing elit.
             </Accordion.Title>
             <Accordion.Content>
-              <p className="mb-2 text-white">
-                <p>
-                  Flowbite is an open-source library of interactive components
-                  built on top of Tailwind CSS including buttons, dropdowns,
-                  modals, navbars, and more.
-                </p>
+              <p className="mb-2 text-black">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Similique, recusandae molestiae deleniti ut voluptatibus,
+                corrupti porro culpa modi nulla distinctio perspiciatis
+                blanditiis praesentium repellat eveniet in tenetur, dicta sunt
+                minus.
               </p>
-              <p className="text-white">
-                <p>Check out this guide to learn how to</p>
-                <a
-                  className="text-white"
-                  href="https://flowbite.com/docs/getting-started/introduction/"
-                >
-                  <p>get started</p>
-                </a>
+              <p className="text-black">
                 <p>
-                  and start developing websites even faster with components on
-                  top of Tailwind CSS.
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Similique, recusandae molestiae deleniti ut voluptatibus,
+                  corrupti porro culpa modi nulla distinctio perspiciatis
+                  blanditiis praesentium repellat eveniet in tenetur, dicta sunt
+                  minus.
                 </p>
               </p>
             </Accordion.Content>
           </Accordion.Panel>
           <Accordion.Panel>
             <Accordion.Title
-              style={{ color: "#fff", ":hover": { color: "#000" } }}
+              style={{ color: "#000", ":hover": { color: "#000" } }}
             >
-              Is there a Figma file available?
+              orem ipsum dolor sit amet consectetur adipisicing elit.{" "}
             </Accordion.Title>
             <Accordion.Content>
-              <p className="mb-2 text-white">
+              <p className="mb-2 text-black">
                 <p>
-                  Flowbite is first conceptualized and designed using the Figma
-                  software so everything you see in the library has a design
-                  equivalent in our Figma file.
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Accusantium repellat sed error voluptas voluptates, maxime
+                  reiciendis eius, itaque sint voluptatibus, accusamus earum
+                  praesentium ipsam. Quidem obcaecati voluptate ipsa aspernatur
+                  nisi.
                 </p>
               </p>
-              <p className="text-white">
+              <p className="text-black">
                 <p>Check out the</p>
-                <a className="text-white" href="https://flowbite.com/figma/">
+                <a className="text-black">
                   <p>Figma design system</p>
                 </a>
-                <p>
-                  based on the utility classes from Tailwind CSS and components
-                  from Flowbite.
-                </p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
               </p>
             </Accordion.Content>
           </Accordion.Panel>
           <Accordion.Panel>
             <Accordion.Title
-              style={{ color: "#fff", ":hover": { color: "#000" } }}
+              style={{ color: "#000", ":hover": { color: "#000" } }}
             >
-              What are the differences between Flowbite and Tailwind UI?
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
             </Accordion.Title>
             <Accordion.Content>
-              <p className="mb-2 text-white">
+              <p className="mb-2 text-black">
                 <p>
-                  The main difference is that the core components from Flowbite
-                  are open source under the MIT license, whereas Tailwind UI is
-                  a paid product. Another difference is that Flowbite relies on
-                  smaller and standalone components, whereas Tailwind UI offers
-                  sections of pages.
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Temporibus maiores sint accusantium nulla a nihil recusandae
+                  aliquid, dolor consectetur nostrum ab corrupti esse, dolorem
+                  veniam qui? Laboriosam esse voluptates repudiandae!
                 </p>
               </p>
-              <p className="mb-2 text-white">
+              <p className="mb-2 text-black">
                 <p>
-                  However, we actually recommend using both Flowbite, Flowbite
-                  Pro, and even Tailwind UI as there is no technical reason
-                  stopping you from using the best of two worlds.
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum
+                  totam reiciendis est omnis eveniet amet, repudiandae error
+                  molestias commodi magnam enim minima tenetur eligendi!
+                  Assumenda expedita neque sequi voluptates vero.
                 </p>
               </p>
-              <p className="mb-2 text-white">
+              <p className="mb-2 text-black">
                 Learn more about these technologies:
               </p>
-              <ul className="list-disc pl-5 text-gray-500 dark:text-gray-400">
-                <li>
-                  <a className="text-white" href="https://flowbite.com/pro/">
-                    <p>Flowbite Pro</p>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="text-white"
-                    href="https://tailwindui.com/"
-                    rel="nofollow"
-                  >
-                    <p>Tailwind UI</p>
-                  </a>
-                </li>
-              </ul>
             </Accordion.Content>
           </Accordion.Panel>
         </Accordion>
@@ -412,7 +391,7 @@ const Home = () => {
                 boxShadow: "none",
               }}
             >
-              FAQ :
+              Qestion 1 :
             </Tab>
             <Tab
               sx={{
@@ -422,7 +401,7 @@ const Home = () => {
                 boxShadow: "none",
               }}
             >
-              utilisation :
+              Qestion 2 :
             </Tab>
             <Tab
               sx={{
@@ -432,7 +411,7 @@ const Home = () => {
                 boxShadow: "none",
               }}
             >
-              Avantages clés
+              Qestion 3
             </Tab>
             <Tab
               sx={{
@@ -442,7 +421,7 @@ const Home = () => {
                 boxShadow: "none",
               }}
             >
-              a propos :
+              Qestion 3:
             </Tab>
           </TabList>
           <TabPanel
@@ -510,47 +489,6 @@ const Home = () => {
         </Tabs>
       </section>
 
-      <section className="bg-gray-50  dark:bg-gray-800">
-        <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
-          <div className="max-w-screen-lg text-gray-500 sm:text-lg dark:text-gray-400">
-            <h2 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
-              Powering innovation at{" "}
-              <span className="font-extrabold">200,000+</span> companies
-              worldwide
-            </h2>
-            <p className="mb-4 font-light">
-              Track work across the enterprise through an open, collaborative
-              platform. Link issues across Jira and ingest data from other
-              software development tools, so your IT support and operations
-              teams have richer contextual information to rapidly respond to
-              requests, incidents, and changes.
-            </p>
-            <p className="mb-4 font-medium">
-              Deliver great service experiences fast - without the complexity of
-              traditional ITSM solutions.Accelerate critical development work,
-              eliminate toil, and deploy changes with ease.
-            </p>
-            <a
-              href="#"
-              className="inline-flex items-center font-medium text-primary-600 hover:text-primary-800 dark:text-primary-500 dark:hover:text-primary-700"
-            >
-              Learn more
-              <svg
-                className="ml-1 w-6 h-6"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-            </a>
-          </div>
-        </div>
-      </section>
       <section className="dark:bg-gray-900">
         <div className="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
           <div className="mx-auto max-w-screen-sm text-center">

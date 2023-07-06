@@ -384,8 +384,8 @@ const Sites = () => {
       </div>
 
       {/* SEARCH SECTION */}
-      <div className="flex  mt-10 justify-center">
-        <div className="flex items-center justify-between w-[90%] ">
+      <div className="flex mt-10 justify-center ">
+        <div className="flex items-center justify-between w-[70%] ">
           <div className="w-[40%] items-center">
             <form className="flex items-center">
               <label htmlFor="simple-search" className="sr-only">
@@ -464,7 +464,7 @@ const Sites = () => {
       >
         <div
           className={`${
-            screenSize.width < 700 ? "h-screen " : "flex flex-wrap w-[80rem] "
+            screenSize.width < 700 ? "h-screen " : "flex flex-wrap w-[60rem] "
           }`}
         >
           {folders && folders.length ? (
