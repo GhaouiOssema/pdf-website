@@ -436,7 +436,7 @@ const PdfView = () => {
               >
                 <div className="flex justify-end">
                   <button
-                    className="boor text-xs items-center text-center text-white bg-blue-500 rounded-full px-4 py-2"
+                    className="mb-8 text-xs items-center text-center text-white bg-blue-500 rounded-full px-4 py-2"
                     onClick={handleDownload}
                   >
                     Télécharger
@@ -444,7 +444,7 @@ const PdfView = () => {
                 </div>
                 <Document
                   file={`https://qr-server-6xmb.onrender.com/files/${pdfData.filename}`}
-                  className="flex flex-col items-center"
+                  className="flex flex-col items-center w-full boor"
                   onLoadSuccess={handlePdfLoadSuccess}
                 >
                   {Array.from(new Array(numPages), (el, index) => (
@@ -453,7 +453,7 @@ const PdfView = () => {
                       pageNumber={index + 1}
                       renderTextLayer={false}
                       height={null}
-                      width={screenSize.width < 700 ? 349 : 1000}
+                      width={screenSize.width < 700 ? 349 : 780}
                       className="mt-1"
                     />
                   ))}

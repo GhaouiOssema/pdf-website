@@ -343,7 +343,7 @@ const PublicPdfView = () => {
   console.log(storedConfirmed);
 
   return (
-    <>
+    <div className="h-screen">
       {storedConfirmed === "true" ? (
         <section className="flex flex-col md:w-screen">
           {open && (
@@ -610,7 +610,7 @@ const PublicPdfView = () => {
           </div>
         </section>
       ) : null}
-    </>
+    </div>
   );
 };
 
