@@ -192,7 +192,7 @@ const PdfDetails = () => {
                 >
                   <QRCode
                     className="w-[200px] h-[200px]"
-                    value={`https://qr-solution-beta.netlify.app/${site}/${dossier}/pdf/view/${id}/verify`}
+                    value={`https://qr-solution-beta.netlify.app/publique/${site}/${dossier}/pdf/view/${id}`}
                   />
                 </div>
                 <div className="mt-5 w-full flex-row-reverse  text-xl flex items-center justify-center">
