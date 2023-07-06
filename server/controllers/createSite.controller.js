@@ -1,4 +1,4 @@
-const Folder = require("../models/Folder");
+const Folder = require("../models/FOLDER");
 const USER = require("../models/USER");
 
 const addSite = async (req, res) => {

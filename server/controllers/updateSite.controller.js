@@ -1,4 +1,4 @@
-const Folder = require("../models/Folder");
+const Folder = require("../models/FOLDER");
 const jwt = require("jsonwebtoken");
 const UserAccount = require("../models/USER");
 

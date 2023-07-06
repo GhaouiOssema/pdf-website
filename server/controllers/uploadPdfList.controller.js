@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const User = require("../models/USER");
-const Folder = require("../models/Folder");
+const Folder = require("../models/FOLDER");
 const FETCH = require("../middleware/fetchDOE");
 const { GridFSBucket } = require("mongodb");
 

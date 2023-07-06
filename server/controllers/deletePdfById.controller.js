@@ -1,5 +1,5 @@
 const PDF = require("../models/PDF");
-const Folder = require("../models/Folder");
+const Folder = require("../models/FOLDER");
 const UserAccount = require("../models/USER");
 const jwt = require("jsonwebtoken");
 

@@ -1,7 +1,7 @@
 require("dotenv").config();
 
 const jwt = require("jsonwebtoken");
-const Folder = require("../models/Folder");
+const Folder = require("../models/FOLDER");
 const PDF = require("../models/PDF");
 
 module.exports = {
