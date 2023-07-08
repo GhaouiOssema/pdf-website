@@ -28,7 +28,12 @@ const MenuProps = {
   },
 };
 
-const names = ["climatiseur", "chauffage", "Armoire electrique", "Ventilateur"];
+const names = [
+  "Climatisation",
+  "Chauffage",
+  "Armoire electrique",
+  "Ventilasion",
+];
 
 const RaportView = ({
   type,
@@ -62,6 +67,7 @@ const RaportView = ({
   const [siteAddress, setSiteAddress] = useState("");
   const [siteCodePostal, setSiteCodePostal] = useState("");
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [name, setName] = useState(""); // Renamed state variable
 
   // for updates
   const [adresse, setAdresse] = useState("");
@@ -79,12 +85,18 @@ const RaportView = ({
   const handleCategoryChange = (event) => {
     setSelectedCategories(event.target.value);
   };
+
+  const handleNameChange = (event) => {
+    setName(event.target.value);
+  };
+
   const addSite = async () => {
     try {
       const formData = {
         adresse: siteAddress,
         code_postal: siteCodePostal,
         subFolders: selectedCategories,
+        name: name,
       };
 
       const token = localStorage.getItem("token");
@@ -98,7 +110,7 @@ const RaportView = ({
       // Extract the necessary information from the token payload
 
       const response = await axios.post(
-        "https://qr-server-6xmb.onrender.com/sites/creation",
+        "http://localhost:3000/sites/creation",
         formData,
         {
           headers: {
@@ -131,10 +143,9 @@ const RaportView = ({
       const data = {
         adresse: adresse,
         code_postal: codePostal,
-        subfolders: subContent, // Use "subfolders" instead of "subFolders"
+        subfolders: subContent,
+        name: name,
       };
-
-      console.log(subContent);
 
       const response = await axios.put(
         `https://qr-server-6xmb.onrender.com/site/${folderIdUpdate}`,
@@ -168,10 +179,10 @@ const RaportView = ({
 
   return (
     <>
-      <div className="w-[100%] boor">
+      <div className=" md:w-[100%] absolute flex justify-center">
         <CssBaseline />
         <form>
-          <Container fixed>
+          <Container fixed className=" ">
             <Box
               component="form"
               sx={{
@@ -179,14 +190,15 @@ const RaportView = ({
                 height: "50vh",
                 borderRadius: "25px",
                 width: 500,
-                marginLeft: 35,
+                display: "flex",
+                justifyContent: "center",
               }}
             >
               <div className="text-black">
                 <div className="w-full max-w-lg ">
                   {screenSize.width > 700 && type === "siteButton" ? (
                     <>
-                      <h1 className="pt-10 block uppercase tracking-wide text-center text-gray-700 text-lg font-bold mb-10 flex justify-center items-center">
+                      <h1 className="pt-10 block uppercase tracking-wide text-center text-gray-700 text-lg font-bold mb-10 justify-center items-center">
                         <span className="text-sm">
                           Villiuer saisir les informations du site
                         </span>
@@ -196,6 +208,22 @@ const RaportView = ({
                           onClick={close}
                         />
                       </h1>
+
+                      <div className="w-full md:w-1/3 px-3 mb-6 md:flex md:flex-wrap">
+                        <div>
+                          <TextField
+                            sx={{ m: 1, width: 361, ml: 6 }}
+                            id="nom_site"
+                            label="Nom du site"
+                            variant="outlined"
+                            fullWidth
+                            size="small"
+                            value={name}
+                            onChange={handleNameChange}
+                          />
+                        </div>
+                      </div>
+
                       <FormControl
                         fullWidth
                         sx={{
@@ -206,7 +234,7 @@ const RaportView = ({
                           marginLeft: 7,
                         }}
                       >
-                        <div className="w-full md:w-1/2 px-1 mb-6 md:mb-0">
+                        <div className="w-full md:w-1/2 px-1 mb-6">
                           <TextField
                             id="adress_site"
                             label="Adresse du site"
@@ -217,7 +245,7 @@ const RaportView = ({
                             onChange={handleSiteAddressChange}
                           />
                         </div>
-                        <div className="w-full md:w-1/2 px-1">
+                        <div className="w-full md:w-1/2 px-1 mb-6">
                           <TextField
                             id="code_postal"
                             label="Code postal"
@@ -231,7 +259,7 @@ const RaportView = ({
                       </FormControl>
 
                       <div className="flex flex-wrap mb-2">
-                        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                        <div className="w-full md:w-1/3 px-3 mb-6">
                           <div>
                             <FormControl
                               sx={{ m: 1, width: 361, ml: 6 }}
@@ -313,7 +341,7 @@ const RaportView = ({
                           marginLeft: 7,
                         }}
                       >
-                        <div className="w-full md:w-1/2 px-1 mb-6 md:mb-0">
+                        <div className="w-full md:w-1/2 px-1 mb-6">
                           <TextField
                             id="adress_site"
                             label="Adresse du site"
@@ -338,7 +366,7 @@ const RaportView = ({
                       </FormControl>
 
                       <div className="flex flex-wrap mb-2">
-                        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                        <div className="w-full md:w-1/3 px-3 mb-6">
                           <div>
                             <FormControl
                               sx={{ m: 1, width: 361, ml: 6 }}

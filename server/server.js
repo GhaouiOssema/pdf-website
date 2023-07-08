@@ -14,6 +14,12 @@ app.use(cors({ origin: true, credentials: true }));
 app.use(bodyParser.json());
 app.use("/files", express.static(path.join(__dirname, "files")));
 
+app.use(express.static(path.join(__dirname, "client/build")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client/build", "index.html"));
+});
+
 app.use(require("./routes"));
 
 // Start the server

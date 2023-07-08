@@ -2,7 +2,8 @@ const Folder = require("../models/FOLDER");
 const USER = require("../models/USER");
 
 const addSite = async (req, res) => {
-  const { adresse, code_postal, subFolders } = req.body;
+  const { adresse, code_postal, subFolders, name } = req.body;
+  console.log(name);
 
   try {
     const userId = req.headers["x-user-id"]; // Retrieve the userId from the custom header
@@ -14,6 +15,7 @@ const addSite = async (req, res) => {
 
     // Create the new folder
     const folder = new Folder({
+      name,
       adresse,
       code_postal,
       content: subFolders.map((subFolder) => ({

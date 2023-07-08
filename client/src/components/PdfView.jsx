@@ -103,28 +103,15 @@ const TransitionsModal = ({ open, handleClose, raports, filteredRaports }) => {
                       flexWrap: "wrap",
                     }}
                   >
-                    <Typography variant="h7" gutterBottom>
-                      {raport.société}
-                    </Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "start",
-                      justifyContent: "space-between",
-                      flexWrap: "wrap",
-                      flexDirection: "column",
-                    }}
-                  >
                     <Typography variant="h6" gutterBottom>
-                      Observation
+                      Date
                     </Typography>
-                    <Typography
-                      variant="h7"
-                      gutterBottom
-                      className="text-gray-500"
-                    >
-                      {raport.observation}
+                    <Typography variant="h7" gutterBottom>
+                      {
+                        new Date(raport.dateDernierEntretien)
+                          .toISOString()
+                          .split("T")[0]
+                      }
                     </Typography>
                   </Box>
                   <Box
@@ -136,7 +123,22 @@ const TransitionsModal = ({ open, handleClose, raports, filteredRaports }) => {
                     }}
                   >
                     <Typography variant="h6" gutterBottom>
-                      Pièces Changées
+                      société
+                    </Typography>
+                    <Typography variant="h7" gutterBottom>
+                      {raport.société}
+                    </Typography>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <Typography variant="h6" gutterBottom>
+                      Tàche effectuer
                     </Typography>
                     <Typography variant="h7" gutterBottom>
                       {raport.piècesChangées}
@@ -151,25 +153,14 @@ const TransitionsModal = ({ open, handleClose, raports, filteredRaports }) => {
                     }}
                   >
                     <Typography variant="h6" gutterBottom>
-                      Date prochain entretien
+                      Date prochain maintenance
                     </Typography>
                     <Typography variant="h7" gutterBottom>
-                      {raport.dateProchainEntretien}
-                    </Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      flexWrap: "wrap",
-                    }}
-                  >
-                    <Typography variant="h6" gutterBottom>
-                      Date dernier entretien
-                    </Typography>
-                    <Typography variant="h7" gutterBottom>
-                      {raport.dateDernierEntretien}
+                      {
+                        new Date(raport.dateProchainEntretien)
+                          .toISOString()
+                          .split("T")[0]
+                      }{" "}
                     </Typography>
                   </Box>
                 </Box>
@@ -196,13 +187,16 @@ const PdfView = () => {
   const [socIndex, setSocIndex] = useState(null);
   const [filteredRaports, setFilteredRaports] = useState([]);
 
+  const [selectedOption, setSelectedOption] = useState("Option 1");
+
+  const handleOptionChange = (option) => {
+    setSelectedOption(option);
+  };
   const handleOpen = (soc) => {
     setOpen(true);
     const filteredReports = raports.filter((raport) => raport.société === soc);
     setFilteredRaports(filteredReports);
   };
-
-  console.log(filteredRaports);
 
   const token = localStorage.getItem("token");
   if (!token) {
@@ -253,8 +247,6 @@ const PdfView = () => {
     };
   }, []);
 
-  const navigate = useNavigate();
-
   const handleDownload = () => {
     const url = `https://qr-server-6xmb.onrender.com/files/${pdfData.filename}`;
     fetch(url)
@@ -283,36 +275,35 @@ const PdfView = () => {
     setValue(index);
   };
 
-  const createData = (
-    Sociéte,
-    Date_du_dernier_entretien,
-    Date_du_prochain_entretien
-  ) => {
-    return { Sociéte, Date_du_dernier_entretien, Date_du_prochain_entretien };
-  };
-
-  const rows = [createData("Frozen yoghurt", 159, 6.0)];
-  console.log(nextMaintenanceDate);
   const sendRaport = async () => {
     try {
       const requestData = {
         société: company,
-        observation,
+        observation: observation,
         piècesChangées: partChanged,
         dateProchainEntretien: nextMaintenanceDate,
+        pdfID: pdfData._id,
+        option:
+          selectedOption === "Préventif"
+            ? "Préventif"
+            : selectedOption === "Correctif"
+            ? "Correctif"
+            : null,
       };
 
+      console.log(requestData);
+
       const response = await axios.post(
-        `https://qr-server-6xmb.onrender.com/pdfs/${id}/raport`,
-        requestData,
-        config
+        `http://localhost:3000/pdfs/${id}/raport`,
+        requestData
       );
+
       if (response.status === 200) {
-        alert("raport sended");
-        setValue(2);
+        alert("Raport sent");
         window.location.reload();
+        setValue(2);
       } else {
-        alert("error raport");
+        alert("Error sending raport");
       }
     } catch (error) {
       console.log("Error sending report:", error);
@@ -402,7 +393,7 @@ const PdfView = () => {
                 }}
               />
               <Tab
-                label="Carnet de verification"
+                label="Historiqye maintenance"
                 {...a11yProps(2)}
                 sx={{
                   color: "white",
@@ -469,12 +460,11 @@ const PdfView = () => {
                 >
                   <TableHead>
                     <TableRow>
+                      <TableCell align="center">Date</TableCell>
                       <TableCell align="center">Sociéte</TableCell>
+                      <TableCell align="center">Tàche effectuer</TableCell>
                       <TableCell align="center">
-                        Date du dernier entretien
-                      </TableCell>
-                      <TableCell align="center">
-                        Date du prochain entretien
+                        Date du prochain maintenance
                       </TableCell>
                     </TableRow>
                   </TableHead>
@@ -491,10 +481,21 @@ const PdfView = () => {
                             {raport.société}
                           </TableCell>
                           <TableCell align="center">
-                            {raport.dateDernierEntretien}
+                            {
+                              new Date(raport.dateDernierEntretien)
+                                .toISOString()
+                                .split("T")[0]
+                            }
                           </TableCell>
                           <TableCell align="center">
-                            {raport.dateProchainEntretien}
+                            {raport.piècesChangées}
+                          </TableCell>
+                          <TableCell align="center">
+                            {
+                              new Date(raport.dateProchainEntretien)
+                                .toISOString()
+                                .split("T")[0]
+                            }
                           </TableCell>
                           <TableCell align="center" sx={{ cursor: "pointer" }}>
                             <InfoOutlinedIcon
@@ -565,6 +566,44 @@ const PdfView = () => {
                     value={partChanged}
                     onChange={(e) => setPartChanged(e.target.value)}
                   />
+                </div>
+                <div className="flex items-center justify-between w-1/4 flex-wrap gap-2">
+                  <div className="flex items-start mb-6">
+                    <div className="flex items-center h-5">
+                      <input
+                        id="option1"
+                        type="radio"
+                        className="w-4 h-4 border border-gray-300 rounded bg-gray-50 dark:bg-gray-700 dark:border-gray-600"
+                        value="Correctif"
+                        checked={selectedOption === "Correctif"}
+                        onChange={() => handleOptionChange("Correctif")}
+                      />
+                    </div>
+                    <label
+                      htmlFor="option1"
+                      className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      Correctif
+                    </label>
+                  </div>
+                  <div className="flex items-start mb-6 ">
+                    <div className="flex items-center h-5">
+                      <input
+                        id="option2"
+                        type="radio"
+                        className="w-4 h-4 border border-gray-300 rounded bg-gray-50 dark:bg-gray-700 dark:border-gray-600"
+                        value="Préventif"
+                        checked={selectedOption === "Préventif"}
+                        onChange={() => handleOptionChange("Préventif")}
+                      />
+                    </div>
+                    <label
+                      htmlFor="option2"
+                      className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      Préventif
+                    </label>
+                  </div>
                 </div>
                 <div className="block mb-6 w-1/2">
                   <label

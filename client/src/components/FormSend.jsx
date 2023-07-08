@@ -26,13 +26,15 @@ const ATert = React.forwardRef(function Alert(props, ref) {
 const FormSend = () => {
   const [formState, setFormState] = useState({
     selectedFile: null,
+    selectedImage: null,
     title: "",
     owner: "",
-    subFolder: "public",
+    subFolder: "",
     site: "",
+    input: "",
+    input1: "",
+    input2: "",
   });
-
-  console.log(formState);
 
   const [loading, setLoading] = useState(false);
   const Navigate = useNavigate();
@@ -61,20 +63,60 @@ const FormSend = () => {
     }
     setOpen(false);
   };
+  const [selectedFolder, setSelectedFolder] = useState("");
+
+  console.log(formState.publicOrPrivate);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormState({ ...formState, [name]: value });
+
+    if (name === "site") {
+      setSelectedFolder(event.target.value);
+    }
+
+    if (name === "publicOrPrivate") {
+      if (value === "Armoire Electrique") {
+        setFormState({
+          ...formState,
+          [name]: value,
+          input1: "",
+          input2: "",
+        });
+      } else {
+        setFormState({
+          ...formState,
+          [name]: value,
+          input: "",
+        });
+      }
+    }
   };
 
   const handleFileChange = (event) => {
-    setFormState({ ...formState, selectedFile: event.target.files[0] });
+    const { name, files } = event.target;
+
+    if (name === "pdf") {
+      setFormState({ ...formState, selectedFile: files[0] });
+    } else if (name === "image") {
+      setFormState({ ...formState, selectedImage: files[0] });
+    }
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const { selectedFile, title, owner, publicOrPrivate } = formState;
+    const {
+      selectedFile,
+      title,
+      owner,
+      publicOrPrivate,
+      input1,
+      input2,
+      input,
+      site,
+      selectedImage,
+    } = formState;
 
     // Check if a file was selected
     if (!selectedFile) {
@@ -84,15 +126,21 @@ const FormSend = () => {
     }
 
     const formData = new FormData();
-    formData.append("pdf", selectedFile);
+    formData.append("file", selectedFile);
     formData.append("title", title);
     formData.append("owner", owner);
     formData.append("publicOrPrivate", publicOrPrivate);
+    formData.append("input1", input1);
+    formData.append("input2", input2);
+    formData.append("input", input);
+    formData.append("site", site);
+    formData.append("image", selectedImage);
 
     try {
       const response = await axios.post(
-        "https://qr-server-6xmb.onrender.com/upload",
-        formData
+        "http://localhost:3000/upload",
+        formData,
+        config
       );
 
       if (response.status === 200) {
@@ -149,6 +197,8 @@ const FormSend = () => {
     fetchFolders();
   }, []);
 
+  console.log(formState);
+
   return (
     <>
       <h1 className="text-3xl text-center font-bold mb-4 pt-20">
@@ -182,11 +232,12 @@ const FormSend = () => {
                           ></path>
                         </svg>
                         <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                          Selectioner un fichier
+                          Selectioner un fichier PDF
                         </p>
                       </div>
                       <input
                         id="dropzone-file"
+                        name="pdf"
                         type="file"
                         accept=".pdf"
                         hidden
@@ -215,14 +266,20 @@ const FormSend = () => {
                 </div>
                 <div className="flex items-center justify-between form__style">
                   <select
-                    name="publicOrPrivate"
+                    name="site"
                     value={formState.publicOrPrivate}
                     onChange={handleInputChange}
                     className="max w-[28%] bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg pl-5 "
                   >
-                    <option value="sites">Sites</option>
+                    <option value="Sites" selected>
+                      Sites
+                    </option>
                     {folders?.map((folder, index) => (
-                      <option value={folder.adresse} key={index}>
+                      <option
+                        value={folder.adresse}
+                        key={index}
+                        onChange={handleInputChange}
+                      >
                         {folder.adresse}
                       </option>
                     ))}
@@ -243,14 +300,88 @@ const FormSend = () => {
                     onChange={handleInputChange}
                     className="max w-[28%] bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg pl-5"
                   >
-                    <option value="add">Dossier</option>
-                    <option value="Chauffage">Chauffage</option>
-                    <option value="Climatiseur">Climatiseur</option>
-                    <option value="Ventilateur">Ventilateur</option>
-                    <option value="Armoire Electrique">
-                      Armoire Electrique
+                    <option value="Categorie" selected>
+                      Categorie
                     </option>
+                    {selectedFolder &&
+                      folders
+                        ?.find((folder) => folder.adresse === selectedFolder)
+                        ?.content.map((subFolder, index) => (
+                          <option value={subFolder.subFolder.name} key={index}>
+                            {subFolder.subFolder.name}
+                          </option>
+                        ))}
                   </select>
+                </div>
+                {formState.publicOrPrivate === "Armoire electrique" && (
+                  <>
+                    <input
+                      className="w-[15rem] bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg pl-5"
+                      type="text"
+                      placeholder=""
+                      value={formState.input1}
+                      onChange={handleInputChange}
+                      name="input1"
+                      required
+                    />
+                    <input
+                      className="w-[15rem] bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg pl-5"
+                      type="date"
+                      placeholder="Input 2"
+                      value={formState.input2}
+                      onChange={handleInputChange}
+                      name="input2"
+                      required
+                    />
+                  </>
+                )}
+                {["Climatisation", "Chauffage", "Ventilasion"].includes(
+                  formState.publicOrPrivate
+                ) && (
+                  <input
+                    className="w-[15rem] bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg pl-5"
+                    type="text"
+                    placeholder="Modéle"
+                    value={formState.input}
+                    onChange={handleInputChange}
+                    name="input"
+                    required
+                  />
+                )}
+                <div className="flex items-center justify-center mt-2 w-full">
+                  <label
+                    htmlFor="pdf-image"
+                    className="flex flex-col items-center justify-center w-full h-19 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100 dark:hover:border-gray-500"
+                  >
+                    <div className="flex flex-col items-center justify-center pt-5 pb-2">
+                      <svg
+                        aria-hidden="true"
+                        className="w-10 h-10 text-gray-400"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                        ></path>
+                      </svg>
+                      <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                        Sélectionner un fichier Image
+                      </p>
+                    </div>
+                    <input
+                      name="image"
+                      id="pdf-image"
+                      type="file"
+                      accept="image/png, image/jpg, image/jpeg"
+                      hidden
+                      onChange={handleFileChange}
+                    />
+                  </label>
                 </div>
               </div>
               <div className="button__style mt-5 my-2 flex w-[100%] justify-end">

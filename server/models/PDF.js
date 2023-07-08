@@ -10,6 +10,12 @@ const pdfSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "UserAccount" },
   raports: [{ type: mongoose.Schema.Types.ObjectId, ref: "Raport" }],
   DOE: [{ type: mongoose.Schema.Types.ObjectId, ref: "DOE" }],
+  pdfDetails: {
+    pdfModel: String,
+    PAT: String,
+    installationDate: Date,
+  },
+  pdfImage: String,
 });
 
 module.exports = mongoose.model("PDFs", pdfSchema);

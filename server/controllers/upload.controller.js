@@ -9,11 +9,19 @@ const FETCH = require("../middleware/fetchAllFiles");
 module.exports = {
   async uploadPdf(req, res) {
     try {
+      const { publicOrPrivate, input, input1, input2, image } = req.body;
+
       const token = req.headers.authorization.split(" ")[1];
-      const decodedToken = jwt.verify(token, process.env.SECRET_TOKEN); // Replace "your_jwt_secret_key" with your actual JWT secret key
+      if (!token) {
+        return res.status(401).json({ message: "No token provided" });
+      }
+      const decodedToken = jwt.verify(token, process.env.SECRET_TOKEN);
+      if (!decodedToken) {
+        return res.status(401).json({ message: "Invalid token" });
+      }
 
+      // const file = req.file;
       const file = req.file;
-
       if (!file) {
         throw new Error("No file provided");
       }
@@ -55,10 +63,16 @@ module.exports = {
       }
 
       const pdf = new PDF({
+        pdfImage: req.image.id.toString(),
         filename: newTitle,
         path: file.path,
         title: req.body.title,
         publicOrPrivate: req.body.publicOrPrivate,
+        pdfDetails: {
+          ...(input ? { pdfModel: input } : null),
+          ...(input1 ? { PAT: input1 } : null),
+          ...(input2 ? { installationDate: input2 } : null),
+        },
       });
 
       const savedPdf = await pdf.save();
@@ -95,6 +109,27 @@ module.exports = {
 
           // Save the updated folder
           await folder.save();
+        }
+      } else if (req.body.site) {
+        // Find the appropriate folder based on the folderName
+        const site = await Folder.findOne({
+          adresse: req.body.site,
+          user: decodedToken.userId,
+          "content.subFolder.name": publicOrPrivate,
+        });
+
+        // Check if the folder exists
+        if (site) {
+          // Find the appropriate subfolder in the folder content
+          const subFolder = site.content.find(
+            (sub) => sub.subFolder.name === req.body.publicOrPrivate
+          );
+
+          // Add the PDF to the subfolder's pdfFiles array
+          subFolder.subFolder.pdfFiles.push(savedPdf._id);
+
+          // Save the updated folder
+          await site.save();
         }
       }
       FETCH();

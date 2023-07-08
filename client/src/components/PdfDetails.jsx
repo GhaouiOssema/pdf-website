@@ -17,6 +17,7 @@ import {
   TableBody,
   TableCell,
   TableHead,
+  TablePagination,
   TableRow,
 } from "@mui/material";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
@@ -157,6 +158,20 @@ const PdfDetails = () => {
     fetchData();
   }, [pdfData]);
 
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  console.log(pdfData);
+
   return (
     <>
       <h1 className="text-3xl text-center font-bold pt-10">
@@ -213,59 +228,90 @@ const PdfDetails = () => {
                     </div>
                   )}
                 </div>
+                {dossier === "Armoire electrique" ? (
+                  <div>
+                    <h1> PTA : {pdfData?.pdfDetails?.PAT}</h1>
+                    <h1>
+                      Date d'instalation {pdfData?.pdfDetails?.installationDate}
+                    </h1>
+                  </div>
+                ) : ["Climatisation", "Chauffage", "Ventilasion"].includes(
+                    dossier
+                  ) ? (
+                  <h1> Modéle : {pdfData?.pdfDetails?.pdfModel}</h1>
+                ) : null}
               </div>
 
               <div className="flex justify-between items-center flex-col ml-5 pt-5 mt-[-100px] ">
                 <p className="font-bold text-lg mb-5  ">Tableau des Raport</p>
 
                 <div className="pdf-preview bg-white " key={pdfData._id}>
-                  <Table
-                    sx={{ minWidth: 650 }}
-                    size="small"
-                    aria-label="a dense table"
-                  >
-                    <TableHead>
-                      <TableRow>
-                        <TableCell align="center">Sociéte</TableCell>
-                        <TableCell align="center">
-                          Date du dernier entretien
-                        </TableCell>
-                        <TableCell align="center">
-                          Date du prochain entretien
-                        </TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {raports &&
-                        raports.map((raport) => (
-                          <TableRow
-                            key={raport.id}
-                            sx={{
-                              "&:last-child td, &:last-child th": { border: 0 },
-                            }}
-                          >
-                            <TableCell component="th" scope="row">
-                              {raport.société}
-                            </TableCell>
-                            <TableCell align="center">
-                              {raport.dateDernierEntretien}
-                            </TableCell>
-                            <TableCell align="center">
-                              {raport.dateProchainEntretien}
-                            </TableCell>
-                            <TableCell
-                              align="center"
-                              sx={{ cursor: "pointer" }}
-                            >
-                              <InfoOutlinedIcon
-                                sx={{ color: "#3291F0" }}
-                                onClick={handleOpenTable}
-                              />
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                    </TableBody>
-                  </Table>
+                  <div style={{ height: "400px", overflow: "auto" }}>
+                    <Table
+                      sx={{ minWidth: 650 }}
+                      size="small"
+                      aria-label="a dense table"
+                    >
+                      <TableHead>
+                        <TableRow>
+                          <TableCell align="center">Sociéte</TableCell>
+                          <TableCell align="center">
+                            Date du dernier entretien
+                          </TableCell>
+                          <TableCell align="center">
+                            Date du prochain entretien
+                          </TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {raports &&
+                          raports
+                            .slice(
+                              page * rowsPerPage,
+                              page * rowsPerPage + rowsPerPage
+                            )
+                            .map((raport) => (
+                              <TableRow
+                                key={raport.id}
+                                sx={{
+                                  "&:last-child td, &:last-child th": {
+                                    border: 0,
+                                  },
+                                }}
+                              >
+                                <TableCell component="th" scope="row">
+                                  {raport.société}
+                                </TableCell>
+                                <TableCell align="center">
+                                  {raport.dateDernierEntretien}
+                                </TableCell>
+                                <TableCell align="center">
+                                  {raport.dateProchainEntretien}
+                                </TableCell>
+                                <TableCell
+                                  align="center"
+                                  sx={{ cursor: "pointer" }}
+                                >
+                                  <InfoOutlinedIcon
+                                    sx={{ color: "#3291F0" }}
+                                    onClick={handleOpenTable}
+                                  />
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+
+                  <TablePagination
+                    rowsPerPageOptions={[10, 25, 50]}
+                    component="div"
+                    count={raports ? raports.length : 0}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                  />
                 </div>
               </div>
 
@@ -288,14 +334,14 @@ const PdfDetails = () => {
                 to={`/${site}/${dossier}/pdf/view/${id}`}
                 className="buttons__style_link__h buttons__style_link__left bg-gray-200 mt-3"
               >
-                <span>Ouvrir les DEO</span>
+                <span>Ouvrir les DOE</span>
                 <IoIosArrowForward />
               </Link>
               <Link
                 to={`/plan/${id}`}
                 className="buttons__style_link__h buttons__style_link__left bg-gray-200 mt-3"
               >
-                <span>Ouvrir le plan </span>
+                <span>Plan</span>
                 <IoIosArrowForward />
               </Link>
             </div>
@@ -304,14 +350,11 @@ const PdfDetails = () => {
                 to={`/${site}/${dossier}/pdf/view/${id}`}
                 className="buttons__style_link__h buttons__style_link__left bg-gray-200 mt-3"
               >
-                <span>fiche technicien</span>
+                <span>fiche d'entretien</span>
                 <IoIosArrowForward />
               </Link>
-              <Link
-                className="buttons__style_link__h buttons__style_link__left bg-gray-200 mt-3 hover:bg-red-700 hover:text-white"
-                onClick={handleDelete}
-              >
-                <span>Supprimer </span>
+              <Link className="buttons__style_link__h buttons__style_link__left bg-gray-200 mt-3">
+                <span>Fiche technique </span>
                 <IoIosArrowForward />
               </Link>
             </div>

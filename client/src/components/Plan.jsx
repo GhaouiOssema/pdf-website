@@ -56,7 +56,7 @@ const Plan = () => {
     <div className="bg-gray-100 boor flex justify-center items-center ">
       {pdfData ? (
         <Document
-          file={`https://qr-server-6xmb.onrender.com/files/${pdfData.filename}`}
+          file={`http://localhost:3000/files/${pdfData.filename}`}
           className="flex flex-col items-center"
           onLoadSuccess={handlePdfLoadSuccess}
         >

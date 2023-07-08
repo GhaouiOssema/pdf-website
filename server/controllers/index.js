@@ -15,4 +15,5 @@ module.exports = {
   multiUpload: require("./uploadPdfList.controller"),
   getDOEData: require("./getDOEFiles.controller"),
   getUserDataById: require("./fetchUserData.controller"),
+  uploadImage: require("./uploadUserProfileImage.controller"),
 };

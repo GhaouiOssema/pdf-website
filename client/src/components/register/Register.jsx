@@ -41,6 +41,21 @@ const Register = () => {
         {error && <p className="text-red-500 mb-4">{error}</p>}
         <div className="mb-4">
           <label
+            htmlFor="profileImage"
+            className="block text-gray-700 font-bold mb-2"
+          >
+            Profile Image
+          </label>
+          <input
+            type="file"
+            id="profileImage"
+            name="profileImage"
+            // onChange={handleImageUpload}
+            className="w-full"
+          />
+        </div>
+        <div className="mb-4">
+          <label
             htmlFor="userName"
             className="block text-gray-700 font-bold mb-2"
           >

@@ -11,6 +11,11 @@ router.post(
   uploadFilesMiddleware,
   controllers.multiUpload.uploadPdfList
 );
+router.post(
+  "/image/:userId",
+  upload.single("file"),
+  controllers.uploadImage.uploadUserImage
+);
 
 router.post("/seconnecter", controllers.userLogin.login);
 router.post("/sites/creation", controllers.createSites.addSite);

@@ -36,7 +36,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 700,
+  width: 400,
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -75,7 +75,6 @@ const a11yProps = (index) => {
     "aria-controls": `full-width-tabpanel-${index}`,
   };
 };
-
 const TransitionsModal = ({ open, handleClose, raports, filteredRaports }) => {
   return (
     <div>
@@ -105,28 +104,15 @@ const TransitionsModal = ({ open, handleClose, raports, filteredRaports }) => {
                       flexWrap: "wrap",
                     }}
                   >
-                    <Typography variant="h7" gutterBottom>
-                      {raport.société}
-                    </Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "start",
-                      justifyContent: "space-between",
-                      flexWrap: "wrap",
-                      flexDirection: "column",
-                    }}
-                  >
                     <Typography variant="h6" gutterBottom>
-                      Observation
+                      Date
                     </Typography>
-                    <Typography
-                      variant="h7"
-                      gutterBottom
-                      className="text-gray-500"
-                    >
-                      {raport.observation}
+                    <Typography variant="h7" gutterBottom>
+                      {
+                        new Date(raport.dateDernierEntretien)
+                          .toISOString()
+                          .split("T")[0]
+                      }
                     </Typography>
                   </Box>
                   <Box
@@ -138,7 +124,22 @@ const TransitionsModal = ({ open, handleClose, raports, filteredRaports }) => {
                     }}
                   >
                     <Typography variant="h6" gutterBottom>
-                      Pièces Changées
+                      société
+                    </Typography>
+                    <Typography variant="h7" gutterBottom>
+                      {raport.société}
+                    </Typography>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <Typography variant="h6" gutterBottom>
+                      Tàche effectuer
                     </Typography>
                     <Typography variant="h7" gutterBottom>
                       {raport.piècesChangées}
@@ -153,25 +154,14 @@ const TransitionsModal = ({ open, handleClose, raports, filteredRaports }) => {
                     }}
                   >
                     <Typography variant="h6" gutterBottom>
-                      Date prochain entretien
+                      Date prochain maintenance
                     </Typography>
                     <Typography variant="h7" gutterBottom>
-                      {raport.dateProchainEntretien}
-                    </Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      flexWrap: "wrap",
-                    }}
-                  >
-                    <Typography variant="h6" gutterBottom>
-                      Date dernier entretien
-                    </Typography>
-                    <Typography variant="h7" gutterBottom>
-                      {raport.dateDernierEntretien}
+                      {
+                        new Date(raport.dateProchainEntretien)
+                          .toISOString()
+                          .split("T")[0]
+                      }{" "}
                     </Typography>
                   </Box>
                 </Box>
@@ -196,8 +186,14 @@ const PublicPdfView = () => {
   const [nextMaintenanceDate, setNextMaintenanceDate] = useState("");
   const [raports, setRaports] = useState(null);
 
-  const [storedConfirmed, setStoredConfirmed] = useState(null);
+  const [socIndex, setSocIndex] = useState(null);
   const [filteredRaports, setFilteredRaports] = useState([]);
+
+  const [selectedOption, setSelectedOption] = useState("Option 1");
+
+  const handleOptionChange = (option) => {
+    setSelectedOption(option);
+  };
 
   const handleOpen = (soc) => {
     setOpen(true);
@@ -207,14 +203,13 @@ const PublicPdfView = () => {
 
   useEffect(() => {
     const confirmed = localStorage.getItem("confirmed");
-    setStoredConfirmed(confirmed);
   }, []);
 
   useEffect(() => {
     const getPdfData = async () => {
       try {
         const response = await axios.get(
-          `https://qr-server-6xmb.onrender.com/site/folder/pdf/details/${id}`
+          `http://localhost:3000/site/folder/pdf/details/${id}`
         );
         setPdfData(response.data.pdf);
       } catch (error) {
@@ -251,7 +246,7 @@ const PublicPdfView = () => {
   const navigate = useNavigate();
 
   const handleDownload = () => {
-    const url = `https://qr-server-6xmb.onrender.com/files/${pdfData.filename}`;
+    const url = `http://localhost:3000/files/${pdfData.filename}`;
     fetch(url)
       .then((response) => response.blob())
       .then((blob) => {
@@ -278,16 +273,10 @@ const PublicPdfView = () => {
     setValue(index);
   };
 
-  const createData = (name, calories, fat) => {
-    return { name, calories, fat };
-  };
-
   const endSession = () => {
     localStorage.clear();
     window.location.href = "/";
   };
-
-  const rows = [createData("Frozen yoghurt", 159, 6.0)];
 
   const sendRaport = async () => {
     try {
@@ -297,12 +286,21 @@ const PublicPdfView = () => {
         piècesChangées: partChanged,
         dateProchainEntretien: nextMaintenanceDate,
         pdfID: pdfData._id,
+        option:
+          selectedOption === "Préventif"
+            ? "Préventif"
+            : selectedOption === "Correctif"
+            ? "Correctif"
+            : null,
       };
 
+      console.log(requestData);
+
       const response = await axios.post(
-        `https://qr-server-6xmb.onrender.com/pdfs/${id}/raport`,
+        `http://localhost:3000/pdfs/${id}/raport`,
         requestData
       );
+
       if (response.status === 200) {
         alert("Raport sent");
         window.location.reload();
@@ -318,9 +316,7 @@ const PublicPdfView = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `https://qr-server-6xmb.onrender.com/pdf/raports`
-        );
+        const response = await axios.get(`http://localhost:3000/pdf/raports`);
         const filteredRaports = response.data.filter((raport) =>
           pdfData.raports.includes(raport._id)
         );
@@ -340,25 +336,9 @@ const PublicPdfView = () => {
   console.log(pdfData);
 
   const TITLE = <div className="text-white">Fin de Session</div>;
-  console.log(storedConfirmed);
 
   return (
-    <div className="h-screen">
-      <h1 className="text-3xl text-center font-bold mt-5 mb-5">
-        <span>Fiche de Maintenance</span>
-        <Tooltip title={TITLE} placement="top">
-          <IconButton>
-            <LogoutIcon
-              sx={{
-                "&:hover": {
-                  color: "red",
-                },
-              }}
-              onClick={endSession}
-            />
-          </IconButton>
-        </Tooltip>
-      </h1>
+    <>
       <section className="flex flex-col md:w-screen">
         {open && (
           <TransitionsModal
@@ -366,10 +346,25 @@ const PublicPdfView = () => {
             handleClose={handleClose}
             handleOpen={handleOpen}
             raports={raports}
+            SOC={socIndex}
             filteredRaports={filteredRaports}
           />
         )}
-
+        <h1 className="text-3xl text-center font-bold mt-5 mb-5">
+          <span>Fiche de Maintenance</span>
+          <Tooltip title={TITLE} placement="top">
+            <IconButton>
+              <LogoutIcon
+                sx={{
+                  "&:hover": {
+                    color: "red",
+                  },
+                }}
+                onClick={endSession}
+              />
+            </IconButton>
+          </Tooltip>
+        </h1>
         <div className="flex justify-center">
           <Box sx={{ bgcolor: "", width: "80%", color: "white" }}>
             <Box
@@ -390,7 +385,6 @@ const PublicPdfView = () => {
                 sx={{
                   width: "100%",
                   bgcolor: "rgb(50, 145, 240)",
-                  borderRadius: 2,
                   color: "white",
                   "& .MuiTabs-indicator": {
                     backgroundColor: "white",
@@ -398,9 +392,10 @@ const PublicPdfView = () => {
                   "& .Mui-selected": {
                     background: "white",
                   },
+                  borderRadius: 2,
                 }}
               >
-                <Tab
+                {/* <Tab
                   label="DOE"
                   {...a11yProps(0)}
                   sx={{
@@ -413,17 +408,17 @@ const PublicPdfView = () => {
                   sx={{
                     color: "white",
                   }}
-                />
+                /> */}
                 <Tab
-                  label="Carnet de maintenance"
-                  {...a11yProps(2)}
+                  label="Historiqye maintenance"
+                  {...a11yProps(0)}
                   sx={{
                     color: "white",
                   }}
                 />
                 <Tab
                   label="écrire un Raport"
-                  {...a11yProps(3)}
+                  {...a11yProps(1)}
                   sx={{
                     color: "white",
                   }}
@@ -437,7 +432,7 @@ const PublicPdfView = () => {
               onChangeIndex={handleChangeIndex}
               className="text-black"
             >
-              <TabPanel value={value} index={0} dir={theme.direction}>
+              {/* <TabPanel value={value} index={0} dir={theme.direction}>
                 Item One
               </TabPanel>
               <TabPanel value={value} index={1} dir={theme.direction}>
@@ -447,16 +442,16 @@ const PublicPdfView = () => {
                   }`}
                   ref={pdfRef}
                 >
-                  <div className="flex justify-end mb-5">
+                  <div className="flex justify-end">
                     <button
-                      className=" text-xs items-center text-center text-white bg-blue-500 rounded-full px-4 py-2"
+                      className="boor text-xs items-center text-center text-white bg-blue-500 rounded-full px-4 py-2"
                       onClick={handleDownload}
                     >
                       Télécharger
                     </button>
                   </div>
                   <Document
-                    file={`https://qr-server-6xmb.onrender.com/files/${pdfData.filename}`}
+                    file={`http://localhost:3000/files/${pdfData.filename}`}
                     className="flex flex-col items-center"
                     onLoadSuccess={handlePdfLoadSuccess}
                   >
@@ -472,8 +467,8 @@ const PublicPdfView = () => {
                     ))}
                   </Document>
                 </div>
-              </TabPanel>
-              <TabPanel value={value} index={2} dir={theme.direction}>
+              </TabPanel> */}
+              <TabPanel value={value} index={0} dir={theme.direction}>
                 <TableContainer component={Paper}>
                   <Table
                     sx={{ minWidth: 650 }}
@@ -482,34 +477,42 @@ const PublicPdfView = () => {
                   >
                     <TableHead>
                       <TableRow>
+                        <TableCell align="center">Date</TableCell>
                         <TableCell align="center">Sociéte</TableCell>
+                        <TableCell align="center">Tàche effectuer</TableCell>
                         <TableCell align="center">
-                          Date du dernier entretien
-                        </TableCell>
-                        <TableCell align="center">
-                          Date du prochain entretien
+                          Date du prochain maintenance
                         </TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
                       {raports &&
-                        raports.map((raport) => (
+                        raports.map((raport, index) => (
                           <TableRow
                             key={raport.id}
                             sx={{
-                              "&:last-child td, &:last-child th": {
-                                border: 0,
-                              },
+                              "&:last-child td, &:last-child th": { border: 0 },
                             }}
                           >
                             <TableCell component="th" scope="row">
                               {raport.société}
                             </TableCell>
                             <TableCell align="center">
-                              {raport.dateDernierEntretien}
+                              {
+                                new Date(raport.dateDernierEntretien)
+                                  .toISOString()
+                                  .split("T")[0]
+                              }
                             </TableCell>
                             <TableCell align="center">
-                              {raport.dateProchainEntretien}
+                              {raport.piècesChangées}
+                            </TableCell>
+                            <TableCell align="center">
+                              {
+                                new Date(raport.dateProchainEntretien)
+                                  .toISOString()
+                                  .split("T")[0]
+                              }
                             </TableCell>
                             <TableCell
                               align="center"
@@ -526,7 +529,12 @@ const PublicPdfView = () => {
                   </Table>
                 </TableContainer>
               </TabPanel>
-              <TabPanel value={value} index={3} dir={theme.direction}>
+              <TabPanel
+                value={value}
+                index={1}
+                dir={theme.direction}
+                className="bg-white"
+              >
                 <Typography variant="h5" gutterBottom>
                   Raport
                 </Typography>
@@ -577,6 +585,44 @@ const PublicPdfView = () => {
                     onChange={(e) => setPartChanged(e.target.value)}
                   />
                 </div>
+                <div className="flex items-center justify-between w-1/4 flex-wrap gap-2">
+                  <div className="flex items-start mb-6">
+                    <div className="flex items-center h-5">
+                      <input
+                        id="option1"
+                        type="radio"
+                        className="w-4 h-4 border border-gray-300 rounded bg-gray-50 dark:bg-gray-700 dark:border-gray-600"
+                        value="Correctif"
+                        checked={selectedOption === "Correctif"}
+                        onChange={() => handleOptionChange("Correctif")}
+                      />
+                    </div>
+                    <label
+                      htmlFor="option1"
+                      className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      Correctif
+                    </label>
+                  </div>
+                  <div className="flex items-start mb-6 ">
+                    <div className="flex items-center h-5">
+                      <input
+                        id="option2"
+                        type="radio"
+                        className="w-4 h-4 border border-gray-300 rounded bg-gray-50 dark:bg-gray-700 dark:border-gray-600"
+                        value="Préventif"
+                        checked={selectedOption === "Préventif"}
+                        onChange={() => handleOptionChange("Préventif")}
+                      />
+                    </div>
+                    <label
+                      htmlFor="option2"
+                      className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      Préventif
+                    </label>
+                  </div>
+                </div>
 
                 <div className="block mb-6 w-1/2">
                   <label
@@ -609,7 +655,7 @@ const PublicPdfView = () => {
           </Box>
         </div>
       </section>
-    </div>
+    </>
   );
 };
 

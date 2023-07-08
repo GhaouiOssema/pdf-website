@@ -112,11 +112,11 @@ function MultiSelectTreeView({
               to={`/${folders.adresse}/${subFolder.subFolder.name}/pdf`}
               className="flex item-center"
             >
-              {subFolder.subFolder.name === "chauffage" ? (
+              {subFolder.subFolder.name === "Chauffage" ? (
                 <HvacIcon sx={{ color: "blue" }} />
-              ) : subFolder.subFolder.name === "climatiseur" ? (
+              ) : subFolder.subFolder.name === "Climatisation" ? (
                 <AcUnitIcon sx={{ color: "blue" }} />
-              ) : subFolder.subFolder.name === "Ventilateur" ? (
+              ) : subFolder.subFolder.name === "Ventilasion" ? (
                 <HeatPumpIcon sx={{ color: "blue" }} />
               ) : subFolder.subFolder.name === "Armoire electrique" ? (
                 <KitchenIcon sx={{ color: "blue" }} />
@@ -446,7 +446,7 @@ const Sites = () => {
                     d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
                   />
                 </svg>
-                Ajouter un fichier
+                Ajouter un Site
               </button>
             </div>
             <FilterListIcon
@@ -504,6 +504,8 @@ const Sites = () => {
                   }`}
                   key={index}
                 >
+                  {/* <span className=" w-[50%] ">{`${folders.name}`}</span> */}
+
                   <MultiSelectTreeView
                     folders={folder}
                     key={index}

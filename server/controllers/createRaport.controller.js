@@ -7,10 +7,13 @@ module.exports = {
   async addRaport(req, res) {
     try {
       const { pdfID } = req.params;
-      const { société, observation, piècesChangées, dateProchainEntretien } =
-        req.body;
-
-      console.log(dateProchainEntretien);
+      const {
+        société,
+        observation,
+        piècesChangées,
+        dateProchainEntretien,
+        option,
+      } = req.body;
 
       const token = req?.headers?.authorization?.split(" ")[1] || null;
 
@@ -28,6 +31,8 @@ module.exports = {
           return res.status(404).json({ error: "User not found." });
         }
 
+        options.push(option);
+
         const newRaport = new Raport({
           société,
           observation,
@@ -35,12 +40,15 @@ module.exports = {
           dateProchainEntretien,
           dateDernierEntretien: new Date(),
           pdf: req.body.id,
-          user: user._id,
+          user: société,
+          options,
         });
 
         const savedRaport = await newRaport.save();
+
         pdf.raports.push(savedRaport._id);
         await pdf.save();
+
         res.status(200).json(savedRaport);
       } else {
         const pdf = await PDF.findById(pdfID);
@@ -48,6 +56,10 @@ module.exports = {
           return res.status(404).json({ error: "PDF not found." });
         }
 
+        let options = [];
+
+        options.push(option);
+
         const newRaport = new Raport({
           société,
           observation,
@@ -55,10 +67,12 @@ module.exports = {
           dateProchainEntretien,
           dateDernierEntretien: new Date(),
           pdf: req.body.id,
-          user: "",
+          user: société,
+          options,
         });
 
         const savedRaport = await newRaport.save();
+
         pdf.raports.push(savedRaport._id);
         await pdf.save();
         res.status(200).json(savedRaport);

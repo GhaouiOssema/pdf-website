@@ -26,6 +26,7 @@ const pdfReportSchema = new mongoose.Schema({
       message: "Invalid user field",
     },
   },
+  options: [String],
 });
 
 pdfReportSchema.pre("save", function (next) {
