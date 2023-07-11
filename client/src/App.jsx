@@ -22,7 +22,7 @@ import VerificationCode from "./components/VerificationCode";
 import PublicPdfView from "./components/PublicPdfView";
 import SideBar from "./components/SideBar";
 import Plan from "./components/Plan";
-import FicheTechnique from "./components/ficheTechnique";
+import FicheTechnique from "./components/FicheTechnique";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
