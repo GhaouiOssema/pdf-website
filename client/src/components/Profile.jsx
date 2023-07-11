@@ -18,7 +18,7 @@ const Profile = () => {
           return;
         }
 
-        const response = await axios.get("http://localhost:3000/profile/user", {
+        const response = await axios.get("https://qr-server-6xmb.onrender.com/profile/user", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -62,7 +62,7 @@ const Profile = () => {
               <div className="bg-white p-3 border-t-4 border-green-400">
                 <div className="image overflow-hidden">
                   <img
-                    src={`http://localhost:3000/userPictures/${prefix}-${timestamp}.${extension}`}
+                    src={`https://qr-server-6xmb.onrender.com/userPictures/${prefix}-${timestamp}.${extension}`}
                     alt="User Profile"
                   />
                 </div>
