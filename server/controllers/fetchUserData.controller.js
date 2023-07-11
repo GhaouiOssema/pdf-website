@@ -24,7 +24,6 @@ module.exports = {
       // Fetch the logged-in user's data
       const userData = await UserAccount.findOne({ _id: userId });
 
-      // User and token are valid, return user data
       return res.status(200).json({ userData });
     } catch (error) {
       if (error.name === "TokenExpiredError") {

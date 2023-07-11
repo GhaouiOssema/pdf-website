@@ -197,10 +197,7 @@ const Sites = () => {
           },
         };
 
-        const response = await axios.get(
-          "https://qr-server-6xmb.onrender.com/sites",
-          config
-        );
+        const response = await axios.get("http://localhost:3000/sites", config);
         setFolders(response.data);
       } catch (error) {
         console.error(error);
@@ -504,7 +501,7 @@ const Sites = () => {
                   }`}
                   key={index}
                 >
-                  {/* <span className=" w-[50%] ">{`${folders.name}`}</span> */}
+                  {/* <span className=" w-[50%] ">{`${folder.name}`}</span> */}
 
                   <MultiSelectTreeView
                     folders={folder}

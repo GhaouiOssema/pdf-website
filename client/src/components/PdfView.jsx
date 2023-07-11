@@ -213,7 +213,7 @@ const PdfView = () => {
     const getPdfData = async () => {
       try {
         const response = await axios.get(
-          `https://qr-server-6xmb.onrender.com/site/folder/pdf/details/${id}`
+          `http://localhost:3000/site/folder/pdf/details/${id}`
         );
         setPdfData(response.data.pdf);
       } catch (error) {
@@ -248,7 +248,7 @@ const PdfView = () => {
   }, []);
 
   const handleDownload = () => {
-    const url = `https://qr-server-6xmb.onrender.com/files/${pdfData.filename}`;
+    const url = `http://localhost:3000/files/${pdfData.filename}`;
     fetch(url)
       .then((response) => response.blob())
       .then((blob) => {
@@ -314,7 +314,7 @@ const PdfView = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `https://qr-server-6xmb.onrender.com/pdf/raports`,
+          `http://localhost:3000/pdf/raports`,
           config
         );
         const filteredRaports = response.data.filter((raport) =>
@@ -434,7 +434,7 @@ const PdfView = () => {
                   </button>
                 </div>
                 <Document
-                  file={`https://qr-server-6xmb.onrender.com/files/${pdfData.filename}`}
+                  file={`http://localhost:3000/files/${pdfData.filename}`}
                   className="flex flex-col items-center w-full boor"
                   onLoadSuccess={handlePdfLoadSuccess}
                 >

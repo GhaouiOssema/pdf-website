@@ -131,7 +131,7 @@ const SpringModal = ({ open, setOpen, handleClickAlert, setAlertMsg, pdf }) => {
       formData.append("fileName", fileName);
 
       const response = await axios.post(
-        `https://qr-server-6xmb.onrender.com/multiupload`,
+        `http://localhost:3000/multiupload`,
         formData,
         {
           headers: {
@@ -173,7 +173,7 @@ const SpringModal = ({ open, setOpen, handleClickAlert, setAlertMsg, pdf }) => {
 
       try {
         const response = await axios.post(
-          "https://qr-server-6xmb.onrender.com/upload",
+          "http://localhost:3000/upload",
           formData,
           config
         );
@@ -388,7 +388,7 @@ const PdfFile = () => {
     const fetchPdfs = async () => {
       try {
         const response = await axios.get(
-          `https://qr-server-6xmb.onrender.com/${site}/${dossier}/pdfs`,
+          `http://localhost:3000/${site}/${dossier}/pdfs`,
           config
         );
 
@@ -407,7 +407,7 @@ const PdfFile = () => {
     setDeletingPdfTitle(title);
     try {
       const res = await axios.delete(
-        `https://qr-server-6xmb.onrender.com/${site}/${dossier}/pdfs/${title}`,
+        `http://localhost:3000/${site}/${dossier}/pdfs/${title}`,
         config
       );
       if (res.status === 200) {

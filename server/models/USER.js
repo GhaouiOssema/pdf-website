@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const UserSchema = new mongoose.Schema({
+const USERS = new mongoose.Schema({
   profileImage: String,
   userId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -31,9 +31,10 @@ const UserSchema = new mongoose.Schema({
   },
   allPdfs: [{ type: mongoose.Schema.Types.ObjectId, ref: "PDFs" }],
   folders: [{ type: mongoose.Schema.Types.ObjectId, ref: "Folder" }],
+  userCreationAccountDate: { type: Date, default: Date.now },
 });
 
-UserSchema.pre("save", function (next) {
+USERS.pre("save", function (next) {
   if (!this.userId) {
     this.userId = this._id;
   }
@@ -47,4 +48,4 @@ UserSchema.pre("save", function (next) {
   next();
 });
 
-module.exports = mongoose.model("UserAccount", UserSchema);
+module.exports = mongoose.model("User", USERS);

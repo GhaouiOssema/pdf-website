@@ -20,3 +20,5 @@ const doeFileSchema = new mongoose.Schema({
 });
 
 const DOEFile = mongoose.model("DOEFile", doeFileSchema);
+
+module.exports = DOEFile;

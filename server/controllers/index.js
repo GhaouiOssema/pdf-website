@@ -12,8 +12,8 @@ module.exports = {
   verifyViewCode: require("./verifyCode.controller"),
   createPdfRaport: require("./createRaport.controller"),
   getRaports: require("./getPdfRaportsById.controller"),
-  multiUpload: require("./uploadPdfList.controller"),
   getDOEData: require("./getDOEFiles.controller"),
   getUserDataById: require("./fetchUserData.controller"),
-  uploadImage: require("./uploadUserProfileImage.controller"),
+  imageUpload: require("./uploadUserProfileImage.controller"),
+  formData: require("./formDataUpload.controller"),
 };

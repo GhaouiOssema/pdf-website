@@ -63,7 +63,7 @@ const SiteOption = ({
       };
 
       const res = await axios.delete(
-        `https://qr-server-6xmb.onrender.com/site/${folderId}`,
+        `http://localhost:3000/site/${folderId}`,
         config
       );
 

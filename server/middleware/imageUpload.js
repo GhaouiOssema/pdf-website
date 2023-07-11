@@ -1,30 +1,24 @@
+require("dotenv").config();
+
 const multer = require("multer");
-const { GridFsStorage } = require("multer-gridfs-storage");
+const fs = require("fs");
+const path = require("path");
 
-const conn = mongoose.connection;
-
-// Initialize GridFS stream
-let gfs;
-
-conn.once("open", () => {
-  gfs = Grid(conn.db, mongoose.mongo);
-  gfs.collection("userProfileImage");
-});
-
-// Create storage engine for GridFS
-const storage = new GridFsStorage({
-  url: mongoURI,
-  options: { useNewUrlParser: true, useUnifiedTopology: true },
-  file: (req, file) => {
-    return {
-      filename: file.originalname,
-      bucketName: "uploads",
-    };
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const folder = "userPictures";
+    fs.mkdirSync(folder, { recursive: true });
+    cb(null, folder);
+  },
+  filename: (req, file, cb) => {
+    const username = req.body.userName;
+    const date = new Date().toISOString().slice(0, 10);
+    const filename = `${username}-${date}.png`;
+    cb(null, filename);
   },
 });
 
 const fileFilter = (req, file, cb) => {
-  // Check if the uploaded file is a PNG, JPG, or JPEG image
   if (
     file.mimetype.startsWith("image/") &&
     /\.(png|jpe?g)$/i.test(file.originalname)
@@ -39,4 +33,4 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-const upload = multer({ storage, fileFilter });
+module.exports = multer({ storage, fileFilter });

@@ -5,6 +5,10 @@ import { useParams } from "react-router-dom";
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);
+  const [filename, setFilename] = useState("");
+  const [prefix, setPrefix] = useState("");
+  const [timestamp, setTimestamp] = useState("");
+  const [extension, setExtension] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -14,16 +18,14 @@ const Profile = () => {
           return;
         }
 
-        const response = await axios.get(
-          "https://qr-server-6xmb.onrender.com/profile/user",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await axios.get("http://localhost:3000/profile/user", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         setUserData(response.data.userData);
+        setFilename(response.data.userData.profileImage);
       } catch (error) {
         console.log(error);
       }
@@ -31,23 +33,37 @@ const Profile = () => {
 
     fetchData();
   }, []);
-  console.log("USER DATA :", userData);
+
+  useEffect(() => {
+    if (filename) {
+      const prefix = filename.substring(0, filename.lastIndexOf("-"));
+      const timestamp = filename.substring(
+        filename.lastIndexOf("-") + 1,
+        filename.lastIndexOf(".")
+      );
+      const extension = filename.substring(filename.lastIndexOf(".") + 1);
+
+      setPrefix(prefix);
+      setTimestamp(timestamp);
+      setExtension(extension);
+    }
+  }, [filename]);
 
   if (userData === null) {
-    // Handle loading state or return a loading spinner
     return <div>Loading...</div>;
   }
+
   return (
     <div>
-      <div className="bg-gray-100 h-screen ">
+      <div className="bg-gray-100 h-screen">
         <div className="container mx-auto my-5 p-5">
-          <div className="md:flex no-wrap md:-mx-2 ">
+          <div className="md:flex no-wrap md:-mx-2">
             <div className="w-full md:w-3/12 md:mx-2">
               <div className="bg-white p-3 border-t-4 border-green-400">
                 <div className="image overflow-hidden">
                   <img
-                    className="h-auto w-full mx-auto"
-                    src="https://lavinephotography.com.au/wp-content/uploads/2017/01/PROFILE-Photography-112.jpg"
+                    src={`http://localhost:3000/userPictures/${prefix}-${timestamp}.${extension}`}
+                    alt="User Profile"
                   />
                 </div>
                 <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">

@@ -8,7 +8,8 @@ module.exports = {
 
       // Verify the JWT token
       const token = req.headers.authorization.split(" ")[1];
-      const decoded = jwt.verify(token, "your-secret-key"); // Replace with your actual secret key
+      const decoded = jwt.verify(token, process.env.SECRET_TOKEN);
+
       const authenticatedUserId = decoded.userId;
 
       // Check if the authenticated user is the same as the requested user
@@ -22,7 +23,8 @@ module.exports = {
         return res.status(404).json({ error: "User not found" });
       }
 
-      user.profileImage = req.file.id.toString();
+      // Update the user profile image filename
+      user.profileImage = req.file.filename;
       await user.save();
 
       res.json(user);

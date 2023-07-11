@@ -12,13 +12,10 @@ connectDB();
 const app = express();
 app.use(cors({ origin: true, credentials: true }));
 app.use(bodyParser.json());
-app.use("/files", express.static(path.join(__dirname, "files")));
 
-app.use(express.static(path.join(__dirname, "client/build")));
-
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client/build", "index.html"));
-});
+app.use(express.static(path.join(__dirname, "public")));
+app.use("/userPictures", express.static(path.join(__dirname, "userPictures")));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use(require("./routes"));
 

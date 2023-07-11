@@ -1,25 +1,30 @@
 const router = require("express").Router();
 const controllers = require("../controllers");
 const upload = require("../middleware/upload");
-const uploadFilesMiddleware = require("../middleware/uploadPdfList");
-const fs = require("fs");
-const path = require("path");
+const imageUpload = require("../middleware/imageUpload");
+const multiUpload = require("../middleware/multiUpload");
 
 router.post("/upload", upload.single("file"), controllers.upload.uploadPdf);
+// Import the modified middleware
+
 router.post(
-  "/multiupload",
-  uploadFilesMiddleware,
-  controllers.multiUpload.uploadPdfList
+  "/FormUpload",
+  multiUpload.fields([
+    { name: "selectedFile", maxCount: 1 },
+    { name: "selectedImage", maxCount: 1 },
+    { name: "selectedInfo", maxCount: 1 },
+  ]),
+  controllers.formData.uploadData
 );
+
 router.post(
-  "/image/:userId",
-  upload.single("file"),
-  controllers.uploadImage.uploadUserImage
+  "/inscription",
+  imageUpload.single("file"),
+  controllers.userRegister.register
 );
 
 router.post("/seconnecter", controllers.userLogin.login);
 router.post("/sites/creation", controllers.createSites.addSite);
-router.post("/inscription", controllers.userRegister.register);
 router.post(
   "/public/verification/view/:code",
   controllers.verifyViewCode.verifyCode
@@ -33,30 +38,7 @@ router.get(
 );
 router.get("/sites", controllers.allSites.sites);
 router.get("/pdf/raports", controllers.getRaports.getPdfReportsById);
-router.get("/pdf/doe/:id", controllers.getDOEData.getFile);
 router.get("/profile/user", controllers.getUserDataById.getData);
-
-router.get("/DOE/:username/:folder", async (req, res) => {
-  const username = req.params.username;
-  const folder = req.params.folder;
-
-  const folderPath = path.join(__dirname, "DOE", username, folder);
-
-  if (!fs.existsSync(folderPath)) {
-    return res.status(404).json({ error: "Folder not found" });
-  }
-
-  try {
-    const files = fs.readdirSync(folderPath);
-
-    const fileCount = files.length;
-
-    res.json({ fileCount });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
 
 router.delete("/:site/:folder/pdfs/:title", controllers.deletePdf.delete);
 router.delete("/site/:folderId", controllers.deleteSite.delete);

@@ -9,7 +9,7 @@ const FETCH = require("../middleware/fetchAllFiles");
 module.exports = {
   async uploadPdf(req, res) {
     try {
-      const { publicOrPrivate, input, input1, input2, image } = req.body;
+      const { publicOrPrivate, input, input1, input2 } = req.body;
 
       const token = req.headers.authorization.split(" ")[1];
       if (!token) {
@@ -20,8 +20,8 @@ module.exports = {
         return res.status(401).json({ message: "Invalid token" });
       }
 
-      // const file = req.file;
       const file = req.file;
+
       if (!file) {
         throw new Error("No file provided");
       }
@@ -63,7 +63,6 @@ module.exports = {
       }
 
       const pdf = new PDF({
-        pdfImage: req.image.id.toString(),
         filename: newTitle,
         path: file.path,
         title: req.body.title,

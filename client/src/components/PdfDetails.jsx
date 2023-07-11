@@ -21,7 +21,6 @@ import {
   TableRow,
 } from "@mui/material";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -64,7 +63,7 @@ const PdfDetails = () => {
     const getPdfData = async () => {
       try {
         const response = await axios.get(
-          `https://qr-server-6xmb.onrender.com/site/folder/pdf/details/${id}`,
+          `http://localhost:3000/site/folder/pdf/details/${id}`,
           config
         );
         setPdfData(response.data.pdf);
@@ -89,7 +88,7 @@ const PdfDetails = () => {
   const handleDelete = async () => {
     try {
       const response = await axios.delete(
-        `https://qr-server-6xmb.onrender.com/${site}/${dossier}/pdfs/${pdfData.title}`,
+        `http://localhost:3000/${site}/${dossier}/pdfs/${pdfData.title}`,
         config
       );
       if (response.status === 200) {
@@ -143,7 +142,7 @@ const PdfDetails = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `https://qr-server-6xmb.onrender.com/pdf/raports`,
+          `http://localhost:3000/pdf/raports`,
           config
         );
         const filteredRaports = response.data.filter((raport) =>
@@ -192,54 +191,69 @@ const PdfDetails = () => {
             )}
 
             <div className="flex justify-around items-center flex__col">
-              <div className="qr-code-section bg-white">
-                {screenSize.width > 700 && (
-                  <div className="flex flex-wrap mb-3">
-                    <h1 className="ml-3 font-bold">Titl :</h1>
-                    <span className="ml-3">{pdfData.title}</span>
-                  </div>
-                )}
-                <div
-                  className={`w-[202px] bg-white ${
-                    screenSize.width < 700 && "ml-9"
-                  }`}
-                  ref={qrCodeRef}
-                >
-                  <QRCode
-                    className="w-[200px] h-[200px]"
-                    value={`https://qr-solution-beta.netlify.app/publique/${site}/${dossier}/pdf/view/${id}`}
-                  />
-                </div>
-                <div className="mt-5 w-full flex-row-reverse  text-xl flex items-center justify-center">
-                  {screenSize.width < 700 && (
+              <div className="flex flex-col">
+                <figure className="max-w-lg relative">
+                  {/* <img
+                    className="h-auto max-w-full rounded-lg"
+                    src={`http://localhost:3000/userPictures/${prefix}-${timestamp}.${extension}`}
+                    alt="image description"
+                  />*/}
+                  <figcaption className="absolute bottom-0 left-0 w-full bg-black bg-opacity-75 text-white text-center py-2">
+                    Nom du fichier : {pdfData.title}
+                  </figcaption>
+                </figure>
+                <div>
+                  <div className="qr-code-section bg-white">
+                    {screenSize.width > 700 && (
+                      <div className="flex flex-wrap mb-3">
+                        <h1 className="ml-3 font-bold">Titl :</h1>
+                        <span className="ml-3">{pdfData.title}</span>
+                      </div>
+                    )}
                     <div
-                      className="cursor-pointer w-full text-center uppercase text-sm tracking-wide bg-blue-500 text-gray-100 px-2 py-[10px] rounded-md focus:outline-none focus:shadow-outline hover:bg-green-500"
-                      onClick={handleDownloadQRCode}
+                      className={`w-[202px] bg-white ${
+                        screenSize.width < 700 && "ml-9"
+                      }`}
+                      ref={qrCodeRef}
                     >
-                      Télècharger
+                      <QRCode
+                        className="w-[200px] h-[200px]"
+                        value={`http://localhost:3000/publique/${site}/${dossier}/pdf/view/${id}`}
+                      />
                     </div>
-                  )}
-                  {screenSize.width > 700 && (
-                    <div
-                      className="cursor-pointer w-full text-center uppercase text-sm tracking-wide bg-blue-500 text-gray-100 px-2 py-[10px] rounded-md focus:outline-none focus:shadow-outline hover:bg-green-500"
-                      onClick={handleDownloadQRCode}
-                    >
-                      Télècharger
+                    <div className="mt-5 w-full flex-row-reverse  text-xl flex items-center justify-center">
+                      {screenSize.width < 700 && (
+                        <div
+                          className="cursor-pointer w-full text-center uppercase text-sm tracking-wide bg-blue-500 text-gray-100 px-2 py-[10px] rounded-md focus:outline-none focus:shadow-outline hover:bg-green-500"
+                          onClick={handleDownloadQRCode}
+                        >
+                          Télècharger
+                        </div>
+                      )}
+                      {screenSize.width > 700 && (
+                        <div
+                          className="cursor-pointer w-full text-center uppercase text-sm tracking-wide bg-blue-500 text-gray-100 px-2 py-[10px] rounded-md focus:outline-none focus:shadow-outline hover:bg-green-500"
+                          onClick={handleDownloadQRCode}
+                        >
+                          Télècharger
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-                {dossier === "Armoire electrique" ? (
-                  <div>
-                    <h1> PTA : {pdfData?.pdfDetails?.PAT}</h1>
-                    <h1>
-                      Date d'instalation {pdfData?.pdfDetails?.installationDate}
-                    </h1>
+                    {dossier === "Armoire electrique" ? (
+                      <div>
+                        <h1> PTA : {pdfData?.pdfDetails?.PAT}</h1>
+                        <h1>
+                          Date d'instalation{" "}
+                          {pdfData?.pdfDetails?.installationDate}
+                        </h1>
+                      </div>
+                    ) : ["Climatisation", "Chauffage", "Ventilasion"].includes(
+                        dossier
+                      ) ? (
+                      <h1> Modéle : {pdfData?.pdfDetails?.pdfModel}</h1>
+                    ) : null}
                   </div>
-                ) : ["Climatisation", "Chauffage", "Ventilasion"].includes(
-                    dossier
-                  ) ? (
-                  <h1> Modéle : {pdfData?.pdfDetails?.pdfModel}</h1>
-                ) : null}
+                </div>
               </div>
 
               <div className="flex justify-between items-center flex-col ml-5 pt-5 mt-[-100px] ">
@@ -353,7 +367,10 @@ const PdfDetails = () => {
                 <span>fiche d'entretien</span>
                 <IoIosArrowForward />
               </Link>
-              <Link className="buttons__style_link__h buttons__style_link__left bg-gray-200 mt-3">
+              <Link
+                to={`/${site}/${dossier}/pdf/detail/fiche_technique/${id}`}
+                className="buttons__style_link__h buttons__style_link__left bg-gray-200 mt-3"
+              >
                 <span>Fiche technique </span>
                 <IoIosArrowForward />
               </Link>

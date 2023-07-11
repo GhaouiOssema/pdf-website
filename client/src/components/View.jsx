@@ -148,7 +148,7 @@ const RaportView = ({
       };
 
       const response = await axios.put(
-        `https://qr-server-6xmb.onrender.com/site/${folderIdUpdate}`,
+        `http://localhost:3000/site/${folderIdUpdate}`,
         data,
         config
       );

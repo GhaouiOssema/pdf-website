@@ -22,6 +22,7 @@ import VerificationCode from "./components/VerificationCode";
 import PublicPdfView from "./components/PublicPdfView";
 import SideBar from "./components/SideBar";
 import Plan from "./components/Plan";
+import FicheTechnique from "./components/ficheTechnique";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -79,6 +80,10 @@ const App = () => {
                 <Route path="/messites" element={<Sites />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/plan/:fichier" element={<Plan />} />
+                <Route
+                  path="/:site/:dossier/pdf/detail/fiche_technique/:pdfid"
+                  element={<FicheTechnique />}
+                />
               </>
             )}
           </Routes>

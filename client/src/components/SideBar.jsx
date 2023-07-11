@@ -13,6 +13,7 @@ import LOGO from "../assets/logo2.png";
 import jwt_decode from "jwt-decode";
 import { Link } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
 const SideBar = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -54,9 +55,9 @@ const SideBar = () => {
               </Link>
             </Sidebar.Item>
             <Sidebar.ItemGroup className="uppercase" style={{ marginTop: 50 }}>
-              <Sidebar.Item href="#" icon={HiViewBoards}>
+              <Sidebar.Item href="#" icon={AddCircleOutlineIcon}>
                 <Link to={"/telecharger"}>
-                  <p className="uppercase">equipement +</p>
+                  <p className="uppercase">equipement</p>
                 </Link>
               </Sidebar.Item>
               <Sidebar.Item href="#" icon={HiViewBoards}>

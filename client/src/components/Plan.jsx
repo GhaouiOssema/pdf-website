@@ -22,7 +22,7 @@ const Plan = () => {
     const getPdfData = async () => {
       try {
         const response = await axios.get(
-          `https://qr-server-6xmb.onrender.com/site/folder/pdf/details/${fichier}`
+          `http://localhost:3000/site/folder/pdf/details/${fichier}`
         );
         setPdfData(response.data.pdf);
       } catch (error) {
