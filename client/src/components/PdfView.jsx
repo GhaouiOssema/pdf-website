@@ -213,7 +213,7 @@ const PdfView = () => {
     const getPdfData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/site/folder/pdf/details/${id}`
+          `https://qr-server-6xmb.onrender.com/site/folder/pdf/details/${id}`
         );
         setPdfData(response.data.pdf);
       } catch (error) {
@@ -248,7 +248,7 @@ const PdfView = () => {
   }, []);
 
   const handleDownload = () => {
-    const url = `http://localhost:3000/files/${pdfData.filename}`;
+    const url = `https://qr-server-6xmb.onrender.com/files/${pdfData.filename}`;
     fetch(url)
       .then((response) => response.blob())
       .then((blob) => {
@@ -294,7 +294,7 @@ const PdfView = () => {
       console.log(requestData);
 
       const response = await axios.post(
-        `http://localhost:3000/pdfs/${id}/raport`,
+        `https://qr-server-6xmb.onrender.com/pdfs/${id}/raport`,
         requestData
       );
 
@@ -314,7 +314,7 @@ const PdfView = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/pdf/raports`,
+          `https://qr-server-6xmb.onrender.com/pdf/raports`,
           config
         );
         const filteredRaports = response.data.filter((raport) =>
@@ -378,7 +378,7 @@ const PdfView = () => {
                 borderRadius: 2,
               }}
             >
-              <Tab
+              {/* <Tab
                 label="DOE"
                 {...a11yProps(0)}
                 sx={{
@@ -387,21 +387,21 @@ const PdfView = () => {
               />
               <Tab
                 label="Plan"
-                {...a11yProps(1)}
+                {...a11yProps(0)}
                 sx={{
                   color: "white",
                 }}
-              />
+              /> */}
               <Tab
                 label="Historiqye maintenance"
-                {...a11yProps(2)}
+                {...a11yProps(0)}
                 sx={{
                   color: "white",
                 }}
               />
               <Tab
                 label="écrire un Raport"
-                {...a11yProps(3)}
+                {...a11yProps(1)}
                 sx={{
                   color: "white",
                 }}
@@ -415,7 +415,7 @@ const PdfView = () => {
             onChangeIndex={handleChangeIndex}
             className="text-black"
           >
-            <TabPanel value={value} index={0} dir={theme.direction}>
+            {/* <TabPanel value={value} index={0} dir={theme.direction}>
               <DOEButtonsGroup pdfData={pdfData} />
             </TabPanel>
             <TabPanel value={value} index={1} dir={theme.direction}>
@@ -434,7 +434,7 @@ const PdfView = () => {
                   </button>
                 </div>
                 <Document
-                  file={`http://localhost:3000/files/${pdfData.filename}`}
+                  file={`https://qr-server-6xmb.onrender.com/files/${pdfData.filename}`}
                   className="flex flex-col items-center w-full boor"
                   onLoadSuccess={handlePdfLoadSuccess}
                 >
@@ -450,8 +450,8 @@ const PdfView = () => {
                   ))}
                 </Document>
               </div>
-            </TabPanel>
-            <TabPanel value={value} index={2} dir={theme.direction}>
+            </TabPanel> */}
+            <TabPanel value={value} index={0} dir={theme.direction}>
               <TableContainer component={Paper}>
                 <Table
                   sx={{ minWidth: 650 }}
@@ -512,7 +512,7 @@ const PdfView = () => {
 
             <TabPanel
               value={value}
-              index={3}
+              index={1}
               dir={theme.direction}
               className="bg-white"
             >

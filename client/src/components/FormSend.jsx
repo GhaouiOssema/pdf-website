@@ -53,11 +53,14 @@ const FormSend = () => {
     setOpen(false);
   };
 
-  const [folders, setFolders] = useState();
+  const [folders, setFolders] = useState([]);
   useEffect(() => {
     const fetchFolders = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/sites", config);
+        const response = await axios.get(
+          "https://qr-server-6xmb.onrender.com/sites",
+          config
+        );
         setFolders(response.data);
       } catch (error) {
         console.error(error);
@@ -148,7 +151,7 @@ const FormSend = () => {
     try {
       setLoading(true);
       const response = await axios.post(
-        "http://localhost:3000/FormUpload",
+        "https://qr-server-6xmb.onrender.com/FormUpload",
         formData,
         config
       );
@@ -187,7 +190,7 @@ const FormSend = () => {
       <h1 className="text-3xl text-center font-bold pt-10">Ajouter un Plan</h1>
       <form onSubmit={handleSubmit} onReset={handleReset} className="">
         <div className="flex justify-center items-center">
-          <div className=" max__size w-[70%] container mx-auto my-4 px-4 lg:px-20 ">
+          <div className=" max__size w-[80%] container mx-auto my-4 px-4 lg:px-20 ">
             <div className=" p-6 my-2 mr-auto rounded-2xl shadow-2xl bg-white">
               <h1 className="text-2xl text-center font-bold mb-4">
                 Fichier d'equipement
@@ -258,11 +261,17 @@ const FormSend = () => {
                     <option value="Sites" selected>
                       Sites
                     </option>
-                    {folders?.map((folder, index) => (
-                      <option value={folder.adresse} key={index}>
-                        {folder.adresse}
+                    {folders.length > 0 ? (
+                      folders?.map((folder, index) => (
+                        <option value={folder.adresse} key={index}>
+                          {folder.adresse}
+                        </option>
+                      ))
+                    ) : (
+                      <option value="/messites" className="cursor-pointer">
+                        La list est vide
                       </option>
-                    ))}
+                    )}
                   </select>
                   <input
                     className="w-[15rem] bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg pl-5 "

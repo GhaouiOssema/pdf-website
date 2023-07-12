@@ -63,7 +63,7 @@ const PdfDetails = () => {
     const getPdfData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/site/folder/pdf/details/${id}`,
+          `https://qr-server-6xmb.onrender.com/site/folder/pdf/details/${id}`,
           config
         );
         setPdfData(response.data.pdf);
@@ -88,7 +88,7 @@ const PdfDetails = () => {
   const handleDelete = async () => {
     try {
       const response = await axios.delete(
-        `http://localhost:3000/${site}/${dossier}/pdfs/${pdfData.title}`,
+        `https://qr-server-6xmb.onrender.com/${site}/${dossier}/pdfs/${pdfData.title}`,
         config
       );
       if (response.status === 200) {
@@ -142,7 +142,7 @@ const PdfDetails = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/pdf/raports`,
+          `https://qr-server-6xmb.onrender.com/pdf/raports`,
           config
         );
         const filteredRaports = response.data.filter((raport) =>
@@ -171,6 +171,16 @@ const PdfDetails = () => {
 
   console.log(pdfData);
 
+  let filename, counter, encryptedDate, extension;
+
+  if (pdfData) {
+    const parts = pdfData.pdfImage.split("-");
+    filename = parts[0];
+    counter = parts[1];
+    encryptedDate = parts[2].split(".")[0];
+    extension = parts[2].split(".")[1];
+  }
+
   return (
     <>
       <h1 className="text-3xl text-center font-bold pt-10">
@@ -193,11 +203,11 @@ const PdfDetails = () => {
             <div className="flex justify-around items-center flex__col">
               <div className="flex flex-col">
                 <figure className="max-w-lg relative">
-                  {/* <img
+                  <img
                     className="h-auto max-w-full rounded-lg"
-                    src={`http://localhost:3000/userPictures/${prefix}-${timestamp}.${extension}`}
+                    src={`https://qr-server-6xmb.onrender.com/uploads/pdfImages/${filename}-${counter}-${encryptedDate}.${extension}`}
                     alt="image description"
-                  />*/}
+                  />
                   <figcaption className="absolute bottom-0 left-0 w-full bg-black bg-opacity-75 text-white text-center py-2">
                     Nom du fichier : {pdfData.title}
                   </figcaption>
@@ -218,7 +228,7 @@ const PdfDetails = () => {
                     >
                       <QRCode
                         className="w-[200px] h-[200px]"
-                        value={`http://localhost:3000/publique/${site}/${dossier}/pdf/view/${id}`}
+                        value={`https://qr-server-6xmb.onrender.com/publique/${site}/${dossier}/pdf/view/${id}`}
                       />
                     </div>
                     <div className="mt-5 w-full flex-row-reverse  text-xl flex items-center justify-center">

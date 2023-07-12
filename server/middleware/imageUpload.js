@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
     const filename = `${username}-${date}.png`;
     cb(null, filename);
   },
-maxAge: null,
+  maxAge: null,
 });
 
 const fileFilter = (req, file, cb) => {

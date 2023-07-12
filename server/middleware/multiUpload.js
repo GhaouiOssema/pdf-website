@@ -44,6 +44,7 @@ const storage = multer.diskStorage({
     counter++; // Increment counter for the next file
     cb(null, filename);
   },
+  maxAge: null,
 });
 
 const fileFilter = (req, file, cb) => {

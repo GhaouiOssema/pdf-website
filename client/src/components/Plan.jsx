@@ -22,15 +22,25 @@ const Plan = () => {
     const getPdfData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/site/folder/pdf/details/${fichier}`
+          `https://qr-server-6xmb.onrender.com/site/folder/pdf/details/${fichier}`
         );
-        setPdfData(response.data.pdf);
+        setPdfData(response.data.pdf.filename);
       } catch (error) {
         console.log("Error retrieving PDF data:", error);
       }
     };
     getPdfData();
   }, [fichier]);
+
+  let filename, counter, encryptedDate, extension;
+
+  if (pdfData) {
+    const parts = pdfData.split("-");
+    filename = parts[0];
+    counter = parts[1];
+    encryptedDate = parts[2].split(".")[0];
+    extension = parts[2].split(".")[1];
+  }
 
   const [screenSize, setScreenSize] = useState({
     width: window.innerWidth,
@@ -56,7 +66,7 @@ const Plan = () => {
     <div className="bg-gray-100 boor flex justify-center items-center ">
       {pdfData ? (
         <Document
-          file={`http://localhost:3000/files/${pdfData.filename}`}
+          file={`https://qr-server-6xmb.onrender.com/uploads/pdfFiles/${filename}-${counter}-${encryptedDate}.${extension}`}
           className="flex flex-col items-center"
           onLoadSuccess={handlePdfLoadSuccess}
         >

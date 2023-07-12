@@ -7,8 +7,6 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 const FicheTechnique = () => {
   const { pdfid } = useParams();
 
-  console.log(pdfid);
-
   const [pdfLoaded, setPdfLoaded] = useState(false);
   const [numPages, setNumPages] = useState(null);
 
@@ -23,7 +21,7 @@ const FicheTechnique = () => {
     const getPdfData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/site/folder/pdf/details/${pdfid}`
+          `https://qr-server-6xmb.onrender.com/site/folder/pdf/details/${pdfid}`
         );
         setPdfData(response.data.pdf.fiche);
       } catch (error) {
@@ -32,6 +30,7 @@ const FicheTechnique = () => {
     };
     getPdfData();
   }, [pdfid]);
+  console.log(pdfData);
 
   let filename, counter, encryptedDate, extension;
 
@@ -67,7 +66,7 @@ const FicheTechnique = () => {
     <div className="bg-gray-100 boor flex justify-center items-center ">
       {pdfData && (
         <Document
-          file={`http://localhost:3000/fiche/${filename}-${counter}-${encryptedDate}.${extension}`}
+          file={`https://qr-server-6xmb.onrender.com/uploads/ficheTechnique/${filename}-${counter}-${encryptedDate}.${extension}`}
           className="flex flex-col items-center"
           onLoadSuccess={handlePdfLoadSuccess}
         >

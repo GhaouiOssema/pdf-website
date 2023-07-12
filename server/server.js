@@ -16,6 +16,10 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/userPictures", express.static(path.join(__dirname, "userPictures")));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use(
+  "/uploads/pdfFiles",
+  express.static(path.join(__dirname, "uploads/pdfFiles"))
+);
 
 app.use(require("./routes"));
 

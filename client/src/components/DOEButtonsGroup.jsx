@@ -96,7 +96,9 @@ const DOEButtonsGroup = ({ pdfData }) => {
   useEffect(() => {
     const fetchFileStructure = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/pdf/doe`);
+        const response = await axios.get(
+          `https://qr-server-6xmb.onrender.com/pdf/doe`
+        );
         const { fileStructure } = response.data.files;
         setFileStructure(fileStructure);
       } catch (error) {

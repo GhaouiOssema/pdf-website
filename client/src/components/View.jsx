@@ -110,7 +110,7 @@ const RaportView = ({
       // Extract the necessary information from the token payload
 
       const response = await axios.post(
-        "http://localhost:3000/sites/creation",
+        "https://qr-server-6xmb.onrender.com/sites/creation",
         formData,
         {
           headers: {
@@ -148,7 +148,7 @@ const RaportView = ({
       };
 
       const response = await axios.put(
-        `http://localhost:3000/site/${folderIdUpdate}`,
+        `https://qr-server-6xmb.onrender.com/site/${folderIdUpdate}`,
         data,
         config
       );
@@ -187,14 +187,14 @@ const RaportView = ({
               component="form"
               sx={{
                 bgcolor: "white",
-                height: "50vh",
+                height: "100%",
                 borderRadius: "25px",
                 width: 500,
                 display: "flex",
                 justifyContent: "center",
               }}
             >
-              <div className="text-black">
+              <div className="text-black pb-10">
                 <div className="w-full max-w-lg ">
                   {screenSize.width > 700 && type === "siteButton" ? (
                     <>

@@ -3,6 +3,7 @@ const path = require("path");
 const fs = require("fs");
 const Folder = require("../models/FOLDER");
 const jwt = require("jsonwebtoken");
+const User = require("../models/USER");
 
 let counter = 1; // Start counter at 1
 
@@ -76,6 +77,12 @@ module.exports = {
 
       // Save the PDF document to the database
       await pdf.save();
+
+      const user = await User.findById(decodedToken.userId);
+
+      // Save the PDF to the user's allPdfs array
+      user.allPdfs.push(pdf._id);
+      await user.save();
 
       if (req.body.site[1]) {
         const folder = await Folder.findOne({
