@@ -198,7 +198,7 @@ const Sites = () => {
         };
 
         const response = await axios.get(
-          "https://qr-server-6xmb.onrender.com/sites",
+          `${import.meta.env.VITE_SERVER_API_URL}/sites`,
           config
         );
         setFolders(response.data);

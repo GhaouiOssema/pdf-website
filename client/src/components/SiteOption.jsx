@@ -63,7 +63,7 @@ const SiteOption = ({
       };
 
       const res = await axios.delete(
-        `https://qr-server-6xmb.onrender.com/site/${folderId}`,
+        `${import.meta.env.VITE_SERVER_API_URL}/site/${folderId}`,
         config
       );
 

@@ -21,7 +21,9 @@ const FicheTechnique = () => {
     const getPdfData = async () => {
       try {
         const response = await axios.get(
-          `https://qr-server-6xmb.onrender.com/site/folder/pdf/details/${pdfid}`
+          `${
+            import.meta.env.VITE_SERVER_API_URL
+          }/site/folder/pdf/details/${pdfid}`
         );
         setPdfData(response.data.pdf.fiche);
       } catch (error) {
@@ -66,7 +68,9 @@ const FicheTechnique = () => {
     <div className="bg-gray-100 boor flex justify-center items-center ">
       {pdfData && (
         <Document
-          file={`https://qr-server-6xmb.onrender.com/uploads/ficheTechnique/${filename}-${counter}-${encryptedDate}.${extension}`}
+          file={`${
+            import.meta.env.VITE_SERVER_API_URL
+          }/uploads/ficheTechnique/${filename}-${counter}-${encryptedDate}.${extension}`}
           className="flex flex-col items-center"
           onLoadSuccess={handlePdfLoadSuccess}
         >

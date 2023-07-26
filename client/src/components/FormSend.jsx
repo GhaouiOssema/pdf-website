@@ -14,7 +14,8 @@ import {
   Select,
 } from "@mui/material";
 import axios from "axios";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
+import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
@@ -39,6 +40,7 @@ const FormSend = () => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data",
     },
   };
 
@@ -58,7 +60,7 @@ const FormSend = () => {
     const fetchFolders = async () => {
       try {
         const response = await axios.get(
-          "https://qr-server-6xmb.onrender.com/sites",
+          `${import.meta.env.VITE_SERVER_API_URL}/sites`,
           config
         );
         setFolders(response.data);
@@ -72,6 +74,9 @@ const FormSend = () => {
   console.log(folders);
   const initialState = {
     selectedFile: null,
+    selectedImage: null,
+    selectedInfo: null,
+    selectedDOE: null,
     title: "",
     owner: "",
     publicOrPrivate: "",
@@ -79,9 +84,6 @@ const FormSend = () => {
     input2: "",
     input: "",
     site: "",
-    selectedImage: null,
-    selectedInfo: null,
-    pdfId: "",
   };
 
   const [formState, setFormState] = useState(initialState);
@@ -113,9 +115,17 @@ const FormSend = () => {
       name === "selectedImage" ||
       name === "selectedInfo"
     ) {
+      // Handle single file selection for selectedFile and selectedImage
       setFormState({
         ...formState,
-        [name]: files[0], // Only store the first file in the array
+        [name]: files[0],
+      });
+    } else if (name === "selectedDOE") {
+      // Handle multi-selection for selectedInfo and selectedDOE files
+      const selectedFiles = Array.from(files);
+      setFormState({
+        ...formState,
+        [name]: selectedFiles,
       });
     } else {
       setFormState({
@@ -125,24 +135,27 @@ const FormSend = () => {
     }
   };
 
+  console.log(formState);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     const formData = new FormData();
 
-    // Send the initial state data
     Object.entries(initialState).forEach(([key, value]) => {
       formData.append(key, value || "");
     });
 
-    // Send additional data from formState
     Object.entries(formState).forEach(([key, value]) => {
-      if (
-        key === "selectedFile" ||
-        key === "selectedImage" ||
-        key === "selectedInfo"
-      ) {
+      if (value instanceof FileList) {
+        for (let i = 0; i < value.length; i++) {
+          formData.append(key, value[i]);
+        }
+      } else if (value instanceof File) {
         formData.append(key, value);
+      } else if (Array.isArray(value)) {
+        // Handle the array case properly
+        formData.append(key, value[1]);
       } else {
         formData.append(key, value || "");
       }
@@ -151,7 +164,7 @@ const FormSend = () => {
     try {
       setLoading(true);
       const response = await axios.post(
-        "https://qr-server-6xmb.onrender.com/FormUpload",
+        `${import.meta.env.VITE_SERVER_API_URL}/FormUpload`,
         formData,
         config
       );
@@ -178,12 +191,6 @@ const FormSend = () => {
       publicOrPrivate: "public",
     });
   };
-
-  const FX = folders
-    ?.find((folder) => folder.adresse === selectedFolder)
-    ?.content.map((subFolder, index) => null);
-
-  console.log(formState);
 
   return (
     <>
@@ -243,13 +250,19 @@ const FormSend = () => {
                         }}
                         spacing={2}
                       >
-                        <Alert severity="info">
-                          <span>{formState.selectedFile.name}</span>
+                        <Alert
+                          severity="info"
+                          icon={false}
+                          className="flex justify-start items-center "
+                        >
+                          <PictureAsPdfIcon sx={{ color: "black" }} />
+                          <span className="font-bold ml-2">
+                            {formState.selectedFile.name}
+                          </span>
                         </Alert>
                       </Stack>
                     )}
                   </>
-                  <label htmlFor="files"></label>
                 </div>
                 <div className="flex items-center justify-between form__style">
                   <select
@@ -338,44 +351,69 @@ const FormSend = () => {
                   />
                 )}
                 <div className="flex flex-col items-center justify-center mt-2 w-full">
-                  <h1 className="text-2xl text-center font-bold mb-4">
+                  <h1 className="flex w-full justify-center items-center text-2xl text-center font-bold mb-4">
                     Image d'equipement
-                  </h1>
-                  <label
-                    htmlFor="pdf-image"
-                    className="flex flex-col items-center justify-center w-full h-19 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100 dark:hover:border-gray-500"
-                  >
-                    <div className="flex flex-col items-center justify-center pt-5 pb-2">
-                      <svg
-                        aria-hidden="true"
-                        className="w-10 h-10 text-gray-400"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
+                    {formState.selectedImage && (
+                      <div
+                        className="text-black cursor-pointer ml-5"
+                        onClick={() =>
+                          setFormState({ ...formState, selectedImage: null })
+                        }
                       >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                        ></path>
-                      </svg>
-                      <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                        Sélectionner un fichier Image
-                      </p>
+                        <CancelOutlinedIcon />
+                      </div>
+                    )}
+                  </h1>
+                  {formState.selectedImage ? (
+                    <div className="relative mb-4">
+                      <img
+                        src={URL.createObjectURL(formState.selectedImage)}
+                        alt="Selected file"
+                        style={{
+                          width: "100%",
+                          height: "auto",
+                          maxWidth: "300px",
+                          maxHeight: "300px",
+                        }}
+                      />
                     </div>
-                    <input
-                      name="selectedImage"
-                      id="pdf-image"
-                      type="file"
-                      accept="image/png, image/jpg, image/jpeg"
-                      hidden
-                      onChange={handleChange}
-                    />
-                  </label>
+                  ) : (
+                    <label
+                      htmlFor="pdf-image"
+                      className="flex flex-col items-center justify-center w-full h-19 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100 dark:hover:border-gray-500"
+                    >
+                      <div className="flex flex-col items-center justify-center pt-5 pb-2">
+                        <svg
+                          aria-hidden="true"
+                          className="w-10 h-10 text-gray-400"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                          ></path>
+                        </svg>
+                        <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                          Sélectionner un fichier Image
+                        </p>
+                      </div>
+                      <input
+                        name="selectedImage"
+                        id="pdf-image"
+                        type="file"
+                        accept="image/png, image/jpg, image/jpeg"
+                        hidden
+                        onChange={handleChange}
+                      />
+                    </label>
+                  )}
                 </div>
-                {/* <div className="flex flex-col items-center justify-center mt-2 w-full">
+                <div className="flex flex-col items-center justify-center mt-2 w-full">
                   <h1 className="text-2xl text-center font-bold mb-4 mt-4">
                     DOE
                   </h1>
@@ -413,7 +451,7 @@ const FormSend = () => {
                       onChange={handleChange}
                     />
                   </label>
-                </div> */}
+                </div>
                 <div className="flex flex-col items-center justify-center mt-2 w-full">
                   <h1 className="text-2xl text-center font-bold mb-4 mt-4">
                     Fiche technique
@@ -452,6 +490,29 @@ const FormSend = () => {
                     />
                   </label>
                 </div>
+                <>
+                  {formState.selectedInfo && (
+                    <Stack
+                      sx={{
+                        width: "100%",
+                        color: "black",
+                        marginTop: "10px",
+                      }}
+                      spacing={2}
+                    >
+                      <Alert
+                        severity="info"
+                        icon={false}
+                        className="flex justify-start items-center "
+                      >
+                        <PictureAsPdfIcon sx={{ color: "black" }} />
+                        <span className="font-bold ml-2">
+                          {formState.selectedInfo.name}
+                        </span>
+                      </Alert>
+                    </Stack>
+                  )}
+                </>
               </div>
               <div className="button__style mt-5 my-2 flex w-[100%] justify-end">
                 {open && (

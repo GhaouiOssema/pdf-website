@@ -4,7 +4,6 @@ const UserAccount = require("../models/USER");
 
 module.exports = {
   async sites(req, res) {
-    console.log("first");
     try {
       const token = req.headers.authorization;
 

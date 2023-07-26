@@ -15,7 +15,7 @@ const Register = () => {
 
     try {
       const response = await axios.post(
-        "https://qr-server-6xmb.onrender.com/inscription",
+        "`${import.meta.env.VITE_SERVER_API_URL}/inscription",
         {
           userName,
           email,

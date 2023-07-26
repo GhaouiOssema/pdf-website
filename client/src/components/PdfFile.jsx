@@ -21,6 +21,9 @@ import Modal from "@mui/material/Modal";
 import { useSpring, animated } from "@react-spring/web";
 import { Label, TextInput } from "flowbite-react";
 import MuiAlert from "@mui/material/Alert";
+import { Document, Page, pdfjs } from "react-pdf";
+
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const Fade = React.forwardRef(function Fade(props, ref) {
   const {
@@ -102,11 +105,6 @@ const SpringModal = ({ open, setOpen, handleClickAlert, setAlertMsg, pdf }) => {
     setSelectedFile(file);
   };
 
-  const handleFilesChange = (event) => {
-    const files = event.target.files;
-    const filesArray = Array.from(files);
-    setSelectedFiles(filesArray);
-  };
   console.log(selectedFiles);
 
   const token = localStorage.getItem("token");
@@ -118,45 +116,6 @@ const SpringModal = ({ open, setOpen, handleClickAlert, setAlertMsg, pdf }) => {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-  };
-
-  const handleMultiSubmit = async (event) => {
-    event.preventDefault();
-
-    try {
-      const formData = new FormData();
-      for (let i = 0; i < selectedFiles.length; i++) {
-        formData.append("files", selectedFiles[i]);
-      }
-      formData.append("fileName", fileName);
-
-      const response = await axios.post(
-        `https://qr-server-6xmb.onrender.com/multiupload`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (response.status === 200) {
-        setAlertMsg("success");
-        handleClickAlert();
-        window.location.reload();
-      } else {
-        setAlertMsg("error");
-        handleClickAlert();
-      }
-
-      setSelectedFiles([]);
-      setFileName("");
-      handleClose();
-      setUploadError(null);
-    } catch (error) {
-      console.log("Error uploading files:", error);
-    }
   };
 
   const handleSubmit = async (event) => {
@@ -173,7 +132,7 @@ const SpringModal = ({ open, setOpen, handleClickAlert, setAlertMsg, pdf }) => {
 
       try {
         const response = await axios.post(
-          "https://qr-server-6xmb.onrender.com/upload",
+          `${import.meta.env.VITE_SERVER_API_URL}/upload`,
           formData,
           config
         );
@@ -203,6 +162,8 @@ const SpringModal = ({ open, setOpen, handleClickAlert, setAlertMsg, pdf }) => {
     setSelectedFile(null);
   };
 
+  console.log(selectedFile);
+
   return (
     <div>
       <Modal
@@ -222,26 +183,16 @@ const SpringModal = ({ open, setOpen, handleClickAlert, setAlertMsg, pdf }) => {
           <Box sx={style} className="rounded-2xl">
             <form
               className="flex max-w-md flex-col gap-4"
-              onSubmit={open === "file" ? handleSubmit : handleMultiSubmit}
+              onSubmit={handleSubmit}
               onReset={handleReset}
             >
               {/* File input */}
               <Typography sx={{ fontWeight: "bold" }}>
-                {open === "file" ? (
-                  <span>Les information du Fichier</span>
-                ) : open === "multiFile" ? (
-                  <span>Les information du DOE</span>
-                ) : null}
+                <span>Les information du Fichier</span>
               </Typography>
               <div className="flex items-center justify-center w-full">
                 <label
-                  htmlFor={
-                    open === "file"
-                      ? "dropzone-file"
-                      : open === "multiFile"
-                      ? "dropzone-multi-file"
-                      : null
-                  }
+                  htmlFor="dropzone-file"
                   className="flex flex-col items-center justify-center w-full h-19 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100 dark:hover:border-gray-500"
                 >
                   <div className="flex flex-col items-center justify-center pt-5 pb-2">
@@ -262,27 +213,16 @@ const SpringModal = ({ open, setOpen, handleClickAlert, setAlertMsg, pdf }) => {
                       ></path>
                     </svg>
                     <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                      Select a file
+                      Sélectionner un fichier ( PDF )
                     </p>
                   </div>
-                  {open === "file" ? (
-                    <input
-                      id="dropzone-file"
-                      type="file"
-                      accept=".pdf"
-                      onChange={handleFileChange}
-                      hidden
-                    />
-                  ) : open === "multiFile" ? (
-                    <input
-                      id="dropzone-multi-file"
-                      type="file"
-                      accept=".pdf"
-                      onChange={handleFilesChange}
-                      hidden
-                      multiple
-                    />
-                  ) : null}
+                  <input
+                    id="dropzone-file"
+                    type="file"
+                    accept=".pdf"
+                    onChange={handleFileChange}
+                    hidden
+                  />
                 </label>
               </div>
 
@@ -388,7 +328,7 @@ const PdfFile = () => {
     const fetchPdfs = async () => {
       try {
         const response = await axios.get(
-          `https://qr-server-6xmb.onrender.com/${site}/${dossier}/pdfs`,
+          `${import.meta.env.VITE_SERVER_API_URL}/${site}/${dossier}/pdfs`,
           config
         );
 
@@ -407,7 +347,9 @@ const PdfFile = () => {
     setDeletingPdfTitle(title);
     try {
       const res = await axios.delete(
-        `https://qr-server-6xmb.onrender.com/${site}/${dossier}/pdfs/${title}`,
+        `${
+          import.meta.env.VITE_SERVER_API_URL
+        }/${site}/${dossier}/pdfs/${title}`,
         config
       );
       if (res.status === 200) {
@@ -438,7 +380,7 @@ const PdfFile = () => {
 
   return (
     <>
-      {openModal === "file" || "multiFile" ? (
+      {openModal === "file" ? (
         <SpringModal
           open={openModal}
           setOpen={setOpenModal}
@@ -450,7 +392,7 @@ const PdfFile = () => {
       ) : null}
       <section className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
         <h1 className="text-3xl text-center font-bold mb-4 mt-10">
-          All PDF Files {dossier}
+          Tous les equipement pour {dossier}
         </h1>
 
         <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
@@ -546,7 +488,7 @@ const PdfFile = () => {
                           <Link
                             to={`/${site}/${dossier}/pdf/détails/${pdf._id}`}
                           >
-                            {pdf.filename}
+                            {pdf.mainPdf.filename}
                           </Link>
                         </th>
                         <td className="px-4 py-3">
@@ -560,7 +502,17 @@ const PdfFile = () => {
                           <Link
                             to={`/${site}/${dossier}/pdf/détails/${pdf._id}`}
                           >
-                            {pdf.creationDate}
+                            {new Date(pdf.creationDate).toLocaleString(
+                              "fr-FR",
+                              {
+                                day: "numeric",
+                                month: "numeric",
+                                year: "numeric",
+                                hour: "numeric",
+                                minute: "numeric",
+                                hour12: false,
+                              }
+                            )}
                           </Link>
                         </td>
                         <td className="px-4 py-3 flex items-center justify-end">

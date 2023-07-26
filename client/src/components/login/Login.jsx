@@ -69,96 +69,57 @@ const Login = () => {
   }, []);
 
   return (
-    <div class="h-full flex">
-      {screenSize.width > 700 ? (
-        <>
-          <div className="flex w-1/2 justify-center items-center bg-white">
-            <form className="bg-white" onSubmit={handleSubmit}>
-              <h1 className="text-gray-800 font-bold text-2xl mb-1">
-                Hello Again!
-              </h1>
-              <p className="text-sm font-normal text-gray-600 mb-7">
-                Welcome Back
-              </p>
-              <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
-                <input
-                  type="email"
-                  id="email"
-                  classNameName="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring"
-                  placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  pattern={emailRegex}
-                />
-              </div>
-              <div className="flex items-center border-2 py-2 px-3 rounded-2xl">
-                <input
-                  type="password"
-                  id="password"
-                  classNameName="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring"
-                  placeholder="Enter your password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </div>
-              <button
-                type="submit"
-                className="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2"
-              >
-                Login
-              </button>
-              <span className="text-sm ml-2 hover:text-blue-500 cursor-pointer">
-                Forgot Password ?
-              </span>
-            </form>
+    <div className="flex justify-center items-center h-screen flex-wrap">
+      <div
+        className={`${
+          screenSize.width > 700
+            ? "w-1/3 p-6 bg-white rounded shadow-lg"
+            : "bg-white rounded shadow-lg w-full p-2"
+        }`}
+      >
+        <form className="bg-white" onSubmit={handleSubmit}>
+          <h1 className="text-gray-800 font-bold text-2xl mb-1">
+            Hello Again!
+          </h1>
+          <p className="text-sm font-normal text-gray-600 mb-7">Welcome Back</p>
+          <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
+            <input
+              type="email"
+              id="email"
+              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring ${
+                screenSize.width > 700 ? "" : "text-sm"
+              }`}
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              pattern={emailRegex}
+            />
           </div>
-        </>
-      ) : (
-        <div className="flex w-full justify-center items-center bg-white">
-          <form className="bg-white  p-1" onSubmit={handleSubmit}>
-            <h1 className="text-gray-800 font-bold text-2xl mb-1">
-              Hello Again!
-            </h1>
-            <p className="text-sm font-normal text-gray-600 mb-7">
-              Welcome Back
-            </p>
-            <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
-              <input
-                type="email"
-                id="email"
-                classNameName="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                pattern={emailRegex}
-              />
-            </div>
-            <div className="flex items-center border-2 py-2 px-3 rounded-2xl">
-              <input
-                type="password"
-                id="password"
-                classNameName="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring"
-                placeholder="Enter your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
-            <button
-              type="submit"
-              className="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2"
-            >
-              Login
-            </button>
-            <span className="text-sm ml-2 hover:text-blue-500 cursor-pointer">
-              Forgot Password ?
-            </span>
-          </form>
-        </div>
-      )}
+          <div className="flex items-center border-2 py-2 px-3 rounded-2xl">
+            <input
+              type="password"
+              id="password"
+              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring ${
+                screenSize.width > 700 ? "" : "text-sm"
+              }`}
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            className="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2"
+          >
+            Login
+          </button>
+          <span className="text-sm ml-2 hover:text-blue-500 cursor-pointer">
+            Forgot Password?
+          </span>
+        </form>
+      </div>
     </div>
   );
 };

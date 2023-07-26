@@ -13,6 +13,7 @@ router.post(
     { name: "selectedFile", maxCount: 1 },
     { name: "selectedImage", maxCount: 1 },
     { name: "selectedInfo", maxCount: 1 },
+    { name: "selectedDOE", maxCount: 20 },
   ]),
   controllers.formData.uploadData
 );

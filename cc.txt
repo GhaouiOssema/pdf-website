@@ -144,12 +144,12 @@ const FormSend = () => {
 
     try {
       const response = await axios.post(
-        "https://qr-server-6xmb.onrender.com/upload",
+        "`${import.meta.env.VITE_SERVER_API_URL}/upload",
         formData,
         config
       );
       const res = await axios.post(
-        "https://qr-server-6xmb.onrender.com/upload/image",
+        "`${import.meta.env.VITE_SERVER_API_URL}/upload/image",
         imageData,
         config
       );
@@ -194,7 +194,7 @@ const FormSend = () => {
   useEffect(() => {
     const fetchFolders = async () => {
       try {
-        const response = await axios.get("https://qr-server-6xmb.onrender.com/sites", config);
+        const response = await axios.get("`${import.meta.env.VITE_SERVER_API_URL}/sites", config);
         setFolders(response.data);
       } catch (error) {
         console.error(error);

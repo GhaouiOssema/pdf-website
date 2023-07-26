@@ -43,15 +43,16 @@ const Profile = () => {
           <div className="md:flex no-wrap md:-mx-2">
             <div className="w-full md:w-3/12 md:mx-2">
               <div className="bg-white p-3 border-t-4 border-green-400">
-                <div className="image overflow-hidden">
+                <div className="flex justify-center">
                   {userData.profileImage && (
                     <img
                       src={`data:image/jpeg;base64,${userData.profileImage}`}
                       alt="User Profile"
-                      style={{ width: "200px", height: "200px" }}
+                      className="h-40 w-40 "
                     />
                   )}
                 </div>
+
                 <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">
                   {userData.userName}
                 </h1>

@@ -63,7 +63,9 @@ const PdfDetails = () => {
     const getPdfData = async () => {
       try {
         const response = await axios.get(
-          `https://qr-server-6xmb.onrender.com/site/folder/pdf/details/${id}`,
+          `${
+            import.meta.env.VITE_SERVER_API_URL
+          }/site/folder/pdf/details/${id}`,
           config
         );
         setPdfData(response.data.pdf);
@@ -88,7 +90,9 @@ const PdfDetails = () => {
   const handleDelete = async () => {
     try {
       const response = await axios.delete(
-        `https://qr-server-6xmb.onrender.com/${site}/${dossier}/pdfs/${pdfData.title}`,
+        `${import.meta.env.VITE_SERVER_API_URL}/${site}/${dossier}/pdfs/${
+          pdfData.title
+        }`,
         config
       );
       if (response.status === 200) {
@@ -142,7 +146,7 @@ const PdfDetails = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `https://qr-server-6xmb.onrender.com/pdf/raports`,
+          `${import.meta.env.VITE_SERVER_API_URL}/pdf/raports`,
           config
         );
         const filteredRaports = response.data.filter((raport) =>
@@ -205,7 +209,9 @@ const PdfDetails = () => {
                 <figure className="max-w-lg relative">
                   <img
                     className="h-auto max-w-full rounded-lg"
-                    src={`https://qr-server-6xmb.onrender.com/uploads/pdfImages/${filename}-${counter}-${encryptedDate}.${extension}`}
+                    src={`${
+                      import.meta.env.VITE_SERVER_API_URL
+                    }/uploads/pdfImages/${filename}-${counter}-${encryptedDate}.${extension}`}
                     alt="image description"
                   />
                   <figcaption className="absolute bottom-0 left-0 w-full bg-black bg-opacity-75 text-white text-center py-2">
@@ -228,7 +234,9 @@ const PdfDetails = () => {
                     >
                       <QRCode
                         className="w-[200px] h-[200px]"
-                        value={`https://qr-server-6xmb.onrender.com/publique/${site}/${dossier}/pdf/view/${id}`}
+                        value={`${
+                          import.meta.env.VITE_SERVER_API_URL
+                        }/publique/${site}/${dossier}/pdf/view/${id}`}
                       />
                     </div>
                     <div className="mt-5 w-full flex-row-reverse  text-xl flex items-center justify-center">

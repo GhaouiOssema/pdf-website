@@ -38,7 +38,9 @@ const VerificationCode = () => {
   const handleConfirmation = async () => {
     try {
       const response = await axios.post(
-        `https://qr-server-6xmb.onrender.com/public/verification/view/${verificationCode}`
+        `${
+          import.meta.env.VITE_SERVER_API_URL
+        }/public/verification/view/${verificationCode}`
       );
 
       const { verified } = response.data;

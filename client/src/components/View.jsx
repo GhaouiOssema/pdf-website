@@ -110,7 +110,7 @@ const RaportView = ({
       // Extract the necessary information from the token payload
 
       const response = await axios.post(
-        "https://qr-server-6xmb.onrender.com/sites/creation",
+        `${import.meta.env.VITE_SERVER_API_URL}/sites/creation`,
         formData,
         {
           headers: {
@@ -148,7 +148,7 @@ const RaportView = ({
       };
 
       const response = await axios.put(
-        `https://qr-server-6xmb.onrender.com/site/${folderIdUpdate}`,
+        `${import.meta.env.VITE_SERVER_API_URL}/site/${folderIdUpdate}`,
         data,
         config
       );
