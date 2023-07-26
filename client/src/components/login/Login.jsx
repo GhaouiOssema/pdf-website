@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -19,10 +19,13 @@ const Login = () => {
     }
 
     try {
-      const response = await axios.post("https://qr-server-6xmb.onrender.com/seconnecter", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_SERVER_API_URL}/seconnecter`,
+        {
+          email,
+          password,
+        }
+      );
 
       const { token } = response.data;
       localStorage.setItem("token", token);
@@ -45,49 +48,117 @@ const Login = () => {
 
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
+  const [screenSize, setScreenSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
-    <div class="h-screen flex">
-      <div class="flex w-1/2 bg-gradient-to-tr from-blue-800 to-purple-700 i justify-around items-center">
-        <div></div>
-      </div>
-      <div class="flex w-1/2 justify-center items-center bg-white">
-        <form class="bg-white" onSubmit={handleSubmit}>
-          <h1 class="text-gray-800 font-bold text-2xl mb-1">Hello Again!</h1>
-          <p class="text-sm font-normal text-gray-600 mb-7">Welcome Back</p>
-          <div class="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
-            <input
-              type="email"
-              id="email"
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              pattern={emailRegex}
-            />
+    <div class="h-full flex">
+      {screenSize.width > 700 ? (
+        <>
+          <div className="flex w-1/2 justify-center items-center bg-white">
+            <form className="bg-white" onSubmit={handleSubmit}>
+              <h1 className="text-gray-800 font-bold text-2xl mb-1">
+                Hello Again!
+              </h1>
+              <p className="text-sm font-normal text-gray-600 mb-7">
+                Welcome Back
+              </p>
+              <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
+                <input
+                  type="email"
+                  id="email"
+                  classNameName="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  pattern={emailRegex}
+                />
+              </div>
+              <div className="flex items-center border-2 py-2 px-3 rounded-2xl">
+                <input
+                  type="password"
+                  id="password"
+                  classNameName="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring"
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+              <button
+                type="submit"
+                className="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2"
+              >
+                Login
+              </button>
+              <span className="text-sm ml-2 hover:text-blue-500 cursor-pointer">
+                Forgot Password ?
+              </span>
+            </form>
           </div>
-          <div class="flex items-center border-2 py-2 px-3 rounded-2xl">
-            <input
-              type="password"
-              id="password"
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring"
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          <button
-            type="submit"
-            class="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2"
-          >
-            Login
-          </button>
-          <span class="text-sm ml-2 hover:text-blue-500 cursor-pointer">
-            Forgot Password ?
-          </span>
-        </form>
-      </div>
+        </>
+      ) : (
+        <div className="flex w-full justify-center items-center bg-white">
+          <form className="bg-white  p-1" onSubmit={handleSubmit}>
+            <h1 className="text-gray-800 font-bold text-2xl mb-1">
+              Hello Again!
+            </h1>
+            <p className="text-sm font-normal text-gray-600 mb-7">
+              Welcome Back
+            </p>
+            <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
+              <input
+                type="email"
+                id="email"
+                classNameName="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                pattern={emailRegex}
+              />
+            </div>
+            <div className="flex items-center border-2 py-2 px-3 rounded-2xl">
+              <input
+                type="password"
+                id="password"
+                classNameName="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              className="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2"
+            >
+              Login
+            </button>
+            <span className="text-sm ml-2 hover:text-blue-500 cursor-pointer">
+              Forgot Password ?
+            </span>
+          </form>
+        </div>
+      )}
     </div>
   );
 };

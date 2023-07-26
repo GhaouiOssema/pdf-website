@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from "react";
-import jwt_decode from "jwt-decode";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);
-  const [filename, setFilename] = useState("");
-  const [prefix, setPrefix] = useState("");
-  const [timestamp, setTimestamp] = useState("");
-  const [extension, setExtension] = useState("");
+  const [imageData, setImageData] = useState(null); // To store the Base64 image data
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,14 +14,16 @@ const Profile = () => {
           return;
         }
 
-        const response = await axios.get("https://qr-server-6xmb.onrender.com/profile/user", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await axios.get(
+          `${import.meta.env.VITE_SERVER_API_URL}/profile/user`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         setUserData(response.data.userData);
-        setFilename(response.data.userData.profileImage);
       } catch (error) {
         console.log(error);
       }
@@ -34,25 +32,10 @@ const Profile = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    if (filename) {
-      const prefix = filename.substring(0, filename.lastIndexOf("-"));
-      const timestamp = filename.substring(
-        filename.lastIndexOf("-") + 1,
-        filename.lastIndexOf(".")
-      );
-      const extension = filename.substring(filename.lastIndexOf(".") + 1);
-
-      setPrefix(prefix);
-      setTimestamp(timestamp);
-      setExtension(extension);
-    }
-  }, [filename]);
-
   if (userData === null) {
     return <div>Loading...</div>;
   }
-
+  console.log(userData);
   return (
     <div>
       <div className="bg-gray-100 h-screen">
@@ -61,10 +44,13 @@ const Profile = () => {
             <div className="w-full md:w-3/12 md:mx-2">
               <div className="bg-white p-3 border-t-4 border-green-400">
                 <div className="image overflow-hidden">
-                  <img
-                    src={`https://qr-server-6xmb.onrender.com/userPictures/${prefix}-${timestamp}.${extension}`}
-                    alt="User Profile"
-                  />
+                  {userData.profileImage && (
+                    <img
+                      src={`data:image/jpeg;base64,${userData.profileImage}`}
+                      alt="User Profile"
+                      style={{ width: "200px", height: "200px" }}
+                    />
+                  )}
                 </div>
                 <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">
                   {userData.userName}

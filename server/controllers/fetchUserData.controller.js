@@ -1,3 +1,4 @@
+// fetch user data controller
 const jwt = require("jsonwebtoken");
 const { ObjectId } = require("mongodb");
 const UserAccount = require("../models/USER");
@@ -24,7 +25,20 @@ module.exports = {
       // Fetch the logged-in user's data
       const userData = await UserAccount.findOne({ _id: userId });
 
-      return res.status(200).json({ userData });
+      if (!userData) {
+        return res.status(404).json({ error: "User data not found" });
+      }
+
+      // Convert the Buffer image data to Base64 and send it in the response
+      const base64ImageData = userData.profileImage.toString("base64");
+
+      // Create a new object with the Base64 encoded image string
+      const userDataWithImage = {
+        ...userData.toObject(),
+        profileImage: base64ImageData,
+      };
+
+      return res.status(200).json({ userData: userDataWithImage });
     } catch (error) {
       if (error.name === "TokenExpiredError") {
         return res.status(401).json({ error: "Token expired" });

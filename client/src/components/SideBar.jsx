@@ -8,6 +8,8 @@ import {
   HiTable,
   HiUser,
   HiViewBoards,
+  HiMenuAlt1, // Hamburger icon
+  HiX, // Close icon
 } from "react-icons/hi";
 import LOGO from "../assets/logo2.png";
 import jwt_decode from "jwt-decode";
@@ -17,6 +19,7 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
 const SideBar = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isSidebarVisible, setIsSidebarVisible] = useState(true); // Track sidebar visibility
 
   useEffect(() => {
     // Check if user is authenticated
@@ -44,41 +47,60 @@ const SideBar = () => {
     window.location.href = "/";
   };
 
+  // Function to toggle sidebar visibility
+  const toggleSidebar = () => {
+    setIsSidebarVisible((prev) => !prev);
+  };
+
   return (
-    <div className="">
-      <Sidebar style={{ width: "220px" }} className="h-screen">
-        <Sidebar.Items>
-          <Sidebar.ItemGroup>
-            <Sidebar.Item href="#">
-              <Link to={"/messites"}>
-                <img src={LOGO} alt="" />
-              </Link>
-            </Sidebar.Item>
-            <Sidebar.ItemGroup className="uppercase" style={{ marginTop: 50 }}>
-              <Sidebar.Item href="#" icon={AddCircleOutlineIcon}>
-                <Link to={"/telecharger"}>
-                  <p className="uppercase">equipement</p>
-                </Link>
-              </Sidebar.Item>
-              <Sidebar.Item href="#" icon={HiViewBoards}>
+    <div className="relative">
+      {/* Hamburger menu to toggle sidebar */}
+      <button
+        onClick={toggleSidebar}
+        style={{ border: "none", background: "transparent" }}
+      >
+        {isSidebarVisible ? <HiX size={30} /> : <HiMenuAlt1 size={30} />}
+      </button>
+
+      {/* Sidebar component */}
+      {isSidebarVisible && (
+        <Sidebar style={{ width: "220px" }} className="h-screen">
+          <Sidebar.Items>
+            <Sidebar.ItemGroup>
+              <Sidebar.Item href="#">
                 <Link to={"/messites"}>
-                  <p className="uppercase">mes Sites</p>
+                  <img src={LOGO} alt="" />
                 </Link>
               </Sidebar.Item>
-              <Sidebar.Item icon={HiUser}>
-                <Link to={"/profile"}>
-                  <p>Mon Profile</p>
-                </Link>
-              </Sidebar.Item>
-              <Sidebar.Item icon={LogoutIcon} onClick={logout}>
-                <Link to={"/"}>
-                  <p className="text-sm">déconnecter</p>
-                </Link>
-              </Sidebar.Item>
+              <Sidebar.ItemGroup
+                className="uppercase"
+                style={{ marginTop: 50 }}
+              >
+                <Sidebar.Item href="#" icon={AddCircleOutlineIcon}>
+                  <Link to={"/telecharger"}>
+                    <p className="uppercase">equipement</p>
+                  </Link>
+                </Sidebar.Item>
+                <Sidebar.Item href="#" icon={HiViewBoards}>
+                  <Link to={"/messites"}>
+                    <p className="uppercase">mes Sites</p>
+                  </Link>
+                </Sidebar.Item>
+                <Sidebar.Item icon={HiUser}>
+                  <Link to={"/profile"}>
+                    <p>Mon Profile</p>
+                  </Link>
+                </Sidebar.Item>
+                <Sidebar.Item icon={LogoutIcon} onClick={logout}>
+                  <Link to={"/"}>
+                    <p className="text-sm">déconnecter</p>
+                  </Link>
+                </Sidebar.Item>
+              </Sidebar.ItemGroup>
             </Sidebar.ItemGroup>
-          </Sidebar.ItemGroup>
-        </Sidebar.Items>
-      </Sidebar>
+          </Sidebar.Items>
+        </Sidebar>
+      )}
     </div>
   );
 };
