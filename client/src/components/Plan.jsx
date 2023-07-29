@@ -3,11 +3,10 @@ import React, { useEffect, useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import { useParams } from "react-router-dom";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+import { Box, CircularProgress } from "@mui/material";
 
 const Plan = () => {
   const { fichier } = useParams();
-  console.log(fichier);
-
   const [pdfLoaded, setPdfLoaded] = useState(false);
   const [numPages, setNumPages] = useState(null);
 
@@ -18,31 +17,38 @@ const Plan = () => {
 
   const [pdfData, setPdfData] = useState(null);
 
+  const token = localStorage.getItem("token");
+  if (!token) {
+    return;
+  }
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
   useEffect(() => {
     const getPdfData = async () => {
       try {
         const response = await axios.get(
           `${
             import.meta.env.VITE_SERVER_API_URL
-          }/site/folder/pdf/details/${fichier}`
+          }/site/folder/pdf/details/${fichier}`,
+          {
+            ...config,
+            params: {
+              data: "plan",
+            },
+          }
         );
-        setPdfData(response.data.pdf.filename);
+        setPdfData(response.data.pdf);
       } catch (error) {
         console.log("Error retrieving PDF data:", error);
       }
     };
     getPdfData();
   }, [fichier]);
-
-  let filename, counter, encryptedDate, extension;
-
-  if (pdfData) {
-    const parts = pdfData.split("-");
-    filename = parts[0];
-    counter = parts[1];
-    encryptedDate = parts[2].split(".")[0];
-    extension = parts[2].split(".")[1];
-  }
 
   const [screenSize, setScreenSize] = useState({
     width: window.innerWidth,
@@ -64,13 +70,13 @@ const Plan = () => {
     };
   }, []);
 
+  console.log(pdfData);
+
   return (
-    <div className="bg-gray-100 boor flex justify-center items-center ">
+    <div className="bg-gray-100 flex justify-center items-center ">
       {pdfData ? (
         <Document
-          file={`${
-            import.meta.env.VITE_SERVER_API_URL
-          }/uploads/pdfFiles/${filename}-${counter}-${encryptedDate}.${extension}`}
+          file={`data:application/pdf;base64,${pdfData.mainPdf.data}`}
           className="flex flex-col items-center"
           onLoadSuccess={handlePdfLoadSuccess}
         >
@@ -86,7 +92,18 @@ const Plan = () => {
               />
             ))}
         </Document>
-      ) : null}
+      ) : (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      )}
     </div>
   );
 };

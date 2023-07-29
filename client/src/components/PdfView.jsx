@@ -213,7 +213,15 @@ const PdfView = () => {
     const getPdfData = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_SERVER_API_URL}/site/folder/pdf/details/${id}`
+          `${
+            import.meta.env.VITE_SERVER_API_URL
+          }/site/folder/pdf/details/${id}`,
+          {
+            ...config,
+            params: {
+              data: "raport",
+            },
+          }
         );
         setPdfData(response.data.pdf);
       } catch (error) {
@@ -292,8 +300,18 @@ const PdfView = () => {
             ? "Correctif"
             : null,
       };
-
       console.log(requestData);
+
+      const token = localStorage.getItem("token");
+      if (!token) {
+        return;
+      }
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
 
       const response = await axios.post(
         `${import.meta.env.VITE_SERVER_API_URL}/pdfs/${id}/raport`,
@@ -311,6 +329,8 @@ const PdfView = () => {
       console.log("Error sending report:", error);
     }
   };
+
+  console.log(pdfData);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -380,20 +400,6 @@ const PdfView = () => {
                 borderRadius: 2,
               }}
             >
-              {/* <Tab
-                label="DOE"
-                {...a11yProps(0)}
-                sx={{
-                  color: "white",
-                }}
-              />
-              <Tab
-                label="Plan"
-                {...a11yProps(0)}
-                sx={{
-                  color: "white",
-                }}
-              /> */}
               <Tab
                 label="Historiqye maintenance"
                 {...a11yProps(0)}
@@ -417,42 +423,6 @@ const PdfView = () => {
             onChangeIndex={handleChangeIndex}
             className="text-black"
           >
-            {/* <TabPanel value={value} index={0} dir={theme.direction}>
-              <DOEButtonsGroup pdfData={pdfData} />
-            </TabPanel>
-            <TabPanel value={value} index={1} dir={theme.direction}>
-              <div
-                className={`flex-1 overflow-y-auto ${
-                  screenSize.width < 700 ? "w-[350px]" : "sm:max-w-7xl"
-                }`}
-                ref={pdfRef}
-              >
-                <div className="flex justify-end">
-                  <button
-                    className="mb-8 text-xs items-center text-center text-white bg-blue-500 rounded-full px-4 py-2"
-                    onClick={handleDownload}
-                  >
-                    Télécharger
-                  </button>
-                </div>
-                <Document
-                  file={`${import.meta.env.VITE_SERVER_API_URL}/files/${pdfData.filename}`}
-                  className="flex flex-col items-center w-full boor"
-                  onLoadSuccess={handlePdfLoadSuccess}
-                >
-                  {Array.from(new Array(numPages), (el, index) => (
-                    <Page
-                      key={index}
-                      pageNumber={index + 1}
-                      renderTextLayer={false}
-                      height={null}
-                      width={screenSize.width < 700 ? 349 : 780}
-                      className="mt-1"
-                    />
-                  ))}
-                </Document>
-              </div>
-            </TabPanel> */}
             <TabPanel value={value} index={0} dir={theme.direction}>
               <TableContainer component={Paper}>
                 <Table
@@ -493,11 +463,12 @@ const PdfView = () => {
                             {raport.piècesChangées}
                           </TableCell>
                           <TableCell align="center">
-                            {
+                            {raport.dateProchainEntretien}
+                            {/* {
                               new Date(raport.dateProchainEntretien)
                                 .toISOString()
                                 .split("T")[0]
-                            }
+                            } */}
                           </TableCell>
                           <TableCell align="center" sx={{ cursor: "pointer" }}>
                             <InfoOutlinedIcon

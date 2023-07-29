@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const isEmailValid = (email) => {
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -115,9 +115,11 @@ const Login = () => {
           >
             Login
           </button>
-          <span className="text-sm ml-2 hover:text-blue-500 cursor-pointer">
-            Forgot Password?
-          </span>
+          <Link to="/seconnecter/oublier">
+            <span className="text-sm ml-2 hover:text-blue-500 cursor-pointer">
+              Forgot Password?
+            </span>
+          </Link>
         </form>
       </div>
     </div>

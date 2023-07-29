@@ -14,6 +14,6 @@ module.exports = {
   getRaports: require("./getPdfRaportsById.controller"),
   getDOEData: require("./getDOEFiles.controller"),
   getUserDataById: require("./fetchUserData.controller"),
-  imageUpload: require("./uploadUserProfileImage.controller"),
   formData: require("./formDataUpload.controller"),
+  forgotUserPassword: require("./resetPassword.controller"),
 };

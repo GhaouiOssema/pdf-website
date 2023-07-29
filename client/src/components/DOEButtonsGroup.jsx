@@ -1,5 +1,4 @@
-import * as React from "react";
-
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@mui/material/styles";
@@ -12,8 +11,6 @@ import Chip from "@mui/material/Chip";
 import { Stack } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
-import axios from "axios";
-import { useState } from "react";
 import jwt_decode from "jwt-decode";
 import { Document, Page, pdfjs } from "react-pdf";
 
@@ -51,10 +48,11 @@ function a11yProps(index) {
     "aria-controls": index,
   };
 }
+
 const DOEButtonsGroup = ({ pdfData }) => {
+  console.log(pdfData);
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
-  const { id } = useParams();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -63,54 +61,10 @@ const DOEButtonsGroup = ({ pdfData }) => {
   const handleChangeIndex = (index) => {
     setValue(index);
   };
+
   const handleClick = () => {
     console.info("You clicked the Chip.");
   };
-
-  const token = localStorage.getItem("token");
-  if (!token) {
-    return;
-  }
-
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-
-  const [username, setUsername] = useState("");
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      const decoded = jwt_decode(token);
-      const { userName } = decoded;
-      setUsername(userName);
-    } else {
-      setIsAuthenticated(false);
-    }
-  }, []);
-
-  const [fileStructure, setFileStructure] = useState([]);
-
-  useEffect(() => {
-    const fetchFileStructure = async () => {
-      try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_SERVER_API_URL}/pdf/doe`
-        );
-        const { fileStructure } = response.data.files;
-        setFileStructure(fileStructure);
-      } catch (error) {
-        console.error("Error fetching file structure:", error);
-      }
-    };
-    fetchFileStructure();
-  }, []);
-
-  console.log(`${username}/${pdfData.title}`);
-
-  console.log(fileStructure);
 
   return (
     <Box sx={{ bgcolor: "background.paper", width: "100%" }}>
@@ -136,14 +90,17 @@ const DOEButtonsGroup = ({ pdfData }) => {
               justifyContent: "center",
             }}
           >
-            <Tab
-              label={
-                <Stack direction="row" spacing={1}>
-                  <Chip label="Clickable" onClick={handleClick} />
-                </Stack>
-              }
-              {...a11yProps(0)}
-            />
+            {pdfData?.doeFiles?.map((file, idx) => (
+              <Tab
+                key={idx}
+                label={
+                  <Stack direction="row" spacing={1}>
+                    <Chip label={file.filename} onClick={handleClick} />
+                  </Stack>
+                }
+                {...a11yProps(idx)} // Use 'idx' as the a11yProps value
+              />
+            ))}
           </Tabs>
         </Box>
       </div>
@@ -152,27 +109,24 @@ const DOEButtonsGroup = ({ pdfData }) => {
         index={value}
         onChangeIndex={handleChangeIndex}
       >
-        <TabPanel value={value} index={0} dir={theme.direction}>
-          <Document
-            file={`${
-              import.meta.env.VITE_SERVER_API_URL
-            }/oussema/rr/download_01.pdf`}
-            className="hidden__class"
-          >
-            <Page pageNumber={1} renderTextLayer={false} className="pdf-page" />
-          </Document>
-        </TabPanel>
-        <TabPanel value={value} index={1} dir={theme.direction}>
-          Item Two
-        </TabPanel>
-        <TabPanel value={value} index={2} dir={theme.direction}>
-          Item Three
-        </TabPanel>
-        <TabPanel value={value} index={3} dir={theme.direction}>
-          Item 5
-        </TabPanel>
+        {/* Iterate over the pdfData.doeFiles array and render TabPanel for each file */}
+        {pdfData?.doeFiles?.map((file, idx) => (
+          <TabPanel key={idx} value={value} index={idx} dir={theme.direction}>
+            <Document
+              file={`data:application/pdf;base64,${file.data}`} // Use 'file.data' here
+              className="hidden__class"
+            >
+              <Page
+                pageNumber={1}
+                renderTextLayer={false}
+                className="pdf-page"
+              />
+            </Document>
+          </TabPanel>
+        ))}
       </SwipeableViews>
     </Box>
   );
 };
+
 export default DOEButtonsGroup;

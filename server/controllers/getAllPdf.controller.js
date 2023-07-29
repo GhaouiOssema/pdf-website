@@ -44,11 +44,14 @@ module.exports = {
       }
 
       // Get the PDFs for the subfolder
-      const pdfs = await PDF.find({
-        _id: { $in: subFolder.subFolder.pdfFiles },
-      });
+      const pdfs = await PDF.find(
+        {
+          _id: { $in: subFolder.subFolder.pdfFiles },
+        },
+        { mainPdf: { filename: 1 }, _id: 1, title: 1, creationDate: 1 }
+      );
 
-      res.json({ pdfs });
+      res.status(200).json({ pdfs });
     } catch (err) {
       res.status(500).json({ message: err.message });
       console.log(err);

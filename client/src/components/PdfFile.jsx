@@ -21,9 +21,7 @@ import Modal from "@mui/material/Modal";
 import { useSpring, animated } from "@react-spring/web";
 import { Label, TextInput } from "flowbite-react";
 import MuiAlert from "@mui/material/Alert";
-import { Document, Page, pdfjs } from "react-pdf";
-
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 
 const Fade = React.forwardRef(function Fade(props, ref) {
   const {
@@ -488,7 +486,12 @@ const PdfFile = () => {
                           <Link
                             to={`/${site}/${dossier}/pdf/détails/${pdf._id}`}
                           >
-                            {pdf.mainPdf.filename}
+                            <div className="flex items-center">
+                              <i className="fa-solid fa-file-pdf text-2xl text-red-500"></i>
+                              <span className="ml-3">
+                                {pdf.mainPdf.filename}
+                              </span>
+                            </div>
                           </Link>
                         </th>
                         <td className="px-4 py-3">

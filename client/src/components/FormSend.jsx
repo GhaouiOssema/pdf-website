@@ -154,8 +154,10 @@ const FormSend = () => {
       } else if (value instanceof File) {
         formData.append(key, value);
       } else if (Array.isArray(value)) {
-        // Handle the array case properly
-        formData.append(key, value[1]);
+        // Handle the array case properly by appending each element separately
+        value.forEach((item) => {
+          formData.append(key, item);
+        });
       } else {
         formData.append(key, value || "");
       }

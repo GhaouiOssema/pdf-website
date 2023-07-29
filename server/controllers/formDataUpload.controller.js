@@ -19,6 +19,7 @@ module.exports = {
     const missingFiles = requiredFiles.filter((field) => !req.files[field]);
 
     if (missingFiles.length > 0) {
+      console.log({ error: `Missing file(s): ${missingFiles.join(", ")}` });
       return res.status(400).json({
         error: `Missing file(s): ${missingFiles.join(", ")}`,
       });
@@ -27,7 +28,8 @@ module.exports = {
     const selectedFile = req.files.selectedFile[0];
     const selectedImage = req.files.selectedImage[0];
     const selectedInfo = req.files.selectedInfo[0];
-    const selectedDOEFiles = req.files.selectedDOE || []; // If selectedDOE is not present, use an empty array
+    const selectedDOEFiles = req.files.selectedDOE || [];
+    console.log(selectedDOEFiles.length);
     const doeFiles = selectedDOEFiles.map((file) => ({
       filename: file.originalname,
       data: file.buffer.toString("base64"),

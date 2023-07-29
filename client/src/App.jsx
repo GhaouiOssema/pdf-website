@@ -23,6 +23,9 @@ import PublicPdfView from "./components/PublicPdfView";
 import SideBar from "./components/SideBar";
 import Plan from "./components/Plan";
 import FicheTechnique from "./components/FicheTechnique";
+import DoeFiles from "./components/DoeFiles";
+import ForgotPassword from "./components/login/ForgotPassword";
+import ResetPasswordForm from "./components/login/ResetPasswordForm";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -56,6 +59,8 @@ const App = () => {
             <Route path="/" element={isAuthenticated ? null : <Home />} />
             <Route path="/seconnecter" element={<Login />} />
             <Route path="/inscription" element={<Register />} />
+            <Route path="/seconnecter/oublier" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPasswordForm />} />
             <Route
               path="/:site/:dossier/pdf/view/:id/verify"
               element={<VerificationCode />}
@@ -83,6 +88,10 @@ const App = () => {
                 <Route
                   path="/:site/:dossier/pdf/detail/fiche_technique/:pdfid"
                   element={<FicheTechnique />}
+                />
+                <Route
+                  path="/:site/:dossier/pdf/detail/doe/:pdfid"
+                  element={<DoeFiles />}
                 />
               </>
             )}

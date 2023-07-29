@@ -15,6 +15,14 @@ module.exports = {
         option,
       } = req.body;
 
+      console.log(
+        société,
+        observation,
+        piècesChangées,
+        dateProchainEntretien,
+        option
+      );
+
       const token = req?.headers?.authorization?.split(" ")[1] || null;
 
       if (token) {

@@ -39,12 +39,6 @@ const PdfDetails = () => {
     return;
   }
 
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-
   const handleClick = () => {
     setOpen(true);
   };
@@ -59,6 +53,12 @@ const PdfDetails = () => {
   const handleOpenTable = () => setOpen(true);
   const handleCloseTable = () => setOpen(false);
 
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
   useEffect(() => {
     const getPdfData = async () => {
       try {
@@ -66,7 +66,12 @@ const PdfDetails = () => {
           `${
             import.meta.env.VITE_SERVER_API_URL
           }/site/folder/pdf/details/${id}`,
-          config
+          {
+            ...config,
+            params: {
+              data: "mainDetails",
+            },
+          }
         );
         setPdfData(response.data.pdf);
       } catch (error) {
@@ -75,8 +80,8 @@ const PdfDetails = () => {
     };
     getPdfData();
   }, [site, dossier, id]);
+
   console.log(pdfData);
-  console.log(id);
 
   const handleDownloadQRCode = () => {
     html2canvas(qrCodeRef.current).then((canvas) => {
@@ -173,18 +178,6 @@ const PdfDetails = () => {
     setPage(0);
   };
 
-  console.log(pdfData);
-
-  let filename, counter, encryptedDate, extension;
-
-  if (pdfData) {
-    const parts = pdfData.pdfImage.split("-");
-    filename = parts[0];
-    counter = parts[1];
-    encryptedDate = parts[2].split(".")[0];
-    extension = parts[2].split(".")[1];
-  }
-
   return (
     <>
       <h1 className="text-3xl text-center font-bold pt-10">
@@ -209,9 +202,10 @@ const PdfDetails = () => {
                 <figure className="max-w-lg relative">
                   <img
                     className="h-auto max-w-full rounded-lg"
-                    src={`${
-                      import.meta.env.VITE_SERVER_API_URL
-                    }/uploads/pdfImages/${filename}-${counter}-${encryptedDate}.${extension}`}
+                    src={`data:image/${pdfData.pdfImage.filename
+                      .split(".")
+                      .pop()
+                      .toLowerCase()};base64,${pdfData.pdfImage.data}`}
                     alt="image description"
                   />
                   <figcaption className="absolute bottom-0 left-0 w-full bg-black bg-opacity-75 text-white text-center py-2">
@@ -363,7 +357,7 @@ const PdfDetails = () => {
           <div className="pdf__footer mb-10 w-[50rem]">
             <div className="">
               <Link
-                to={`/${site}/${dossier}/pdf/view/${id}`}
+                to={`/${site}/${dossier}/pdf/detail/doe/${id}`}
                 className="buttons__style_link__h buttons__style_link__left bg-gray-200 mt-3"
               >
                 <span>Ouvrir les DOE</span>
