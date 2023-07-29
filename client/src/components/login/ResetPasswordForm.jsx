@@ -17,33 +17,35 @@ const ResetPasswordForm = () => {
   const [loading, setLoading] = React.useState(false);
 
   const handleResetPassword = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+  e.preventDefault();
+  setLoading(true);
 
-    if (password !== confirmPassword) {
-      alert("Passwords do not match. Please try again.");
-      return;
-    }
+  if (password !== confirmPassword) {
+    alert("Passwords do not match. Please try again.");
+    return;
+  }
 
-    try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_SERVER_API_URL}/reset-password`,
-        {
-          email,
-          password,
-        }
-      );
-      if (res.status === 200) {
-        setIsResetSuccess(true);
-        setLoading(false);
+  try {
+    const expiration = Date.now() + 600000; // 10 minutes in milliseconds
+    const res = await axios.post(
+      `${import.meta.env.VITE_SERVER_API_URL}/reset-password`,
+      {
+        email,
+        password,
+        expiration, // Include the expiration timestamp in the request payload
       }
-    } catch (err) {
-      console.error(err);
-      alert(
-        "An error occurred while resetting the password. Please try again."
-      );
+    );
+
+    if (res.status === 200) {
+      setIsResetSuccess(true);
+      setLoading(false);
     }
-  };
+  } catch (err) {
+    console.error(err);
+    alert("An error occurred while resetting the password. Please try again.");
+  }
+};
+
 
   return (
     <div className="flex flex-col items-center">
