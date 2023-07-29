@@ -41,7 +41,7 @@ module.exports = {
         return res.status(404).json({ message: "User not found" });
       }
 
-      const resetLink = `http://localhost:5173/reset-password?email=${encodeURIComponent(
+      const resetLink = `https://qr-solution-beta.netlify.app/reset-password?email=${encodeURIComponent(
         email
       )}`;
       await sendResetEmail(email, resetLink);
