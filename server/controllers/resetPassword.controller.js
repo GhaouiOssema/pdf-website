@@ -18,13 +18,14 @@ const sendResetEmail = async (email, resetLink) => {
     "utf-8"
   );
 
-  const emailContent = htmlTemplate.replace("{resetLink}", resetLink);
+  const expirationTime = Date.now() + 600000; // 10 minutes in milliseconds
+  const emailContentWithExpiration = htmlTemplate.replace("{resetLink}", resetLink).replace("{expiration}", expirationTime);
 
   const mailOptions = {
     from: "QR SOLUTION",
     to: email,
     subject: "Password Reset",
-    html: emailContent,
+    html: emailContentWithExpiration,
   };
 
   await transporter.sendMail(mailOptions);
@@ -52,14 +53,21 @@ module.exports = {
       res.status(500).json({ message: "Internal server error" });
     }
   },
+
   async resetPassword(req, res) {
-    const { email, password } = req.body;
+    const { email, password, expiration } = req.body;
 
     try {
       const user = await User.findOne({ email });
 
       if (!user) {
         return res.status(404).json({ message: "User not found" });
+      }
+
+      // Check if the reset link has expired
+      const currentTime = Date.now();
+      if (expiration < currentTime) {
+        return res.status(400).json({ message: "Reset link has expired" });
       }
 
       // Generate a salt and hash the new password
