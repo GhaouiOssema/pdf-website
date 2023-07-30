@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 const fs = require("fs");
 const path = require("path");
 
-const sendResetEmail = async (email, resetLink) => {
+const sendResetEmail = async (email, resetLink, expirationTime) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -18,8 +18,9 @@ const sendResetEmail = async (email, resetLink) => {
     "utf-8"
   );
 
-  const expirationTime = Date.now() + 600000; // 10 minutes in milliseconds
-  const emailContentWithExpiration = htmlTemplate.replace("{resetLink}", resetLink).replace("{expiration}", expirationTime);
+  const emailContentWithExpiration = htmlTemplate
+    .replace("{resetLink}", resetLink)
+    .replace("{expiration}", expirationTime);
 
   const mailOptions = {
     from: "QR SOLUTION",
@@ -42,10 +43,13 @@ module.exports = {
         return res.status(404).json({ message: "User not found" });
       }
 
+      const expirationTime = Date.now() + 600000; // 10 minutes in milliseconds
+
       const resetLink = `https://qr-solution-beta.netlify.app/reset-password?email=${encodeURIComponent(
         email
-      )}`;
-      await sendResetEmail(email, resetLink);
+      )}&expiration=${expirationTime}`;
+
+      await sendResetEmail(email, resetLink, expirationTime);
 
       res.status(200).json({ message: "Reset email sent successfully" });
     } catch (err) {

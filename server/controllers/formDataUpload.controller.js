@@ -117,7 +117,7 @@ module.exports = {
         }
       }
 
-      res.status(200).send("Form uploaded successfully!");
+      res.status(200).json({ message: "Form uploaded successfully!" });
     } catch (error) {
       console.error(error);
       res.status(500).send("Error occurred while uploading the form.");

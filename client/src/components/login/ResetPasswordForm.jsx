@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import Button from "@mui/material/Button";
@@ -11,41 +11,66 @@ import SaveIcon from "@mui/icons-material/Save";
 const ResetPasswordForm = () => {
   const searchParams = new URLSearchParams(location.search);
   const email = searchParams.get("email");
+  const expiration = searchParams.get("expiration");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isResetSuccess, setIsResetSuccess] = useState(false);
   const [loading, setLoading] = React.useState(false);
+  const [linkExpired, setLinkExpired] = useState(false);
+
+  useEffect(() => {
+    const expirationTime = parseInt(expiration);
+    const currentTime = Date.now();
+
+    if (currentTime > expirationTime) {
+      setLinkExpired(true);
+    }
+  }, [expiration]);
 
   const handleResetPassword = async (e) => {
-  e.preventDefault();
-  setLoading(true);
+    e.preventDefault();
+    setLoading(true);
 
-  if (password !== confirmPassword) {
-    alert("Passwords do not match. Please try again.");
-    return;
-  }
-
-  try {
-    const expiration = Date.now() + 600000; // 10 minutes in milliseconds
-    const res = await axios.post(
-      `${import.meta.env.VITE_SERVER_API_URL}/reset-password`,
-      {
-        email,
-        password,
-        expiration, // Include the expiration timestamp in the request payload
-      }
-    );
-
-    if (res.status === 200) {
-      setIsResetSuccess(true);
-      setLoading(false);
+    if (password !== confirmPassword) {
+      alert("Passwords do not match. Please try again.");
+      return;
     }
-  } catch (err) {
-    console.error(err);
-    alert("An error occurred while resetting the password. Please try again.");
-  }
-};
 
+    try {
+      const expiration = Date.now() + 600000; // 10 minutes in milliseconds
+      const res = await axios.post(
+        `${import.meta.env.VITE_SERVER_API_URL}/reset-password`,
+        {
+          email,
+          password,
+          expiration,
+        }
+      );
+
+      if (res.status === 200) {
+        setIsResetSuccess(true);
+        setLoading(false);
+      }
+    } catch (err) {
+      console.error(err);
+      alert(
+        "An error occurred while resetting the password. Please try again."
+      );
+    }
+  };
+
+  if (linkExpired) {
+    return (
+      <div className="pt-20">
+        <div className="text-red-500 text-4xl mb-4 flex justify-center items-center">
+          <i className="fa-solid fa-triangle-exclamation"></i>
+        </div>
+        <p className="text-xl font-semibold text-red-500 mb-4 text-center">
+          link expired
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col items-center">

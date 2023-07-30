@@ -31,7 +31,7 @@ const ForgotPassword = () => {
           <div className="text-green-500 text-4xl mb-4 flex justify-center items-center">
             <i className="fa-solid fa-circle-check"></i>
           </div>
-          <p className="text-xl font-semibold text-green-500 mb-4">
+          <p className="text-xl font-semibold text-green-500 mb-4 text-center">
             An email with instructions to reset your password has been sent to
             your email address.
           </p>
