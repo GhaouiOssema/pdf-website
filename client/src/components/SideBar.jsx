@@ -55,12 +55,12 @@ const SideBar = () => {
   return (
     <div className="relative">
       {/* Hamburger menu to toggle sidebar */}
-      <button
+      {/* <button
         onClick={toggleSidebar}
         style={{ border: "none", background: "transparent" }}
       >
         {isSidebarVisible ? <HiX size={30} /> : <HiMenuAlt1 size={30} />}
-      </button>
+      </button> */}
 
       {/* Sidebar component */}
       {isSidebarVisible && (

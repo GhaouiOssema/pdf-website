@@ -7,15 +7,35 @@ const multiUpload = require("../middleware/multiUpload");
 router.post("/upload", upload.single("file"), controllers.upload.uploadPdf);
 // Import the modified middleware
 
+// router.post(
+//   "/FormUpload",
+//   multiUpload.fields([
+//     { name: "selectedFile", maxCount: 1 },
+//     { name: "selectedImage", maxCount: 1 },
+//     { name: "selectedInfo", maxCount: 1 },
+//     { name: "selectedDOE", maxCount: 20 },
+//   ]),
+//   controllers.formData.uploadData
+// );
 router.post(
-  "/FormUpload",
-  multiUpload.fields([
-    { name: "selectedFile", maxCount: 1 },
-    { name: "selectedImage", maxCount: 1 },
-    { name: "selectedInfo", maxCount: 1 },
-    { name: "selectedDOE", maxCount: 20 },
-  ]),
+  "/FormUpload/mainpdf",
+  multiUpload.fields([{ name: "selectedFile", maxCount: 1 }]),
   controllers.formData.uploadData
+);
+router.post(
+  "/FormUpload/image",
+  multiUpload.fields([{ name: "selectedImage", maxCount: 1 }]),
+  controllers.formData.uploadImage
+);
+router.post(
+  "/FormUpload/fiche",
+  multiUpload.fields([{ name: "selectedInfo", maxCount: 1 }]),
+  controllers.formData.uploadFileInfo
+);
+router.post(
+  "/FormUpload/doe",
+  multiUpload.fields([{ name: "selectedDOE", maxCount: 20 }]),
+  controllers.formData.uploadDOE
 );
 
 router.post(
@@ -39,6 +59,14 @@ router.get(
   "/site/folder/pdf/details/:id",
   controllers.getPdfById.getPdfDataById
 );
+router.get("/site/folder/pdf/details/plan/:id", controllers.getPdfById.plan);
+router.get("/site/folder/pdf/details/doe/:id", controllers.getPdfById.doe);
+router.get("/site/folder/pdf/details/fiche/:id", controllers.getPdfById.fiche);
+router.get(
+  "/site/folder/pdf/details/raports/:id",
+  controllers.getPdfById.raports
+);
+
 router.get("/sites", controllers.allSites.sites);
 router.get("/pdf/raports", controllers.getRaports.getPdfReportsById);
 router.get("/profile/user", controllers.getUserDataById.getData);

@@ -24,7 +24,7 @@ const FicheTechnique = () => {
         const response = await axios.get(
           `${
             import.meta.env.VITE_SERVER_API_URL
-          }/site/folder/pdf/details/${pdfid}`
+          }/site/folder/pdf/details/fiche/${pdfid}`
         );
         setPdfData(response.data.pdf);
       } catch (error) {

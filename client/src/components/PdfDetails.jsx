@@ -66,12 +66,7 @@ const PdfDetails = () => {
           `${
             import.meta.env.VITE_SERVER_API_URL
           }/site/folder/pdf/details/${id}`,
-          {
-            ...config,
-            params: {
-              data: "mainDetails",
-            },
-          }
+          config
         );
         setPdfData(response.data.pdf);
       } catch (error) {
@@ -199,7 +194,7 @@ const PdfDetails = () => {
 
             <div className="flex justify-around items-center flex__col">
               <div className="flex flex-col">
-                <figure className="max-w-lg relative">
+                {/* <figure className="max-w-lg relative">
                   <img
                     className="h-auto max-w-full rounded-lg"
                     src={`data:image/${pdfData.pdfImage.filename
@@ -208,10 +203,7 @@ const PdfDetails = () => {
                       .toLowerCase()};base64,${pdfData.pdfImage.data}`}
                     alt="image description"
                   />
-                  <figcaption className="absolute bottom-0 left-0 w-full bg-black bg-opacity-75 text-white text-center py-2">
-                    Nom du fichier : {pdfData.title}
-                  </figcaption>
-                </figure>
+                </figure> */}
                 <div>
                   <div className="qr-code-section bg-white">
                     {screenSize.width > 700 && (
@@ -318,10 +310,10 @@ const PdfDetails = () => {
                                   align="center"
                                   sx={{ cursor: "pointer" }}
                                 >
-                                  <InfoOutlinedIcon
+                                  {/* <InfoOutlinedIcon
                                     sx={{ color: "#3291F0" }}
                                     onClick={handleOpenTable}
-                                  />
+                                  /> */}
                                 </TableCell>
                               </TableRow>
                             ))}

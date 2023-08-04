@@ -1,9 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Document, Page, pdfjs } from "react-pdf";
-import { Link, useNavigate } from "react-router-dom";
-import Stack from "@mui/material/Stack";
-import Snackbar from "@mui/material/Snackbar";
-import MuiAlert from "@mui/material/Alert";
 import {
   Alert,
   Button,
@@ -12,10 +7,16 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  Stack,
+  Snackbar,
+  Box,
 } from "@mui/material";
-import axios from "axios";
+import MuiAlert from "@mui/material/Alert";
+import { Document, Page, pdfjs } from "react-pdf";
+import { Link, useNavigate } from "react-router-dom";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+import axios from "axios";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
@@ -24,9 +25,24 @@ const ATert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
+const initialState = {
+  selectedFile: null,
+  selectedImage: null,
+  selectedInfo: null,
+  selectedDOE: null,
+  title: "",
+  owner: "",
+  publicOrPrivate: "",
+  input1: "",
+  input2: "",
+  input: "",
+  site: "",
+};
+
 const FormSend = () => {
-  const [selectedFolder, setSelectedFolder] = useState("");
+  const [activeStep, setActiveStep] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [selectedFolder, setSelectedFolder] = useState("");
   const Navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
@@ -72,21 +88,9 @@ const FormSend = () => {
     fetchFolders();
   }, []);
   console.log(folders);
-  const initialState = {
-    selectedFile: null,
-    selectedImage: null,
-    selectedInfo: null,
-    selectedDOE: null,
-    title: "",
-    owner: "",
-    publicOrPrivate: "",
-    input1: "",
-    input2: "",
-    input: "",
-    site: "",
-  };
 
   const [formState, setFormState] = useState(initialState);
+  console.log(formState);
 
   const handleChange = (event) => {
     const { name, value, files } = event.target;
@@ -135,39 +139,28 @@ const FormSend = () => {
     }
   };
 
-  console.log(formState);
-
-  const handleSubmit = async (event) => {
+  const handleSubmitStep1 = async (event) => {
     event.preventDefault();
 
-    const formData = new FormData();
+    // Collect data from the form relevant to the first step
+    const formDataStep1 = new FormData();
+    formDataStep1.append("selectedFile", formState.selectedFile);
+    formDataStep1.append("site", formState.site);
+    formDataStep1.append("title", formState.title);
+    formDataStep1.append("publicOrPrivate", formState.publicOrPrivate);
 
-    Object.entries(initialState).forEach(([key, value]) => {
-      formData.append(key, value || "");
-    });
-
-    Object.entries(formState).forEach(([key, value]) => {
-      if (value instanceof FileList) {
-        for (let i = 0; i < value.length; i++) {
-          formData.append(key, value[i]);
-        }
-      } else if (value instanceof File) {
-        formData.append(key, value);
-      } else if (Array.isArray(value)) {
-        // Handle the array case properly by appending each element separately
-        value.forEach((item) => {
-          formData.append(key, item);
-        });
-      } else {
-        formData.append(key, value || "");
-      }
-    });
+    if (formState.publicOrPrivate === "Armoire electrique") {
+      formDataStep1.append("input1", formState.input1);
+      formDataStep1.append("input2", formState.input2);
+    } else {
+      formDataStep1.append("input", formState.input);
+    }
 
     try {
       setLoading(true);
       const response = await axios.post(
-        `${import.meta.env.VITE_SERVER_API_URL}/FormUpload`,
-        formData,
+        `${import.meta.env.VITE_SERVER_API_URL}/FormUpload/mainpdf`,
+        formDataStep1,
         config
       );
 
@@ -175,7 +168,95 @@ const FormSend = () => {
         setAlertMsg("success");
         handleClick();
         setLoading(false);
-        Navigate("/messites");
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      }
+    } catch (error) {
+      console.error(error);
+      setAlertMsg("error");
+      handleClick();
+      setLoading(false);
+    }
+  };
+  const handleSubmitStep2 = async (event) => {
+    event.preventDefault();
+
+    const formDataStep1 = new FormData();
+    formDataStep1.append("selectedImage", formState.selectedImage);
+
+    try {
+      setLoading(true);
+      const response = await axios.post(
+        `${import.meta.env.VITE_SERVER_API_URL}/FormUpload/image`,
+        formDataStep1,
+        config
+      );
+
+      if (response.status === 200) {
+        setAlertMsg("success");
+        handleClick();
+        setLoading(false);
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      }
+    } catch (error) {
+      console.error(error);
+      setAlertMsg("error");
+      handleClick();
+      setLoading(false);
+    }
+  };
+  const handleSubmitStep3 = async (event) => {
+    event.preventDefault();
+
+    const formDataStep1 = new FormData();
+    formDataStep1.append("selectedInfo", formState.selectedInfo);
+
+    try {
+      setLoading(true);
+      const response = await axios.post(
+        `${import.meta.env.VITE_SERVER_API_URL}/FormUpload/fiche`,
+        formDataStep1,
+        config
+      );
+
+      if (response.status === 200) {
+        setAlertMsg("success");
+        handleClick();
+        setLoading(false);
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      }
+    } catch (error) {
+      console.error(error);
+      setAlertMsg("error");
+      handleClick();
+      setLoading(false);
+    }
+  };
+  const handleSubmitStep4 = async (event) => {
+    event.preventDefault();
+
+    // Ensure formState.selectedDOE is an array
+    const selectedDOEFiles = Array.isArray(formState.selectedDOE)
+      ? formState.selectedDOE
+      : [formState.selectedDOE];
+
+    const formDataStep1 = new FormData();
+    selectedDOEFiles.forEach((file) => {
+      formDataStep1.append("selectedDOE", file);
+    });
+
+    try {
+      setLoading(true);
+      const response = await axios.post(
+        `${import.meta.env.VITE_SERVER_API_URL}/FormUpload/doe`,
+        formDataStep1,
+        config
+      );
+
+      if (response.status === 200) {
+        setAlertMsg("success");
+        handleClick();
+        setLoading(false);
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
       }
     } catch (error) {
       console.error(error);
@@ -186,63 +267,152 @@ const FormSend = () => {
   };
 
   const handleReset = () => {
-    setFormState({
-      selectedFile: null,
-      title: "",
-      owner: "",
-      publicOrPrivate: "public",
-    });
+    setFormState(initialState);
+    setActiveStep(0);
   };
 
-  return (
-    <>
-      <h1 className="text-3xl text-center font-bold pt-10">Ajouter un Plan</h1>
-      <form onSubmit={handleSubmit} onReset={handleReset} className="">
-        <div className="flex justify-center items-center">
-          <div className=" max__size w-[80%] container mx-auto my-4 px-4 lg:px-20 ">
-            <div className=" p-6 my-2 mr-auto rounded-2xl shadow-2xl bg-white">
-              <h1 className="text-2xl text-center font-bold mb-4">
-                Fichier d'equipement
-              </h1>
-              <div className=" mt-5">
-                <div className="w-full flex flex-col">
-                  <div className="flex items-center justify-center w-full">
-                    <label
-                      htmlFor="dropzone-file"
-                      className="flex flex-col items-center justify-center w-full h-19 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100 dark:hover:border-gray-500"
-                    >
-                      <div className="flex flex-col items-center justify-center pt-5 pb-2">
-                        <svg
-                          aria-hidden="true"
-                          className="w-10 h-10 text-gray-400"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                          ></path>
-                        </svg>
-                        <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                          Selectioner un fichier PDF
-                        </p>
-                      </div>
-                      <input
-                        id="dropzone-file"
-                        name="selectedFile"
-                        type="file"
-                        accept=".pdf"
-                        hidden
-                        onChange={handleChange}
-                      />
-                    </label>
-                  </div>
+  const steps = [
+    "Fichier d'équipement",
+    "Image d'équipement",
+    "Fiche technique",
+    "Dossier des Ouvrages Executés",
+  ];
 
-                  <>
+  const getStepContent = (step) => {
+    switch (step) {
+      case 0:
+        return (
+          <>
+            {!loading ? (
+              <>
+                <div className=" mt-5">
+                  <div className="w-full flex flex-col">
+                    <div className="flex items-center justify-center w-full">
+                      <label
+                        htmlFor="dropzone-file"
+                        className="flex flex-col items-center justify-center w-full h-19 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100 dark:hover:border-gray-500"
+                      >
+                        <div className="flex flex-col items-center justify-center pt-5 pb-2">
+                          <svg
+                            aria-hidden="true"
+                            className="w-10 h-10 text-gray-400"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                            ></path>
+                          </svg>
+                          <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                            Selectioner un fichier PDF
+                          </p>
+                        </div>
+                        <input
+                          id="dropzone-file"
+                          name="selectedFile"
+                          type="file"
+                          accept=".pdf"
+                          hidden
+                          onChange={handleChange}
+                        />
+                      </label>
+                    </div>
+                    <div className="flex items-center justify-between form__style">
+                      <select
+                        name="site"
+                        value={formState.site}
+                        onChange={handleChange}
+                        className="max w-[28%] bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg pl-5 "
+                      >
+                        <option value="Sites" selected>
+                          Sites
+                        </option>
+                        {folders.length > 0 ? (
+                          folders?.map((folder, index) => (
+                            <option value={folder.adresse} key={index}>
+                              {folder.adresse}
+                            </option>
+                          ))
+                        ) : (
+                          <option value="/messites" className="cursor-pointer">
+                            La list est vide
+                          </option>
+                        )}
+                      </select>
+                      <input
+                        className="w-[15rem] bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg pl-5 "
+                        type="text"
+                        placeholder="Nom d'equipement"
+                        value={formState.title}
+                        onChange={handleChange}
+                        name="title"
+                        required
+                      />
+
+                      <select
+                        name="publicOrPrivate"
+                        value={formState.publicOrPrivate}
+                        onChange={handleChange}
+                        className="max w-[28%] bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg pl-5"
+                      >
+                        <option value="Categorie" selected>
+                          Categorie
+                        </option>
+                        {selectedFolder &&
+                          folders
+                            ?.find(
+                              (folder) => folder.adresse === selectedFolder
+                            )
+                            ?.content.map((subFolder, index) => (
+                              <option
+                                value={subFolder.subFolder.name}
+                                key={index}
+                              >
+                                {subFolder.subFolder.name}
+                              </option>
+                            ))}
+                      </select>
+                    </div>
+                    {formState.publicOrPrivate === "Armoire electrique" && (
+                      <div className="mt-2 flex items-center justify-around">
+                        <input
+                          className="w-[15rem] bg-gray-100 text-gray-900  p-3 rounded-lg pl-5"
+                          type="text"
+                          placeholder=""
+                          value={formState.input1}
+                          onChange={handleChange}
+                          name="input1"
+                          required
+                        />
+                        <input
+                          className="w-[15rem] bg-gray-100 text-gray-900  p-3 rounded-lg pl-5"
+                          type="date"
+                          placeholder="Input 2"
+                          value={formState.input2}
+                          onChange={handleChange}
+                          name="input2"
+                          required
+                        />
+                      </div>
+                    )}
+                    {["Climatisation", "Chauffage", "Ventilasion"].includes(
+                      formState.publicOrPrivate
+                    ) && (
+                      <input
+                        className="w-[15rem] bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg pl-5"
+                        type="text"
+                        placeholder="Modéle"
+                        value={formState.input}
+                        onChange={handleChange}
+                        name="input"
+                        required
+                      />
+                    )}
                     {formState.selectedFile && (
                       <Stack
                         sx={{
@@ -264,108 +434,39 @@ const FormSend = () => {
                         </Alert>
                       </Stack>
                     )}
-                  </>
-                </div>
-                <div className="flex items-center justify-between form__style">
-                  <select
-                    name="site"
-                    value={formState.site}
-                    onChange={handleChange}
-                    className="max w-[28%] bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg pl-5 "
-                  >
-                    <option value="Sites" selected>
-                      Sites
-                    </option>
-                    {folders.length > 0 ? (
-                      folders?.map((folder, index) => (
-                        <option value={folder.adresse} key={index}>
-                          {folder.adresse}
-                        </option>
-                      ))
-                    ) : (
-                      <option value="/messites" className="cursor-pointer">
-                        La list est vide
-                      </option>
-                    )}
-                  </select>
-                  <input
-                    className="w-[15rem] bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg pl-5 "
-                    type="text"
-                    placeholder="Nom d'equipement"
-                    value={formState.title}
-                    onChange={handleChange}
-                    name="title"
-                    required
-                  />
-
-                  <select
-                    name="publicOrPrivate"
-                    value={formState.publicOrPrivate}
-                    onChange={handleChange}
-                    className="max w-[28%] bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg pl-5"
-                  >
-                    <option value="Categorie" selected>
-                      Categorie
-                    </option>
-                    {selectedFolder &&
-                      folders
-                        ?.find((folder) => folder.adresse === selectedFolder)
-                        ?.content.map((subFolder, index) => (
-                          <option value={subFolder.subFolder.name} key={index}>
-                            {subFolder.subFolder.name}
-                          </option>
-                        ))}
-                  </select>
-                </div>
-                {formState.publicOrPrivate === "Armoire electrique" && (
-                  <div className="mt-2 flex items-center justify-around">
-                    <input
-                      className="w-[15rem] bg-gray-100 text-gray-900  p-3 rounded-lg pl-5"
-                      type="text"
-                      placeholder=""
-                      value={formState.input1}
-                      onChange={handleChange}
-                      name="input1"
-                      required
-                    />
-                    <input
-                      className="w-[15rem] bg-gray-100 text-gray-900  p-3 rounded-lg pl-5"
-                      type="date"
-                      placeholder="Input 2"
-                      value={formState.input2}
-                      onChange={handleChange}
-                      name="input2"
-                      required
-                    />
                   </div>
+                </div>
+                {activeStep < steps.length - 1 && (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleSubmitStep1}
+                    sx={{ mt: 5 }}
+                  >
+                    Suivant
+                  </Button>
                 )}
-                {["Climatisation", "Chauffage", "Ventilasion"].includes(
-                  formState.publicOrPrivate
-                ) && (
-                  <input
-                    className="w-[15rem] bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg pl-5"
-                    type="text"
-                    placeholder="Modéle"
-                    value={formState.input}
-                    onChange={handleChange}
-                    name="input"
-                    required
-                  />
-                )}
-                <div className="flex flex-col items-center justify-center mt-2 w-full">
-                  <h1 className="flex w-full justify-center items-center text-2xl text-center font-bold mb-4">
-                    Image d'equipement
-                    {formState.selectedImage && (
-                      <div
-                        className="text-black cursor-pointer ml-5"
-                        onClick={() =>
-                          setFormState({ ...formState, selectedImage: null })
-                        }
-                      >
-                        <CancelOutlinedIcon />
-                      </div>
-                    )}
-                  </h1>
+              </>
+            ) : (
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "50vh",
+                }}
+              >
+                <CircularProgress />
+              </Box>
+            )}
+          </>
+        );
+      case 1:
+        return (
+          <>
+            {!loading ? (
+              <>
+                <div className="mt-5">
                   {formState.selectedImage ? (
                     <div className="relative mb-4">
                       <img
@@ -415,170 +516,258 @@ const FormSend = () => {
                     </label>
                   )}
                 </div>
-                <div className="flex flex-col items-center justify-center mt-2 w-full">
-                  <h1 className="text-2xl text-center font-bold mb-4 mt-4">
-                    DOE
-                  </h1>
-                  <label
-                    htmlFor="DOE-PDF"
-                    className="flex flex-col items-center justify-center w-full h-19 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100 dark:hover:border-gray-500"
-                  >
-                    <div className="flex flex-col items-center justify-center pt-5 pb-2">
-                      <svg
-                        aria-hidden="true"
-                        className="w-10 h-10 text-gray-400"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                        ></path>
-                      </svg>
-                      <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                        Sélectionner un ou plussieur fichier (PDF)
-                      </p>
-                    </div>
-                    <input
-                      name="selectedDOE"
-                      id="DOE-PDF"
-                      type="file"
-                      accept=".pdf"
-                      hidden
-                      multiple
-                      onChange={handleChange}
-                    />
-                  </label>
-                </div>
-                <div className="flex flex-col items-center justify-center mt-2 w-full">
-                  <h1 className="text-2xl text-center font-bold mb-4 mt-4">
-                    Fiche technique
-                  </h1>
-                  <label
-                    htmlFor="fiche-tech"
-                    className="flex flex-col items-center justify-center w-full h-19 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100 dark:hover:border-gray-500"
-                  >
-                    <div className="flex flex-col items-center justify-center pt-5 pb-2">
-                      <svg
-                        aria-hidden="true"
-                        className="w-10 h-10 text-gray-400"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                        ></path>
-                      </svg>
-                      <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                        Sélectionner un ou plussieur fichier (PDF)
-                      </p>
-                    </div>
-                    <input
-                      name="selectedInfo"
-                      id="fiche-tech"
-                      type="file"
-                      accept=".pdf"
-                      hidden
-                      onChange={handleChange}
-                    />
-                  </label>
-                </div>
-                <>
-                  {formState.selectedInfo && (
-                    <Stack
-                      sx={{
-                        width: "100%",
-                        color: "black",
-                        marginTop: "10px",
-                      }}
-                      spacing={2}
+                {activeStep < steps.length - 1 && (
+                  <div className="flex items-center mt-10">
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleSubmitStep2}
                     >
-                      <Alert
-                        severity="info"
-                        icon={false}
-                        className="flex justify-start items-center "
+                      Suivant
+                    </Button>
+                    {formState.selectedImage && (
+                      <div
+                        className="text-black cursor-pointer ml-5"
+                        onClick={() =>
+                          setFormState({ ...formState, sele: null })
+                        }
                       >
-                        <PictureAsPdfIcon sx={{ color: "black" }} />
-                        <span className="font-bold ml-2">
-                          {formState.selectedInfo.name}
-                        </span>
-                      </Alert>
-                    </Stack>
-                  )}
-                </>
-              </div>
-              <div className="button__style mt-5 my-2 flex w-[100%] justify-end">
-                {open && (
-                  <div className="pr-6">
-                    <Stack
-                      sx={{
-                        color: "rgb(30, 58 ,138)",
-                        marginTop: 1,
-                      }}
-                      spacing={2}
-                      direction="row"
-                    >
-                      <CircularProgress color="inherit" size={32} />
-                    </Stack>
+                        <CancelOutlinedIcon />
+                      </div>
+                    )}
                   </div>
                 )}
-                {!open ? (
-                  <button
-                    type="submit"
-                    onClick={() => setOpen(true)}
-                    className="uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-lg focus:outline-none focus:shadow-outline hover:bg-green-500"
-                  >
-                    Ajouter
-                  </button>
-                ) : (
-                  <button
-                    type="submit"
-                    className="uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-lg focus:outline-none focus:shadow-outline hover:bg-green-500"
-                  >
-                    Encours
-                  </button>
-                )}
-                <button
-                  type="reset"
-                  className="uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 ml-5 rounded-lg focus:outline-none focus:shadow-outline hover:bg-red-500"
+              </>
+            ) : (
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "50vh",
+                }}
+              >
+                <CircularProgress />
+              </Box>
+            )}
+          </>
+        );
+      case 2:
+        return (
+          <>
+            {!loading ? (
+              <>
+                <label
+                  htmlFor="fiche-tech"
+                  className="flex flex-col items-center justify-center w-full h-19 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100 dark:hover:border-gray-500"
                 >
-                  Restaurer
-                </button>
-              </div>
+                  <div className="flex flex-col items-center justify-center pt-5 pb-2">
+                    <svg
+                      aria-hidden="true"
+                      className="w-10 h-10 text-gray-400"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                      ></path>
+                    </svg>
+                    <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                      Sélectionner un ou plussieur fichier (PDF)
+                    </p>
+                  </div>
+                  <input
+                    name="selectedInfo"
+                    id="fiche-tech"
+                    type="file"
+                    accept=".pdf"
+                    hidden
+                    onChange={handleChange}
+                  />
+                </label>
+                {formState.selectedInfo && (
+                  <Stack
+                    sx={{
+                      width: "100%",
+                      color: "black",
+                      marginTop: "10px",
+                    }}
+                    spacing={2}
+                  >
+                    <Alert severity="info" icon={false}>
+                      <PictureAsPdfIcon sx={{ color: "black" }} />
+                      <span className="font-bold ml-2">
+                        {formState.selectedInfo.name}
+                      </span>
+                    </Alert>
+                  </Stack>
+                )}
+                {activeStep < steps.length - 1 && (
+                  <div className="flex items-center mt-10">
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleSubmitStep3}
+                    >
+                      Suivant
+                    </Button>
+                  </div>
+                )}
+              </>
+            ) : (
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "50vh",
+                }}
+              >
+                <CircularProgress />
+              </Box>
+            )}
+          </>
+        );
+
+      case 3:
+        return (
+          <>
+            {!loading ? (
+              <>
+                <label
+                  htmlFor="DOE-PDF"
+                  className="flex flex-col items-center justify-center w-full h-19 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100 dark:hover:border-gray-500"
+                >
+                  <div className="flex flex-col items-center justify-center pt-5 pb-2">
+                    <svg
+                      aria-hidden="true"
+                      className="w-10 h-10 text-gray-400"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                      ></path>
+                    </svg>
+                    <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                      Sélectionner un ou plussieur fichier (PDF)
+                    </p>
+                  </div>
+                  <input
+                    name="selectedDOE"
+                    id="DOE-PDF"
+                    type="file"
+                    accept=".pdf"
+                    hidden
+                    multiple
+                    onChange={handleChange}
+                  />
+                </label>
+                {formState.selectedDOE && (
+                  <Stack
+                    sx={{
+                      width: "100%",
+                      color: "black",
+                      marginTop: "10px",
+                    }}
+                    spacing={2}
+                  >
+                    {formState.selectedDOE.map((file, index) => (
+                      <Alert key={index} severity="info" icon={false}>
+                        <PictureAsPdfIcon sx={{ color: "black" }} />
+                        <span className="font-bold ml-2">{file.name}</span>
+                      </Alert>
+                    ))}
+                  </Stack>
+                )}
+                {activeStep && (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleSubmitStep4}
+                    sx={{ mt: 5 }}
+                  >
+                    Suivant
+                  </Button>
+                )}
+              </>
+            ) : (
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "50vh",
+                }}
+              >
+                <CircularProgress />
+              </Box>
+            )}
+          </>
+        );
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <>
+      <h1 className="text-3xl text-center font-bold pt-10">Ajouter un Plan</h1>
+      <form onReset={handleReset} className="">
+        <div className="flex justify-center items-center">
+          <div className=" max__size w-[80%] container mx-auto my-4 px-4 lg:px-20 ">
+            <div className=" p-6 my-2 mr-auto rounded-2xl shadow-2xl bg-white">
+              {activeStep === steps.length ? (
+                <>
+                  <h1 className="text-2xl text-center font-bold mb-4">
+                    Ajout complété!
+                  </h1>
+                  <div className="text-center">
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => Navigate("/messites")}
+                    >
+                      Retourner à la liste
+                    </Button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="flex justify-between items-center my-4">
+                    <h2 className="text-2xl font-bold">{steps[activeStep]}</h2>
+                    <Button
+                      onClick={() => setActiveStep((prev) => prev + 1)} // Move to the next step
+                      color="primary"
+                    >
+                      ignorer
+                    </Button>
+                  </div>
+                  <div className="mb-10">{getStepContent(activeStep)}</div>
+                </>
+              )}
             </div>
           </div>
         </div>
       </form>
-      <Stack spacing={2} sx={{ width: "100%" }}>
-        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-          {alertMsg === "success" ? (
-            <ATert
-              onClose={handleClose}
-              severity="success"
-              sx={{ width: "100%" }}
-            >
-              Fichier ajouté avec succès
-            </ATert>
-          ) : alertMsg === "error" ? (
-            <ATert
-              onClose={handleClose}
-              severity="error"
-              sx={{ width: "100%" }}
-            >
-              Veuillez insérer un fichier!
-            </ATert>
-          ) : null}
-        </Snackbar>
-      </Stack>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <ATert
+          onClose={handleClose}
+          severity={alertMsg === "success" ? "success" : "error"}
+        >
+          {alertMsg}
+        </ATert>
+      </Snackbar>
     </>
   );
 };

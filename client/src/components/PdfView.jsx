@@ -215,13 +215,8 @@ const PdfView = () => {
         const response = await axios.get(
           `${
             import.meta.env.VITE_SERVER_API_URL
-          }/site/folder/pdf/details/${id}`,
-          {
-            ...config,
-            params: {
-              data: "raport",
-            },
-          }
+          }/site/folder/pdf/details/raports/${id}`,
+          config
         );
         setPdfData(response.data.pdf);
       } catch (error) {
@@ -350,6 +345,7 @@ const PdfView = () => {
 
     fetchData();
   }, [pdfData]);
+  console.log(pdfData);
 
   if (!pdfData) {
     return <div>Loading PDF...</div>;

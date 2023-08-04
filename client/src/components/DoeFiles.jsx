@@ -66,7 +66,7 @@ const DoeFiles = () => {
         const response = await axios.get(
           `${
             import.meta.env.VITE_SERVER_API_URL
-          }/site/folder/pdf/details/${pdfid}`,
+          }/site/folder/pdf/details/doe/${pdfid}`,
           config
         );
         setPdfData(response.data.pdf);
@@ -108,7 +108,7 @@ const DoeFiles = () => {
   }
 
   return (
-    <section className="flex flex-col max-w-screen-2xl	">
+    <section className="flex flex-col max-w-screen-2xl">
       <h1 className="text-3xl text-center font-bold mt-5 mb-5">
         Les DOE d'equipement
       </h1>

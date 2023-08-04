@@ -4,6 +4,7 @@ const express = require("express");
 var cors = require("cors");
 const path = require("path");
 const bodyParser = require("body-parser");
+const helmet = require("helmet");
 
 // Create a connection to MongoDB
 const connectDB = require("./config/Database.config");
@@ -12,14 +13,13 @@ connectDB();
 const app = express();
 app.use(cors({ origin: true, credentials: true }));
 app.use(bodyParser.json());
+app.use(helmet());
+app.use(helmet.contentSecurityPolicy());
+app.use(helmet.frameguard({ action: "deny" }));
+app.use(helmet.xssFilter());
 
 app.use(express.static(path.join(__dirname, "public")));
-app.use("/userPictures", express.static(path.join(__dirname, "userPictures")));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-app.use(
-  "/uploads/pdfFiles",
-  express.static(path.join(__dirname, "uploads/pdfFiles"))
-);
 
 app.use(require("./routes"));
 

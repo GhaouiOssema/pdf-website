@@ -34,13 +34,8 @@ const Plan = () => {
         const response = await axios.get(
           `${
             import.meta.env.VITE_SERVER_API_URL
-          }/site/folder/pdf/details/${fichier}`,
-          {
-            ...config,
-            params: {
-              data: "plan",
-            },
-          }
+          }/site/folder/pdf/details/plan/${fichier}`,
+          config
         );
         setPdfData(response.data.pdf);
       } catch (error) {

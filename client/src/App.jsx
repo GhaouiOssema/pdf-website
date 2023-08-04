@@ -26,6 +26,7 @@ import FicheTechnique from "./components/FicheTechnique";
 import DoeFiles from "./components/DoeFiles";
 import ForgotPassword from "./components/login/ForgotPassword";
 import ResetPasswordForm from "./components/login/ResetPasswordForm";
+import FormDataUpload from "./components/form/FormDataUpload";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
