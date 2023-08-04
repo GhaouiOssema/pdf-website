@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const pdfSchema = new mongoose.Schema({
   mainPdf: {
     filename: String,
-    data: String,
+    fileId: mongoose.Schema.Types.ObjectId,
   },
   title: String,
   creationDate: { type: Date, default: Date.now },
@@ -17,16 +17,16 @@ const pdfSchema = new mongoose.Schema({
   },
   pdfImage: {
     filename: String,
-    data: String,
+    fileId: mongoose.Schema.Types.ObjectId,
   },
   fiche: {
     filename: String,
-    data: String,
+    fileId: mongoose.Schema.Types.ObjectId,
   },
   doeFiles: [
     {
       filename: String,
-      data: String,
+      fileId: mongoose.Schema.Types.ObjectId,
     },
   ],
 });

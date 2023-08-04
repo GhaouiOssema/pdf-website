@@ -529,7 +529,7 @@ const FormSend = () => {
                       <div
                         className="text-black cursor-pointer ml-5"
                         onClick={() =>
-                          setFormState({ ...formState, sele: null })
+                          setFormState({ ...formState, selectedImage: null })
                         }
                       >
                         <CancelOutlinedIcon />

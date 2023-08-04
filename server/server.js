@@ -24,6 +24,6 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(require("./routes"));
 
 // Start the server
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
+app.listen(process.env.PORT || null, () => {
+  console.log(`Server is running on port ${process.env.PORT || null}`);
 });

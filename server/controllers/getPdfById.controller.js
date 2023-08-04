@@ -26,12 +26,13 @@ module.exports = {
       }
 
       let filteredPdfData = {};
-      const { raports, pdfDetails, pdfImage, _id } = pdf;
+      const { raports, pdfDetails, pdfImage, _id, title } = pdf;
 
       filteredPdfData = {
         raports,
         pdfDetails,
         pdfImage,
+        title,
         _id,
       };
 
