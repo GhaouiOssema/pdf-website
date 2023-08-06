@@ -23,7 +23,7 @@ const sendResetEmail = async (email, resetLink, expirationTime) => {
     .replace("{expiration}", expirationTime);
 
   const mailOptions = {
-    from: "QR SOLUTION",
+    from: "no-reply@qrsolution.com",
     to: email,
     subject: "Password Reset",
     html: emailContentWithExpiration,
