@@ -729,13 +729,16 @@ const FormSend = () => {
             <div className=" p-6 my-2 mr-auto rounded-2xl shadow-2xl bg-white">
               {activeStep === steps.length ? (
                 <>
+                  <div className="text-green-500 text-4xl mb-4 flex justify-center items-center">
+                    <i className="fa-solid fa-circle-check"></i>
+                  </div>
                   <h1 className="text-2xl text-center font-bold mb-4">
                     Ajout complété!
                   </h1>
                   <div className="text-center">
                     <Button
                       variant="contained"
-                      color="primary"
+                      color="success"
                       onClick={() => Navigate("/messites")}
                     >
                       Retourner à la liste

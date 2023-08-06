@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Routes,
-  Route,
-  redirect,
-  useNavigate,
-  useLocation,
-} from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import Navbar from "./components/NavBar";
 import Login from "./components/login/Login";
@@ -26,7 +20,6 @@ import FicheTechnique from "./components/FicheTechnique";
 import DoeFiles from "./components/DoeFiles";
 import ForgotPassword from "./components/login/ForgotPassword";
 import ResetPasswordForm from "./components/login/ResetPasswordForm";
-import FormDataUpload from "./components/form/FormDataUpload";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);

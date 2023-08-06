@@ -6,8 +6,8 @@ const addSite = async (req, res) => {
   console.log(name);
 
   try {
-    const userId = req.headers["x-user-id"]; // Retrieve the userId from the custom header
-    const userName = req.headers["x-user-name"]; // Retrieve the userName from the custom header
+    const userId = req.headers["x-user-id"];
+    const userName = req.headers["x-user-name"];
 
     if (!userId || !userName) {
       return res.status(401).json({ error: "Unauthorized" });
@@ -27,8 +27,8 @@ const addSite = async (req, res) => {
           pdfFiles: [],
         },
       })),
-      user: userId, // Assign the userId to the folder's user field
-      userName: userName, // Assign the userName to the folder's userName field
+      user: userId,
+      userName: userName,
     });
 
     const savedFolder = await folder.save();

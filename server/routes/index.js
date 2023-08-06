@@ -1,10 +1,8 @@
 const router = require("express").Router();
 const controllers = require("../controllers");
-const upload = require("../middleware/upload");
 const imageUpload = require("../middleware/imageUpload");
 const multiUpload = require("../middleware/multiUpload");
 
-router.post("/upload", upload.single("file"), controllers.upload.uploadPdf);
 // Import the modified middleware
 
 // router.post(

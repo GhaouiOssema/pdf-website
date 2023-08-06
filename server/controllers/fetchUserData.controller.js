@@ -1,6 +1,6 @@
-// fetch user data controller
+require("dotenv").config();
+
 const jwt = require("jsonwebtoken");
-const { ObjectId } = require("mongodb");
 const UserAccount = require("../models/USER");
 
 module.exports = {
@@ -29,14 +29,20 @@ module.exports = {
         return res.status(404).json({ error: "User data not found" });
       }
 
-      // Convert the Buffer image data to Base64 and send it in the response
-      const base64ImageData = userData.profileImage.toString("base64");
+      let userDataWithImage;
 
-      // Create a new object with the Base64 encoded image string
-      const userDataWithImage = {
-        ...userData.toObject(),
-        profileImage: base64ImageData,
-      };
+      if (userData.profileImage) {
+        const base64ImageData = userData.profileImage.toString("base64");
+
+        userDataWithImage = {
+          ...userData.toObject(),
+          profileImage: base64ImageData,
+        };
+      } else {
+        userDataWithImage = {
+          ...userData.toObject(),
+        };
+      }
 
       return res.status(200).json({ userData: userDataWithImage });
     } catch (error) {

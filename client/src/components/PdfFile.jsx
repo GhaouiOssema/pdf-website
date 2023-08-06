@@ -88,201 +88,201 @@ const CircularIndeterminate = () => {
   );
 };
 
-const SpringModal = ({ open, setOpen, handleClickAlert, setAlertMsg, pdf }) => {
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [fileName, setFileName] = useState("");
-  const [uploadError, setUploadError] = useState(null);
-  const { site, dossier } = useParams();
-  const [selectedFiles, setSelectedFiles] = useState([]);
+// const SpringModal = ({ open, setOpen, handleClickAlert, setAlertMsg, pdf }) => {
+//   const [selectedFile, setSelectedFile] = useState(null);
+//   const [fileName, setFileName] = useState("");
+//   const [uploadError, setUploadError] = useState(null);
+//   const { site, dossier } = useParams();
+//   const [selectedFiles, setSelectedFiles] = useState([]);
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+//   const handleOpen = () => setOpen(true);
+//   const handleClose = () => setOpen(false);
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    setSelectedFile(file);
-  };
+//   const handleFileChange = (event) => {
+//     const file = event.target.files[0];
+//     setSelectedFile(file);
+//   };
 
-  console.log(selectedFiles);
+//   console.log(selectedFiles);
 
-  const token = localStorage.getItem("token");
-  if (!token) {
-    return;
-  }
+//   const token = localStorage.getItem("token");
+//   if (!token) {
+//     return;
+//   }
 
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
+//   const config = {
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//     },
+//   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+//   const handleSubmit = async (event) => {
+//     event.preventDefault();
 
-    if (selectedFile) {
-      const formData = new FormData();
-      formData.append("file", selectedFile);
-      formData.append("title", fileName);
-      formData.append("folder", site);
-      formData.append("subFolder", dossier);
-      console.log(site);
-      console.log(dossier);
+//     if (selectedFile) {
+//       const formData = new FormData();
+//       formData.append("file", selectedFile);
+//       formData.append("title", fileName);
+//       formData.append("folder", site);
+//       formData.append("subFolder", dossier);
+//       console.log(site);
+//       console.log(dossier);
 
-      try {
-        const response = await axios.post(
-          `${import.meta.env.VITE_SERVER_API_URL}/upload`,
-          formData,
-          config
-        );
+//       try {
+//         const response = await axios.post(
+//           `${import.meta.env.VITE_SERVER_API_URL}/upload`,
+//           formData,
+//           config
+//         );
 
-        if (response.status === 200) {
-          setAlertMsg("success");
-          handleClickAlert();
-          window.location.reload();
-        } else {
-          setAlertMsg("error");
-          handleClickAlert();
-        }
+//         if (response.status === 200) {
+//           setAlertMsg("success");
+//           handleClickAlert();
+//           window.location.reload();
+//         } else {
+//           setAlertMsg("error");
+//           handleClickAlert();
+//         }
 
-        setSelectedFile(null);
-        setFileName("");
-        handleClose();
-        setUploadError(null);
-      } catch (error) {
-        console.error("Error uploading file:", error);
-        setUploadError("An error occurred during file upload.");
-      }
-    }
-  };
+//         setSelectedFile(null);
+//         setFileName("");
+//         handleClose();
+//         setUploadError(null);
+//       } catch (error) {
+//         console.error("Error uploading file:", error);
+//         setUploadError("An error occurred during file upload.");
+//       }
+//     }
+//   };
 
-  const handleReset = () => {
-    setFileName(null);
-    setSelectedFile(null);
-  };
+//   const handleReset = () => {
+//     setFileName(null);
+//     setSelectedFile(null);
+//   };
 
-  console.log(selectedFile);
+//   console.log(selectedFile);
 
-  return (
-    <div>
-      <Modal
-        aria-labelledby="spring-modal-title"
-        aria-describedby="spring-modal-description"
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        slots={{ backdrop: Backdrop }}
-        slotProps={{
-          backdrop: {
-            TransitionComponent: Fade,
-          },
-        }}
-      >
-        <Fade in={open}>
-          <Box sx={style} className="rounded-2xl">
-            <form
-              className="flex max-w-md flex-col gap-4"
-              onSubmit={handleSubmit}
-              onReset={handleReset}
-            >
-              {/* File input */}
-              <Typography sx={{ fontWeight: "bold" }}>
-                <span>Les information du Fichier</span>
-              </Typography>
-              <div className="flex items-center justify-center w-full">
-                <label
-                  htmlFor="dropzone-file"
-                  className="flex flex-col items-center justify-center w-full h-19 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100 dark:hover:border-gray-500"
-                >
-                  <div className="flex flex-col items-center justify-center pt-5 pb-2">
-                    <svg
-                      aria-hidden="true"
-                      className="w-10 h-10 text-gray-400"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      {/* Replace with your own SVG icon */}
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                      ></path>
-                    </svg>
-                    <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                      Sélectionner un fichier ( PDF )
-                    </p>
-                  </div>
-                  <input
-                    id="dropzone-file"
-                    type="file"
-                    accept=".pdf"
-                    onChange={handleFileChange}
-                    hidden
-                  />
-                </label>
-              </div>
+//   return (
+//     <div>
+//       <Modal
+//         aria-labelledby="spring-modal-title"
+//         aria-describedby="spring-modal-description"
+//         open={open}
+//         onClose={handleClose}
+//         closeAfterTransition
+//         slots={{ backdrop: Backdrop }}
+//         slotProps={{
+//           backdrop: {
+//             TransitionComponent: Fade,
+//           },
+//         }}
+//       >
+//         <Fade in={open}>
+//           <Box sx={style} className="rounded-2xl">
+//             <form
+//               className="flex max-w-md flex-col gap-4"
+//               onSubmit={handleSubmit}
+//               onReset={handleReset}
+//             >
+//               {/* File input */}
+//               <Typography sx={{ fontWeight: "bold" }}>
+//                 <span>Les information du Fichier</span>
+//               </Typography>
+//               <div className="flex items-center justify-center w-full">
+//                 <label
+//                   htmlFor="dropzone-file"
+//                   className="flex flex-col items-center justify-center w-full h-19 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100 dark:hover:border-gray-500"
+//                 >
+//                   <div className="flex flex-col items-center justify-center pt-5 pb-2">
+//                     <svg
+//                       aria-hidden="true"
+//                       className="w-10 h-10 text-gray-400"
+//                       fill="none"
+//                       stroke="currentColor"
+//                       viewBox="0 0 24 24"
+//                       xmlns="http://www.w3.org/2000/svg"
+//                     >
+//                       {/* Replace with your own SVG icon */}
+//                       <path
+//                         strokeLinecap="round"
+//                         strokeLinejoin="round"
+//                         strokeWidth="2"
+//                         d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+//                       ></path>
+//                     </svg>
+//                     <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+//                       Sélectionner un fichier ( PDF )
+//                     </p>
+//                   </div>
+//                   <input
+//                     id="dropzone-file"
+//                     type="file"
+//                     accept=".pdf"
+//                     onChange={handleFileChange}
+//                     hidden
+//                   />
+//                 </label>
+//               </div>
 
-              <>
-                {selectedFile && (
-                  <Stack
-                    sx={{
-                      width: "100%",
-                      color: "black",
-                      marginTop: "10px",
-                    }}
-                    spacing={2}
-                  >
-                    <Alert severity="info">
-                      <span>{selectedFile.name}</span>
-                    </Alert>
-                  </Stack>
-                )}
-              </>
+//               <>
+//                 {selectedFile && (
+//                   <Stack
+//                     sx={{
+//                       width: "100%",
+//                       color: "black",
+//                       marginTop: "10px",
+//                     }}
+//                     spacing={2}
+//                   >
+//                     <Alert severity="info">
+//                       <span>{selectedFile.name}</span>
+//                     </Alert>
+//                   </Stack>
+//                 )}
+//               </>
 
-              {/* File name input */}
+//               {/* File name input */}
 
-              <div>
-                <div className="mb-2 block">
-                  <Label htmlFor="filename" value="File name" />
-                </div>
-                <TextInput
-                  id="filename"
-                  placeholder="Enter file name"
-                  value={fileName}
-                  onChange={(event) => setFileName(event.target.value)}
-                  required
-                  shadow
-                  type="text"
-                />
-              </div>
+//               <div>
+//                 <div className="mb-2 block">
+//                   <Label htmlFor="filename" value="File name" />
+//                 </div>
+//                 <TextInput
+//                   id="filename"
+//                   placeholder="Enter file name"
+//                   value={fileName}
+//                   onChange={(event) => setFileName(event.target.value)}
+//                   required
+//                   shadow
+//                   type="text"
+//                 />
+//               </div>
 
-              {/* Form actions */}
-              <div className="flex items-center justify-center">
-                <button
-                  type="submit"
-                  className="uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-lg focus:outline-none focus:shadow-outline hover:bg-green-500"
-                >
-                  Add
-                </button>
-                <button
-                  type="reset"
-                  className="uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 ml-5 rounded-lg focus:outline-none focus:shadow-outline hover:bg-red-500"
-                >
-                  Restore
-                </button>
-              </div>
+//               {/* Form actions */}
+//               <div className="flex items-center justify-center">
+//                 <button
+//                   type="submit"
+//                   className="uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-lg focus:outline-none focus:shadow-outline hover:bg-green-500"
+//                 >
+//                   Add
+//                 </button>
+//                 <button
+//                   type="reset"
+//                   className="uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 ml-5 rounded-lg focus:outline-none focus:shadow-outline hover:bg-red-500"
+//                 >
+//                   Restore
+//                 </button>
+//               </div>
 
-              {/* Display error message, if any */}
-              {uploadError && <p className="text-red-500">{uploadError}</p>}
-            </form>
-          </Box>
-        </Fade>
-      </Modal>
-    </div>
-  );
-};
+//               {/* Display error message, if any */}
+//               {uploadError && <p className="text-red-500">{uploadError}</p>}
+//             </form>
+//           </Box>
+//         </Fade>
+//       </Modal>
+//     </div>
+//   );
+// };
 
 const ITEM_HEIGHT = 48;
 

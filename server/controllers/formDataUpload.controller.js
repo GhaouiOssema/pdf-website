@@ -14,7 +14,6 @@ module.exports = {
     const missingFiles = requiredFiles.filter((field) => !req.files[field]);
 
     if (missingFiles.length > 0) {
-      console.log({ error: `Missing file(s): ${missingFiles.join(", ")}` });
       return res.status(400).json({
         error: `Missing file(s): ${missingFiles.join(", ")}`,
       });
@@ -104,7 +103,7 @@ module.exports = {
       // Create a new GridFS bucket using mongoose
       const { connection } = mongoose;
       const gfs = new mongoose.mongo.GridFSBucket(connection.db, {
-        bucketName: "pdfFiles", // Replace "pdfFiles" with your preferred bucket name
+        bucketName: "pdfFiles",
       });
 
       // Create an upload stream with metadata
@@ -130,7 +129,7 @@ module.exports = {
         res.status(500).send("Error occurred while uploading the form.");
       });
     } catch (error) {
-      console.error(error);
+      console.log(error);
       res.status(500).send("Error occurred while uploading the form.");
     }
   },
@@ -138,9 +137,6 @@ module.exports = {
     const requiredFiles = ["selectedImage"];
     const missingFiles = requiredFiles.filter((field) => !req.files[field]);
     if (missingFiles.length > 0) {
-      console.log({
-        error: `Missing file(s): ${missingFiles.join(", ")}`,
-      });
       return res.status(400).json({
         error: `Missing file(s): ${missingFiles.join(", ")}`,
       });
@@ -169,7 +165,7 @@ module.exports = {
       // Create a new GridFS bucket using mongoose
       const { connection } = mongoose;
       const gfs = new mongoose.mongo.GridFSBucket(connection.db, {
-        bucketName: "imageFiles", // Replace "imageFiles" with your preferred bucket name
+        bucketName: "imageFiles",
       });
 
       // Create an upload stream with metadata
@@ -213,7 +209,7 @@ module.exports = {
         res.status(500).send("Error occurred while uploading the image.");
       });
     } catch (error) {
-      console.error(error);
+      console.log(error);
       res.status(500).send("Error occurred while uploading the image.");
     }
   },
@@ -221,9 +217,6 @@ module.exports = {
     const requiredFiles = ["selectedInfo"];
     const missingFiles = requiredFiles.filter((field) => !req.files[field]);
     if (missingFiles.length > 0) {
-      console.log({
-        error: `Missing file(s): ${missingFiles.join(", ")}`,
-      });
       return res.status(400).json({
         error: `Missing file(s): ${missingFiles.join(", ")}`,
       });
@@ -237,7 +230,7 @@ module.exports = {
       // Create a new GridFS bucket using mongoose
       const { connection } = mongoose;
       const gfs = new mongoose.mongo.GridFSBucket(connection.db, {
-        bucketName: "fileInfoFiles", // Replace "fileInfoFiles" with your preferred bucket name
+        bucketName: "fileInfoFiles",
       });
 
       const { buffer, originalname } = req.files.selectedInfo[0];
@@ -288,7 +281,7 @@ module.exports = {
         res.status(500).send("Error occurred while uploading the PDF.");
       });
     } catch (error) {
-      console.error(error);
+      console.log(error);
       res.status(500).send("Error occurred while uploading the PDF.");
     }
   },
@@ -297,9 +290,6 @@ module.exports = {
     const requiredFiles = ["selectedDOE"];
     const missingFiles = requiredFiles.filter((field) => !req.files[field]);
     if (missingFiles.length > 0) {
-      console.log({
-        error: `Missing file(s): ${missingFiles.join(", ")}`,
-      });
       return res.status(400).json({
         error: `Missing file(s): ${missingFiles.join(", ")}`,
       });
@@ -313,7 +303,7 @@ module.exports = {
       // Create a new GridFS bucket using mongoose
       const { connection } = mongoose;
       const gfs = new mongoose.mongo.GridFSBucket(connection.db, {
-        bucketName: "doeFiles", // Replace "doeFiles" with your preferred bucket name
+        bucketName: "doeFiles",
       });
 
       // Use Promise.all to process multiple files concurrently
@@ -371,7 +361,7 @@ module.exports = {
 
       res.status(200).json({ message: "DOE files uploaded successfully!" });
     } catch (error) {
-      console.error(error);
+      console.log(error);
       res.status(500).send("Error occurred while uploading the DOE files.");
     }
   },

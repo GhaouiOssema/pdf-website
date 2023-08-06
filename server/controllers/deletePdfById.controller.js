@@ -6,16 +6,13 @@ const jwt = require("jsonwebtoken");
 module.exports = {
   async delete(req, res) {
     try {
-      // Extract parameters from the request URL
       const { site, folder, title } = req.params;
 
-      // Check if the user is authorized to delete the PDF file
       const token = req.headers.authorization.split(" ")[1];
       if (!token) {
         return res.status(401).json({ message: "No token provided" });
       }
 
-      // Verify the JWT token
       const decoded = jwt.verify(token, process.env.SECRET_TOKEN);
       if (!decoded) {
         return res.status(401).json({ message: "Invalid token" });
@@ -33,7 +30,9 @@ module.exports = {
         return res.status(404).json({ message: "Folder not found" });
       }
 
-      const subFolder = folderObj.content[0].subFolder;
+      const subFolder = folderObj.content.find(
+        (contentItem) => contentItem.subFolder.name === folder
+      ).subFolder;
 
       const pdfFileIndex = subFolder.pdfFiles.findIndex(
         (pdfFile) => pdfFile.title === title

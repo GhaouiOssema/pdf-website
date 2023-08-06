@@ -110,7 +110,7 @@ module.exports = {
     try {
       const { connection } = mongoose;
       const gfs = new mongoose.mongo.GridFSBucket(connection.db, {
-        bucketName: "pdfFiles", // Replace "pdfFiles" with your preferred bucket name
+        bucketName: "pdfFiles",
       });
       const token = req.headers.authorization.split(" ")[1];
 
@@ -193,7 +193,7 @@ module.exports = {
     try {
       const { connection } = mongoose;
       const gfs = new mongoose.mongo.GridFSBucket(connection.db, {
-        bucketName: "fileInfoFiles", // Replace "pdfFiles" with your preferred bucket name
+        bucketName: "fileInfoFiles",
       });
       const token = req.headers.authorization.split(" ")[1];
 
@@ -276,7 +276,7 @@ module.exports = {
     try {
       const { connection } = mongoose;
       const gfs = new mongoose.mongo.GridFSBucket(connection.db, {
-        bucketName: "doeFiles", // Replace "doeFiles" with your preferred bucket name
+        bucketName: "doeFiles",
       });
 
       const token = req.headers.authorization?.split(" ")[1];

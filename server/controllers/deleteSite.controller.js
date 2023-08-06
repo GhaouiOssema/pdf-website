@@ -16,7 +16,7 @@ module.exports = {
           .json({ message: "Authorization token is missing" });
       }
 
-      const tokenWithoutBearer = token.split(" ")[1]; // Remove the "Bearer " prefix from the token
+      const tokenWithoutBearer = token.split(" ")[1];
 
       const decodedToken = jwt.verify(
         tokenWithoutBearer,

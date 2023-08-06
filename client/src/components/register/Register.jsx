@@ -21,7 +21,9 @@ const Register = () => {
 
     try {
       const formData = new FormData();
-      formData.append("file", selectedFile);
+      if (selectedFile) {
+        formData.append("file", selectedFile);
+      }
       formData.append("userName", userName);
       formData.append("email", email);
       formData.append("password", password);

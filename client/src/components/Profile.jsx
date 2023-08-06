@@ -13,6 +13,12 @@ const Profile = () => {
         if (!token) {
           return;
         }
+        console.log(token);
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
 
         const response = await axios.get(
           `${import.meta.env.VITE_SERVER_API_URL}/profile/user`,

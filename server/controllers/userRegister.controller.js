@@ -1,5 +1,4 @@
 require("dotenv").config();
-
 const User = require("../models/USER");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -10,7 +9,12 @@ module.exports = {
   async register(req, res) {
     try {
       const { userName, email, password, userRole } = req.body;
-      const { filename, path: imagePath, buffer } = req.file;
+      let profileImageBase64 = null;
+
+      if (req.file) {
+        const { filename, path: imagePath, buffer } = req.file;
+        profileImageBase64 = buffer.toString("base64");
+      }
 
       // Check if the user already exists
       const existingUser = await User.findOne({ email });
@@ -20,9 +24,6 @@ module.exports = {
 
       // Hash the password
       const hashedPassword = await bcrypt.hash(password, 10);
-
-      // Convert buffer to base64 string
-      const profileImageBase64 = buffer.toString("base64");
 
       // Create a new user
       const user = new User({
@@ -35,9 +36,7 @@ module.exports = {
 
       await user.save();
 
-      const token = jwt.sign({ userId: user.userId }, process.env.SECRET_TOKEN);
-
-      res.status(201).json({ message: "User registered successfully", token });
+      res.status(201).json({ message: "User registered successfully" });
     } catch (err) {
       console.error(err);
       res.status(500).json({ error: "Internal server error" });

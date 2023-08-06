@@ -15,18 +15,9 @@ module.exports = {
         option,
       } = req.body;
 
-      console.log(
-        société,
-        observation,
-        piècesChangées,
-        dateProchainEntretien,
-        option
-      );
-
       const token = req?.headers?.authorization?.split(" ")[1] || null;
 
       if (token) {
-        // User is logged in, proceed with creating the PDF report
         const decoded = jwt.verify(token, process.env.SECRET_TOKEN);
 
         const pdf = await PDF.findById(pdfID);

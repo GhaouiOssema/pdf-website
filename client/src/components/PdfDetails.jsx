@@ -234,8 +234,6 @@ const PdfDetails = () => {
                 <div className="flex flex-col">
                   {imageLoading && <div>Loading Image...</div>}
 
-                  {imageError && <div>Error loading the image.</div>}
-
                   {/* Show the image when it is loaded */}
                   {!imageLoading && !imageError && (
                     <figure className="max-w-lg relative">
