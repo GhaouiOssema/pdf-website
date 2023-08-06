@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@mui/material/styles";
@@ -8,11 +8,9 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
-import { Stack } from "@mui/material";
-import { useParams } from "react-router-dom";
-import { useEffect } from "react";
-import jwt_decode from "jwt-decode";
+import { CircularProgress, Stack } from "@mui/material";
 import { Document, Page, pdfjs } from "react-pdf";
+import axios from "axios";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -50,82 +48,163 @@ function a11yProps(index) {
 }
 
 const DOEButtonsGroup = ({ pdfData }) => {
-  console.log(pdfData);
   const theme = useTheme();
-  const [value, setValue] = React.useState(0);
+  const [selectedFileIndex, setSelectedFileIndex] = useState(0);
+  const [doeFiles, setDOEFiles] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [pdfLoaded, setPdfLoaded] = useState(false);
+  const [numPages, setNumPages] = useState(null);
+  const [screenSize, setScreenSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const handlePdfLoadSuccess = ({ numPages }) => {
+    setPdfLoaded(true);
+    setNumPages(numPages);
+  };
+
+  const fetchDOEFiles = async (id) => {
+    console.log(id);
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        return;
+      }
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios.get(
+        `${
+          import.meta.env.VITE_SERVER_API_URL
+        }/site/folder/pdf/details/doeFiles/${id}`,
+        { responseType: "arraybuffer", ...config } // Add 'responseType' to get the data as an array buffer
+      );
+
+      setLoading(true);
+
+      // Create a Blob from the array buffer
+      const blob = new Blob([response.data], { type: "application/pdf" });
+
+      // Convert the Blob to a base64 string
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64Pdf = reader.result.split(",")[1];
+        setDOEFiles((prevFiles) => [...prevFiles, base64Pdf]);
+        setLoading(false);
+      };
+      reader.readAsDataURL(blob);
+    } catch (error) {
+      setError("Error retrieving PDF data.");
+      setLoading(false);
+      console.log("Error retrieving PDF data:", error);
+    }
+  };
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  const handleChangeIndex = (index) => {
-    setValue(index);
-  };
-
-  const handleClick = () => {
-    console.info("You clicked the Chip.");
+    setSelectedFileIndex(newValue);
+    fetchDOEFiles(pdfData.doeFiles[selectedFileIndex].fileId);
   };
 
   return (
-    <Box sx={{ bgcolor: "background.paper", width: "100%" }}>
-      <div className="flex w-full justify-center">
+    <>
+      {pdfData.doeFiles && (
         <Box
-          sx={{
-            flexGrow: 1,
-            maxWidth: { xs: 320, sm: 480, md: "100%" },
-            bgcolor: "white",
-          }}
+          sx={{ bgcolor: "background.paper", width: "100%", minHeight: "70vh" }}
         >
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            variant="scrollable"
-            scrollButtons
-            aria-label="visible arrows tabs example"
-            sx={{
-              [`& .${tabsClasses.scrollButtons}`]: {
-                "&.Mui-disabled": { opacity: 0.3 },
-              },
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            {pdfData?.doeFiles?.map((file, idx) => (
-              <Tab
-                key={idx}
-                label={
-                  <Stack direction="row" spacing={1}>
-                    <Chip label={file.filename} onClick={handleClick} />
-                  </Stack>
-                }
-                {...a11yProps(idx)} // Use 'idx' as the a11yProps value
-              />
-            ))}
-          </Tabs>
-        </Box>
-      </div>
-      <SwipeableViews
-        axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-        index={value}
-        onChangeIndex={handleChangeIndex}
-      >
-        {/* Iterate over the pdfData.doeFiles array and render TabPanel for each file */}
-        {pdfData?.doeFiles?.map((file, idx) => (
-          <TabPanel key={idx} value={value} index={idx} dir={theme.direction}>
-            <Document
-              file={`data:application/pdf;base64,${file.data}`} // Use 'file.data' here
-              className="hidden__class"
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <Box
+              sx={{
+                flexGrow: 1,
+                maxWidth: { xs: 320, sm: 480, md: "100%" },
+                bgcolor: "white",
+              }}
             >
-              <Page
-                pageNumber={1}
-                renderTextLayer={false}
-                className="pdf-page"
-              />
-            </Document>
-          </TabPanel>
-        ))}
-      </SwipeableViews>
-    </Box>
+              <Tabs
+                value={selectedFileIndex}
+                onChange={handleChange}
+                variant="scrollable"
+                scrollButtons
+                aria-label="visible arrows tabs example"
+                sx={{
+                  [`& .${tabsClasses.scrollButtons}`]: {
+                    "&.Mui-disabled": { opacity: 0.3 },
+                  },
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                {pdfData.doeFiles.map((file, idx) => (
+                  <Tab
+                    key={idx}
+                    label={
+                      <Stack direction="row" spacing={1}>
+                        <Chip
+                          label={file.filename}
+                          onClick={() => setSelectedFileIndex(idx, file.fileId)}
+                        />
+                      </Stack>
+                    }
+                    {...a11yProps(idx)}
+                  />
+                ))}
+              </Tabs>
+            </Box>
+          </Box>
+          <SwipeableViews
+            axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+            index={selectedFileIndex}
+            onChangeIndex={setSelectedFileIndex}
+          >
+            {doeFiles.map((file, idx) => (
+              <TabPanel
+                key={idx}
+                value={selectedFileIndex}
+                index={idx}
+                dir={theme.direction}
+              >
+                <Document
+                  file={`data:application/pdf;base64,${file}`}
+                  className="hidden__class"
+                  onLoadSuccess={handlePdfLoadSuccess}
+                >
+                  {pdfLoaded &&
+                    Array.from(new Array(numPages), (el, index) => (
+                      <Page
+                        key={index}
+                        pageNumber={index + 1}
+                        renderTextLayer={false}
+                        height={500}
+                        width={screenSize.width < 700 ? 349 : 1000}
+                        className="mt-1"
+                      />
+                    ))}
+                </Document>
+              </TabPanel>
+            ))}
+          </SwipeableViews>
+        </Box>
+      )}
+    </>
   );
 };
 

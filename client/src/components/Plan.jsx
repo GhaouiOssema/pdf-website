@@ -3,12 +3,22 @@ import React, { useEffect, useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import { useParams } from "react-router-dom";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
-import { Box, CircularProgress } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 
 const Plan = () => {
   const { fichier } = useParams();
   const [pdfLoaded, setPdfLoaded] = useState(false);
   const [numPages, setNumPages] = useState(null);
+
+  const token = localStorage.getItem("token");
+  if (!token) {
+    return;
+  }
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
 
   const handlePdfLoadSuccess = ({ numPages }) => {
     setPdfLoaded(true);
@@ -16,17 +26,8 @@ const Plan = () => {
   };
 
   const [pdfData, setPdfData] = useState(null);
-
-  const token = localStorage.getItem("token");
-  if (!token) {
-    return;
-  }
-
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const getPdfData = async () => {
@@ -35,10 +36,23 @@ const Plan = () => {
           `${
             import.meta.env.VITE_SERVER_API_URL
           }/site/folder/pdf/details/plan/${fichier}`,
-          config
+          { responseType: "arraybuffer", ...config } // Add 'responseType' to get the data as an array buffer
         );
-        setPdfData(response.data.pdf);
+
+        // Create a Blob from the array buffer
+        const blob = new Blob([response.data], { type: "application/pdf" });
+
+        // Convert the Blob to a base64 string
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const base64Pdf = reader.result.split(",")[1];
+          setPdfData(base64Pdf);
+          setLoading(false);
+        };
+        reader.readAsDataURL(blob);
       } catch (error) {
+        setError("Error retrieving PDF data.");
+        setLoading(false);
         console.log("Error retrieving PDF data:", error);
       }
     };
@@ -69,9 +83,24 @@ const Plan = () => {
 
   return (
     <div className="bg-gray-100 flex justify-center items-center ">
-      {pdfData ? (
+      {error && !pdfData ? (
+        <Typography variant="h5" color="error">
+          {error}
+        </Typography>
+      ) : loading ? (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      ) : (
         <Document
-          file={`data:application/pdf;base64,${pdfData.mainPdf.data}`}
+          file={`data:application/pdf;base64,${pdfData}`}
           className="flex flex-col items-center"
           onLoadSuccess={handlePdfLoadSuccess}
         >
@@ -87,17 +116,6 @@ const Plan = () => {
               />
             ))}
         </Document>
-      ) : (
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100vh",
-          }}
-        >
-          <CircularProgress />
-        </Box>
       )}
     </div>
   );

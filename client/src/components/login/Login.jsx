@@ -33,11 +33,7 @@ const Login = () => {
       // Clear form fields
       setEmail("");
       setPassword("");
-
-      // Show success message or perform other actions
       alert("Login successful!");
-
-      await new Promise((resolve) => setTimeout(resolve, 1000));
 
       window.location.href = "/messites";
     } catch (err) {

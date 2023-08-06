@@ -271,7 +271,7 @@ module.exports = {
           { _id: lastPdf._id, user: userId }, // Find by both last PDF ID and userId
           {
             $set: {
-              pdfFileInfo: {
+              fiche: {
                 fileId: uploadStream.id,
                 filename: originalname,
               },

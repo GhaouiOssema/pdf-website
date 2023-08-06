@@ -60,11 +60,19 @@ router.get(
   controllers.getPdfById.getPdfDataById
 );
 router.get("/site/folder/pdf/details/plan/:id", controllers.getPdfById.plan);
-router.get("/site/folder/pdf/details/doe/:id", controllers.getPdfById.doe);
+router.get("/site/folder/pdf/details/doe/:id", controllers.getPdfById.doeData);
+router.get(
+  "/site/folder/pdf/details/doefiles/:id",
+  controllers.getPdfById.doeFiles
+);
 router.get("/site/folder/pdf/details/fiche/:id", controllers.getPdfById.fiche);
 router.get(
   "/site/folder/pdf/details/raports/:id",
   controllers.getPdfById.raports
+);
+router.get(
+  "/site/folder/pdf/details/image/:id",
+  controllers.getPdfById.pdfImage
 );
 
 router.get("/sites", controllers.allSites.sites);

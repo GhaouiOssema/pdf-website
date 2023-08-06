@@ -32,7 +32,11 @@ const PdfDetails = () => {
   const qrCodeRef = useRef(null);
   const Navigate = useNavigate();
   const [alertMsg, setAlertMsg] = useState("");
+  const [loading, setLoading] = useState(true);
   const [raports, setRaports] = useState(null);
+  const [image, setImage] = useState(null);
+  const [imageLoading, setImageLoading] = useState(true);
+  const [imageError, setImageError] = useState(false);
 
   const token = localStorage.getItem("token");
   if (!token) {
@@ -74,6 +78,39 @@ const PdfDetails = () => {
       }
     };
     getPdfData();
+  }, [site, dossier, id]);
+
+  useEffect(() => {
+    const getImageFile = async () => {
+      try {
+        const response = await axios.get(
+          `${
+            import.meta.env.VITE_SERVER_API_URL
+          }/site/folder/pdf/details/image/${id}`,
+          {
+            ...config,
+            responseType: "arraybuffer", // Set the response type to "arraybuffer" to handle binary data correctly
+          }
+        );
+
+        // Convert the received ArrayBuffer to a base64 string
+        const base64Pdf = btoa(
+          new Uint8Array(response.data).reduce(
+            (data, byte) => data + String.fromCharCode(byte),
+            ""
+          )
+        );
+        setImage(
+          `data:${response.headers["content-type"]};base64,${base64Pdf}`
+        );
+        setImageLoading(false); // Image loading is complete
+      } catch (error) {
+        console.log("Error retrieving PDF data:", error);
+        setImageError(true);
+        setImageLoading(false);
+      }
+    };
+    getImageFile();
   }, [site, dossier, id]);
 
   console.log(pdfData);
@@ -194,16 +231,22 @@ const PdfDetails = () => {
 
             <div className="flex justify-around items-center flex__col">
               <div className="flex flex-col">
-                {/* <figure className="max-w-lg relative">
-                  <img
-                    className="h-auto max-w-full rounded-lg"
-                    src={`data:image/${pdfData.pdfImage.filename
-                      .split(".")
-                      .pop()
-                      .toLowerCase()};base64,${pdfData.pdfImage.data}`}
-                    alt="image description"
-                  />
-                </figure> */}
+                <div className="flex flex-col">
+                  {imageLoading && <div>Loading Image...</div>}
+
+                  {imageError && <div>Error loading the image.</div>}
+
+                  {/* Show the image when it is loaded */}
+                  {!imageLoading && !imageError && (
+                    <figure className="max-w-lg relative">
+                      <img
+                        className="h-auto max-w-full rounded-lg"
+                        src={image}
+                        alt="image"
+                      />
+                    </figure>
+                  )}
+                </div>
                 <div>
                   <div className="qr-code-section bg-white">
                     {screenSize.width > 700 && (

@@ -297,11 +297,43 @@ const PdfFile = () => {
   const [openAlert, setOpenAlert] = useState(false);
   const [deletingPdfTitle, setDeletingPdfTitle] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  console.log("SITE :", site);
-  console.log("dossier :", dossier);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const handleClickAlert = () => {
-    setOpenAlert(true);
+  const [filteredPdfs, setFilteredPdfs] = useState([]);
+  const itemsPerPage = 20;
+  const totalPages = Math.ceil(pdfs.length / itemsPerPage);
+
+  const pageNumbers = Array.from(
+    { length: totalPages },
+    (_, index) => index + 1
+  );
+
+  const changePage = (page) => {
+    setCurrentPage(page);
+  };
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+
+  const displayedPdfs =
+    filteredPdfs.length > 0 ? filteredPdfs : pdfs.slice(startIndex, endIndex);
+
+  useEffect(() => {
+    // Filter the displayedPdfs based on the search query
+    const filtered = pdfs
+      .slice(startIndex, endIndex)
+      .filter(
+        (pdf) =>
+          pdf.mainPdf.filename
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase()) ||
+          pdf.title.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    setFilteredPdfs(filtered);
+  }, [pdfs, searchQuery, startIndex, endIndex]);
+
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
   };
 
   const handleCloseAlert = (event, reason) => {
@@ -359,26 +391,9 @@ const PdfFile = () => {
   };
   const handleEdit = (id) => {};
 
-  const itemsPerPage = 20;
-  const totalPages = Math.ceil(pdfs.length / itemsPerPage);
-
-  const pageNumbers = Array.from(
-    { length: totalPages },
-    (_, index) => index + 1
-  );
-
-  const changePage = (page) => {
-    setCurrentPage(page);
-  };
-
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-
-  const displayedPdfs = pdfs.slice(startIndex, endIndex);
-
   return (
     <>
-      {openModal === "file" ? (
+      {/* {openModal === "file" ? (
         <SpringModal
           open={openModal}
           setOpen={setOpenModal}
@@ -387,7 +402,7 @@ const PdfFile = () => {
           handleCloseAlert={handleCloseAlert}
           pdf={pdfs}
         />
-      ) : null}
+      ) : null} */}
       <section className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
         <h1 className="text-3xl text-center font-bold mb-4 mt-10">
           Tous les equipement pour {dossier}
@@ -424,13 +439,15 @@ const PdfFile = () => {
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                       placeholder="Search"
                       required
+                      value={searchQuery}
+                      onChange={handleSearch}
                     />
                   </div>
                 </form>
               </div>
 
               {/* Add file button */}
-              <div className="flex justify-between md:w-[22rem]">
+              {/* <div className="flex justify-between md:w-[22rem]">
                 <div className="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
                   <button
                     type="button"
@@ -453,11 +470,11 @@ const PdfFile = () => {
                     Ajouter un équipement
                   </button>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             {/* PDF file table */}
-            {pdfs.length > 0 || pdfs.length !== 0 ? (
+            {pdfs.length > 0 || pdfs.length !== 0 || filteredPdfs.length < 0 ? (
               <div className="overflow-x-auto">
                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

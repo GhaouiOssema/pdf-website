@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
 import DOEButtonsGroup from "./DOEButtonsGroup";
+import { CircularProgress } from "@mui/material";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -47,6 +48,7 @@ const a11yProps = (index) => {
 const DoeFiles = () => {
   const { pdfid } = useParams();
   const [pdfData, setPdfData] = useState(null);
+  const [pdfLoaded, setPdfLoaded] = useState(false);
 
   const token = localStorage.getItem("token");
   if (!token) {
@@ -58,8 +60,6 @@ const DoeFiles = () => {
       Authorization: `Bearer ${token}`,
     },
   };
-  console.log(pdfid);
-
   useEffect(() => {
     const getPdfData = async () => {
       try {
@@ -76,6 +76,11 @@ const DoeFiles = () => {
     };
     getPdfData();
   }, [pdfid]);
+
+  const [screenSize, setScreenSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
 
   useEffect(() => {
     const handleResize = () => {
@@ -104,7 +109,18 @@ const DoeFiles = () => {
   };
 
   if (!pdfData) {
-    return <div>Loading DOE...</div>;
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "70vh",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
   }
 
   return (
