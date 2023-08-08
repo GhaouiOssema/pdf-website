@@ -17,7 +17,9 @@ module.exports = {
       }
 
       // Check if the user already exists
-      const existingUser = await User.findOne({ email });
+      const existingUser = await User.findOne({
+        $or: [{ email }, { userName }],
+      });
       if (existingUser) {
         return res.status(400).json({ error: "User already exists" });
       }

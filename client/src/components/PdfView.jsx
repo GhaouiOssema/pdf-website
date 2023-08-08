@@ -317,7 +317,7 @@ const PdfView = () => {
 
       if (response.status === 200) {
         alert("Raport sent");
-        // window.location.reload();
+        window.location.reload();
         setValue(2);
       }
     } catch (error) {
@@ -447,7 +447,15 @@ const PdfView = () => {
                           }}
                         >
                           <TableCell component="th" scope="row">
-                            {raport.société}
+                            {
+                              new Date(raport.dateDernierEntretien)
+                                .toISOString()
+                                .split("T")[0]
+                            }
+                          </TableCell>
+                          <TableCell align="center">{raport.société}</TableCell>
+                          <TableCell align="center">
+                            {raport.piècesChangées}
                           </TableCell>
                           <TableCell align="center">
                             {
@@ -455,17 +463,6 @@ const PdfView = () => {
                                 .toISOString()
                                 .split("T")[0]
                             }
-                          </TableCell>
-                          <TableCell align="center">
-                            {raport.piècesChangées}
-                          </TableCell>
-                          <TableCell align="center">
-                            {raport.dateProchainEntretien}
-                            {/* {
-                              new Date(raport.dateProchainEntretien)
-                                .toISOString()
-                                .split("T")[0]
-                            } */}
                           </TableCell>
                           <TableCell align="center" sx={{ cursor: "pointer" }}>
                             <InfoOutlinedIcon

@@ -36,7 +36,11 @@ const Register = () => {
 
       navigate("/seconnecter");
     } catch (err) {
-      setError("Registration failed");
+      if (err.response && err.response.data && err.response.data.error) {
+        setError(err.response.data.error);
+      } else {
+        setError("An error occurred.");
+      }
       console.error(err);
     }
   };
