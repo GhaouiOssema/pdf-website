@@ -10,6 +10,7 @@ import {
   Stack,
   Snackbar,
   Box,
+  LinearProgress,
 } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 import { Document, Page, pdfjs } from "react-pdf";
@@ -47,6 +48,8 @@ const FormSend = () => {
 
   const [open, setOpen] = useState(false);
   const [alertMsg, setAlertMsg] = useState(null);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [isUploading, setIsUploading] = useState(false);
 
   const token = localStorage.getItem("token");
   if (!token) {
@@ -138,7 +141,6 @@ const FormSend = () => {
       });
     }
   };
-
   const handleSubmitStep1 = async (event) => {
     event.preventDefault();
 
@@ -157,11 +159,39 @@ const FormSend = () => {
     }
 
     try {
-      setLoading(true);
+      setIsUploading(true);
+      setUploadProgress(0);
       const response = await axios.post(
         `${import.meta.env.VITE_SERVER_API_URL}/FormUpload/mainpdf`,
         formDataStep1,
-        config
+        {
+          ...config,
+          onUploadProgress: (progressEvent) => {
+            const totalBytes = progressEvent.total;
+            const startTime = new Date().getTime();
+
+            const interval = setInterval(() => {
+              const currentTime = new Date().getTime();
+              const elapsedTime = currentTime - startTime;
+
+              if (elapsedTime >= responseTime) {
+                clearInterval(interval);
+                setUploadProgress(100);
+                return;
+              }
+
+              const uploadedBytes = (elapsedTime / responseTime) * totalBytes;
+              const percentage = Math.min(
+                Math.round((uploadedBytes / totalBytes) * 100),
+                100
+              );
+              setUploadProgress(percentage);
+            }, 100); // Update progress every 100 milliseconds
+
+            // Simulate server response time
+            const responseTime = 2000; // Adjust the response time in milliseconds as needed
+          },
+        }
       );
 
       if (response.status === 200) {
@@ -175,8 +205,11 @@ const FormSend = () => {
       setAlertMsg("error");
       handleClick();
       setLoading(false);
+    } finally {
+      setIsUploading(false); // Upload complete or error, stop uploading
     }
   };
+
   const handleSubmitStep2 = async (event) => {
     event.preventDefault();
 
@@ -184,11 +217,38 @@ const FormSend = () => {
     formDataStep1.append("selectedImage", formState.selectedImage);
 
     try {
-      setLoading(true);
+      setIsUploading(true);
+      setUploadProgress(0);
       const response = await axios.post(
         `${import.meta.env.VITE_SERVER_API_URL}/FormUpload/image`,
         formDataStep1,
-        config
+        {
+          ...config,
+          onUploadProgress: (progressEvent) => {
+            const totalBytes = progressEvent.total;
+            const startTime = new Date().getTime();
+
+            const interval = setInterval(() => {
+              const currentTime = new Date().getTime();
+              const elapsedTime = currentTime - startTime;
+
+              if (elapsedTime >= responseTime) {
+                clearInterval(interval);
+                setUploadProgress(100);
+                return;
+              }
+
+              const uploadedBytes = (elapsedTime / responseTime) * totalBytes;
+              const percentage = Math.min(
+                Math.round((uploadedBytes / totalBytes) * 100),
+                100
+              );
+              setUploadProgress(percentage);
+            }, 100);
+
+            const responseTime = 2000;
+          },
+        }
       );
 
       if (response.status === 200) {
@@ -202,6 +262,8 @@ const FormSend = () => {
       setAlertMsg("error");
       handleClick();
       setLoading(false);
+    } finally {
+      setIsUploading(false); // Upload complete or error, stop uploading
     }
   };
   const handleSubmitStep3 = async (event) => {
@@ -211,11 +273,38 @@ const FormSend = () => {
     formDataStep1.append("selectedInfo", formState.selectedInfo);
 
     try {
-      setLoading(true);
+      setIsUploading(true);
+      setUploadProgress(0);
       const response = await axios.post(
         `${import.meta.env.VITE_SERVER_API_URL}/FormUpload/fiche`,
         formDataStep1,
-        config
+        {
+          ...config,
+          onUploadProgress: (progressEvent) => {
+            const totalBytes = progressEvent.total;
+            const startTime = new Date().getTime();
+
+            const interval = setInterval(() => {
+              const currentTime = new Date().getTime();
+              const elapsedTime = currentTime - startTime;
+
+              if (elapsedTime >= responseTime) {
+                clearInterval(interval);
+                setUploadProgress(100);
+                return;
+              }
+
+              const uploadedBytes = (elapsedTime / responseTime) * totalBytes;
+              const percentage = Math.min(
+                Math.round((uploadedBytes / totalBytes) * 100),
+                100
+              );
+              setUploadProgress(percentage);
+            }, 100);
+
+            const responseTime = 2000;
+          },
+        }
       );
 
       if (response.status === 200) {
@@ -229,6 +318,8 @@ const FormSend = () => {
       setAlertMsg("error");
       handleClick();
       setLoading(false);
+    } finally {
+      setIsUploading(false); // Upload complete or error, stop uploading
     }
   };
   const handleSubmitStep4 = async (event) => {
@@ -245,11 +336,38 @@ const FormSend = () => {
     });
 
     try {
-      setLoading(true);
+      setIsUploading(true);
+      setUploadProgress(0);
       const response = await axios.post(
         `${import.meta.env.VITE_SERVER_API_URL}/FormUpload/doe`,
         formDataStep1,
-        config
+        {
+          ...config,
+          onUploadProgress: (progressEvent) => {
+            const totalBytes = progressEvent.total;
+            const startTime = new Date().getTime();
+
+            const interval = setInterval(() => {
+              const currentTime = new Date().getTime();
+              const elapsedTime = currentTime - startTime;
+
+              if (elapsedTime >= responseTime) {
+                clearInterval(interval);
+                setUploadProgress(100);
+                return;
+              }
+
+              const uploadedBytes = (elapsedTime / responseTime) * totalBytes;
+              const percentage = Math.min(
+                Math.round((uploadedBytes / totalBytes) * 100),
+                100
+              );
+              setUploadProgress(percentage);
+            }, 100);
+
+            const responseTime = 2000;
+          },
+        }
       );
 
       if (response.status === 200) {
@@ -263,6 +381,8 @@ const FormSend = () => {
       setAlertMsg("error");
       handleClick();
       setLoading(false);
+    } finally {
+      setIsUploading(false); // Upload complete or error, stop uploading
     }
   };
 
@@ -283,7 +403,7 @@ const FormSend = () => {
       case 0:
         return (
           <>
-            {!loading ? (
+            {!isUploading ? (
               <>
                 <div className=" mt-5">
                   <div className="w-full flex flex-col">
@@ -448,23 +568,23 @@ const FormSend = () => {
                 )}
               </>
             ) : (
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: "50vh",
-                }}
-              >
-                <CircularProgress />
-              </Box>
+              <div className="mt-3">
+                <LinearProgress
+                  variant="determinate"
+                  value={uploadProgress}
+                  sx={{ width: "100%" }}
+                />
+                <div className="mt-2 text-center">
+                  {uploadProgress}% Uploaded
+                </div>
+              </div>
             )}
           </>
         );
       case 1:
         return (
           <>
-            {!loading ? (
+            {!isUploading ? (
               <>
                 <div className="mt-5">
                   {formState.selectedImage ? (
@@ -539,23 +659,23 @@ const FormSend = () => {
                 )}
               </>
             ) : (
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: "50vh",
-                }}
-              >
-                <CircularProgress />
-              </Box>
+              <div className="mt-3">
+                <LinearProgress
+                  variant="determinate"
+                  value={uploadProgress}
+                  sx={{ width: "100%" }}
+                />
+                <div className="mt-2 text-center">
+                  {uploadProgress}% Uploaded
+                </div>
+              </div>
             )}
           </>
         );
       case 2:
         return (
           <>
-            {!loading ? (
+            {!isUploading ? (
               <>
                 <label
                   htmlFor="fiche-tech"
@@ -620,16 +740,16 @@ const FormSend = () => {
                 )}
               </>
             ) : (
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: "50vh",
-                }}
-              >
-                <CircularProgress />
-              </Box>
+              <div className="mt-3">
+                <LinearProgress
+                  variant="determinate"
+                  value={uploadProgress}
+                  sx={{ width: "100%" }}
+                />
+                <div className="mt-2 text-center">
+                  {uploadProgress}% Uploaded
+                </div>
+              </div>
             )}
           </>
         );
@@ -637,7 +757,7 @@ const FormSend = () => {
       case 3:
         return (
           <>
-            {!loading ? (
+            {!isUploading ? (
               <>
                 <label
                   htmlFor="DOE-PDF"
@@ -702,16 +822,16 @@ const FormSend = () => {
                 )}
               </>
             ) : (
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: "50vh",
-                }}
-              >
-                <CircularProgress />
-              </Box>
+              <div className="mt-3">
+                <LinearProgress
+                  variant="determinate"
+                  value={uploadProgress}
+                  sx={{ width: "100%" }}
+                />
+                <div className="mt-2 text-center">
+                  {uploadProgress}% Uploaded
+                </div>
+              </div>
             )}
           </>
         );

@@ -88,209 +88,9 @@ const CircularIndeterminate = () => {
   );
 };
 
-// const SpringModal = ({ open, setOpen, handleClickAlert, setAlertMsg, pdf }) => {
-//   const [selectedFile, setSelectedFile] = useState(null);
-//   const [fileName, setFileName] = useState("");
-//   const [uploadError, setUploadError] = useState(null);
-//   const { site, dossier } = useParams();
-//   const [selectedFiles, setSelectedFiles] = useState([]);
-
-//   const handleOpen = () => setOpen(true);
-//   const handleClose = () => setOpen(false);
-
-//   const handleFileChange = (event) => {
-//     const file = event.target.files[0];
-//     setSelectedFile(file);
-//   };
-
-//   console.log(selectedFiles);
-
-//   const token = localStorage.getItem("token");
-//   if (!token) {
-//     return;
-//   }
-
-//   const config = {
-//     headers: {
-//       Authorization: `Bearer ${token}`,
-//     },
-//   };
-
-//   const handleSubmit = async (event) => {
-//     event.preventDefault();
-
-//     if (selectedFile) {
-//       const formData = new FormData();
-//       formData.append("file", selectedFile);
-//       formData.append("title", fileName);
-//       formData.append("folder", site);
-//       formData.append("subFolder", dossier);
-//       console.log(site);
-//       console.log(dossier);
-
-//       try {
-//         const response = await axios.post(
-//           `${import.meta.env.VITE_SERVER_API_URL}/upload`,
-//           formData,
-//           config
-//         );
-
-//         if (response.status === 200) {
-//           setAlertMsg("success");
-//           handleClickAlert();
-//           window.location.reload();
-//         } else {
-//           setAlertMsg("error");
-//           handleClickAlert();
-//         }
-
-//         setSelectedFile(null);
-//         setFileName("");
-//         handleClose();
-//         setUploadError(null);
-//       } catch (error) {
-//         console.error("Error uploading file:", error);
-//         setUploadError("An error occurred during file upload.");
-//       }
-//     }
-//   };
-
-//   const handleReset = () => {
-//     setFileName(null);
-//     setSelectedFile(null);
-//   };
-
-//   console.log(selectedFile);
-
-//   return (
-//     <div>
-//       <Modal
-//         aria-labelledby="spring-modal-title"
-//         aria-describedby="spring-modal-description"
-//         open={open}
-//         onClose={handleClose}
-//         closeAfterTransition
-//         slots={{ backdrop: Backdrop }}
-//         slotProps={{
-//           backdrop: {
-//             TransitionComponent: Fade,
-//           },
-//         }}
-//       >
-//         <Fade in={open}>
-//           <Box sx={style} className="rounded-2xl">
-//             <form
-//               className="flex max-w-md flex-col gap-4"
-//               onSubmit={handleSubmit}
-//               onReset={handleReset}
-//             >
-//               {/* File input */}
-//               <Typography sx={{ fontWeight: "bold" }}>
-//                 <span>Les information du Fichier</span>
-//               </Typography>
-//               <div className="flex items-center justify-center w-full">
-//                 <label
-//                   htmlFor="dropzone-file"
-//                   className="flex flex-col items-center justify-center w-full h-19 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100 dark:hover:border-gray-500"
-//                 >
-//                   <div className="flex flex-col items-center justify-center pt-5 pb-2">
-//                     <svg
-//                       aria-hidden="true"
-//                       className="w-10 h-10 text-gray-400"
-//                       fill="none"
-//                       stroke="currentColor"
-//                       viewBox="0 0 24 24"
-//                       xmlns="http://www.w3.org/2000/svg"
-//                     >
-//                       {/* Replace with your own SVG icon */}
-//                       <path
-//                         strokeLinecap="round"
-//                         strokeLinejoin="round"
-//                         strokeWidth="2"
-//                         d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-//                       ></path>
-//                     </svg>
-//                     <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-//                       Sélectionner un fichier ( PDF )
-//                     </p>
-//                   </div>
-//                   <input
-//                     id="dropzone-file"
-//                     type="file"
-//                     accept=".pdf"
-//                     onChange={handleFileChange}
-//                     hidden
-//                   />
-//                 </label>
-//               </div>
-
-//               <>
-//                 {selectedFile && (
-//                   <Stack
-//                     sx={{
-//                       width: "100%",
-//                       color: "black",
-//                       marginTop: "10px",
-//                     }}
-//                     spacing={2}
-//                   >
-//                     <Alert severity="info">
-//                       <span>{selectedFile.name}</span>
-//                     </Alert>
-//                   </Stack>
-//                 )}
-//               </>
-
-//               {/* File name input */}
-
-//               <div>
-//                 <div className="mb-2 block">
-//                   <Label htmlFor="filename" value="File name" />
-//                 </div>
-//                 <TextInput
-//                   id="filename"
-//                   placeholder="Enter file name"
-//                   value={fileName}
-//                   onChange={(event) => setFileName(event.target.value)}
-//                   required
-//                   shadow
-//                   type="text"
-//                 />
-//               </div>
-
-//               {/* Form actions */}
-//               <div className="flex items-center justify-center">
-//                 <button
-//                   type="submit"
-//                   className="uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-lg focus:outline-none focus:shadow-outline hover:bg-green-500"
-//                 >
-//                   Add
-//                 </button>
-//                 <button
-//                   type="reset"
-//                   className="uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 ml-5 rounded-lg focus:outline-none focus:shadow-outline hover:bg-red-500"
-//                 >
-//                   Restore
-//                 </button>
-//               </div>
-
-//               {/* Display error message, if any */}
-//               {uploadError && <p className="text-red-500">{uploadError}</p>}
-//             </form>
-//           </Box>
-//         </Fade>
-//       </Modal>
-//     </div>
-//   );
-// };
-
-const ITEM_HEIGHT = 48;
-
 const PdfFile = () => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
   const [loading, setLoading] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
   const [pdfs, setPdfs] = useState([]);
   const { site, dossier } = useParams();
   const [alertMsg, setAlertMsg] = useState(null);
@@ -300,7 +100,7 @@ const PdfFile = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const [filteredPdfs, setFilteredPdfs] = useState([]);
-  const itemsPerPage = 20;
+  const itemsPerPage = 7;
   const totalPages = Math.ceil(pdfs.length / itemsPerPage);
 
   const pageNumbers = Array.from(
@@ -393,16 +193,6 @@ const PdfFile = () => {
 
   return (
     <>
-      {/* {openModal === "file" ? (
-        <SpringModal
-          open={openModal}
-          setOpen={setOpenModal}
-          setAlertMsg={setAlertMsg}
-          handleClickAlert={handleClickAlert}
-          handleCloseAlert={handleCloseAlert}
-          pdf={pdfs}
-        />
-      ) : null} */}
       <section className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
         <h1 className="text-3xl text-center font-bold mb-4 mt-10">
           Tous les equipement pour {dossier}
@@ -445,37 +235,10 @@ const PdfFile = () => {
                   </div>
                 </form>
               </div>
-
-              {/* Add file button */}
-              {/* <div className="flex justify-between md:w-[22rem]">
-                <div className="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                  <button
-                    type="button"
-                    className="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
-                    onClick={() => setOpenModal("file")}
-                  >
-                    <svg
-                      className="h-3.5 w-3.5 mr-2"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                      aria-hidden="true"
-                    >
-                      <path
-                        clipRule="evenodd"
-                        fillRule="evenodd"
-                        d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-                      />
-                    </svg>
-                    Ajouter un équipement
-                  </button>
-                </div>
-              </div> */}
             </div>
-
             {/* PDF file table */}
             {pdfs.length > 0 || pdfs.length !== 0 || filteredPdfs.length < 0 ? (
-              <div className="overflow-x-auto">
+              <div className="overflow-x-auto max-h-100">
                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
@@ -552,7 +315,9 @@ const PdfFile = () => {
                   </tbody>
                 </table>
               </div>
-            ) : null}
+            ) : (
+              <p className="text-center mt-4">No PDFs available.</p>
+            )}
             {/* Pagination */}
             <nav
               className="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4"
@@ -561,9 +326,12 @@ const PdfFile = () => {
               <ul className="inline-flex items-stretch -space-x-px">
                 {/* Previous page button */}
                 <li>
-                  <a
-                    href="#"
-                    className="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                  <button
+                    onClick={() => changePage(currentPage - 1)}
+                    className={`flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
+                      currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
+                    disabled={currentPage === 1}
                   >
                     <span className="sr-only">Previous</span>
                     <svg
@@ -579,7 +347,7 @@ const PdfFile = () => {
                         clipRule="evenodd"
                       />
                     </svg>
-                  </a>
+                  </button>
                 </li>
 
                 {/* Page number buttons */}
@@ -601,9 +369,14 @@ const PdfFile = () => {
 
                 {/* Next page button */}
                 <li>
-                  <a
-                    href="#"
-                    className="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                  <button
+                    onClick={() => changePage(currentPage + 1)}
+                    className={`flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
+                      currentPage === totalPages
+                        ? "opacity-50 cursor-not-allowed"
+                        : ""
+                    }`}
+                    disabled={currentPage === totalPages}
                   >
                     <span className="sr-only">Next</span>
                     <svg
@@ -619,7 +392,7 @@ const PdfFile = () => {
                         clipRule="evenodd"
                       />
                     </svg>
-                  </a>
+                  </button>
                 </li>
               </ul>
             </nav>

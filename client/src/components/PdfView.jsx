@@ -104,6 +104,21 @@ const TransitionsModal = ({ open, handleClose, raports, filteredRaports }) => {
                     }}
                   >
                     <Typography variant="h6" gutterBottom>
+                      société
+                    </Typography>
+                    <Typography variant="h7" gutterBottom>
+                      {raport.société}
+                    </Typography>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <Typography variant="h6" gutterBottom>
                       Date
                     </Typography>
                     <Typography variant="h7" gutterBottom>
@@ -123,10 +138,25 @@ const TransitionsModal = ({ open, handleClose, raports, filteredRaports }) => {
                     }}
                   >
                     <Typography variant="h6" gutterBottom>
-                      société
+                      Correctif ou Préventif
                     </Typography>
                     <Typography variant="h7" gutterBottom>
-                      {raport.société}
+                      {raport.options.map((el) => el)}
+                    </Typography>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <Typography variant="h6" gutterBottom>
+                      Observation
+                    </Typography>
+                    <Typography variant="h7" gutterBottom>
+                      {raport.observation}
                     </Typography>
                   </Box>
                   <Box
@@ -348,6 +378,8 @@ const PdfView = () => {
   }, [pdfData]);
   console.log(pdfData);
 
+  console.log("RAPORT : ", raports);
+
   if (!pdfData) {
     return <div>Loading PDF...</div>;
   }
@@ -435,6 +467,7 @@ const PdfView = () => {
                       <TableCell align="center">
                         Date du prochain maintenance
                       </TableCell>
+                      <TableCell align="center">P/C</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -459,10 +492,13 @@ const PdfView = () => {
                           </TableCell>
                           <TableCell align="center">
                             {
-                              new Date(raport.dateDernierEntretien)
+                              new Date(raport.dateProchainEntretien)
                                 .toISOString()
                                 .split("T")[0]
                             }
+                          </TableCell>
+                          <TableCell align="center">
+                            {raport.options.map((el) => el)}
                           </TableCell>
                           <TableCell align="center" sx={{ cursor: "pointer" }}>
                             <InfoOutlinedIcon
