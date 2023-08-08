@@ -3,18 +3,6 @@ const controllers = require("../controllers");
 const imageUpload = require("../middleware/imageUpload");
 const multiUpload = require("../middleware/multiUpload");
 
-// Import the modified middleware
-
-// router.post(
-//   "/FormUpload",
-//   multiUpload.fields([
-//     { name: "selectedFile", maxCount: 1 },
-//     { name: "selectedImage", maxCount: 1 },
-//     { name: "selectedInfo", maxCount: 1 },
-//     { name: "selectedDOE", maxCount: 20 },
-//   ]),
-//   controllers.formData.uploadData
-// );
 router.post(
   "/FormUpload/mainpdf",
   multiUpload.fields([{ name: "selectedFile", maxCount: 1 }]),

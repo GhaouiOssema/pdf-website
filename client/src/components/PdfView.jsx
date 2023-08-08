@@ -175,8 +175,6 @@ const TransitionsModal = ({ open, handleClose, raports, filteredRaports }) => {
 const PdfView = () => {
   const { id } = useParams();
   const [pdfData, setPdfData] = useState(null);
-  const [numPages, setNumPages] = useState(null);
-  const pdfRef = useRef();
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
   const [company, setCompany] = useState("");
@@ -186,6 +184,7 @@ const PdfView = () => {
   const [raports, setRaports] = useState(null);
   const [socIndex, setSocIndex] = useState(null);
   const [filteredRaports, setFilteredRaports] = useState([]);
+  const [confirmationCode, setConfirmationCode] = useState(null);
 
   const [selectedOption, setSelectedOption] = useState("Option 1");
 
@@ -279,6 +278,7 @@ const PdfView = () => {
   const handleChangeIndex = (index) => {
     setValue(index);
   };
+  console.log(confirmationCode);
 
   const sendRaport = async () => {
     try {
@@ -294,6 +294,7 @@ const PdfView = () => {
             : selectedOption === "Correctif"
             ? "Correctif"
             : null,
+        code: confirmationCode,
       };
       console.log(requestData);
 
@@ -310,18 +311,18 @@ const PdfView = () => {
 
       const response = await axios.post(
         `${import.meta.env.VITE_SERVER_API_URL}/pdfs/${id}/raport`,
-        requestData
+        requestData,
+        config
       );
 
       if (response.status === 200) {
         alert("Raport sent");
-        window.location.reload();
+        // window.location.reload();
         setValue(2);
-      } else {
-        alert("Error sending raport");
       }
     } catch (error) {
       console.log("Error sending report:", error);
+      alert(error.response.data.error);
     }
   };
 
@@ -590,6 +591,21 @@ const PdfView = () => {
                     value={nextMaintenanceDate}
                     onChange={(e) => setNextMaintenanceDate(e.target.value)}
                     required
+                  />
+                </div>
+                <div className="mb-6">
+                  <label
+                    htmlFor="repeat-password"
+                    className="block mb-2 text-sm text-gray-900 dark:text-white font-bold"
+                  >
+                    Code du confirmation
+                  </label>
+                  <input
+                    type="text"
+                    className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:shadow-sm-light"
+                    required
+                    value={confirmationCode}
+                    onChange={(e) => setConfirmationCode(e.target.value)}
                   />
                 </div>
                 <button

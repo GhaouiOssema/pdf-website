@@ -23,8 +23,6 @@ import ResetPasswordForm from "./components/login/ResetPasswordForm";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const location = useLocation();
-
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -55,14 +53,11 @@ const App = () => {
             <Route path="/inscription" element={<Register />} />
             <Route path="/seconnecter/oublier" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPasswordForm />} />
-            <Route
+            {/* <Route
               path="/:site/:dossier/pdf/view/:id/verify"
               element={<VerificationCode />}
-            />
-            <Route
-              path="/publique/:site/:dossier/pdf/view/:id"
-              element={<PublicPdfView />}
-            />
+            /> */}
+            <Route path="/publique/pdf/:id" element={<PublicPdfView />} />
 
             {isAuthenticated && (
               <>

@@ -1,209 +1,35 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
-import { Document, Page, pdfjs } from "react-pdf";
-import "react-pdf/dist/esm/Page/AnnotationLayer.css";
-import { IoIosArrowBack } from "react-icons/io";
-import PropTypes from "prop-types";
-import SwipeableViews from "react-swipeable-views";
-import { useTheme } from "@mui/material/styles";
-import AppBar from "@mui/material/AppBar";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import { Table } from "flowbite-react";
-import LogoutIcon from "@mui/icons-material/Logout";
+import QRCode from "react-qr-code";
+import html2canvas from "html2canvas";
+import { Link } from "react-router-dom";
+import { IoIosArrowForward } from "react-icons/io";
+
 import {
-  Backdrop,
-  Fade,
-  IconButton,
-  Modal,
-  Paper,
+  Box,
+  CircularProgress,
+  Table,
   TableBody,
   TableCell,
-  TableContainer,
   TableHead,
+  TablePagination,
   TableRow,
-  Tooltip,
 } from "@mui/material";
-
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
-
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`full-width-tabpanel-${index}`}
-      aria-labelledby={`full-width-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
-
-const a11yProps = (index) => {
-  return {
-    id: `full-width-tab-${index}`,
-    "aria-controls": `full-width-tabpanel-${index}`,
-  };
-};
-const TransitionsModal = ({ open, handleClose, raports, filteredRaports }) => {
-  return (
-    <div>
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        slotProps={{
-          backdrop: {
-            timeout: 500,
-          },
-        }}
-      >
-        <Fade in={open}>
-          <Box sx={style}>
-            {filteredRaports &&
-              filteredRaports.map((raport, index) => (
-                <Box sx={{ maxHeight: "400px", overflow: "auto" }} key={index}>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      flexWrap: "wrap",
-                    }}
-                  >
-                    <Typography variant="h6" gutterBottom>
-                      Date
-                    </Typography>
-                    <Typography variant="h7" gutterBottom>
-                      {
-                        new Date(raport.dateDernierEntretien)
-                          .toISOString()
-                          .split("T")[0]
-                      }
-                    </Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      flexWrap: "wrap",
-                    }}
-                  >
-                    <Typography variant="h6" gutterBottom>
-                      société
-                    </Typography>
-                    <Typography variant="h7" gutterBottom>
-                      {raport.société}
-                    </Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      flexWrap: "wrap",
-                    }}
-                  >
-                    <Typography variant="h6" gutterBottom>
-                      Tàche effectuer
-                    </Typography>
-                    <Typography variant="h7" gutterBottom>
-                      {raport.piècesChangées}
-                    </Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      flexWrap: "wrap",
-                    }}
-                  >
-                    <Typography variant="h6" gutterBottom>
-                      Date prochain maintenance
-                    </Typography>
-                    <Typography variant="h7" gutterBottom>
-                      {
-                        new Date(raport.dateProchainEntretien)
-                          .toISOString()
-                          .split("T")[0]
-                      }{" "}
-                    </Typography>
-                  </Box>
-                </Box>
-              ))}
-          </Box>
-        </Fade>
-      </Modal>
-    </div>
-  );
-};
 
 const PublicPdfView = () => {
   const { site, dossier, id } = useParams();
   const [pdfData, setPdfData] = useState(null);
-  const [numPages, setNumPages] = useState(null);
-  const pdfRef = useRef();
-  const [open, setOpen] = useState(false);
-  const handleClose = () => setOpen(false);
-  const [company, setCompany] = useState("");
-  const [observation, setObservation] = useState("");
-  const [partChanged, setPartChanged] = useState("");
-  const [nextMaintenanceDate, setNextMaintenanceDate] = useState("");
+  const qrCodeRef = useRef(null);
   const [raports, setRaports] = useState(null);
+  const [image, setImage] = useState(null);
+  const [imageLoading, setImageLoading] = useState(true);
+  const [imageError, setImageError] = useState(false);
 
-  const [socIndex, setSocIndex] = useState(null);
-  const [filteredRaports, setFilteredRaports] = useState([]);
-
-  const [selectedOption, setSelectedOption] = useState("Option 1");
-
-  const handleOptionChange = (option) => {
-    setSelectedOption(option);
-  };
-
-  const handleOpen = (soc) => {
-    setOpen(true);
-    const filteredReports = raports.filter((raport) => raport.société === soc);
-    setFilteredRaports(filteredReports);
-  };
-
-  useEffect(() => {
-    const confirmed = localStorage.getItem("confirmed");
-  }, []);
+  const token = localStorage.getItem("token");
+  if (!token) {
+    return;
+  }
 
   useEffect(() => {
     const getPdfData = async () => {
@@ -217,10 +43,50 @@ const PublicPdfView = () => {
       }
     };
     getPdfData();
-  }, [id]);
+  }, [site, dossier, id]);
 
-  const handlePdfLoadSuccess = ({ numPages }) => {
-    setNumPages(numPages);
+  useEffect(() => {
+    const getImageFile = async () => {
+      try {
+        const response = await axios.get(
+          `${
+            import.meta.env.VITE_SERVER_API_URL
+          }/site/folder/pdf/details/image/${id}`,
+          {
+            responseType: "arraybuffer", // Set the response type to "arraybuffer" to handle binary data correctly
+          }
+        );
+
+        // Convert the received ArrayBuffer to a base64 string
+        const base64Pdf = btoa(
+          new Uint8Array(response.data).reduce(
+            (data, byte) => data + String.fromCharCode(byte),
+            ""
+          )
+        );
+        setImage(
+          `data:${response.headers["content-type"]};base64,${base64Pdf}`
+        );
+        setImageLoading(false); // Image loading is complete
+      } catch (error) {
+        console.log("Error retrieving PDF data:", error);
+        setImageError(true);
+        setImageLoading(false);
+      }
+    };
+    getImageFile();
+  }, [site, dossier, id]);
+
+  console.log(pdfData);
+
+  const handleDownloadQRCode = () => {
+    html2canvas(qrCodeRef.current).then((canvas) => {
+      const qrCodeDataURL = canvas.toDataURL();
+      const downloadLink = document.createElement("a");
+      downloadLink.href = qrCodeDataURL;
+      downloadLink.download = "qr_code.png";
+      downloadLink.click();
+    });
   };
 
   const [screenSize, setScreenSize] = useState({
@@ -243,78 +109,6 @@ const PublicPdfView = () => {
     };
   }, []);
 
-  const navigate = useNavigate();
-
-  const handleDownload = () => {
-    const url = `${import.meta.env.VITE_SERVER_API_URL}/files/${
-      pdfData.filename
-    }`;
-    fetch(url)
-      .then((response) => response.blob())
-      .then((blob) => {
-        const downloadLink = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = downloadLink;
-        a.download = "download.pdf";
-        a.click();
-        URL.revokeObjectURL(downloadLink);
-      })
-      .catch((error) => {
-        console.log("Error downloading PDF:", error);
-      });
-  };
-
-  const theme = useTheme();
-  const [value, setValue] = useState(2);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  const handleChangeIndex = (index) => {
-    setValue(index);
-  };
-
-  const endSession = () => {
-    localStorage.clear();
-    window.location.href = "/";
-  };
-
-  const sendRaport = async () => {
-    try {
-      const requestData = {
-        société: company,
-        observation: observation,
-        piècesChangées: partChanged,
-        dateProchainEntretien: nextMaintenanceDate,
-        pdfID: pdfData._id,
-        option:
-          selectedOption === "Préventif"
-            ? "Préventif"
-            : selectedOption === "Correctif"
-            ? "Correctif"
-            : null,
-      };
-
-      console.log(requestData);
-
-      const response = await axios.post(
-        `${import.meta.env.VITE_SERVER_API_URL}/pdfs/${id}/raport`,
-        requestData
-      );
-
-      if (response.status === 200) {
-        alert("Raport sent");
-        window.location.reload();
-        setValue(2);
-      } else {
-        alert("Error sending raport");
-      }
-    } catch (error) {
-      console.log("Error sending report:", error);
-    }
-  };
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -333,334 +127,239 @@ const PublicPdfView = () => {
     fetchData();
   }, [pdfData]);
 
-  if (!pdfData) {
-    return <div>Loading PDF...</div>;
-  }
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  console.log(pdfData);
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
 
-  const TITLE = <div className="text-white">Fin de Session</div>;
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
   return (
     <>
-      <section className="flex flex-col md:w-screen">
-        {open && (
-          <TransitionsModal
-            open={open}
-            handleClose={handleClose}
-            handleOpen={handleOpen}
-            raports={raports}
-            SOC={socIndex}
-            filteredRaports={filteredRaports}
-          />
-        )}
-        <h1 className="text-3xl text-center font-bold mt-5 mb-5">
-          <span>Fiche de Maintenance</span>
-          <Tooltip title={TITLE} placement="top">
-            <IconButton>
-              <LogoutIcon
-                sx={{
-                  "&:hover": {
-                    color: "red",
-                  },
-                }}
-                onClick={endSession}
-              />
-            </IconButton>
-          </Tooltip>
-        </h1>
-        <div className="flex justify-center">
-          <Box sx={{ bgcolor: "", width: "80%", color: "white" }}>
-            <Box
-              sx={{
-                color: "white",
-                "& .MuiTabs-indicator": {
-                  backgroundColor: "white",
-                },
-                "& .Mui-selected": {
-                  color: "white",
-                },
-              }}
-            >
-              <Tabs
-                value={value}
-                onChange={handleChange}
-                centered
-                sx={{
-                  width: "100%",
-                  bgcolor: "rgb(50, 145, 240)",
-                  color: "white",
-                  "& .MuiTabs-indicator": {
-                    backgroundColor: "white",
-                  },
-                  "& .Mui-selected": {
-                    background: "white",
-                  },
-                  borderRadius: 2,
-                }}
-              >
-                {/* <Tab
-                  label="DOE"
-                  {...a11yProps(0)}
-                  sx={{
-                    color: "white",
-                  }}
-                />
-                <Tab
-                  label="Plan"
-                  {...a11yProps(1)}
-                  sx={{
-                    color: "white",
-                  }}
-                /> */}
-                <Tab
-                  label="Historiqye maintenance"
-                  {...a11yProps(0)}
-                  sx={{
-                    color: "white",
-                  }}
-                />
-                <Tab
-                  label="écrire un Raport"
-                  {...a11yProps(1)}
-                  sx={{
-                    color: "white",
-                  }}
-                />
-              </Tabs>
-            </Box>
+      {pdfData ? (
+        <>
+          <h1 className="text-3xl text-center font-bold pt-10">
+            <span className=""> Fiche d'equipement</span>
+          </h1>
+          <div
+            className={`container pt-20 ${
+              screenSize.width < 700 ? "h-screen" : ""
+            }`}
+          >
+            {screenSize.width < 700 && (
+              <div className="flex flex-wrap justify-center items-center text-center">
+                <h1 className="text-lg font-bold">Titre :</h1>
+                <span className="ml-3">{pdfData.title}</span>
+              </div>
+            )}
+            <div className="flex justify-around items-center flex__col">
+              <div className="flex flex-col">
+                <div className="flex flex-col">
+                  {imageLoading && <div>Loading Image...</div>}
 
-            <SwipeableViews
-              axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-              index={value}
-              onChangeIndex={handleChangeIndex}
-              className="text-black"
-            >
-              {/* <TabPanel value={value} index={0} dir={theme.direction}>
-                Item One
-              </TabPanel>
-              <TabPanel value={value} index={1} dir={theme.direction}>
-                <div
-                  className={`flex-1 overflow-y-auto ${
-                    screenSize.width < 700 ? "w-[350px]" : "sm:max-w-7xl"
-                  }`}
-                  ref={pdfRef}
-                >
-                  <div className="flex justify-end">
-                    <button
-                      className="boor text-xs items-center text-center text-white bg-blue-500 rounded-full px-4 py-2"
-                      onClick={handleDownload}
-                    >
-                      Télécharger
-                    </button>
-                  </div>
-                  <Document
-                    file={`${import.meta.env.VITE_SERVER_API_URL}/files/${pdfData.filename}`}
-                    className="flex flex-col items-center"
-                    onLoadSuccess={handlePdfLoadSuccess}
-                  >
-                    {Array.from(new Array(numPages), (el, index) => (
-                      <Page
-                        key={index}
-                        pageNumber={index + 1}
-                        renderTextLayer={false}
-                        height={null}
-                        width={screenSize.width < 700 ? 349 : 1000}
-                        className="mt-1"
+                  {/* Show the image when it is loaded */}
+                  {!imageLoading && !imageError && (
+                    <figure className="max-w-lg relative">
+                      <img
+                        className="h-auto max-w-full rounded-lg"
+                        src={image}
+                        alt="image"
                       />
-                    ))}
-                  </Document>
+                    </figure>
+                  )}
                 </div>
-              </TabPanel> */}
-              <TabPanel value={value} index={0} dir={theme.direction}>
-                <TableContainer component={Paper}>
-                  <Table
-                    sx={{ minWidth: 650 }}
-                    size="small"
-                    aria-label="a dense table"
-                  >
-                    <TableHead>
-                      <TableRow>
-                        <TableCell align="center">Date</TableCell>
-                        <TableCell align="center">Sociéte</TableCell>
-                        <TableCell align="center">Tàche effectuer</TableCell>
-                        <TableCell align="center">
-                          Date du prochain maintenance
-                        </TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {raports &&
-                        raports.map((raport, index) => (
-                          <TableRow
-                            key={raport.id}
-                            sx={{
-                              "&:last-child td, &:last-child th": { border: 0 },
-                            }}
-                          >
-                            <TableCell component="th" scope="row">
-                              {raport.société}
-                            </TableCell>
-                            <TableCell align="center">
-                              {
-                                new Date(raport.dateDernierEntretien)
-                                  .toISOString()
-                                  .split("T")[0]
-                              }
-                            </TableCell>
-                            <TableCell align="center">
-                              {raport.piècesChangées}
-                            </TableCell>
-                            <TableCell align="center">
-                              {
-                                new Date(raport.dateProchainEntretien)
-                                  .toISOString()
-                                  .split("T")[0]
-                              }
-                            </TableCell>
-                            <TableCell
-                              align="center"
-                              sx={{ cursor: "pointer" }}
-                            >
-                              <InfoOutlinedIcon
-                                sx={{ color: "#3291F0" }}
-                                onClick={() => handleOpen(raport.société)}
-                              />
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </TabPanel>
-              <TabPanel
-                value={value}
-                index={1}
-                dir={theme.direction}
-                className="bg-white"
-              >
-                <Typography variant="h5" gutterBottom>
-                  Raport
-                </Typography>
-                <div className="mb-6 mt-5">
-                  <label
-                    htmlFor="email"
-                    className="block mb-2 text-md font-medium text-gray-900 dark:text-white"
-                  >
-                    Sociéte
-                  </label>
-                  <input
-                    type="text"
-                    className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:shadow-sm-light"
-                    placeholder="le nom du sociéte"
-                    required
-                    value={company}
-                    onChange={(e) => setCompany(e.target.value)}
-                  />
-                </div>
-                <div className="mb-6">
-                  <label
-                    for="message"
-                    className="block mb-2 text-md font-medium text-gray-900 dark:text-white"
-                  >
-                    Observation
-                  </label>
-                  <textarea
-                    rows="4"
-                    className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                    placeholder="Leave a comment..."
-                    value={observation}
-                    onChange={(e) => setObservation(e.target.value)}
-                    required
-                  ></textarea>
-                </div>
-                <div className="mb-6">
-                  <label
-                    htmlFor="repeat-password"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Piéce changée
-                  </label>
-                  <input
-                    type="text"
-                    className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:shadow-sm-light"
-                    required
-                    value={partChanged}
-                    onChange={(e) => setPartChanged(e.target.value)}
-                  />
-                </div>
-                <div className="flex items-center justify-between w-1/4 flex-wrap gap-2">
-                  <div className="flex items-start mb-6">
-                    <div className="flex items-center h-5">
-                      <input
-                        id="option1"
-                        type="radio"
-                        className="w-4 h-4 border border-gray-300 rounded bg-gray-50 dark:bg-gray-700 dark:border-gray-600"
-                        value="Correctif"
-                        checked={selectedOption === "Correctif"}
-                        onChange={() => handleOptionChange("Correctif")}
+                <div>
+                  <div className="qr-code-section bg-white">
+                    {screenSize.width > 700 && (
+                      <div className="flex flex-wrap mb-3">
+                        <h1 className="ml-3 font-bold">Titl :</h1>
+                        <span className="ml-3">{pdfData.title}</span>
+                      </div>
+                    )}
+                    <div
+                      className={`w-[202px] bg-white ${
+                        screenSize.width < 700 && "ml-9"
+                      }`}
+                      ref={qrCodeRef}
+                    >
+                      <QRCode
+                        className="w-[200px] h-[200px]"
+                        value={`${
+                          import.meta.env.VITE_SERVER_API_URL
+                        }/publique/${site}/${dossier}/pdf/view/${id}`}
                       />
                     </div>
-                    <label
-                      htmlFor="option1"
-                      className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                    >
-                      Correctif
-                    </label>
-                  </div>
-                  <div className="flex items-start mb-6 ">
-                    <div className="flex items-center h-5">
-                      <input
-                        id="option2"
-                        type="radio"
-                        className="w-4 h-4 border border-gray-300 rounded bg-gray-50 dark:bg-gray-700 dark:border-gray-600"
-                        value="Préventif"
-                        checked={selectedOption === "Préventif"}
-                        onChange={() => handleOptionChange("Préventif")}
-                      />
+                    <div className="mt-5 w-full flex-row-reverse  text-xl flex items-center justify-center">
+                      {screenSize.width < 700 && (
+                        <div
+                          className="cursor-pointer w-full text-center uppercase text-sm tracking-wide bg-blue-500 text-gray-100 px-2 py-[10px] rounded-md focus:outline-none focus:shadow-outline hover:bg-green-500"
+                          onClick={handleDownloadQRCode}
+                        >
+                          Télècharger
+                        </div>
+                      )}
+                      {screenSize.width > 700 && (
+                        <div
+                          className="cursor-pointer w-full text-center uppercase text-sm tracking-wide bg-blue-500 text-gray-100 px-2 py-[10px] rounded-md focus:outline-none focus:shadow-outline hover:bg-green-500"
+                          onClick={handleDownloadQRCode}
+                        >
+                          Télècharger
+                        </div>
+                      )}
                     </div>
-                    <label
-                      htmlFor="option2"
-                      className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                    >
-                      Préventif
-                    </label>
+                    {dossier === "Armoire electrique" ? (
+                      <div>
+                        <h1> PTA : {pdfData?.pdfDetails?.PAT}</h1>
+                        <h1>
+                          Date d'instalation{" "}
+                          {pdfData?.pdfDetails?.installationDate}
+                        </h1>
+                      </div>
+                    ) : ["Climatisation", "Chauffage", "Ventilasion"].includes(
+                        dossier
+                      ) ? (
+                      <h1> Modéle : {pdfData?.pdfDetails?.pdfModel}</h1>
+                    ) : null}
                   </div>
                 </div>
+              </div>
 
-                <div className="block mb-6 w-1/2">
-                  <label
-                    for="date"
-                    className="w-full text-md font-medium text-gray-900 dark:text-white flex flex-wrap gap-2"
-                  >
-                    Date du prochain entretie :
-                  </label>
-                  <input
-                    date-rangepicker
-                    name="date"
-                    type="date"
-                    className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                    placeholder="Select date start"
-                    value={nextMaintenanceDate}
-                    onChange={(e) => setNextMaintenanceDate(e.target.value)}
-                    required
+              <div className="flex justify-between items-center flex-col ml-5 pt-5 mt-[-100px] ">
+                <p className="font-bold text-lg mb-5  ">Tableau des Raport</p>
+
+                <div className="pdf-preview bg-white " key={pdfData._id}>
+                  <div style={{ height: "400px", overflow: "auto" }}>
+                    <Table
+                      sx={{ minWidth: 650 }}
+                      size="small"
+                      aria-label="a dense table"
+                    >
+                      <TableHead>
+                        <TableRow>
+                          <TableCell align="center">Sociéte</TableCell>
+                          <TableCell align="center">
+                            Date du dernier entretien
+                          </TableCell>
+                          <TableCell align="center">
+                            Date du prochain entretien
+                          </TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {raports &&
+                          raports
+                            .slice(
+                              page * rowsPerPage,
+                              page * rowsPerPage + rowsPerPage
+                            )
+                            .map((raport) => (
+                              <TableRow
+                                key={raport.id}
+                                sx={{
+                                  "&:last-child td, &:last-child th": {
+                                    border: 0,
+                                  },
+                                }}
+                              >
+                                <TableCell component="th" scope="row">
+                                  {raport.société}
+                                </TableCell>
+                                <TableCell align="center">
+                                  {raport.dateDernierEntretien}
+                                </TableCell>
+                                <TableCell align="center">
+                                  {raport.dateProchainEntretien}
+                                </TableCell>
+                                <TableCell
+                                  align="center"
+                                  sx={{ cursor: "pointer" }}
+                                >
+                                  {/* <InfoOutlinedIcon
+                                    sx={{ color: "#3291F0" }}
+                                    onClick={handleOpenTable}
+                                  /> */}
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+
+                  <TablePagination
+                    rowsPerPageOptions={[10, 25, 50]}
+                    component="div"
+                    count={raports ? raports.length : 0}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
                   />
                 </div>
+              </div>
 
-                <button
-                  type="submit"
-                  onClick={sendRaport}
-                  className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700"
+              {screenSize.width < 700 && (
+                <div>
+                  <CustomizedFileFolder PdfData={pdfData} />
+                </div>
+              )}
+            </div>
+            ${" "}
+          </div>
+          <div className="flex justify-center mt-20">
+            <div className="pdf__footer mb-10 w-[50rem]">
+              <div className="">
+                <Link
+                  to={`/${site}/${dossier}/pdf/detail/doe/${id}`}
+                  className="buttons__style_link__h buttons__style_link__left bg-gray-200 mt-3"
                 >
-                  Envoyer le Raport
-                </button>
-              </TabPanel>
-            </SwipeableViews>
-          </Box>
-        </div>
-      </section>
+                  <span>Ouvrir les DOE</span>
+                  <IoIosArrowForward />
+                </Link>
+                <Link
+                  to={`/plan/${id}`}
+                  className="buttons__style_link__h buttons__style_link__left bg-gray-200 mt-3"
+                >
+                  <span>Plan</span>
+                  <IoIosArrowForward />
+                </Link>
+              </div>
+              <div>
+                <Link
+                  to={`/${site}/${dossier}/pdf/view/${id}`}
+                  className="buttons__style_link__h buttons__style_link__left bg-gray-200 mt-3"
+                >
+                  <span>fiche d'entretien</span>
+                  <IoIosArrowForward />
+                </Link>
+                <Link
+                  to={`/${site}/${dossier}/pdf/detail/fiche_technique/${id}`}
+                  className="buttons__style_link__h buttons__style_link__left bg-gray-200 mt-3"
+                >
+                  <span>Fiche technique </span>
+                  <IoIosArrowForward />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </>
+      ) : (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      )}
     </>
   );
 };
-
 export default PublicPdfView;

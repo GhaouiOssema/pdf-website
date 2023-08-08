@@ -13,6 +13,7 @@ module.exports = {
         piècesChangées,
         dateProchainEntretien,
         option,
+        code,
       } = req.body;
 
       const token = req?.headers?.authorization?.split(" ")[1] || null;
@@ -25,10 +26,18 @@ module.exports = {
           return res.status(404).json({ error: "PDF not found." });
         }
 
-        const user = await UserAccount.findById(decoded.userId);
+        const user = await UserAccount.findOne({
+          _id: decoded.userId,
+          verification_code: code,
+        });
+
         if (!user) {
-          return res.status(404).json({ error: "User not found." });
+          return res
+            .status(403)
+            .json({ error: "le code du maintenance est invalide" });
         }
+
+        let options = [];
 
         options.push(option);
 
@@ -39,7 +48,7 @@ module.exports = {
           dateProchainEntretien,
           dateDernierEntretien: new Date(),
           pdf: req.body.id,
-          user: société,
+          user: decoded.userName,
           options,
         });
 
@@ -55,6 +64,16 @@ module.exports = {
           return res.status(404).json({ error: "PDF not found." });
         }
 
+        const user = await UserAccount.findOne({
+          verification_code: code,
+        });
+
+        if (!user) {
+          return res
+            .status(403)
+            .json({ error: "le code du maintenance est invalide" });
+        }
+
         let options = [];
 
         options.push(option);
@@ -66,7 +85,6 @@ module.exports = {
           dateProchainEntretien,
           dateDernierEntretien: new Date(),
           pdf: req.body.id,
-          user: société,
           options,
         });
 

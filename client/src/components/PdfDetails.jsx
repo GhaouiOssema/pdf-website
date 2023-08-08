@@ -261,9 +261,7 @@ const PdfDetails = () => {
                     >
                       <QRCode
                         className="w-[200px] h-[200px]"
-                        value={`${
-                          import.meta.env.VITE_SERVER_API_URL
-                        }/publique/${site}/${dossier}/pdf/view/${id}`}
+                        value={`http://localhost:5173/publique/pdf/${id}`}
                       />
                     </div>
                     <div className="mt-5 w-full flex-row-reverse  text-xl flex items-center justify-center">
