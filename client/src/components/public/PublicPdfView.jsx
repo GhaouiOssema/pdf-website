@@ -336,7 +336,7 @@ const PublicPdfView = () => {
                   htmlFor="viewSelector"
                   className="block font-bold text-lg mb-2"
                 >
-                  Select View:
+                  sélectionner l'option :
                 </label>
                 <select
                   id="viewSelector"
@@ -365,7 +365,7 @@ const PublicPdfView = () => {
                           Date d'installation :
                         </h1>
                         <span className="ml-3 text-black">
-                          {pdfData?.pdfDetails?.installationDate}
+                          {new Date(pdfData?.pdfDetails?.installationDate).toISOString().split("T")[0]}
                         </span>
                       </div>
                     </>
