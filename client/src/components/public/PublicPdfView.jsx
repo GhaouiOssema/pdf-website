@@ -26,7 +26,8 @@ const PublicPdfView = () => {
   const [image, setImage] = useState(null);
   const [imageLoading, setImageLoading] = useState(true);
   const [imageError, setImageError] = useState(false);
-  const [selectedView, setSelectedView] = useState("image"); // Default selected view
+  const [selectedView, setSelectedView] = useState("image");
+  const [isImageFullscreen, setIsImageFullscreen] = useState(false);
 
   useEffect(() => {
     const getPdfData = async () => {
@@ -141,7 +142,9 @@ const PublicPdfView = () => {
   const handleViewChange = (event) => {
     setSelectedView(event.target.value);
   };
-  console.log(pdfData);
+  const handleImageClick = () => {
+    setIsImageFullscreen(!isImageFullscreen);
+  };
 
   return (
     <>
@@ -158,7 +161,7 @@ const PublicPdfView = () => {
               >
                 <button
                   type="button"
-                  className="boor w-full md:w-auto flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+                  className="w-full md:w-auto flex items-center justify-start text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
                 >
                   <InfoOutlinedIcon className="mr-2" />
                   <span>Ouvrir les DOE</span>
@@ -202,20 +205,56 @@ const PublicPdfView = () => {
               </Link>
             </div>
           </div>
+
           <div>
             {/* Desktop View */}
             <div className="hidden md:flex items-center justify-around md:w-full">
-              <div className="w-1/2">
-                {!imageLoading && !imageError && (
-                  <figure className="max-w-lg relative">
-                    <img
-                      className="h-auto max-w-full rounded-lg"
-                      src={image}
-                      alt="image"
-                    />
-                  </figure>
-                )}
+              <div className="block w-1/2">
+                <div className="shadow-md shadow-black/20 p-4 rounded-xl bg-white h-auto">
+                  <div className="mb-3 flex items-center">
+                    <h1 className="font-bold">Titre :</h1>
+                    <span className="text-black ml-3">{pdfData.title}</span>
+                  </div>
+                  {dossier === "Armoire electrique" && (
+                    <>
+                      <div className="mb-3 flex items-center">
+                        <h1 className="font-bold">PTA :</h1>
+                        <span className="text-black ml-3">
+                          {pdfData?.pdfDetails?.PAT}
+                        </span>
+                      </div>
+                      <div className="mb-3 flex items-center">
+                        <h1 className="font-bold">Date d'installation :</h1>
+                        <span className="text-black ml-3">
+                          {pdfData?.pdfDetails?.installationDate}
+                        </span>
+                      </div>
+                    </>
+                  )}
+                  {["Climatisation", "Chauffage", "Ventilasion"].includes(
+                    dossier
+                  ) && (
+                    <div className="mb-3 flex items-center">
+                      <h1 className="font-bold">Modéle :</h1>
+                      <span className="text-black ml-3">
+                        {pdfData?.pdfDetails?.pdfModel}
+                      </span>
+                    </div>
+                  )}
+                </div>
+                <div className="mt-4">
+                  {!imageLoading && !imageError && (
+                    <figure className="relative">
+                      <img
+                        className="h-auto max-w-full rounded-lg"
+                        src={image}
+                        alt="image"
+                      />
+                    </figure>
+                  )}
+                </div>
               </div>
+
               <div className="w-1/2 ml-5 pt-5 mt-12">
                 {/* Adjust margin top */}
                 <p className="font-bold text-lg mb-4">Tableau des Rapports</p>
@@ -346,13 +385,22 @@ const PublicPdfView = () => {
               {selectedView === "image" && (
                 <div className="mt-5">
                   {!imageLoading && !imageError && (
-                    <figure className="max-w-lg relative">
+                    <div
+                      className={`max-w-lg relative ${
+                        isImageFullscreen
+                          ? "fixed top-0 left-0 w-screen h-screen z-50 bg-black flex justify-center items-center"
+                          : ""
+                      }`}
+                      onClick={handleImageClick}
+                    >
                       <img
-                        className="h-auto max-w-full rounded-lg"
+                        className={`h-auto max-w-full rounded-lg ${
+                          isImageFullscreen ? "cursor-pointer" : ""
+                        }`}
                         src={image}
                         alt="image"
                       />
-                    </figure>
+                    </div>
                   )}
                 </div>
               )}
