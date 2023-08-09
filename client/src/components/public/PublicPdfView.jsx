@@ -344,8 +344,8 @@ const PublicPdfView = () => {
                   onChange={handleViewChange}
                   value={selectedView}
                 >
-                  <option value="image">Image</option>
-                  <option value="table">Table</option>
+                  <option value="image">Image de l'équipement</option>
+                  <option value="table">Tableau des rapports</option>
                 </select>
                 <div className="qr-code-section bg-white">
                   <div className="flex flex-wrap mb-3">
