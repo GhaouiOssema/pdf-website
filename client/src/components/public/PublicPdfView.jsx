@@ -486,6 +486,7 @@ const PublicPdfView = () => {
                       page={page}
                       onPageChange={handleChangePage}
                       onRowsPerPageChange={handleChangeRowsPerPage}
+labelRowsPerPage="Lignes par page"
                     />
                   </div>
                 </div>
