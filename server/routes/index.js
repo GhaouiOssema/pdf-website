@@ -3,6 +3,13 @@ const controllers = require("../controllers");
 const imageUpload = require("../middleware/imageUpload");
 const multiUpload = require("../middleware/multiUpload");
 
+/**
+ * @route GET POST PUT DELETE /private-route
+ * @group Private Routes
+ * @returns {object} 200 - The public content
+ * @returns {Error}  500 - An error occurred
+ */
+
 router.post(
   "/FormUpload/mainpdf",
   multiUpload.fields([{ name: "selectedFile", maxCount: 1 }]),
@@ -69,5 +76,39 @@ router.delete("/:site/:folder/pdfs/:title", controllers.deletePdf.delete);
 router.delete("/site/:folderId", controllers.deleteSite.delete);
 
 router.put("/site/:folderId", controllers.updateSite.updateFolder);
+
+/**
+ * @route GET POST PUT DELETE /public-route
+ * @group Public Routes
+ * @returns {object} 200 - The public content
+ * @returns {Error}  500 - An error occurred
+ */
+
+router.get(
+  "/public/site/folder/pdf/details/:id",
+  controllers.public.getPdfDataById
+);
+router.get("/public/site/folder/pdf/details/plan/:id", controllers.public.plan);
+router.get(
+  "/public/site/folder/pdf/details/doe/:id",
+  controllers.public.doeData
+);
+router.get(
+  "/public/site/folder/pdf/details/doefiles/:id",
+  controllers.public.doeFiles
+);
+router.get(
+  "/public/site/folder/pdf/details/fiche/:id",
+  controllers.public.fiche
+);
+router.get(
+  "/public/site/folder/pdf/details/raports/:id",
+  controllers.public.raports
+);
+router.get(
+  "/public/site/folder/pdf/details/image/:id",
+  controllers.public.pdfImage
+);
+router.get("/public/pdf/raports", controllers.getRaports.getPdfReportsById);
 
 module.exports = router;

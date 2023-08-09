@@ -14,4 +14,5 @@ module.exports = {
   getUserDataById: require("./fetchUserData.controller"),
   formData: require("./formDataUpload.controller"),
   forgotUserPassword: require("./resetPassword.controller"),
+  public: require("./publicetPdfData.controller"),
 };

@@ -347,8 +347,8 @@ const PdfView = () => {
 
       if (response.status === 200) {
         alert("Raport sent");
-        window.location.reload();
-        setValue(2);
+        // window.location.reload();
+        // setValue(2);
       }
     } catch (error) {
       console.log("Error sending report:", error);

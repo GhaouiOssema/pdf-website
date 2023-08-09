@@ -13,13 +13,13 @@ import Home from "./components/home/Home";
 import Footer from "./components/Footer";
 import Profile from "./components/Profile";
 import VerificationCode from "./components/VerificationCode";
-import PublicPdfView from "./components/PublicPdfView";
 import SideBar from "./components/SideBar";
 import Plan from "./components/Plan";
 import FicheTechnique from "./components/FicheTechnique";
 import DoeFiles from "./components/DoeFiles";
 import ForgotPassword from "./components/login/ForgotPassword";
 import ResetPasswordForm from "./components/login/ResetPasswordForm";
+import PublicPdfView from "./components/public/PublicPdfView";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -57,7 +57,12 @@ const App = () => {
               path="/:site/:dossier/pdf/view/:id/verify"
               element={<VerificationCode />}
             /> */}
-            <Route path="/publique/pdf/:id" element={<PublicPdfView />} />
+            {!isAuthenticated && (
+              <Route
+                path="/publique/:site/:dossier/pdf/:id"
+                element={<PublicPdfView />}
+              />
+            )}
 
             {isAuthenticated && (
               <>

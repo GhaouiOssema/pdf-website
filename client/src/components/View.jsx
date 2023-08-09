@@ -169,7 +169,7 @@ const RaportView = ({
     };
 
     if (alertMsg === "success") {
-      timeoutNavigate = setTimeout(action, 2000);
+      timeoutNavigate = setTimeout(action, 100);
     }
 
     return () => {
