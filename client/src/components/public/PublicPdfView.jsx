@@ -156,7 +156,7 @@ const PublicPdfView = () => {
             </h1>
             <div className="flex flex-col space-y-3 md:space-y-0 md:flex-row md:space-x-3">
               <Link
-                to={`/${site}/${dossier}/pdf/detail/doe/${id}`}
+                to={`/publique/${site}/${dossier}/pdf/detail/doe/${id}`}
                 className="w-full md:w-auto"
               >
                 <button
@@ -168,7 +168,10 @@ const PublicPdfView = () => {
                 </button>
               </Link>
 
-              <Link to={`/plan/${id}`} className="w-full md:w-auto">
+              <Link
+                to={`/publique/${site}/${dossier}/plan/${id}`}
+                className="w-full md:w-auto"
+              >
                 <button
                   type="button"
                   className="w-full md:w-auto flex items-center justify-start text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
@@ -179,7 +182,7 @@ const PublicPdfView = () => {
               </Link>
 
               <Link
-                to={`/${site}/${dossier}/pdf/view/${id}`}
+                to={`/publique/${site}/${dossier}/pdf/view/${id}`}
                 className="w-full md:w-auto"
               >
                 <button
@@ -192,7 +195,7 @@ const PublicPdfView = () => {
               </Link>
 
               <Link
-                to={`/${site}/${dossier}/pdf/detail/fiche_technique/${id}`}
+                to={`/publique/${site}/${dossier}/fiche_technique/${id}`}
                 className="w-full md:w-auto"
               >
                 <button

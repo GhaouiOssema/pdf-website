@@ -20,6 +20,10 @@ import DoeFiles from "./components/DoeFiles";
 import ForgotPassword from "./components/login/ForgotPassword";
 import ResetPasswordForm from "./components/login/ResetPasswordForm";
 import PublicPdfView from "./components/public/PublicPdfView";
+import PublicPlan from "./components/public/PublicPlan";
+import PublicFicheTechnique from "./components/public/PublicFicheTechnique";
+import PublicDoeFiles from "./components/public/PublicDoeFiles";
+import PublicView from "./components/public/PublicView";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -53,16 +57,6 @@ const App = () => {
             <Route path="/inscription" element={<Register />} />
             <Route path="/seconnecter/oublier" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPasswordForm />} />
-            {/* <Route
-              path="/:site/:dossier/pdf/view/:id/verify"
-              element={<VerificationCode />}
-            /> */}
-            {!isAuthenticated && (
-              <Route
-                path="/publique/:site/:dossier/pdf/:id"
-                element={<PublicPdfView />}
-              />
-            )}
 
             {isAuthenticated && (
               <>
@@ -86,6 +80,30 @@ const App = () => {
                 <Route
                   path="/:site/:dossier/pdf/detail/doe/:pdfid"
                   element={<DoeFiles />}
+                />
+              </>
+            )}
+            {!isAuthenticated && (
+              <>
+                <Route
+                  path="/publique/:site/:dossier/pdf/:id"
+                  element={<PublicPdfView />}
+                />
+                <Route
+                  path="/publique/:site/:dossier/plan/:fichier"
+                  element={<PublicPlan />}
+                />
+                <Route
+                  path="/publique/:site/:dossier/fiche_technique/:pdfid"
+                  element={<PublicFicheTechnique />}
+                />
+                <Route
+                  path="/publique/:site/:dossier/pdf/detail/doe/:pdfid"
+                  element={<PublicDoeFiles />}
+                />
+                <Route
+                  path="/publique/:site/:dossier/pdf/view/:id"
+                  element={<PublicView />}
                 />
               </>
             )}
