@@ -339,7 +339,7 @@ const PublicPdfView = () => {
                   htmlFor="viewSelector"
                   className="block font-bold text-lg mb-2"
                 >
-                  Select View:
+                  sélectionner l'option :
                 </label>
                 <select
                   id="viewSelector"
@@ -347,8 +347,8 @@ const PublicPdfView = () => {
                   onChange={handleViewChange}
                   value={selectedView}
                 >
-                  <option value="image">Image</option>
-                  <option value="table">Table</option>
+                  <option value="image">Image de l'équipement</option>
+                  <option value="table">Tableau des rapports</option>
                 </select>
                 <div className="qr-code-section bg-white">
                   <div className="flex flex-wrap mb-3">
@@ -368,7 +368,7 @@ const PublicPdfView = () => {
                           Date d'installation :
                         </h1>
                         <span className="ml-3 text-black">
-                          {pdfData?.pdfDetails?.installationDate}
+                          {new Date(pdfData?.pdfDetails?.installationDate).toISOString().split("T")[0]}
                         </span>
                       </div>
                     </>
@@ -489,6 +489,7 @@ const PublicPdfView = () => {
                       page={page}
                       onPageChange={handleChangePage}
                       onRowsPerPageChange={handleChangeRowsPerPage}
+labelRowsPerPage="Lignes par page"
                     />
                   </div>
                 </div>

@@ -400,7 +400,7 @@ const PdfDetails = () => {
                 to={`/plan/${id}`}
                 className="buttons__style_link__h buttons__style_link__left bg-gray-200 mt-3"
               >
-                <span>Plan</span>
+                <span>Fiche technique</span>
                 <IoIosArrowForward />
               </Link>
             </div>
@@ -416,7 +416,7 @@ const PdfDetails = () => {
                 to={`/${site}/${dossier}/pdf/detail/fiche_technique/${id}`}
                 className="buttons__style_link__h buttons__style_link__left bg-gray-200 mt-3"
               >
-                <span>Fiche technique </span>
+                <span>Plan </span>
                 <IoIosArrowForward />
               </Link>
             </div>

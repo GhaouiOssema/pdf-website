@@ -392,9 +392,9 @@ const FormSend = () => {
   };
 
   const steps = [
-    "Fichier d'équipement",
-    "Image d'équipement",
     "Fiche technique",
+    "Image d'équipement",
+    "plan d'équipement",
     "Dossier des Ouvrages Executés",
   ];
 
@@ -460,7 +460,7 @@ const FormSend = () => {
                           ))
                         ) : (
                           <option value="/messites" className="cursor-pointer">
-                            La list est vide
+                            La liste est vide
                           </option>
                         )}
                       </select>
@@ -842,7 +842,7 @@ const FormSend = () => {
 
   return (
     <>
-      <h1 className="text-3xl text-center font-bold pt-10">Ajouter un Plan</h1>
+      <h1 className="text-3xl text-center font-bold pt-10"></h1>
       <form onReset={handleReset} className="">
         <div className="flex justify-center items-center">
           <div className=" max__size w-[80%] container mx-auto my-4 px-4 lg:px-20 ">

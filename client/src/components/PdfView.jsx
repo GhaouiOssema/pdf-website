@@ -397,7 +397,7 @@ const PdfView = () => {
         />
       )}
       <h1 className="text-3xl text-center font-bold mt-5 mb-5">
-        Fiche de Maintenance
+        Fiche d'entretien
       </h1>
       <div className="flex justify-center bg-gray-100">
         <Box sx={{ bgcolor: "", width: "80%", color: "white" }}>
@@ -430,7 +430,7 @@ const PdfView = () => {
               }}
             >
               <Tab
-                label="Historiqye maintenance"
+                label="Historique de maintenance"
                 {...a11yProps(0)}
                 sx={{
                   color: "white",
@@ -465,7 +465,7 @@ const PdfView = () => {
                       <TableCell align="center">Sociéte</TableCell>
                       <TableCell align="center">Tàche effectuer</TableCell>
                       <TableCell align="center">
-                        Date du prochain maintenance
+                        Date du prochain entretien
                       </TableCell>
                       <TableCell align="center">P/C</TableCell>
                     </TableRow>
