@@ -337,7 +337,7 @@ const PublicView = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_SERVER_API_URL}/pdf/raports`,
+          `${import.meta.env.VITE_SERVER_API_URL}/public/pdf/raports`,
           config
         );
         const filteredRaports = response.data.filter((raport) =>
