@@ -87,23 +87,23 @@ const PublicPlan = () => {
           <CircularProgress />
         </Box>
       ) : (
-        <Document
-          file={`data:application/pdf;base64,${pdfData}`}
-          className="flex flex-col items-center"
-          onLoadSuccess={handlePdfLoadSuccess}
-        >
-          {pdfLoaded &&
-            Array.from(new Array(numPages), (el, index) => (
-              <Page
-                key={index}
-                pageNumber={index + 1}
-                renderTextLayer={false}
-                height={500}
-                width={window.innerWidth < 700 ? window.innerWidth - 20 : 1000}
-                className="mt-1"
-              />
-            ))}
-        </Document>
+        <Document 
+  file={`data:application/pdf;base64,${pdfData}`} 
+  className="flex flex-col items-center" 
+  onLoadSuccess={handlePdfLoadSuccess} 
+> 
+  {pdfLoaded && 
+    Array.from(new Array(numPages), (el, index) => ( 
+      <Page 
+        key={index} 
+        pageNumber={index + 1} 
+        renderTextLayer={false} 
+        height={500} 
+        width={window.innerWidth < 700 ? window.innerWidth - 20 : (window.innerWidth < 1000 ? window.innerWidth - 50 : 1000)} 
+        className="mt-1" 
+      /> 
+    ))} 
+</Document>
       )}
     </div>
   );
