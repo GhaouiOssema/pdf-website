@@ -99,7 +99,7 @@ const PublicPlan = () => {
         pageNumber={index + 1} 
         renderTextLayer={false} 
         height={500} 
-        width={window.innerWidth < 700 ? window.innerWidth - 20 : (window.innerWidth < 1000 ? window.innerWidth - 50 : 1000)} 
+        width={screenSize.width < 700 ? 349 : 1000} 
         className="mt-1" 
       /> 
     ))} 
