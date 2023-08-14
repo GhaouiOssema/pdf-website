@@ -322,8 +322,8 @@ const PublicView = () => {
 
       if (response.status === 200) {
         alert("Raport sent");
-        // window.location.reload();
-        // setValue(2);
+        window.location.reload();
+        setValue(2);
       }
     } catch (error) {
       console.log("Error sending report:", error);
@@ -586,7 +586,7 @@ const PublicView = () => {
                 <div className="block mb-6 w-1/2">
                   <label
                     for="date"
-                    className="w-full text-md font-medium text-gray-900 dark:text-white flex flex-wrap gap-2"
+                    className="w-full text-md sm:text-sm font-medium text-gray-900 dark:text-white flex flex-wrap gap-2"
                   >
                     Date du prochain entretie :
                   </label>
