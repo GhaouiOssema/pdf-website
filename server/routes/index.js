@@ -109,6 +109,6 @@ router.get(
   "/public/site/folder/pdf/details/image/:id",
   controllers.public.pdfImage
 );
-router.get("/public/pdf/raports",controllers.public.raports );
+router.get("/public/pdf/raports",controllers.getRaports.getPdfReportsById );
 
 module.exports = router;
