@@ -69,7 +69,7 @@ const Register = () => {
   }, []);
 
   return (
-    <div className="flex justify-center items-center h-screen flex-wrap">
+    <div className="flex mt-20 justify-center items-center h-screen flex-wrap">
       <form
         className={`${
           screenSize.width > 700

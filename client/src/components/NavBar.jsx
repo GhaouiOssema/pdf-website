@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import LOGO from "../assets/logo2.png";
 
-const pages = ["telecharger", "mes plans", "connexion", "inscription"];
+const pages = ["telecharger", "mes plans", "connexion", "inscription", "Home"];
 
 const Navbar = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -46,117 +46,50 @@ const Navbar = () => {
   };
 
   return (
-    <header className="fixed w-screen z-50 bg-white">
+    <header className="fixed w-full z-50 bg-white">
       <dic className="hidden"></dic>
       <nav className="px-4 lg:px-6 py-2.5 bg-none dark:bg-gray-800">
-        <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-          <a href="https://flowbite.com" className="flex items-center">
+        <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-2xl">
+          <a
+            href="https://flowbite.com"
+            className="flex w-full lg:w-1/6 md:w-1/6 justify-center lg:justify-start md:justify-start items-center lg:mb-0 mb-5"
+          >
             <img src={LOGO} className="mr-3 h-6 sm:h-9" alt="Flowbite Logo" />
           </a>
-          <div
-            className={`flex items-center ${
-              isAuthenticated && "justify-between w-[50rem] flex-row-reverse"
-            }  `}
-          >
-            {!isAuthenticated ? (
-              <>
-                <div>
-                  <Link
-                    to={"/"}
-                    onClick={() => setOpenMenu(false)} // Close the menu after clicking
-                    className={`cursor-pointer text-black font-medium text-sm px-5 py-2.5 mr-2 ${
-                      isActiveNavItem("/") ? "line-container" : ""
-                    }`}
-                  >
-                    Home
-                  </Link>
-                </div>
-
-                <div>
-                  <Link
-                    to={"/seconnecter"}
-                    className={`cursor-pointer text-black font-medium text-sm px-5 py-2.5 mr-2 ${
-                      isActiveNavItem("/seconnecter") ? "line-container-1" : ""
-                    }`}
-                  >
-                    {pages[2]}
-                  </Link>
-                </div>
-
-                <div>
-                  <Link
-                    to={"/inscription"}
-                    className={`cursor-pointer text-black font-medium text-sm px-5 py-2.5 mr-2 ${
-                      isActiveNavItem("/inscription") ? "line-container-2" : ""
-                    }`}
-                  >
-                    {pages[3]}
-                  </Link>
-                </div>
-              </>
-            ) : (
+          <div className="flex items-center lg:w-[26.2%] md:w-[26.2%] w-full">
+            <div>
               <Link
                 to={"/"}
+                onClick={() => setOpenMenu(false)} // Close the menu after clicking
                 className={`cursor-pointer text-black font-medium text-sm px-5 py-2.5 mr-2 ${
-                  isActiveNavItem("") ? "active" : ""
+                  isActiveNavItem("/") ? "line-container" : ""
                 }`}
-                onClick={logout}
               >
-                déconnecter
+                {pages[4]}
               </Link>
-            )}
-            {isAuthenticated && (
-              <div className="flex items-center justify-around boor w-[30rem]">
-                <Link
-                  to={"/profile"}
-                  className={`block py-2 pr-4 pl-3 rounded ${
-                    isActiveNavItem("profile/:id")
-                      ? "active"
-                      : "text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
-                  } lg:p-0 dark:text-white`}
-                  aria-current="page"
-                >
-                  Profile
-                </Link>
-                <Link
-                  to={"/telecharger"}
-                  className={`block py-2 pr-4 pl-3 rounded ${
-                    isActiveNavItem("telecharger")
-                      ? "active"
-                      : "text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
-                  } lg:p-0 dark:text-white`}
-                >
-                  Ajouter un plan
-                </Link>
-                <Link
-                  to={"/mesites"}
-                  className={`block py-2 pr-4 pl-3 rounded ${
-                    isActiveNavItem("telecharger")
-                      ? "active"
-                      : "text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
-                  } lg:p-0 dark:text-white`}
-                >
-                  Mes sites
-                </Link>
-              </div>
-            )}
-            <button
-              type="button"
-              className="p-1.5 rounded-md text-gray-700 dark:text-gray-400 lg:hidden focus:outline-none focus:ring-2 focus:ring-gray-600"
-              onClick={handleOpenMenu}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+            </div>
+
+            <div>
+              <Link
+                to={"/seconnecter"}
+                className={`cursor-pointer text-black font-medium text-sm px-5 py-2.5 mr-2 ${
+                  isActiveNavItem("/seconnecter") ? "line-container-1" : ""
+                }`}
               >
-                <path d="M4 6h16M4 12h16M4 18h16"></path>
-              </svg>
-            </button>
+                {pages[2]}
+              </Link>
+            </div>
+
+            <div>
+              <Link
+                to={"/inscription"}
+                className={`cursor-pointer text-black font-medium text-sm px-5 py-2.5 mr-2 ${
+                  isActiveNavItem("/inscription") ? "line-container-2" : ""
+                }`}
+              >
+                {pages[3]}
+              </Link>
+            </div>
           </div>
         </div>
       </nav>

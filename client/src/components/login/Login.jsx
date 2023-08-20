@@ -67,12 +67,12 @@ const Login = () => {
   }, []);
 
   return (
-    <div className="flex justify-center items-center h-screen flex-wrap">
+    <div className="h-full mt-[-1%] w-screen-lg lg:w-screen  flex justify-center items-center flex-wrap bg-gray-100">
       <div
         className={`${
           screenSize.width > 700
             ? "w-1/3 p-6 bg-white rounded shadow-lg"
-            : "bg-white rounded shadow-lg w-full p-2"
+            : "bg-white rounded shadow-lg p-6"
         }`}
       >
         <form className="bg-white" onSubmit={handleSubmit}>
