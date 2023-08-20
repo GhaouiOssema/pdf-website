@@ -1,8 +1,18 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+function formatDate(dateString) {
+  const options = { year: "numeric", month: "short", day: "numeric" };
+  const formattedDate = new Date(dateString).toLocaleDateString(
+    undefined,
+    options
+  );
+  return formattedDate;
+}
+
 const Profile = () => {
   const [userData, setUserData] = useState(null);
+  const [imageData, setImageData] = useState(null); // To store the Base64 image data
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,10 +49,10 @@ const Profile = () => {
   if (userData === null) {
     return <div>Loading...</div>;
   }
-
+  console.log(userData);
   return (
     <div>
-      <div className="bg-gray-100 h-screen">
+      <div className="bg-gray-100 lg:h-[89.7vh] md:h-[89.7vh] h-screen">
         <div className="container mx-auto my-5 p-5">
           <div className="md:flex no-wrap md:-mx-2">
             <div className="w-full md:w-3/12 md:mx-2">
@@ -72,7 +82,9 @@ const Profile = () => {
                   </li>
                   <li className="flex items-center py-3">
                     <span>Member since</span>
-                    <span className="ml-auto">Nov 07, 2016</span>
+                    <span className="ml-auto">
+                      {formatDate(userData.userCreationAccountDate)}
+                    </span>
                   </li>
                 </ul>
               </div>
@@ -116,7 +128,7 @@ const Profile = () => {
                       <div className="px-4 py-2">{userData.userRole}</div>
                     </div>
 
-                    <div className="grid grid-cols-2">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
                       <div className="px-4 py-2 font-semibold">Email.</div>
                       <div className="px-4 py-2">
                         <a
@@ -127,7 +139,7 @@ const Profile = () => {
                         </a>
                       </div>
                     </div>
-                    <div className="grid grid-cols-2">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
                       <div className="px-4 py-2 font-semibold">
                         Code de vérification
                       </div>
@@ -141,11 +153,11 @@ const Profile = () => {
 
               <div className="my-4"></div>
 
-              <div className="bg-white p-3 shadow-sm rounded-sm">
-                <div className="grid grid-cols-2">
-                  <div>
-                    <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
-                      <span clas="text-green-500">
+              <div className="bg-white p-3 shadow-sm rounded-sm lg:w-1/2 md:w-1/2">
+                <div className="flex flex-col ">
+                  <div className="flex justify-between items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
+                    <div className="flex items-center  font-semibold text-gray-900 leading-8 ">
+                      <span className="text-green-500 mr-2">
                         <svg
                           className="h-5"
                           xmlns="http://www.w3.org/2000/svg"
@@ -167,15 +179,15 @@ const Profile = () => {
                     </div>
                     <ul className="list-inside space-y-2">
                       <li>
-                        <div className="text-teal-600">
+                        <div className="text-green-500">
                           {userData.allPdfs.length}
                         </div>
                       </li>
                     </ul>
                   </div>
-                  <div>
-                    <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
-                      <span clas="text-green-500">
+                  <div className="flex justify-between items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
+                    <div className="flex items-center  font-semibold text-gray-900 leading-8 ">
+                      <span className="text-green-500 mr-2">
                         <svg
                           className="h-5"
                           xmlns="http://www.w3.org/2000/svg"
@@ -200,7 +212,7 @@ const Profile = () => {
                     </div>
                     <ul className="list-inside space-y-2">
                       <li>
-                        <div className="text-teal-600">
+                        <div className="text-green-500">
                           {userData.folders.length}
                         </div>
                       </li>

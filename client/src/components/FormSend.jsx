@@ -841,9 +841,9 @@ const FormSend = () => {
   };
 
   return (
-    <>
-      <h1 className="text-3xl text-center font-bold pt-10"></h1>
-      <form onReset={handleReset} className="">
+    <div className="h-[92vh] bg-gray-100">
+      <div className="text-3xl text-center font-bold pt-5" />
+      <form onReset={handleReset}>
         <div className="flex justify-center items-center">
           <div className=" max__size w-[80%] container mx-auto my-4 px-4 lg:px-20 ">
             <div className=" p-6 my-2 mr-auto rounded-2xl shadow-2xl bg-white">
@@ -893,7 +893,7 @@ const FormSend = () => {
           {alertMsg}
         </ATert>
       </Snackbar>
-    </>
+    </div>
   );
 };
 

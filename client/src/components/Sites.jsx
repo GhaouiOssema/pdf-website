@@ -227,7 +227,7 @@ const Sites = () => {
   };
 
   return (
-    <div className="h-screen">
+    <div className="h-full bg-gray-100">
       <Dialog open={filterOpen} onClose={handleCloseFilter}>
         <DialogTitle>Filter Options</DialogTitle>
         <DialogContent>
@@ -477,9 +477,9 @@ const Sites = () => {
       </div>
 
       <div
-        className={`mt-10 ${
+        className={` mt-10 ${
           screenSize.width < 700
-            ? "w-[20rem]"
+            ? "w-full h-full"
             : "flex justify-center items-center w-full"
         } `}
       >
