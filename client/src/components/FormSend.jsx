@@ -868,7 +868,9 @@ const FormSend = () => {
               ) : (
                 <>
                   <div className="flex justify-between items-center my-4">
-                    <h2 className="text-2xl font-bold">{steps[activeStep]}</h2>
+                    <span className=" font-bold text-base ">
+                      {steps[activeStep]}
+                    </span>
                     <Button
                       onClick={() => setActiveStep((prev) => prev + 1)} // Move to the next step
                       color="primary"

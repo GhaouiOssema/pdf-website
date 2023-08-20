@@ -14,14 +14,9 @@ import {
   Typography,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-
 import PropTypes from "prop-types";
-import Backdrop from "@mui/material/Backdrop";
-import Modal from "@mui/material/Modal";
 import { useSpring, animated } from "@react-spring/web";
-import { Label, TextInput } from "flowbite-react";
 import MuiAlert from "@mui/material/Alert";
-import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 
 const Fade = React.forwardRef(function Fade(props, ref) {
   const {
@@ -193,12 +188,12 @@ const PdfFile = () => {
 
   return (
     <>
-      <section className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
-        <h1 className="text-3xl text-center font-bold mb-4 mt-10">
+      <section className="bg-gray-50 dark:bg-gray-900">
+        <h1 className="text-base text-center font-bold mb-4 mt-10 pt-3">
           Tous les equipement pour {dossier}
         </h1>
 
-        <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
+        <div className="mx-auto max-w-screen-xl lg:px-12">
           <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
             <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
               {/* Search input */}
@@ -243,13 +238,10 @@ const PdfFile = () => {
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                       <th scope="col" className="px-4 py-3">
-                        File Name
+                        Titre
                       </th>
-                      <th scope="col" className="px-4 py-3">
-                        File Title
-                      </th>
-                      <th scope="col" className="px-4 py-3">
-                        Creation Date
+                      <th scope="col" className="text-center py-3">
+                        Date du création
                       </th>
                     </tr>
                   </thead>
@@ -268,19 +260,11 @@ const PdfFile = () => {
                           >
                             <div className="flex items-center">
                               <i className="fa-solid fa-file-pdf text-2xl text-red-500"></i>
-                              <span className="ml-3">
-                                {pdf.mainPdf.filename}
-                              </span>
+                              <span className="ml-3">{pdf.title}</span>
                             </div>
                           </Link>
                         </th>
-                        <td className="px-4 py-3">
-                          <Link
-                            to={`/${site}/${dossier}/pdf/détails/${pdf._id}`}
-                          >
-                            {pdf.title}
-                          </Link>
-                        </td>
+
                         <td className="px-4 py-3">
                           <Link
                             to={`/${site}/${dossier}/pdf/détails/${pdf._id}`}
