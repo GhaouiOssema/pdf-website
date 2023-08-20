@@ -113,17 +113,17 @@ const Profile = () => {
                 </div>
                 <div className="text-gray-700">
                   <div className="grid md:grid-cols-2 text-sm">
-                    <div className="grid grid-cols-2">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
                       <div className="px-4 py-2 font-semibold">
                         nom d'utilisateur
                       </div>
                       <div className="px-4 py-2"> {userData.userName} </div>
                     </div>
-                    <div className="grid grid-cols-2">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
                       <div className="px-4 py-2 font-semibold">Password</div>
                       <div className="px-4 py-2">password</div>
                     </div>
-                    <div className="grid grid-cols-2">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
                       <div className="px-4 py-2 font-semibold">Role</div>
                       <div className="px-4 py-2">{userData.userRole}</div>
                     </div>
