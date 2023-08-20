@@ -845,8 +845,8 @@ const FormSend = () => {
       <div className="text-3xl text-center font-bold pt-5" />
       <form onReset={handleReset}>
         <div className="flex justify-center items-center">
-          <div className=" max__size w-[80%] container mx-auto my-4 px-4 lg:px-20 ">
-            <div className=" p-6 my-2 mr-auto rounded-2xl shadow-2xl bg-white">
+          <div className="lg:w-[80%] md:w-[80%] w-full container mx-auto my-4 px-4 lg:px-20">
+            <div className=" p-6 mr-auto rounded-2xl shadow-2xl bg-white">
               {activeStep === steps.length ? (
                 <>
                   <div className="text-green-500 text-4xl mb-4 flex justify-center items-center">
