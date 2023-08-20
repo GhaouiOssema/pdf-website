@@ -99,9 +99,11 @@ const RaportView = ({
         name: name,
       };
 
-      const token = localStorage.getItem("token");
-      console.log(formData);
+      const anyFieldEmpty = Object.values(formData).some(
+        (value) => value === null || value === undefined || value === ""
+      );
 
+      const token = localStorage.getItem("token");
       if (!token) {
         return;
       }
@@ -109,21 +111,27 @@ const RaportView = ({
       const { userId, userName } = JSON.parse(atob(token.split(".")[1]));
       // Extract the necessary information from the token payload
 
+      if (anyFieldEmpty) {
+        console.log("One or more fields are empty");
+        setOpen(false); // Close the popup or set its visibility to false
+        return;
+      }
+
       const response = await axios.post(
         `${import.meta.env.VITE_SERVER_API_URL}/sites/creation`,
         formData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            "X-User-Id": userId, // Pass the userId as a custom header
-            "X-User-Name": userName, // Pass the userName as a custom header
+            "X-User-Id": userId,
+            "X-User-Name": userName,
           },
         }
       );
 
       setAlertMsg("success");
-      handleClick();
       setOpen(true);
+      handleClick();
     } catch (error) {
       console.error(error);
     }
@@ -196,44 +204,26 @@ const RaportView = ({
             >
               <div className="text-black pb-10">
                 <div className="w-full max-w-lg ">
-                  {screenSize.width > 700 && type === "siteButton" ? (
+                  {type === "siteButton" ? (
                     <>
-                      <h1 className="pt-10 block uppercase tracking-wide text-center text-gray-700 text-lg font-bold mb-10 justify-center items-center">
-                        <span className="text-sm">
-                          Villiuer saisir les informations du site
-                        </span>
-                        <HighlightOffIcon
-                          color="black"
-                          sx={{ cursor: "pointer", ml: 2 }}
-                          onClick={close}
-                        />
+                      <h1 className="pt-10 text-center text-gray-700 text-lg font-bold mb-10">
+                        <span>Villiuer saisir les informations du site</span>
                       </h1>
 
-                      <div className="w-full md:w-1/3 px-3 mb-6 md:flex md:flex-wrap">
-                        <div>
-                          <TextField
-                            sx={{ m: 1, width: 361, ml: 6 }}
-                            id="nom_site"
-                            label="Nom du site"
-                            variant="outlined"
-                            fullWidth
-                            size="small"
-                            value={name}
-                            onChange={handleNameChange}
-                          />
-                        </div>
+                      <div className="w-full mb-6 md:flex md:flex-wrap mx-auto">
+                        <TextField
+                          className="m-1 w-full"
+                          id="nom_site"
+                          label="Nom du site"
+                          variant="outlined"
+                          size="small"
+                          value={name}
+                          onChange={handleNameChange}
+                          required
+                        />
                       </div>
 
-                      <FormControl
-                        fullWidth
-                        sx={{
-                          display: "flex",
-                          flexDirection: "row",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          marginLeft: 7,
-                        }}
-                      >
+                      <div className="flex flex-wrap mb-2 justify-center">
                         <div className="w-full md:w-1/2 px-1 mb-6">
                           <TextField
                             id="adress_site"
@@ -250,59 +240,44 @@ const RaportView = ({
                             id="code_postal"
                             label="Code postal"
                             variant="outlined"
-                            sx={{ m: 0, width: 112 }}
+                            className="w-32 md:w-40"
                             size="small"
                             value={siteCodePostal}
                             onChange={handleSiteCodePostalChange}
                           />
                         </div>
-                      </FormControl>
-
-                      <div className="flex flex-wrap mb-2">
-                        <div className="w-full md:w-1/3 px-3 mb-6">
-                          <div>
-                            <FormControl
-                              sx={{ m: 1, width: 361, ml: 6 }}
-                              size="small"
-                            >
-                              <InputLabel id="demo-multiple-checkbox-label">
-                                Category
-                              </InputLabel>
-                              <Select
-                                labelId="demo-multiple-checkbox-label"
-                                id="demo-multiple-checkbox"
-                                multiple
-                                value={selectedCategories}
-                                onChange={handleCategoryChange}
-                                input={<OutlinedInput label="Category" />}
-                                renderValue={(selected) => selected.join(", ")}
-                                MenuProps={MenuProps}
-                              >
-                                {names.map((name) => (
-                                  <MenuItem key={name} value={name}>
-                                    <Checkbox
-                                      checked={
-                                        selectedCategories.indexOf(name) > -1
-                                      }
-                                    />
-                                    <ListItemText primary={name} />
-                                  </MenuItem>
-                                ))}
-                              </Select>
-                            </FormControl>
-                          </div>
-                        </div>
                       </div>
-                      <Stack
-                        spacing={2}
-                        direction="row"
-                        sx={{
-                          display: "flex",
-                          flexDirection: "row",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
+
+                      <div className="w-full px-1 mb-6 mx-auto">
+                        <FormControl size="small" className="w-full">
+                          <InputLabel id="demo-multiple-checkbox-label">
+                            Category
+                          </InputLabel>
+                          <Select
+                            labelId="demo-multiple-checkbox-label"
+                            id="demo-multiple-checkbox"
+                            multiple
+                            value={selectedCategories}
+                            onChange={handleCategoryChange}
+                            input={<OutlinedInput label="Category" />}
+                            renderValue={(selected) => selected.join(", ")}
+                            MenuProps={MenuProps}
+                          >
+                            {names.map((name) => (
+                              <MenuItem key={name} value={name}>
+                                <Checkbox
+                                  checked={
+                                    selectedCategories.indexOf(name) > -1
+                                  }
+                                />
+                                <ListItemText primary={name} />
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
+                      </div>
+
+                      <div className="flex flex-wrap justify-center space-x-2">
                         <Button
                           variant="outlined"
                           color="success"
@@ -317,7 +292,7 @@ const RaportView = ({
                         >
                           Annuler
                         </Button>
-                      </Stack>
+                      </div>
                     </>
                   ) : screenSize.width > 700 && type === "editSite" ? (
                     <>

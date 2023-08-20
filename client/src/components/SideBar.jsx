@@ -1,106 +1,115 @@
-import React, { useEffect, useState } from "react";
-import { Badge, Sidebar } from "flowbite-react";
-import {
-  HiArrowSmRight,
-  HiChartPie,
-  HiInbox,
-  HiShoppingBag,
-  HiTable,
-  HiUser,
-  HiViewBoards,
-  HiMenuAlt1, // Hamburger icon
-  HiX, // Close icon
-} from "react-icons/hi";
-import LOGO from "../assets/logo2.png";
+import React, { useEffect, useRef, useState } from "react";
+import { HiMenuAlt1, HiUser, HiViewBoards, HiX } from "react-icons/hi";
 import jwt_decode from "jwt-decode";
 import { Link } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import LOGO from "../assets/logo2.png";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
 const SideBar = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isSidebarVisible, setIsSidebarVisible] = useState(true); // Track sidebar visibility
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const sidebarRef = useRef(null);
+
+  const handleOutsideClick = (event) => {
+    if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+      setIsSidebarOpen(false);
+    }
+  };
 
   useEffect(() => {
-    // Check if user is authenticated
-    const token = localStorage.getItem("token");
-    if (token) {
-      // Verify token expiration
-      const decoded = jwt_decode(token);
-      const currentTime = Date.now() / 1000;
-      if (decoded.exp < currentTime) {
-        setIsAuthenticated(false);
-        localStorage.removeItem("token");
-      } else {
-        // Token is valid
-        setIsAuthenticated(true);
-      }
-    } else {
-      // No token found
-      setIsAuthenticated(false);
-    }
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
   }, []);
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen((prev) => !prev);
+  };
   const logout = async () => {
     localStorage.removeItem("token");
     await new Promise((resolve) => setTimeout(resolve, 1000));
     window.location.href = "/";
   };
 
-  // Function to toggle sidebar visibility
-  const toggleSidebar = () => {
-    setIsSidebarVisible((prev) => !prev);
-  };
-
   return (
     <div className="relative">
-      {/* Hamburger menu to toggle sidebar */}
-      {/* <button
-        onClick={toggleSidebar}
-        style={{ border: "none", background: "transparent" }}
-      >
-        {isSidebarVisible ? <HiX size={30} /> : <HiMenuAlt1 size={30} />}
-      </button> */}
-
-      {/* Sidebar component */}
-      {isSidebarVisible && (
-        <Sidebar style={{ width: "220px" }} className="h-screen">
-          <Sidebar.Items>
-            <Sidebar.ItemGroup>
-              <Sidebar.Item href="#">
-                <Link to={"/messites"}>
-                  <img src={LOGO} alt="" />
+      <div className="bg-white">
+        <div className="flex bg-gray-white">
+          {/* Sidebar Toggle Button */}
+          <div
+            className="lg:hidden absolute top-4 left-4 cursor-pointer z-10"
+            onClick={toggleSidebar}
+          >
+            {isSidebarOpen ? <HiX size={24} /> : <HiMenuAlt1 size={24} />}
+          </div>
+          {/* Sidebar */}
+          <div
+            ref={sidebarRef}
+            className={`${
+              isSidebarOpen
+                ? "fixed top-0 left-0 h-screen w-60 bg-white shadow-lg"
+                : "hidden"
+            } lg:flex w-60 md:flex-col z-20`}
+          >
+            <div className="space-y-4">
+              <div className="bg-top bg-cover space-y-1 pt-4 p-4 left-0">
+                <Link to={"/"}>
+                  <img src={LOGO} alt="" className="w-full" />
                 </Link>
-              </Sidebar.Item>
-              <Sidebar.ItemGroup
-                className="uppercase"
-                style={{ marginTop: 50 }}
+              </div>
+              <div className="mt-5 bg-top bg-cover space-y-1">
+                <Link
+                  to={"/telecharger"}
+                  className="font-medium text-lg text-gray-900 px-4 py-2.5 flex justify-start items-center transition-all duration-200 hover:bg-gray-200 group cursor-pointer"
+                >
+                  <p className="uppercase flex items-center">
+                    <AddCircleOutlineIcon />
+                    <span className="uppercase ml-2">Équipement</span>
+                  </p>
+                </Link>
+              </div>
+              <div className="mt-5 bg-top bg-cover space-y-1 pl-1">
+                <Link
+                  to={"/messites"}
+                  className="font-medium text-lg text-gray-900 px-4 py-2.5 flex justify-start items-center transition-all duration-200 hover:bg-gray-200 group cursor-pointer"
+                >
+                  <p className="uppercase flex items-center">
+                    <HiViewBoards />
+                    <span className="uppercase ml-2">Mes Sites</span>
+                  </p>
+                </Link>
+              </div>
+              <div className="mt-5 bg-top bg-cover space-y-1 pl-1">
+                <Link
+                  to={"/profile"}
+                  className="font-medium text-lg text-gray-900 px-4 py-2.5 flex justify-start items-center transition-all duration-200 hover:bg-gray-200 group cursor-pointer"
+                >
+                  <p className="uppercase flex items-center">
+                    <HiUser />
+                    <span className="uppercase ml-2">Mon Profil</span>
+                  </p>
+                </Link>
+              </div>
+              <div
+                className="mt-5 bg-top bg-cover space-y-1 pl-1"
+                onClick={logout}
               >
-                <Sidebar.Item href="#" icon={AddCircleOutlineIcon}>
-                  <Link to={"/telecharger"}>
-                    <p className="uppercase">equipement</p>
-                  </Link>
-                </Sidebar.Item>
-                <Sidebar.Item href="#" icon={HiViewBoards}>
-                  <Link to={"/messites"}>
-                    <p className="uppercase">mes Sites</p>
-                  </Link>
-                </Sidebar.Item>
-                <Sidebar.Item icon={HiUser}>
-                  <Link to={"/profile"}>
-                    <p>Mon Profile</p>
-                  </Link>
-                </Sidebar.Item>
-                <Sidebar.Item icon={LogoutIcon} onClick={logout}>
-                  <Link to={"/"}>
-                    <p className="text-sm">déconnecter</p>
-                  </Link>
-                </Sidebar.Item>
-              </Sidebar.ItemGroup>
-            </Sidebar.ItemGroup>
-          </Sidebar.Items>
-        </Sidebar>
-      )}
+                <Link
+                  to={"/"}
+                  className="font-medium text-lg text-gray-900 px-4 py-2.5 flex justify-start items-center transition-all duration-200 hover:bg-gray-200 group cursor-pointer"
+                >
+                  <p className="uppercase flex items-center">
+                    <LogoutIcon />
+                    <span className="uppercase ml-2">Déconnecter</span>
+                  </p>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

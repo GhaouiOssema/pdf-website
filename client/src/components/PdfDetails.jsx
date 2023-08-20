@@ -13,6 +13,8 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import CustomizedFileFolder from "./CustomizedFileFolder";
 import {
+  Box,
+  CircularProgress,
   Table,
   TableBody,
   TableCell,
@@ -21,6 +23,7 @@ import {
   TableRow,
 } from "@mui/material";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import QrView from "./QrView";
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -37,6 +40,9 @@ const PdfDetails = () => {
   const [image, setImage] = useState(null);
   const [imageLoading, setImageLoading] = useState(true);
   const [imageError, setImageError] = useState(false);
+  const [selectedView, setSelectedView] = useState("image");
+  const [isImageFullscreen, setIsImageFullscreen] = useState(false);
+  const [QrViewModal, setQrViewModal] = useState(false);
 
   const token = localStorage.getItem("token");
   if (!token) {
@@ -210,33 +216,138 @@ const PdfDetails = () => {
     setPage(0);
   };
 
+  const handleViewChange = (event) => {
+    setSelectedView(event.target.value);
+  };
+  const handleImageClick = () => {
+    setIsImageFullscreen(!isImageFullscreen);
+  };
+
   return (
     <>
-      <h1 className="text-3xl text-center font-bold pt-10">
-        <span className=""> Fiche d'equipement</span>
-      </h1>
-      <div
-        className={`container pt-20 ${
-          screenSize.width < 700 ? "h-screen" : ""
-        }`}
-      >
-        {pdfData ? (
-          <>
-            {screenSize.width < 700 && (
-              <div className="flex flex-wrap justify-center items-center text-center">
-                <h1 className="text-lg font-bold">Titre :</h1>
-                <span className="ml-3">{pdfData.title}</span>
+      {QrViewModal && (
+        <QrView
+          open={QrViewModal}
+          setOpen={setQrViewModal}
+          site={site}
+          dossier={dossier}
+          id={id}
+        />
+      )}
+      {pdfData ? (
+        <div className="h-screen">
+          <div className="flex flex-col items-center justify-center mt-20">
+            <h1 className="text-3xl text-center font-bold mb-5">
+              <span className="">Fiche d'équipement</span>
+            </h1>
+            <div className="flex flex-col space-y-3 md:space-y-0 md:flex-row md:space-x-3">
+              <Link
+                to={`/${site}/${dossier}/pdf/detail/doe/${id}`}
+                className="w-full md:w-auto"
+              >
+                <button
+                  type="button"
+                  className="w-full md:w-auto flex items-center justify-start text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+                >
+                  <InfoOutlinedIcon className="mr-2" />
+                  <span>Ouvrir les DOE</span>
+                </button>
+              </Link>
+
+              <Link
+                to={`/${site}/${dossier}/pdf/detail/fiche_technique/${id}`}
+                className="w-full md:w-auto"
+              >
+                <button
+                  type="button"
+                  className="w-full md:w-auto flex items-center justify-start text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+                >
+                  <InfoOutlinedIcon className="mr-2" />
+                  <span> Ouvrir le Plan </span>
+                </button>
+              </Link>
+              <div
+                to={`/${site}/${dossier}/pdf/detail/fiche_technique/${id}`}
+                className="w-full md:w-auto"
+              >
+                <button
+                  type="button"
+                  onClick={() => setQrViewModal(true)}
+                  className="w-full md:w-auto flex items-center justify-start text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+                >
+                  <InfoOutlinedIcon className="mr-2" />
+                  <span> QR Code</span>
+                </button>
               </div>
-            )}
 
-            <div className="flex justify-around items-center flex__col">
-              <div className="flex flex-col">
-                <div className="flex flex-col">
-                  {imageLoading && <div>Loading Image...</div>}
+              <Link
+                to={`/${site}/${dossier}/pdf/view/${id}`}
+                className="w-full md:w-auto"
+              >
+                <button
+                  type="button"
+                  className="w-full md:w-auto flex items-center justify-start text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+                >
+                  <InfoOutlinedIcon className="mr-2" />
+                  <span> Fiche d'entretien</span>
+                </button>
+              </Link>
 
-                  {/* Show the image when it is loaded */}
+              <Link to={`/plan/${id}`} className="w-full md:w-auto">
+                <button
+                  type="button"
+                  className="w-full md:w-auto flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+                >
+                  <InfoOutlinedIcon className="mr-2" />
+                  <span> Fiche technique</span>
+                </button>
+              </Link>
+            </div>
+          </div>
+
+          <div>
+            {/* Desktop View */}
+            <div className="hidden md:flex items-center justify-around md:w-full">
+              <div className="block w-1/2">
+                <div className="shadow-md shadow-black/20 p-4 rounded-xl bg-white h-auto">
+                  <div className="mb-3 flex items-center">
+                    <h1 className="font-bold">Titre :</h1>
+                    <span className="text-black ml-3">{pdfData.title}</span>
+                  </div>
+                  {dossier === "Armoire electrique" && (
+                    <>
+                      <div className="mb-3 flex items-center">
+                        <h1 className="font-bold">PTA :</h1>
+                        <span className="text-black ml-3">
+                          {pdfData?.pdfDetails?.PAT}
+                        </span>
+                      </div>
+                      <div className="mb-3 flex items-center">
+                        <h1 className="font-bold">Date d'installation :</h1>
+                        <span className="text-black ml-3">
+                          {
+                            new Date(pdfData?.pdfDetails?.installationDate)
+                              .toISOString()
+                              .split("T")[0]
+                          }
+                        </span>
+                      </div>
+                    </>
+                  )}
+                  {["Climatisation", "Chauffage", "Ventilasion"].includes(
+                    dossier
+                  ) && (
+                    <div className="mb-3 flex items-center">
+                      <h1 className="font-bold">Modéle :</h1>
+                      <span className="text-black ml-3">
+                        {pdfData?.pdfDetails?.pdfModel}
+                      </span>
+                    </div>
+                  )}
+                </div>
+                <div className="mt-4">
                   {!imageLoading && !imageError && (
-                    <figure className="max-w-lg relative">
+                    <figure className="relative">
                       <img
                         className="h-auto max-w-full rounded-lg"
                         src={image}
@@ -245,66 +356,12 @@ const PdfDetails = () => {
                     </figure>
                   )}
                 </div>
-                <div>
-                  <div className="qr-code-section bg-white">
-                    {screenSize.width > 700 && (
-                      <div className="flex flex-wrap mb-3">
-                        <h1 className="ml-3 font-bold">Titl :</h1>
-                        <span className="ml-3">{pdfData.title}</span>
-                      </div>
-                    )}
-                    <div
-                      className={`w-[202px] bg-white ${
-                        screenSize.width < 700 && "ml-9"
-                      }`}
-                      ref={qrCodeRef}
-                    >
-                      <QRCode
-                        className="w-[200px] h-[200px]"
-                        value={`${
-                          import.meta.env.VITE_NETLIFY_URL
-                        }/publique/${site}/${dossier}/pdf/${id}`}
-                      />
-                    </div>
-                    <div className="mt-5 w-full flex-row-reverse  text-xl flex items-center justify-center">
-                      {screenSize.width < 700 && (
-                        <div
-                          className="cursor-pointer w-full text-center uppercase text-sm tracking-wide bg-blue-500 text-gray-100 px-2 py-[10px] rounded-md focus:outline-none focus:shadow-outline hover:bg-green-500"
-                          onClick={handleDownloadQRCode}
-                        >
-                          Télècharger
-                        </div>
-                      )}
-                      {screenSize.width > 700 && (
-                        <div
-                          className="cursor-pointer w-full text-center uppercase text-sm tracking-wide bg-blue-500 text-gray-100 px-2 py-[10px] rounded-md focus:outline-none focus:shadow-outline hover:bg-green-500"
-                          onClick={handleDownloadQRCode}
-                        >
-                          Télècharger
-                        </div>
-                      )}
-                    </div>
-                    {dossier === "Armoire electrique" ? (
-                      <div>
-                        <h1> PTA : {pdfData?.pdfDetails?.PAT}</h1>
-                        <h1>
-                          Date d'instalation{" "}
-                          {pdfData?.pdfDetails?.installationDate}
-                        </h1>
-                      </div>
-                    ) : ["Climatisation", "Chauffage", "Ventilasion"].includes(
-                        dossier
-                      ) ? (
-                      <h1> Modéle : {pdfData?.pdfDetails?.pdfModel}</h1>
-                    ) : null}
-                  </div>
-                </div>
               </div>
 
-              <div className="flex justify-between items-center flex-col ml-5 pt-5 mt-[-100px] ">
-                <p className="font-bold text-lg mb-5  ">Tableau des Raport</p>
-
-                <div className="pdf-preview bg-white " key={pdfData._id}>
+              <div className="w-1/2 ml-5 pt-5 mt-12">
+                {/* Adjust margin top */}
+                <p className="font-bold text-lg mb-4">Tableau des Rapports</p>
+                <div className="pdf-preview bg-white">
                   <div style={{ height: "400px", overflow: "auto" }}>
                     <Table
                       sx={{ minWidth: 650 }}
@@ -313,11 +370,13 @@ const PdfDetails = () => {
                     >
                       <TableHead>
                         <TableRow>
-                          <TableCell align="center">Sociéte</TableCell>
-                          <TableCell align="center">
+                          <TableCell align="center" sx={{ fontWeight: "bold" }}>
+                            Sociéte
+                          </TableCell>
+                          <TableCell align="center" sx={{ fontWeight: "bold" }}>
                             Date du dernier entretien
                           </TableCell>
-                          <TableCell align="center">
+                          <TableCell align="center" sx={{ fontWeight: "bold" }}>
                             Date du prochain entretien
                           </TableCell>
                         </TableRow>
@@ -338,30 +397,28 @@ const PdfDetails = () => {
                                   },
                                 }}
                               >
-                                <TableCell component="th" scope="row">
+                                <TableCell align="center">
                                   {raport.société}
                                 </TableCell>
                                 <TableCell align="center">
-                                  {raport.dateDernierEntretien}
+                                  {
+                                    new Date(raport.dateDernierEntretien)
+                                      .toISOString()
+                                      .split("T")[0]
+                                  }
                                 </TableCell>
                                 <TableCell align="center">
-                                  {raport.dateProchainEntretien}
-                                </TableCell>
-                                <TableCell
-                                  align="center"
-                                  sx={{ cursor: "pointer" }}
-                                >
-                                  {/* <InfoOutlinedIcon
-                                    sx={{ color: "#3291F0" }}
-                                    onClick={handleOpenTable}
-                                  /> */}
+                                  {
+                                    new Date(raport.dateProchainEntretien)
+                                      .toISOString()
+                                      .split("T")[0]
+                                  }
                                 </TableCell>
                               </TableRow>
                             ))}
                       </TableBody>
                     </Table>
                   </div>
-
                   <TablePagination
                     rowsPerPageOptions={[10, 25, 50]}
                     component="div"
@@ -373,69 +430,189 @@ const PdfDetails = () => {
                   />
                 </div>
               </div>
+            </div>
 
-              {screenSize.width < 700 && (
-                <div>
-                  <CustomizedFileFolder PdfData={pdfData} />
+            {/* Mobile View */}
+            <div className="md:hidden">
+              <div className="mt-5">
+                <label
+                  htmlFor="viewSelector"
+                  className="block font-bold text-lg mb-2"
+                >
+                  sélectionner l'option :
+                </label>
+                <select
+                  id="viewSelector"
+                  className="w-full p-2 border rounded-md"
+                  onChange={handleViewChange}
+                  value={selectedView}
+                >
+                  <option value="image">Image de l'équipement</option>
+                  <option value="table">Tableau des rapports</option>
+                </select>
+                <div className="qr-code-section bg-white">
+                  <div className="flex flex-wrap mb-3">
+                    <h1 className="ml-3 font-bold">Titre :</h1>
+                    <span className="ml-3 text-black">{pdfData.title}</span>
+                  </div>
+                  {dossier === "Armoire electrique" && (
+                    <>
+                      <div className="flex flex-wrap mb-3">
+                        <h1 className="ml-3 font-bold">PTA :</h1>
+                        <span className="ml-3 text-black">
+                          {pdfData?.pdfDetails?.PAT}
+                        </span>
+                      </div>
+                      <div className="flex flex-wrap mb-3">
+                        <h1 className="ml-3 font-bold">
+                          Date d'installation :
+                        </h1>
+                        <span className="ml-3 text-black">
+                          {
+                            new Date(pdfData?.pdfDetails?.installationDate)
+                              .toISOString()
+                              .split("T")[0]
+                          }
+                        </span>
+                      </div>
+                    </>
+                  )}
+                  {["Climatisation", "Chauffage", "Ventilasion"].includes(
+                    dossier
+                  ) && (
+                    <div className="flex flex-wrap mb-3">
+                      <h1 className="ml-3 font-bold">Modéle:</h1>
+                      <span className="ml-3 text-black">
+                        {pdfData?.pdfDetails?.pdfModel}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </div>
+              {selectedView === "image" && (
+                <div className="mt-5">
+                  {!imageLoading && !imageError && (
+                    <div
+                      className={`max-w-lg relative ${
+                        isImageFullscreen
+                          ? "fixed top-0 left-0 w-screen h-screen z-50 bg-black flex justify-center items-center"
+                          : ""
+                      }`}
+                      onClick={handleImageClick}
+                    >
+                      <img
+                        className={`h-auto max-w-full rounded-lg ${
+                          isImageFullscreen ? "cursor-pointer" : ""
+                        }`}
+                        src={image}
+                        alt="image"
+                      />
+                    </div>
+                  )}
                 </div>
               )}
-            </div>
-          </>
-        ) : (
-          <p>Loading PDF data...</p>
-        )}
-      </div>
-      {pdfData ? (
-        <div className="flex justify-center mt-20">
-          <div className="pdf__footer mb-10 w-[50rem]">
-            <div className="">
-              <Link
-                to={`/${site}/${dossier}/pdf/detail/doe/${id}`}
-                className="buttons__style_link__h buttons__style_link__left bg-gray-200 mt-3"
-              >
-                <span>Ouvrir les DOE</span>
-                <IoIosArrowForward />
-              </Link>
-              <Link
-                to={`/plan/${id}`}
-                className="buttons__style_link__h buttons__style_link__left bg-gray-200 mt-3"
-              >
-                <span>Fiche technique</span>
-                <IoIosArrowForward />
-              </Link>
-            </div>
-            <div>
-              <Link
-                to={`/${site}/${dossier}/pdf/view/${id}`}
-                className="buttons__style_link__h buttons__style_link__left bg-gray-200 mt-3"
-              >
-                <span>fiche d'entretien</span>
-                <IoIosArrowForward />
-              </Link>
-              <Link
-                to={`/${site}/${dossier}/pdf/detail/fiche_technique/${id}`}
-                className="buttons__style_link__h buttons__style_link__left bg-gray-200 mt-3"
-              >
-                <span>Plan </span>
-                <IoIosArrowForward />
-              </Link>
+              {selectedView === "table" && (
+                <div className="mt-5">
+                  <div className="pdf-preview bg-white" key={pdfData._id}>
+                    <div style={{ height: "400px", overflowX: "auto" }}>
+                      <Table size="small" aria-label="a dense table">
+                        <TableHead>
+                          <TableRow>
+                            <TableCell
+                              align="center"
+                              sx={{
+                                fontWeight: "bold",
+                                fontSize: 11,
+                              }}
+                            >
+                              Sociéte
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              sx={{
+                                fontWeight: "bold",
+                                fontSize: 11,
+                              }}
+                            >
+                              Date du dernier entretien
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              sx={{
+                                fontWeight: "bold",
+                                fontSize: 11,
+                              }}
+                            >
+                              Date du prochain entretien
+                            </TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          {raports &&
+                            raports
+                              .slice(
+                                page * rowsPerPage,
+                                page * rowsPerPage + rowsPerPage
+                              )
+                              .map((raport) => (
+                                <TableRow
+                                  key={raport.id}
+                                  sx={{
+                                    "&:last-child td, &:last-child th": {
+                                      border: 0,
+                                    },
+                                  }}
+                                >
+                                  <TableCell align="center">
+                                    {raport.société}
+                                  </TableCell>
+                                  <TableCell align="center">
+                                    {
+                                      new Date(raport.dateDernierEntretien)
+                                        .toISOString()
+                                        .split("T")[0]
+                                    }
+                                  </TableCell>
+                                  <TableCell align="center">
+                                    {
+                                      new Date(raport.dateProchainEntretien)
+                                        .toISOString()
+                                        .split("T")[0]
+                                    }
+                                  </TableCell>
+                                </TableRow>
+                              ))}
+                        </TableBody>
+                      </Table>
+                    </div>
+                    <TablePagination
+                      rowsPerPageOptions={[10, 25, 50]}
+                      component="div"
+                      count={raports ? raports.length : 0}
+                      rowsPerPage={rowsPerPage}
+                      page={page}
+                      onPageChange={handleChangePage}
+                      onRowsPerPageChange={handleChangeRowsPerPage}
+                      labelRowsPerPage="Lignes par page"
+                    />
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
       ) : (
-        <p></p>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: "calc(100vh - 40px)",
+          }}
+        >
+          <CircularProgress />
+        </Box>
       )}
-      <Stack spacing={2} sx={{ width: "100%" }}>
-        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-          <Alert
-            onClose={handleClose}
-            severity="success"
-            sx={{ width: "100%" }}
-          >
-            Fichier supprimer avec succès
-          </Alert>
-        </Snackbar>
-      </Stack>
     </>
   );
 };
