@@ -294,59 +294,51 @@ const RaportView = ({
                         </Button>
                       </div>
                     </>
-                  ) : screenSize.width > 700 && type === "editSite" ? (
+                  ) : type === "editSite" ? (
                     <>
                       <h1 className="pt-10 block uppercase tracking-wide text-center text-gray-700 text-lg font-bold mb-10 flex justify-center items-center">
                         <span className="text-sm">
                           Modifier les informations du site
                         </span>
-                        <HighlightOffIcon
-                          color="black"
-                          sx={{ cursor: "pointer", ml: 2 }}
-                          onClick={close}
-                        />
                       </h1>
                       <FormControl
                         fullWidth
                         sx={{
                           display: "flex",
-                          flexDirection: "row",
-                          justifyContent: "center",
+                          flexDirection: "column",
                           alignItems: "center",
-                          marginLeft: 7,
                         }}
                       >
-                        <div className="w-full md:w-1/2 px-1 mb-6">
-                          <TextField
-                            id="adress_site"
-                            label="Adresse du site"
-                            variant="outlined"
-                            fullWidth
-                            size="small"
-                            value={adresse}
-                            onChange={(e) => setAdresse(e.target.value)}
-                          />
-                        </div>
-                        <div className="w-full md:w-1/2 px-1">
-                          <TextField
-                            id="code_postal"
-                            label="Code postal"
-                            variant="outlined"
-                            sx={{ m: 0, width: 112 }}
-                            size="small"
-                            value={codePostal}
-                            onChange={(e) => setCodePostal(e.target.value)}
-                          />
+                        <div className="w-full md:flex">
+                          <div className="w-full md:w-1/2 px-2 mb-4 md:mb-0 ">
+                            <TextField
+                              id="adress_site"
+                              label="Adresse du site"
+                              fullWidth
+                              variant="outlined"
+                              size="small"
+                              value={adresse}
+                              onChange={(e) => setAdresse(e.target.value)}
+                            />
+                          </div>
+                          <div className="w-full md:w-1/2 px-1">
+                            <TextField
+                              fullWidth
+                              id="code_postal"
+                              label="Code postal"
+                              variant="outlined"
+                              size="small"
+                              value={codePostal}
+                              onChange={(e) => setCodePostal(e.target.value)}
+                            />
+                          </div>
                         </div>
                       </FormControl>
 
-                      <div className="flex flex-wrap mb-2">
-                        <div className="w-full md:w-1/3 px-3 mb-6">
+                      <div className="flex flex-wrap mb-2 mt-6">
+                        <div className="w-full px-1 mb-6">
                           <div>
-                            <FormControl
-                              sx={{ m: 1, width: 361, ml: 6 }}
-                              size="small"
-                            >
+                            <FormControl sx={{ width: "100%" }} size="small">
                               <InputLabel id="demo-multiple-checkbox-label">
                                 Category
                               </InputLabel>

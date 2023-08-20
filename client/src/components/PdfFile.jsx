@@ -188,9 +188,9 @@ const PdfFile = () => {
 
   return (
     <>
-      <section className="bg-gray-50 dark:bg-gray-900">
-        <h1 className="text-base text-center font-bold mb-4 mt-10 pt-3">
-          Tous les equipement pour {dossier}
+      <section className="bg-gray-50 dark:bg-gray-900 h-screen">
+        <h1 className="text-xl sm:text-xl md:text-xl lg:text-xl text-center font-bold mb-4 mt-10 pt-3">
+          Tous les équipements pour {dossier}
         </h1>
 
         <div className="mx-auto max-w-screen-xl lg:px-12">
@@ -269,17 +269,11 @@ const PdfFile = () => {
                           <Link
                             to={`/${site}/${dossier}/pdf/détails/${pdf._id}`}
                           >
-                            {new Date(pdf.creationDate).toLocaleString(
-                              "fr-FR",
-                              {
-                                day: "numeric",
-                                month: "numeric",
-                                year: "numeric",
-                                hour: "numeric",
-                                minute: "numeric",
-                                hour12: false,
-                              }
-                            )}
+                            {
+                              new Date(pdf.creationDate)
+                                .toISOString()
+                                .split("T")[0]
+                            }
                           </Link>
                         </td>
                         <td className="px-4 py-3 flex items-center justify-end">
