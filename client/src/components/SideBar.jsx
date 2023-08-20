@@ -7,10 +7,12 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import LOGO from "../assets/logo2.png";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
-const SideBar = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const sidebarRef = useRef(null);
-
+const SideBar = ({
+  isSidebarOpen,
+  setIsSidebarOpen,
+  sidebarRef,
+  toggleSidebar,
+}) => {
   const handleOutsideClick = (event) => {
     if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
       setIsSidebarOpen(false);
@@ -24,9 +26,6 @@ const SideBar = () => {
     };
   }, []);
 
-  const toggleSidebar = () => {
-    setIsSidebarOpen((prev) => !prev);
-  };
   const logout = async () => {
     localStorage.removeItem("token");
     await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -37,13 +36,6 @@ const SideBar = () => {
     <div className="relative">
       <div className="bg-white">
         <div className="flex bg-gray-white">
-          {/* Sidebar Toggle Button */}
-          <div
-            className="lg:hidden absolute top-4 left-4 cursor-pointer z-10"
-            onClick={toggleSidebar}
-          >
-            {isSidebarOpen ? <HiX size={24} /> : <HiMenuAlt1 size={24} />}
-          </div>
           {/* Sidebar */}
           <div
             ref={sidebarRef}
@@ -88,7 +80,7 @@ const SideBar = () => {
                 >
                   <p className="uppercase flex items-center">
                     <HiUser />
-                    <span className="uppercase ml-2">Mon Profil</span>
+                    <span className="uppercase ml-2">Mon Profile</span>
                   </p>
                 </Link>
               </div>

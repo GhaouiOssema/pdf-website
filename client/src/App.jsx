@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import Navbar from "./components/NavBar";
@@ -12,7 +12,6 @@ import Sites from "./components/Sites";
 import Home from "./components/home/Home";
 import Footer from "./components/Footer";
 import Profile from "./components/Profile";
-import VerificationCode from "./components/VerificationCode";
 import SideBar from "./components/SideBar";
 import Plan from "./components/Plan";
 import FicheTechnique from "./components/FicheTechnique";
@@ -24,9 +23,13 @@ import PublicPlan from "./components/public/PublicPlan";
 import PublicFicheTechnique from "./components/public/PublicFicheTechnique";
 import PublicDoeFiles from "./components/public/PublicDoeFiles";
 import PublicView from "./components/public/PublicView";
+import TopBar from "./components/TopBar";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const sidebarRef = useRef(null);
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -43,14 +46,31 @@ const App = () => {
     }
   }, []);
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen((prev) => !prev);
+  };
+
   return (
-    <div className="flex ">
-      {isAuthenticated && <SideBar isAuthenticated={isAuthenticated} />}
+    <div className="flex">
+      {isAuthenticated && (
+        <SideBar
+          isSidebarOpen={isSidebarOpen}
+          setIsSidebarOpen={setIsSidebarOpen}
+          sidebarRef={sidebarRef}
+          toggleSidebar={toggleSidebar}
+        />
+      )}
 
       <div className="flex-grow">
         {!isAuthenticated && <Navbar isAuthenticated={isAuthenticated} />}
 
         <div className="container bg-gray-100 h-full">
+          {isAuthenticated && (
+            <TopBar
+              toggleSidebar={toggleSidebar}
+              isSidebarOpen={isSidebarOpen}
+            />
+          )}
           <Routes>
             <Route path="/" element={isAuthenticated ? null : <Home />} />
             <Route path="/seconnecter" element={<Login />} />

@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);
-  const [imageData, setImageData] = useState(null); // To store the Base64 image data
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,7 +39,7 @@ const Profile = () => {
   if (userData === null) {
     return <div>Loading...</div>;
   }
-  console.log(userData);
+
   return (
     <div>
       <div className="bg-gray-100 h-screen">
