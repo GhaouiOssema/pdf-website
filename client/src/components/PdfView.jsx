@@ -26,6 +26,7 @@ import {
   TableRow,
 } from "@mui/material";
 import DOEButtonsGroup from "./DOEButtonsGroup";
+import { itemTextStyle, itemsStyle } from "../utils/utils";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -34,7 +35,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 600,
+  width: { lg: 600, md: 600, sm: 500, xs: 350 },
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -95,33 +96,19 @@ const TransitionsModal = ({ open, handleClose, raports, filteredRaports }) => {
             {filteredRaports &&
               filteredRaports.map((raport, index) => (
                 <Box sx={{ maxHeight: "400px", overflow: "auto" }} key={index}>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      flexWrap: "wrap",
-                    }}
-                  >
+                  <Box sx={itemsStyle}>
                     <Typography variant="h6" gutterBottom>
                       société
                     </Typography>
-                    <Typography variant="h7" gutterBottom>
+                    <Typography variant="h7" gutterBottom sx={itemTextStyle}>
                       {raport.société}
                     </Typography>
                   </Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      flexWrap: "wrap",
-                    }}
-                  >
+                  <Box sx={itemsStyle}>
                     <Typography variant="h6" gutterBottom>
                       Date
                     </Typography>
-                    <Typography variant="h7" gutterBottom>
+                    <Typography variant="h7" gutterBottom sx={itemTextStyle}>
                       {
                         new Date(raport.dateDernierEntretien)
                           .toISOString()
@@ -129,63 +116,35 @@ const TransitionsModal = ({ open, handleClose, raports, filteredRaports }) => {
                       }
                     </Typography>
                   </Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      flexWrap: "wrap",
-                    }}
-                  >
+                  <Box sx={itemsStyle}>
                     <Typography variant="h6" gutterBottom>
                       Correctif ou Préventif
                     </Typography>
-                    <Typography variant="h7" gutterBottom>
+                    <Typography variant="h7" gutterBottom sx={itemTextStyle}>
                       {raport.options.map((el) => el)}
                     </Typography>
                   </Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      flexWrap: "wrap",
-                    }}
-                  >
+                  <Box sx={itemsStyle}>
                     <Typography variant="h6" gutterBottom>
                       Observation
                     </Typography>
-                    <Typography variant="h7" gutterBottom>
+                    <Typography variant="h7" gutterBottom sx={itemTextStyle}>
                       {raport.observation}
                     </Typography>
                   </Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      flexWrap: "wrap",
-                    }}
-                  >
+                  <Box sx={itemsStyle}>
                     <Typography variant="h6" gutterBottom>
                       Tàche effectuer
                     </Typography>
-                    <Typography variant="h7" gutterBottom>
+                    <Typography variant="h7" gutterBottom sx={itemTextStyle}>
                       {raport.piècesChangées}
                     </Typography>
                   </Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      flexWrap: "wrap",
-                    }}
-                  >
+                  <Box sx={itemsStyle}>
                     <Typography variant="h6" gutterBottom>
                       Date prochain maintenance
                     </Typography>
-                    <Typography variant="h7" gutterBottom>
+                    <Typography variant="h7" gutterBottom sx={itemTextStyle}>
                       {
                         new Date(raport.dateProchainEntretien)
                           .toISOString()
@@ -385,7 +344,7 @@ const PdfView = () => {
   }
 
   return (
-    <section className="flex flex-col max-w-screen-2xl	">
+    <section className="flex flex-col h-screen">
       {open && (
         <TransitionsModal
           open={open}
@@ -450,24 +409,54 @@ const PdfView = () => {
             axis={theme.direction === "rtl" ? "x-reverse" : "x"}
             index={value}
             onChangeIndex={handleChangeIndex}
-            className="text-black"
+            className="text-black w-full"
           >
             <TabPanel value={value} index={0} dir={theme.direction}>
-              <TableContainer component={Paper}>
-                <Table
-                  sx={{ minWidth: 650 }}
-                  size="small"
-                  aria-label="a dense table"
-                >
+              <TableContainer className="bg-white">
+                <Table size="small" aria-label="a dense table">
                   <TableHead>
                     <TableRow>
                       <TableCell align="center">Date</TableCell>
-                      <TableCell align="center">Sociéte</TableCell>
-                      <TableCell align="center">Tàche effectuer</TableCell>
-                      <TableCell align="center">
+                      <TableCell align="center">Société</TableCell>
+                      <TableCell
+                        align="center"
+                        sx={{
+                          display: {
+                            xs: "none",
+                            sm: "none",
+                            md: "table-cell",
+                            lg: "table-cell",
+                          },
+                        }}
+                      >
+                        Tâche effectuée
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        sx={{
+                          display: {
+                            xs: "none",
+                            sm: "none",
+                            md: "table-cell",
+                            lg: "table-cell",
+                          },
+                        }}
+                      >
                         Date du prochain entretien
                       </TableCell>
-                      <TableCell align="center">P/C</TableCell>
+                      <TableCell
+                        align="center"
+                        sx={{
+                          display: {
+                            xs: "none",
+                            sm: "none",
+                            md: "table-cell",
+                            lg: "table-cell",
+                          },
+                        }}
+                      >
+                        P/C
+                      </TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -487,17 +476,47 @@ const PdfView = () => {
                             }
                           </TableCell>
                           <TableCell align="center">{raport.société}</TableCell>
-                          <TableCell align="center">
+                          <TableCell
+                            align="center"
+                            sx={{
+                              display: {
+                                xs: "none",
+                                sm: "none",
+                                md: "table-cell",
+                                lg: "table-cell",
+                              },
+                            }}
+                          >
                             {raport.piècesChangées}
                           </TableCell>
-                          <TableCell align="center">
+                          <TableCell
+                            align="center"
+                            sx={{
+                              display: {
+                                xs: "none",
+                                sm: "none",
+                                md: "table-cell",
+                                lg: "table-cell",
+                              },
+                            }}
+                          >
                             {
                               new Date(raport.dateProchainEntretien)
                                 .toISOString()
                                 .split("T")[0]
                             }
                           </TableCell>
-                          <TableCell align="center">
+                          <TableCell
+                            align="center"
+                            sx={{
+                              display: {
+                                xs: "none",
+                                sm: "none",
+                                md: "table-cell",
+                                lg: "table-cell",
+                              },
+                            }}
+                          >
                             {raport.options.map((el) => el)}
                           </TableCell>
                           <TableCell align="center" sx={{ cursor: "pointer" }}>
@@ -517,7 +536,7 @@ const PdfView = () => {
               value={value}
               index={1}
               dir={theme.direction}
-              className="bg-white"
+              className="bg-white mt-5"
             >
               <div>
                 <Typography variant="h5" gutterBottom>
