@@ -9,6 +9,7 @@ import Tab from "@mui/joy/Tab";
 import TabPanel from "@mui/joy/TabPanel";
 import DefaultCarousel from "../DefaultCarousel";
 import { Accordion } from "flowbite-react";
+import Footer from "../Footer";
 
 const DescktopView = () => {
   const decouvrirSectionRef = useRef(null);
@@ -515,6 +516,8 @@ const DescktopView = () => {
           </div>
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 };

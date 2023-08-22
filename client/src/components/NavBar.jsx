@@ -37,7 +37,7 @@ const Navbar = () => {
           <nav className="px-4 lg:px-6 py-2.5 bg-none dark:bg-gray-800">
             <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-2xl">
               <a
-                href="https://flowbite.com"
+                href="#"
                 className="flex w-full lg:w-1/6 md:w-1/6 justify-center lg:justify-start md:justify-start items-center lg:mb-0 mb-5"
               >
                 <img

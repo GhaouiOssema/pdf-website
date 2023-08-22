@@ -10,7 +10,6 @@ import PdfDetails from "./components/PdfDetails";
 import PdfView from "./components/PdfView";
 import Sites from "./components/Sites";
 import Home from "./components/home/Home";
-import Footer from "./components/Footer";
 import Profile from "./components/Profile";
 import SideBar from "./components/SideBar";
 import Plan from "./components/Plan";
@@ -129,7 +128,6 @@ const App = () => {
             )}
           </Routes>
         </div>
-        {!isAuthenticated && <Footer />}
       </div>
     </div>
   );
