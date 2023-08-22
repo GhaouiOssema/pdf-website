@@ -112,6 +112,10 @@ const PublicDOEButtonsGroup = ({ pdfData }) => {
     setSelectedFileIndex(newValue);
     fetchDOEFiles(pdfData.doeFiles[selectedFileIndex].fileId);
   };
+  const getPdfViewerWidth = () => {
+    const screenWidth = screenSize.width;
+    return screenWidth < 700 ? screenWidth - 40 : 1000;
+  };
 
   return (
     <>
@@ -182,7 +186,7 @@ const PublicDOEButtonsGroup = ({ pdfData }) => {
                         pageNumber={index + 1}
                         renderTextLayer={false}
                         height={500}
-                        width={screenSize.width < 700 ? 200 : 1000}
+                        width={getPdfViewerWidth()}
                         className="mt-1"
                       />
                     ))}

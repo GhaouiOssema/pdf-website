@@ -125,6 +125,11 @@ const DOEButtonsGroup = ({ pdfData }) => {
     fetchDOEFiles(pdfData.doeFiles[selectedFileIndex].fileId);
   };
 
+  const getPdfViewerWidth = () => {
+    const screenWidth = screenSize.width;
+    return screenWidth < 700 ? screenWidth - 40 : 1000;
+  };
+
   return (
     <>
       {pdfData.doeFiles && (
@@ -184,8 +189,8 @@ const DOEButtonsGroup = ({ pdfData }) => {
               >
                 <Document
                   file={`data:application/pdf;base64,${file}`}
-                  className="flex justify-center"
                   onLoadSuccess={handlePdfLoadSuccess}
+                  className="flex justify-center"
                 >
                   {pdfLoaded &&
                     Array.from(new Array(numPages), (el, index) => (
@@ -194,7 +199,7 @@ const DOEButtonsGroup = ({ pdfData }) => {
                         pageNumber={index + 1}
                         renderTextLayer={false}
                         height={500}
-                        width={screenSize.width < 700 ? 349 : 1000}
+                        width={getPdfViewerWidth()}
                         className="mt-1"
                       />
                     ))}
