@@ -6,6 +6,7 @@ import {
   Checkbox,
   TextField,
   Stack,
+  Typography,
 } from "@mui/material";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
@@ -196,8 +197,8 @@ const RaportView = ({
               sx={{
                 bgcolor: "white",
                 height: "100%",
-                borderRadius: "25px",
-                width: 500,
+                borderRadius: 2,
+                width: { lg: 500, md: 500, sm: 300, xs: 300 },
                 display: "flex",
                 justifyContent: "center",
               }}
@@ -206,13 +207,15 @@ const RaportView = ({
                 <div className="w-full max-w-lg ">
                   {type === "siteButton" ? (
                     <>
-                      <h1 className="pt-10 text-center text-gray-700 text-lg font-bold mb-10">
-                        <span>Villiuer saisir les informations du site</span>
+                      <h1 className="pt-10  uppercase tracking-wide text-center text-gray-700 text-lg font-bold mb-10 flex justify-center items-center">
+                        <span className="text-sm">
+                          Modifier les informations du site
+                        </span>
                       </h1>
 
-                      <div className="w-full mb-6 md:flex md:flex-wrap mx-auto">
+                      <div className=" w-full mb-6 md:flex md:flex-wrap mx-auto flex justify-center">
                         <TextField
-                          className="m-1 w-full"
+                          className="m-1 w-[80%]"
                           id="nom_site"
                           label="Nom du site"
                           variant="outlined"
@@ -224,23 +227,23 @@ const RaportView = ({
                       </div>
 
                       <div className="flex flex-wrap mb-2 justify-center">
-                        <div className="w-full md:w-1/2 px-1 mb-6">
+                        <div className=" w-full mb-6 md:flex md:flex-wrap mx-auto flex justify-center">
                           <TextField
+                            className="m-1 w-[80%]"
                             id="adress_site"
                             label="Adresse du site"
                             variant="outlined"
-                            fullWidth
                             size="small"
                             value={siteAddress}
                             onChange={handleSiteAddressChange}
                           />
                         </div>
-                        <div className="w-full md:w-1/2 px-1 mb-6">
+                        <div className=" w-full mb-6 md:flex md:flex-wrap mx-auto flex justify-center">
                           <TextField
+                            className="m-1 w-[80%]"
                             id="code_postal"
                             label="Code postal"
                             variant="outlined"
-                            className="w-32 md:w-40"
                             size="small"
                             value={siteCodePostal}
                             onChange={handleSiteCodePostalChange}
@@ -248,8 +251,8 @@ const RaportView = ({
                         </div>
                       </div>
 
-                      <div className="w-full px-1 mb-6 mx-auto">
-                        <FormControl size="small" className="w-full">
+                      <div className=" w-full mb-6 md:flex md:flex-wrap mx-auto flex justify-center">
+                        <FormControl size="small" className="m-1 w-[80%]">
                           <InputLabel id="demo-multiple-checkbox-label">
                             Category
                           </InputLabel>
@@ -296,7 +299,7 @@ const RaportView = ({
                     </>
                   ) : type === "editSite" ? (
                     <>
-                      <h1 className="pt-10 block uppercase tracking-wide text-center text-gray-700 text-lg font-bold mb-10 flex justify-center items-center">
+                      <h1 className="pt-10  uppercase tracking-wide text-center text-gray-700 text-lg font-bold mb-10 flex justify-center items-center">
                         <span className="text-sm">
                           Modifier les informations du site
                         </span>

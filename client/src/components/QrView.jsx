@@ -43,7 +43,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: { lg: 400, md: 400, sm: 300, xs: 300 },
   bgcolor: "background.paper",
   boxShadow: 24,
   p: 4,
@@ -87,13 +87,13 @@ const QrView = ({ open, setOpen, site, dossier, id }) => {
             >
               Scannez moi
             </Typography>
-            <div className="flex flex justify-center items-center">
+            <div className="flex justify-center items-center">
               <div
                 className="w-auto h-auto bg-black  mt-2 mb-2"
                 ref={qrCodeRef}
               >
                 <QRCode
-                  className="w-auto h-auto"
+                  className="w-auto h-auto "
                   value={`${
                     import.meta.env.VITE_NETLIFY_URL
                   }/publique/${site}/${dossier}/pdf/${id}`}
