@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Footer from "../Footer";
 
 const isEmailValid = (email) => {
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -67,59 +68,64 @@ const Login = () => {
   }, []);
 
   return (
-    <div className="h-full mt-[-1%] w-screen-lg lg:w-screen  flex justify-center items-center flex-wrap bg-gray-100">
-      <div
-        className={`${
-          screenSize.width > 700
-            ? "w-1/3 p-6 bg-white rounded shadow-lg"
-            : "bg-white rounded shadow-lg p-6"
-        }`}
-      >
-        <form className="bg-white" onSubmit={handleSubmit}>
-          <h1 className="text-gray-800 font-bold text-2xl mb-1">
-            Hello Again!
-          </h1>
-          <p className="text-sm font-normal text-gray-600 mb-7">Welcome Back</p>
-          <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
-            <input
-              type="email"
-              id="email"
-              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring ${
-                screenSize.width > 700 ? "" : "text-sm"
-              }`}
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              pattern={emailRegex}
-            />
-          </div>
-          <div className="flex items-center border-2 py-2 px-3 rounded-2xl">
-            <input
-              type="password"
-              id="password"
-              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring ${
-                screenSize.width > 700 ? "" : "text-sm"
-              }`}
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          <button
-            type="submit"
-            className="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2"
-          >
-            Login
-          </button>
-          <Link to="/seconnecter/oublier">
-            <span className="text-sm ml-2 hover:text-blue-500 cursor-pointer">
-              Forgot Password?
-            </span>
-          </Link>
-        </form>
+    <div className="flex h-full flex-col lg:h-screen md:h-screen ">
+      <div className="h-screen mt-[-1%] w-screen-lg lg:w-screen  flex justify-center items-center flex-wrap bg-gray-100">
+        <div
+          className={`mb-5 ${
+            screenSize.width > 700
+              ? "w-1/3 p-6 bg-white rounded shadow-lg"
+              : "bg-white rounded shadow-lg p-6"
+          }`}
+        >
+          <form className="bg-white" onSubmit={handleSubmit}>
+            <h1 className="text-gray-800 font-bold text-2xl mb-1">
+              Hello Again!
+            </h1>
+            <p className="text-sm font-normal text-gray-600 mb-7">
+              Welcome Back
+            </p>
+            <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
+              <input
+                type="email"
+                id="email"
+                className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring ${
+                  screenSize.width > 700 ? "" : "text-sm"
+                }`}
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                pattern={emailRegex}
+              />
+            </div>
+            <div className="flex items-center border-2 py-2 px-3 rounded-2xl">
+              <input
+                type="password"
+                id="password"
+                className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring ${
+                  screenSize.width > 700 ? "" : "text-sm"
+                }`}
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              className="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2"
+            >
+              Login
+            </button>
+            <Link to="/seconnecter/oublier">
+              <span className="text-sm ml-2 hover:text-blue-500 cursor-pointer">
+                Forgot Password?
+              </span>
+            </Link>
+          </form>
+        </div>
       </div>
+      <Footer />
     </div>
   );
 };
