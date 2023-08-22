@@ -19,6 +19,24 @@ export const infoSteps = [
   },
 ];
 
+export function truncateText(text, maxLength) {
+  const words = text.split(" ");
+
+  let truncatedText = "";
+  let currentLength = 0;
+
+  for (const word of words) {
+    if (currentLength + word.length <= maxLength) {
+      truncatedText += word + " ";
+      currentLength += word.length + 1;
+    } else {
+      break;
+    }
+  }
+
+  return truncatedText.trim() + (currentLength < text.length ? "..." : "");
+}
+
 export const itemsStyle = {
   display: "flex",
   flexDirection: { lg: "row", md: "row", sm: "column", xs: "column" },
@@ -43,5 +61,20 @@ export const itemTextStyle = {
   p: 1.5,
   width: "100%",
   background: "#f3f4f6",
+  borderRadius: 2,
+  whiteSpace: "normal",
+  wordWrap: "break-word",
+};
+
+export const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: { lg: 600, md: 600, sm: 500, xs: 350 },
+  bgcolor: "background.paper",
+  border: "2px solid white",
+  boxShadow: 24,
+  p: 4,
   borderRadius: 2,
 };

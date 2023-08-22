@@ -1,13 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
-import { Document, Page, pdfjs } from "react-pdf";
-import "react-pdf/dist/esm/Page/AnnotationLayer.css";
-import { IoIosArrowBack } from "react-icons/io";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@mui/material/styles";
-import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
@@ -25,22 +21,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import DOEButtonsGroup from "./DOEButtonsGroup";
-import { itemTextStyle, itemsStyle } from "../utils/utils";
-
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: { lg: 600, md: 600, sm: 500, xs: 350 },
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+import { itemTextStyle, itemsStyle, style, truncateText } from "../utils/utils";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -214,30 +195,6 @@ const PdfView = () => {
     getPdfData();
   }, [id]);
 
-  const handlePdfLoadSuccess = ({ numPages }) => {
-    setNumPages(numPages);
-  };
-
-  const [screenSize, setScreenSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
-  });
-
-  useEffect(() => {
-    const handleResize = () => {
-      setScreenSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
   const handleDownload = () => {
     const url = `${import.meta.env.VITE_SERVER_API_URL}/files/${
       pdfData.filename
@@ -306,8 +263,8 @@ const PdfView = () => {
 
       if (response.status === 200) {
         alert("Raport sent");
-        // window.location.reload();
-        // setValue(2);
+        window.location.reload();
+        setValue(0);
       }
     } catch (error) {
       console.log("Error sending report:", error);
@@ -409,10 +366,10 @@ const PdfView = () => {
             axis={theme.direction === "rtl" ? "x-reverse" : "x"}
             index={value}
             onChangeIndex={handleChangeIndex}
-            className="text-black w-full"
+            className="text-black lg:w-full md:w-full w-screen-xl"
           >
             <TabPanel value={value} index={0} dir={theme.direction}>
-              <TableContainer className="bg-white">
+              <TableContainer className="bg-white w-full boor">
                 <Table size="small" aria-label="a dense table">
                   <TableHead>
                     <TableRow>
@@ -487,7 +444,7 @@ const PdfView = () => {
                               },
                             }}
                           >
-                            {raport.piècesChangées}
+                            {truncateText(raport.piècesChangées, 40)}
                           </TableCell>
                           <TableCell
                             align="center"

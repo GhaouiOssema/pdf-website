@@ -12,14 +12,14 @@ import { Accordion } from "flowbite-react";
 
 const MobileView = () => {
   return (
-    <div className="h-full w-full">
+    <div className="h-full w-auto">
       <motion.section
-        className="flex flex-col items-center justify-center md:mt-10 h-screen  mt-20"
+        className="flex flex-col items-center justify-center h-screen"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <div className="flex flex-col items-center justify-center mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:flex-row">
-          <div className="md:absolute place-self-center py-8 px-10 max-w-screen-xl rounded-xl">
+        <div className="flex flex-col items-center justify-center top-0 mt-[-10%]">
+          <div className="md:absolute place-self-center py-8 px-10 max-w-screen-lg rounded-xl">
             <div
               className="w-[250px] h-[150px] ml-[10px] absolute"
               style={{
@@ -32,17 +32,11 @@ const MobileView = () => {
               }}
             />
             <motion.h1
-              className="md:h-[23vh] w-75 gradient-text text-2xl text-black text-center font-extrabold md:text-5xl xl:text-6xl"
+              className="w-75 gradient-text text-lg text-black text-start font-extrabold"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
             >
-              <h3 className="md:pb-1">Une maintenance simplifiée</h3>
-              {/* <img
-                alt="scribble"
-                src={IMG}
-                className="mx-auto absolute md:ml-[16rem] md:h-[2rem] md:-mt-10 md:w-[200px]"
-              /> */}
-              <span className="block mt-2">dès aujourd'hui.</span>
+              Une maintenance simplifiée dès aujourd'hui.
             </motion.h1>
             <br />
             <motion.div
@@ -50,12 +44,12 @@ const MobileView = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
-              <p className="flex flex-col text-start w-full">
+              <span className="flex flex-colfont-thin text-start w-full">
                 Maximisez l'efficacité de votre gestion et entretien
                 d'équipements grâce à notre solution QR . Bénéficiez d'une
                 maintenance simplifiée qui assure une performance optimale de
-                vos <span className="lg-text-center">installations.</span>
-              </p>
+                vos installations.
+              </span>
             </motion.div>
             <motion.div
               className="flex flex-col md:flex-row lg:flex-row xl-flex-row items-center"
@@ -165,7 +159,7 @@ const MobileView = () => {
         </Accordion>
       </section>
 
-      <section className="p-5 bg-gray-800 text-gray-100 w-[21rem] boor md:h-[90vh] mb-[15rem]">
+      <section className="p-5 bg-gray-800 text-gray-100 w-[21rem] md:h-[90vh] mb-[15rem]">
         <div className=" mx-auto">
           <span className="block mb-2 text-xs font-medium tracki text-center uppercase text-violet-400">
             How it works
