@@ -11,6 +11,12 @@ import DefaultCarousel from "../DefaultCarousel";
 import { Accordion } from "flowbite-react";
 
 const MobileView = () => {
+  const decouvrirSectionRef = useRef(null);
+
+  const scrollToDecouvrir = () => {
+    decouvrirSectionRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <div className="h-full w-auto">
       <motion.section
@@ -56,12 +62,12 @@ const MobileView = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
-              <motion.button
-                href="#decouvrir"
+              <motion.a
+                onClick={scrollToDecouvrir}
                 className="w-full inline-flex justify-center items-center py-3 mb-3 text-base font-medium text-center text-white rounded-lg custome__border__blue bg-[#F0854A] hover:bg-[#F0854A]"
               >
                 Découvrir plus
-              </motion.button>
+              </motion.a>
               <motion.button
                 className="w-full inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-[#125ba3] hover:text-white rounded-lg custome__border border-[#125ba3] hover:bg-[#125ba3]"
                 initial={{ opacity: 0 }}
@@ -74,7 +80,10 @@ const MobileView = () => {
           <div className="hidden lg:flex lg:col-span-5"></div>
         </div>
       </motion.section>
-      <motion.section className="  md:h-[300px] mb-[2rem]">
+      <motion.section
+        className="  md:h-[300px] mb-[2rem]"
+        ref={decouvrirSectionRef}
+      >
         <DefaultCarousel />
       </motion.section>
 

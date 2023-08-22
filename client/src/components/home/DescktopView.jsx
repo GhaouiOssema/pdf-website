@@ -11,8 +11,13 @@ import DefaultCarousel from "../DefaultCarousel";
 import { Accordion } from "flowbite-react";
 
 const DescktopView = () => {
+  const decouvrirSectionRef = useRef(null);
+
+  const scrollToDecouvrir = () => {
+    decouvrirSectionRef.current.scrollIntoView({ behavior: "smooth" });
+  };
   return (
-    <div className="w-full bg-gray-100">
+    <div className="w-full bg-gray-100 h-screen">
       <motion.section
         className="flex flex-col items-center justify-center md:mt-10 md:h-[90.5vh]"
         initial={{ opacity: 0, y: -50 }}
@@ -60,12 +65,12 @@ const DescktopView = () => {
               </p>
             </motion.div>
             <motion.div
-              className="flex items-center justify-center"
+              className="flex items-center justify-center cursor-pointer"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
               <a
-                href="#decouvrir"
+                onClick={scrollToDecouvrir}
                 className="inline-flex justify-center items-center py-3 px-5 mr-3 text-base font-medium text-center text-white rounded-lg custome__border__blue bg-[#F0854A] hover:bg-[#F0854A]"
               >
                 Découvrir plus
@@ -95,7 +100,10 @@ const DescktopView = () => {
         </div>
       </motion.section>
 
-      <motion.section className="  md:h-[300px] mb-[5rem]">
+      <motion.section
+        className="  md:h-[300px] mb-[5rem]"
+        ref={decouvrirSectionRef}
+      >
         <DefaultCarousel />
       </motion.section>
 
