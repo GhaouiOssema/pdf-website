@@ -207,9 +207,9 @@ const RaportView = ({
                 <div className="w-full max-w-lg ">
                   {type === "siteButton" ? (
                     <>
-                      <h1 className="pt-10  uppercase tracking-wide text-center text-gray-700 text-lg font-bold mb-10 flex justify-center items-center">
-                        <span className="text-sm">
-                          Modifier les informations du site
+                      <h1 className="pt-10 uppercase tracking-wide text-center text-gray-700 text-lg font-bold mb-10 flex justify-center items-center flex-wrap whitespace-normal sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
+                        <span className="text-sm sm:text-base md:text-lg lg:text-lg xl:text-lg">
+                          Veuillez saisir les informations du site
                         </span>
                       </h1>
 
@@ -299,8 +299,8 @@ const RaportView = ({
                     </>
                   ) : type === "editSite" ? (
                     <>
-                      <h1 className="pt-10  uppercase tracking-wide text-center text-gray-700 text-lg font-bold mb-10 flex justify-center items-center">
-                        <span className="text-sm">
+                      <h1 className="pt-10 uppercase tracking-wide text-center text-gray-700 text-lg font-bold mb-10 flex justify-center items-center flex-wrap whitespace-normal sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
+                        <span className="text-sm sm:text-base md:text-lg lg:text-lg xl:text-lg">
                           Modifier les informations du site
                         </span>
                       </h1>
