@@ -227,7 +227,7 @@ const Sites = () => {
   };
 
   return (
-    <div className="h-full bg-gray-100">
+    <div className="h-screen bg-gray-100">
       <Dialog open={filterOpen} onClose={handleCloseFilter}>
         <DialogTitle>Filter Options</DialogTitle>
         <DialogContent>

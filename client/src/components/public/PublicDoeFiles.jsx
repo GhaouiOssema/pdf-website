@@ -46,7 +46,7 @@ const a11yProps = (index) => {
 };
 
 const PublicDoeFiles = () => {
-  const { pdfid } = useParams();
+  const { id } = useParams();
   const [pdfData, setPdfData] = useState(null);
   useEffect(() => {
     const getPdfData = async () => {
@@ -54,7 +54,7 @@ const PublicDoeFiles = () => {
         const response = await axios.get(
           `${
             import.meta.env.VITE_SERVER_API_URL
-          }/public/site/folder/pdf/details/doe/${pdfid}`
+          }/public/site/folder/pdf/details/doe/${id}`
         );
         setPdfData(response.data.pdf);
       } catch (error) {
@@ -62,7 +62,7 @@ const PublicDoeFiles = () => {
       }
     };
     getPdfData();
-  }, [pdfid]);
+  }, [id]);
 
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
@@ -95,7 +95,7 @@ const PublicDoeFiles = () => {
       <h1 className="text-3xl text-center font-bold mt-5 mb-5">
         Les DOE d'equipement
       </h1>
-      <div className="flex justify-center bg-gray-100">
+      <div className="flex justify-center ">
         <Box sx={{ bgcolor: "", width: "80%", color: "white" }}>
           <Box
             sx={{
@@ -141,7 +141,12 @@ const PublicDoeFiles = () => {
             onChangeIndex={handleChangeIndex}
             className="text-black"
           >
-            <TabPanel value={value} index={0} dir={theme.direction}>
+            <TabPanel
+              value={value}
+              index={0}
+              dir={theme.direction}
+              className=" w-full"
+            >
               <DOEButtonsGroup pdfData={pdfData} />
             </TabPanel>
           </SwipeableViews>

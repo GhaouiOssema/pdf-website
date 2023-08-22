@@ -70,7 +70,7 @@ const PublicFicheTechnique = () => {
   }, []);
 
   return (
-    <div className="bg-gray-100 flex justify-center items-center pt-20">
+    <div className="flex justify-center items-center pt-20">
       {error && !pdfData ? (
         <Typography variant="h5" color="error">
           {error}

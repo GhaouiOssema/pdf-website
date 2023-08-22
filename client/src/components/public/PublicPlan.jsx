@@ -70,7 +70,7 @@ const PublicPlan = () => {
   }, []);
 
   return (
-    <div className="bg-gray-100 flex justify-center items-center pt-20">
+    <div className=" flex justify-center items-center pt-20">
       {error && !pdfData ? (
         <Typography variant="h5" color="error">
           {error}
@@ -87,23 +87,23 @@ const PublicPlan = () => {
           <CircularProgress />
         </Box>
       ) : (
-        <Document 
-  file={`data:application/pdf;base64,${pdfData}`} 
-  className="flex flex-col items-center" 
-  onLoadSuccess={handlePdfLoadSuccess} 
-> 
-  {pdfLoaded && 
-    Array.from(new Array(numPages), (el, index) => ( 
-      <Page 
-        key={index} 
-        pageNumber={index + 1} 
-        renderTextLayer={false} 
-        height={500} 
-        width={screenSize.width < 700 ? 349 : 1000} 
-        className="mt-1" 
-      /> 
-    ))} 
-</Document>
+        <Document
+          file={`data:application/pdf;base64,${pdfData}`}
+          className="flex flex-col items-center"
+          onLoadSuccess={handlePdfLoadSuccess}
+        >
+          {pdfLoaded &&
+            Array.from(new Array(numPages), (el, index) => (
+              <Page
+                key={index}
+                pageNumber={index + 1}
+                renderTextLayer={false}
+                height={500}
+                width={screenSize.width < 700 ? 349 : 1000}
+                className="mt-1"
+              />
+            ))}
+        </Document>
       )}
     </div>
   );

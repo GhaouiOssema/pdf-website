@@ -184,7 +184,7 @@ const DOEButtonsGroup = ({ pdfData }) => {
               >
                 <Document
                   file={`data:application/pdf;base64,${file}`}
-                  className="hidden__class"
+                  className="flex justify-center"
                   onLoadSuccess={handlePdfLoadSuccess}
                 >
                   {pdfLoaded &&

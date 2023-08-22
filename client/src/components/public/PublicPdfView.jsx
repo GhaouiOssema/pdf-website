@@ -149,7 +149,7 @@ const PublicPdfView = () => {
   return (
     <>
       {pdfData ? (
-        <div className="h-screen">
+        <div className="h-screen ">
           <div className="flex flex-col items-center justify-center mt-20">
             <h1 className="text-3xl text-center font-bold mb-5">
               <span className="">Fiche d'équipement</span>
@@ -368,7 +368,11 @@ const PublicPdfView = () => {
                           Date d'installation :
                         </h1>
                         <span className="ml-3 text-black">
-                          {new Date(pdfData?.pdfDetails?.installationDate).toISOString().split("T")[0]}
+                          {
+                            new Date(pdfData?.pdfDetails?.installationDate)
+                              .toISOString()
+                              .split("T")[0]
+                          }
                         </span>
                       </div>
                     </>
@@ -489,7 +493,7 @@ const PublicPdfView = () => {
                       page={page}
                       onPageChange={handleChangePage}
                       onRowsPerPageChange={handleChangeRowsPerPage}
-labelRowsPerPage="Lignes par page"
+                      labelRowsPerPage="Lignes par page"
                     />
                   </div>
                 </div>

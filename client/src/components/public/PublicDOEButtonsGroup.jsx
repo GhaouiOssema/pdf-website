@@ -47,7 +47,7 @@ function a11yProps(index) {
   };
 }
 
-const DOEButtonsGroup = ({ pdfData }) => {
+const PublicDOEButtonsGroup = ({ pdfData }) => {
   const theme = useTheme();
   const [selectedFileIndex, setSelectedFileIndex] = useState(0);
   const [doeFiles, setDOEFiles] = useState([]);
@@ -85,15 +85,15 @@ const DOEButtonsGroup = ({ pdfData }) => {
       const response = await axios.get(
         `${
           import.meta.env.VITE_SERVER_API_URL
-        }/public/site/folder/pdf/details/doefiles/${id}}`,
+        }/public/site/folder/pdf/details/doeFiles/${id}`,
         { responseType: "arraybuffer" }
       );
 
       setLoading(true);
 
-      // Create a Blob from the array buffer
       const blob = new Blob([response.data], { type: "application/pdf" });
 
+      // Convert the Blob to a base64 string
       const reader = new FileReader();
       reader.onloadend = () => {
         const base64Pdf = reader.result.split(",")[1];
@@ -119,11 +119,11 @@ const DOEButtonsGroup = ({ pdfData }) => {
         <Box
           sx={{ bgcolor: "background.paper", width: "100%", minHeight: "70vh" }}
         >
-          <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <Box sx={{ display: "flex" }}>
             <Box
               sx={{
                 flexGrow: 1,
-                maxWidth: { xs: 320, sm: 480, md: "100%" },
+                maxWidth: { xs: 500, sm: 500, md: "100%" },
                 bgcolor: "white",
               }}
             >
@@ -172,8 +172,8 @@ const DOEButtonsGroup = ({ pdfData }) => {
               >
                 <Document
                   file={`data:application/pdf;base64,${file}`}
-                  className="hidden__class"
                   onLoadSuccess={handlePdfLoadSuccess}
+                  className="flex justify-center"
                 >
                   {pdfLoaded &&
                     Array.from(new Array(numPages), (el, index) => (
@@ -182,7 +182,7 @@ const DOEButtonsGroup = ({ pdfData }) => {
                         pageNumber={index + 1}
                         renderTextLayer={false}
                         height={500}
-                        width={screenSize.width < 700 ? 349 : 1000}
+                        width={screenSize.width < 700 ? 200 : 1000}
                         className="mt-1"
                       />
                     ))}
@@ -196,4 +196,4 @@ const DOEButtonsGroup = ({ pdfData }) => {
   );
 };
 
-export default DOEButtonsGroup;
+export default PublicDOEButtonsGroup;
