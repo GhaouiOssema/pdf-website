@@ -118,7 +118,7 @@ const App = () => {
                   element={<PublicFicheTechnique />}
                 />
                 <Route
-                  path="/publique/:site/:dossier/pdf/detail/doe/:pdfid"
+                  path="/publique/:site/:dossier/pdf/detail/doe/:id"
                   element={<PublicDoeFiles />}
                 />
                 <Route
