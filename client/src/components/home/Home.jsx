@@ -9,10 +9,6 @@ const Home = () => {
   const [isNavbarVisible, setIsNavbarVisible] = useState(false);
   const pages = ["connexion", "inscription", "Home"];
 
-  const isActiveNavItem = (navItem) => {
-    return location.pathname === navItem;
-  };
-
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -51,14 +47,26 @@ const Home = () => {
                   alt="Flowbite Logo"
                 />
               </a>
-              <div className="flex justify-center items-center lg:w-[26.2%] md:w-[26.2%] w-full">
+              <div className=" flex justify-center items-center lg:w-[26.2%] md:w-[26.2%] w-full">
                 <Link
                   to={"/"}
-                  onClick={() => setOpenMenu(false)}
-                  className="cursor-pointer text-black text-sm px-4 py-2.5 mr-2 line-container-2"
+                  className="cursor-pointer text-black font-medium text-sm px-4 py-2.5 mr-2"
+                  style={{ position: "relative", display: "inline-block" }}
                 >
                   {pages[2]}
+                  <span
+                    style={{
+                      position: "absolute",
+                      bottom: 0,
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                      width: "50%",
+                      height: "3px",
+                      background: "#F0854A",
+                    }}
+                  />
                 </Link>
+
                 <Link
                   to={"/seconnecter"}
                   className="cursor-pointer text-black text-sm px-4 py-2.5 mr-2"

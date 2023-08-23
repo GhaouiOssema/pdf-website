@@ -117,9 +117,21 @@ const Register = () => {
               </Link>
               <Link
                 to={"/inscription"}
-                className="cursor-pointer text-black font-medium text-sm px-4 py-2.5 mr-2 line-container-2"
+                className="cursor-pointer text-black font-medium text-sm px-4 py-2.5 mr-2"
+                style={{ position: "relative", display: "inline-block" }}
               >
                 {pages[1]}
+                <span
+                  style={{
+                    position: "absolute",
+                    bottom: 0,
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    width: "40%", // Adjust this value to control the width of the line
+                    height: "3px", // Adjust this value for the height of the line
+                    background: "#F0854A", // Adjust the color as needed
+                  }}
+                />
               </Link>
             </div>
           </div>
