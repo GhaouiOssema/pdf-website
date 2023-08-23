@@ -40,7 +40,6 @@ const Home = () => {
     <div className="bg-gray-100">
       {isNavbarVisible && (
         <header className="fixed w-full z-50 transition-all bg-white top-0">
-          {/* <div className="hidden"></div> */}
           <nav className="px-4 lg:px-6 py-2.5 bg-none dark:bg-gray-800">
             <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-2xl">
               <a
