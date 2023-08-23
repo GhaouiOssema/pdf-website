@@ -169,9 +169,7 @@ const MobileView = () => {
         </Accordion>
       </section>
 
-      {/* this */}
-
-      <section className="">
+      {/* <section className="">
         <div className=" rounded-lg bg-gray-800 text-gray-100 w-screen py-3 px-0 mb-[5rem]">
           <span className="block mb-2 text-xs font-medium tracki text-center uppercase text-violet-400">
             How it works
@@ -198,7 +196,7 @@ const MobileView = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       <section className="flex flex-col items-center justify-start mt-10 h-[80vh]">
         <Tabs
@@ -344,7 +342,6 @@ const MobileView = () => {
           </div>
         </div>
       </section>
-      <Footer />
     </div>
   );
 };
