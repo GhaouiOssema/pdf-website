@@ -91,7 +91,7 @@ const Register = () => {
   };
 
   return (
-    <div className="w-screen">
+    <div className="">
       <header className="fixed w-full z-50 transition-all bg-white top-0 left-0 right-0">
         <nav className="px-4 lg:px-6 py-2.5 bg-none dark:bg-gray-800">
           <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-2xl">
