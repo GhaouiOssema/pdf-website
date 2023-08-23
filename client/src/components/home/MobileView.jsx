@@ -198,6 +198,108 @@ const MobileView = () => {
         </div>
       </section> */}
 
+      <section className="md:w-lg md:h-[77vh] mb-[5rem]" id="decouvrir">
+        <div className="md:absolute bg-[#f3f3ff] bg-opacity-60 rounded-3xl shadow-lg md:mt-[-430px] py-8 px-4 md:h-[83vh] mx-auto md:max-w-screen-lg sm:py-16 lg:px-6 shadow-xl">
+          <div className="mb-8 max-w-screen-xl lg:mb-16 md:mt-[-20px]">
+            <h2 className="text-center mb-4 text-2xl font-extrabold text-gray-900 dark:text-white">
+              Avantages clés
+            </h2>
+            <p className="text-gray-500 text-center sm:text-xl dark:text-gray-400">
+              Boostez l'efficacité de votre maintenance
+            </p>
+          </div>
+          <motion.div
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8"
+            initial={{ opacity: 0, x: -100 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="flex flex-col items-center justify-center p-4 rounded-md bg-gray-100 dark:bg-gray-900">
+              <svg
+                className="w-8 h-8 text-primary-600 dark:text-primary-300"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 0l-2 2a1 1 0 101.414 1.414L8 10.414l1.293 1.293a1 1 0 001.414 0l4-4z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              <h3 className="mt-2 mb-1 text-xl font-bold dark:text-white">
+                Gagnez du temps
+              </h3>
+              <p className="text-gray-500 text-sm text-center">
+                Notre solution simplifie et accélère le processus de
+                maintenance, réduisant ainsi les temps d'arrêt de production.{" "}
+              </p>
+            </div>
+            <div className="flex flex-col items-center justify-center p-4 rounded-md bg-gray-100 dark:bg-gray-900">
+              <svg
+                className="w-8 h-8 text-primary-600 dark:text-primary-300"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"></path>
+              </svg>
+              <h3 className="mt-2 mb-1 text-xl font-bold dark:text-white">
+                Réduisez les coûts
+              </h3>
+              <p className="text-gray-500 text-sm text-center">
+                Une maintenance préventive basée sur des données précises aide à
+                prévenir les pannes coûteuses et prolonge la durée de vie de vos
+                machines.
+              </p>
+            </div>
+            <div className="flex flex-col items-center justify-center p-4 rounded-md bg-gray-100 dark:bg-gray-900">
+              <svg
+                className="w-8 h-8 text-primary-600 dark:text-primary-300"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M9 11V6C9 4.34315 10.3431 3 12 3C13.6569 3 15 4.34315 15 6V10.9673M10.4 21H13.6C15.8402 21 16.9603 21 17.816 20.564C18.5686 20.1805 19.1805 19.5686 19.564 18.816C20 17.9603 20 16.8402 20 14.6V12.2C20 11.0799 20 10.5198 19.782 10.092C19.5903 9.71569 19.2843 9.40973 18.908 9.21799C18.4802 9 17.9201 9 16.8 9H7.2C6.0799 9 5.51984 9 5.09202 9.21799C4.71569 9.40973 4.40973 9.71569 4.21799 10.092C4 10.5198 4 11.0799 4 12.2V14.6C4 16.8402 4 17.9603 4.43597 18.816C4.81947 19.5686 5.43139 20.1805 6.18404 20.564C7.03968 21 8.15979 21 10.4 21Z"
+                  stroke-width="2"
+                />
+              </svg>
+              <h3 className="mt-2 mb-1 text-xl font-bold dark:text-white">
+                Suivi centralisé
+              </h3>
+              <p className="text-gray-500 text-sm text-center">
+                Tous les rapports de maintenance sont automatiquement
+                enregistrés dans notre système, vous permettant de suivre
+                l'historique de chaque machine et de planifier les interventions
+                futures.
+              </p>
+            </div>
+            <div className="flex flex-col items-center justify-center p-4 rounded-md bg-gray-100 dark:bg-gray-900">
+              <svg
+                className="w-8 h-8 text-primary-600 dark:text-primary-300"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              <h3 className="mt-2 mb-1 text-xl font-bold dark:text-white">
+                Facilité d'utilisation
+              </h3>
+              <p className="text-gray-500 text-sm text-center">
+                une installation simple des codes QR et une interface
+                conviviale, facilitant ainsi leur utilisation.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       <section className="flex flex-col items-center justify-start mt-10 h-[80vh]">
         <Tabs
           aria-label="Vertical tabs"

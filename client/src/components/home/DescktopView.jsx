@@ -18,7 +18,7 @@ const DescktopView = () => {
     decouvrirSectionRef.current.scrollIntoView({ behavior: "smooth" });
   };
   return (
-    <div className=" bg-gray-100 h-screen w-screen">
+    <div className=" bg-gray-100 w-screen">
       <motion.section
         className="flex flex-col items-center justify-center  md:h-[90.5vh]"
         initial={{ opacity: 0, y: -50 }}
@@ -246,7 +246,7 @@ const DescktopView = () => {
         </div>
       </section>
 
-      {/* <section
+      <section
         className=" md:w-lg md:h-[77vh] mb-[5rem] ml-[8rem]"
         id="decouvrir"
       >
@@ -370,7 +370,7 @@ const DescktopView = () => {
             </div>
           </motion.div>
         </div>
-      </section> */}
+      </section>
 
       <section className="flex flex-col items-center justify-center md:mt-10 md:h-[80vh] md:w-full">
         <Tabs
