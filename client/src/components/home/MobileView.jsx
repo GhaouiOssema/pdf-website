@@ -169,8 +169,8 @@ const MobileView = () => {
         </Accordion>
       </section>
 
-      <section className="flex w-screen">
-        <div className=" rounded-lg bg-gray-800 text-gray-100 max-w-xs py-3 px-auto mb-[5rem]">
+      <section className="flex w-screen boor">
+        <div className=" rounded-lg bg-gray-800 text-gray-100 w-screen py-3 px-auto mb-[5rem]">
           <span className="block mb-2 text-xs font-medium tracki text-center uppercase text-violet-400">
             How it works
           </span>
