@@ -27,7 +27,7 @@ const MobileView = () => {
         animate={{ opacity: 1, y: 0 }}
       >
         <div className="flex flex-col items-center justify-center mt-[-10%] w-full">
-          <div className="md:absolute place-self-center py-screen max-w-screen-lg rounded-xl">
+          <div className="md:absolute place-self-center py-screen rounded-xl">
             <div
               className="w-[250px] h-[150px] ml-[10px] absolute"
               style={{
@@ -84,11 +84,11 @@ const MobileView = () => {
       </motion.section>
       <span ref={decouvrirSectionRef} />
 
-      <motion.section className=" md:h-[300px] mb-[2rem] flex w-full justify-center">
+      {/* <motion.section className=" md:h-[300px] mb-[2rem] flex w-full justify-center">
         <DefaultCarousel />
-      </motion.section>
+      </motion.section> */}
 
-      <section className="p-6 bg-gray-100 text-black-100 mb-[5rem]">
+      <section className="flex justify-center py-screen w-full bg-gray-100 text-black-100 mb-[5rem]">
         <Accordion collapseAll>
           <Accordion.Panel>
             <Accordion.Title style={{ color: "#000" }}>
@@ -169,12 +169,12 @@ const MobileView = () => {
         </Accordion>
       </section>
 
-      <section className="p-5 bg-gray-800 text-gray-100 w-[17.5rem] md:h-[90vh] mb-[5rem]">
+      <section className="bg-gray-800 text-gray-100 max-w-xs py-3 px-auto mb-[5rem]">
         <div className="">
           <span className="block mb-2 text-xs font-medium tracki text-center uppercase text-violet-400">
             How it works
           </span>
-          <h2 className="text-xl font-bold text-center text-gray-50">
+          <h2 className="text-lg font-bold text-center text-gray-50">
             Building with Mamba is simple
           </h2>
           <div className="grid gap-6 my-2 lg:grid-cols-3 w-full slides overflow-x-auto pb-9">
@@ -334,7 +334,7 @@ const MobileView = () => {
             <div className="h-[7vh] flex justify-center">
               <Link
                 to={"/inscription"}
-                className="boor text-white bg-primary-700 hover:bg-primary-800 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700"
+                className="text-white bg-primary-700 hover:bg-primary-800 font-medium rounded-lg text-sm px-5 flex flex-col justify-center dark:bg-primary-600 dark:hover:bg-primary-700"
               >
                 s'inscrire
               </Link>
