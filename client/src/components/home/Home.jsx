@@ -3,9 +3,16 @@ import "./home.css";
 import MobileView from "./MobileView";
 import DesktopView from "./DescktopView";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import LOGO from "../../assets/logo2.png";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const [isNavbarVisible, setIsNavbarVisible] = useState(false);
+  const pages = ["connexion", "inscription", "Home"];
+
+  const isActiveNavItem = (navItem) => {
+    return location.pathname === navItem;
+  };
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -31,6 +38,58 @@ const Home = () => {
 
   return (
     <div className="bg-gray-100">
+      {isNavbarVisible && (
+        <header className="fixed w-full z-50 transition-all bg-white top-0">
+          {/* <div className="hidden"></div> */}
+          <nav className="px-4 lg:px-6 py-2.5 bg-none dark:bg-gray-800">
+            <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-2xl">
+              <a
+                href="#"
+                className="flex w-full lg:w-1/6 md:w-1/6 justify-center lg:justify-start md:justify-start items-center lg:mb-0 mb-5"
+              >
+                <img
+                  src={LOGO}
+                  className="mr-3 h-6 sm:h-9"
+                  alt="Flowbite Logo"
+                />
+              </a>
+              <div className="flex items-center lg:w-[26.2%] md:w-[26.2%] w-full">
+                <div>
+                  <Link
+                    to={"/"}
+                    onClick={() => setOpenMenu(false)} // Close the menu after clicking
+                    className="cursor-pointer text-black font-medium text-sm px-5 py-2.5 mr-2 line-container"
+                  >
+                    {pages[2]}
+                  </Link>
+                </div>
+
+                <div>
+                  <Link
+                    to={"/seconnecter"}
+                    className={`cursor-pointer text-black font-medium text-sm px-5 py-2.5 mr-2 ${
+                      isActiveNavItem("/seconnecter") ? "line-container-1" : ""
+                    }`}
+                  >
+                    {pages[0]}
+                  </Link>
+                </div>
+
+                <div>
+                  <Link
+                    to={"/inscription"}
+                    className={`cursor-pointer text-black font-medium text-sm px-5 py-2.5 mr-2 ${
+                      isActiveNavItem("/inscription") ? "line-container-2" : ""
+                    }`}
+                  >
+                    {pages[1]}
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </nav>
+        </header>
+      )}
       <div className="xl:block lg:block md:block hidden ">
         <DesktopView />
       </div>

@@ -61,7 +61,7 @@ const App = () => {
       )}
 
       <div className="flex-grow">
-        {!isAuthenticated && <Navbar isAuthenticated={isAuthenticated} />}
+        {/* {!isAuthenticated && <Navbar isAuthenticated={isAuthenticated} />} */}
 
         <div className="container bg-gray-100 h-full">
           {isAuthenticated && (

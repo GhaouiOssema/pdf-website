@@ -18,14 +18,14 @@ const DescktopView = () => {
     decouvrirSectionRef.current.scrollIntoView({ behavior: "smooth" });
   };
   return (
-    <div className=" bg-gray-100 h-screen w-screen ">
+    <div className=" bg-gray-100 h-screen w-screen">
       <motion.section
-        className="flex flex-col items-center justify-center md:mt-10 md:h-[90.5vh]"
+        className="flex flex-col items-center justify-center  md:h-[90.5vh]"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <div className="flex flex-col items-center justify-center px-9 mx-auto w-full lg:gap-8 xl:gap-0 lg:py-16 lg:flex-row">
-          <div className="md:absolute place-self-center py-8 px-10 max-w-screen-xl rounded-xl">
+        <div className="flex flex-col items-center justify-center lg:gap-8 xl:gap-0 lg:py-16 lg:flex-row">
+          <div className="md:absolute place-self-center py-8 px-10 rounded-xl">
             <div
               className="w-[450px] h-[350px] ml-[450px] md:absolute md:mt-[-250px]"
               style={{
