@@ -22,7 +22,7 @@ const Home = () => {
   };
 
   const handleScroll = () => {
-    if (window.scrollY > 100) {
+    if (window.scrollY > 0) {
       setIsNavbarVisible(true);
     } else {
       setIsNavbarVisible(false);
@@ -39,7 +39,7 @@ const Home = () => {
   return (
     <div className="bg-gray-100">
       {isNavbarVisible && (
-        <header className="fixed w-full z-50 transition-all bg-white top-0">
+        <header className="fixed w-full z-50 transition-all bg-white top-0 left-0 right-0">
           <nav className="px-4 lg:px-6 py-2.5 bg-none dark:bg-gray-800">
             <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-2xl">
               <a
@@ -52,38 +52,26 @@ const Home = () => {
                   alt="Flowbite Logo"
                 />
               </a>
-              <div className="flex items-center lg:w-[26.2%] md:w-[26.2%] w-full">
-                <div>
-                  <Link
-                    to={"/"}
-                    onClick={() => setOpenMenu(false)} // Close the menu after clicking
-                    className="cursor-pointer text-black font-medium text-sm px-5 py-2.5 mr-2 line-container"
-                  >
-                    {pages[2]}
-                  </Link>
-                </div>
-
-                <div>
-                  <Link
-                    to={"/seconnecter"}
-                    className={`cursor-pointer text-black font-medium text-sm px-5 py-2.5 mr-2 ${
-                      isActiveNavItem("/seconnecter") ? "line-container-1" : ""
-                    }`}
-                  >
-                    {pages[0]}
-                  </Link>
-                </div>
-
-                <div>
-                  <Link
-                    to={"/inscription"}
-                    className={`cursor-pointer text-black font-medium text-sm px-5 py-2.5 mr-2 ${
-                      isActiveNavItem("/inscription") ? "line-container-2" : ""
-                    }`}
-                  >
-                    {pages[1]}
-                  </Link>
-                </div>
+              <div className="flex justify-center items-center lg:w-[26.2%] md:w-[26.2%] w-full">
+                <Link
+                  to={"/"}
+                  onClick={() => setOpenMenu(false)}
+                  className="cursor-pointer text-black text-sm px-4 py-2.5 mr-2 line-container-2"
+                >
+                  {pages[2]}
+                </Link>
+                <Link
+                  to={"/seconnecter"}
+                  className="cursor-pointer text-black text-sm px-4 py-2.5 mr-2"
+                >
+                  {pages[0]}
+                </Link>
+                <Link
+                  to={"/inscription"}
+                  className="cursor-pointer text-black font-medium text-sm px-4 py-2.5 mr-2"
+                >
+                  {pages[1]}
+                </Link>
               </div>
             </div>
           </nav>

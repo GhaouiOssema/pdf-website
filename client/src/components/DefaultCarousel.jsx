@@ -30,17 +30,6 @@ const DefaultCarousel = () => {
           </h1>
         </div>
       </div>
-      <div className="relative flex flex-col bg-green-400 w-full h-full pb-10">
-        <div className="w-full">
-          <img alt="..." src={IMG_1} className="object-fit h-full" />
-        </div>
-        <div className="w-full">
-          <h1 className="text-white font-bold opacity-100 text-center text-sm mt-2">
-            Importez facilement les plans détaillés de vos machines et gérez
-            leur maintenance de manière efficace et structurée.
-          </h1>
-        </div>
-      </div>
     </Carousel>
   );
 };
