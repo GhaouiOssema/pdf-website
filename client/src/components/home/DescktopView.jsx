@@ -246,7 +246,7 @@ const DescktopView = () => {
         </div>
       </section>
 
-      <section
+      {/* <section
         className=" md:w-lg md:h-[77vh] mb-[5rem] ml-[8rem]"
         id="decouvrir"
       >
@@ -370,7 +370,7 @@ const DescktopView = () => {
             </div>
           </motion.div>
         </div>
-      </section>
+      </section> */}
 
       <section className="flex flex-col items-center justify-center md:mt-10 md:h-[80vh] md:w-full">
         <Tabs

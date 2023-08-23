@@ -34,7 +34,7 @@ const SideBar = ({
 
   return (
     <div className="relative">
-      <div className="bg-white">
+      <div className="bg-white h-full">
         <div className="flex bg-gray-white">
           {/* Sidebar */}
           <div

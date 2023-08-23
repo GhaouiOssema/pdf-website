@@ -23,6 +23,7 @@ import PublicFicheTechnique from "./components/public/PublicFicheTechnique";
 import PublicDoeFiles from "./components/public/PublicDoeFiles";
 import PublicView from "./components/public/PublicView";
 import TopBar from "./components/TopBar";
+import Footer from "./components/Footer";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -63,7 +64,7 @@ const App = () => {
       <div className="flex-grow">
         {/* {!isAuthenticated && <Navbar isAuthenticated={isAuthenticated} />} */}
 
-        <div className="container bg-gray-100 h-full">
+        <div className="container bg-gray-100">
           {isAuthenticated && (
             <TopBar
               toggleSidebar={toggleSidebar}
@@ -128,6 +129,7 @@ const App = () => {
             )}
           </Routes>
         </div>
+        <Footer />
       </div>
     </div>
   );

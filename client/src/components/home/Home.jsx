@@ -89,10 +89,10 @@ const Home = () => {
           </nav>
         </header>
       )}
-      <div className="xl:block lg:block md:block hidden ">
+      <div className="xl:block lg:block hidden ">
         <DesktopView />
       </div>
-      <div className="lg:hidden md:hidden sm:block xs:block">
+      <div className="2xl:hidden xl:hidden lg:hidden block">
         <MobileView />
       </div>
 

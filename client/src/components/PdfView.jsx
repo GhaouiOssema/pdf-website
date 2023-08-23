@@ -369,7 +369,7 @@ const PdfView = () => {
             className="text-black lg:w-full md:w-full w-screen-xl"
           >
             <TabPanel value={value} index={0} dir={theme.direction}>
-              <TableContainer className="bg-white w-full boor">
+              <TableContainer className="bg-white w-full">
                 <Table size="small" aria-label="a dense table">
                   <TableHead>
                     <TableRow>

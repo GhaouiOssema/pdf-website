@@ -92,7 +92,7 @@ const Register = () => {
 
   return (
     <div className="w-full">
-      <header className="fixed w-full z-50 transition-all bg-white top-0">
+      <header className="fixed w-full z-50 transition-all bg-white top-0 left-0 right-0">
         <nav className="px-4 lg:px-6 py-2.5 bg-none dark:bg-gray-800">
           <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-2xl">
             <a
@@ -101,23 +101,23 @@ const Register = () => {
             >
               <img src={LOGO} className="mr-3 h-6 sm:h-9" alt="Flowbite Logo" />
             </a>
-            <div className="flex items-center lg:w-[26.2%] md:w-[26.2%] w-full">
+            <div className="flex justify-center items-center lg:w-[26.2%] md:w-[26.2%] w-full">
               <Link
                 to={"/"}
                 onClick={() => setOpenMenu(false)}
-                className="cursor-pointer text-black text-sm px-5 py-2.5 mr-2"
+                className="cursor-pointer text-black text-sm px-4 py-2.5 mr-2"
               >
                 {pages[2]}
               </Link>
               <Link
                 to={"/seconnecter"}
-                className="cursor-pointer text-black text-sm px-5 py-2.5 mr-2"
+                className="cursor-pointer text-black text-sm px-4 py-2.5 mr-2"
               >
                 {pages[0]}
               </Link>
               <Link
                 to={"/inscription"}
-                className="cursor-pointer text-black font-medium text-sm px-5 py-2.5 mr-2 line-container-2"
+                className="cursor-pointer text-black font-medium text-sm px-4 py-2.5 mr-2 line-container-2"
               >
                 {pages[1]}
               </Link>
@@ -126,7 +126,7 @@ const Register = () => {
         </nav>
       </header>
 
-      <div className="flex justify-center items-center pt-[10rem] h-screen">
+      <div className="flex justify-center items-center mt-[8rem] mb-[1rem] h-full w-full">
         <form
           className={`${
             screenSize.width > 700
@@ -216,8 +216,6 @@ const Register = () => {
           </div>
         </form>
       </div>
-
-      {/* <Footer /> */}
     </div>
   );
 };
