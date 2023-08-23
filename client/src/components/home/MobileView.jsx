@@ -84,9 +84,9 @@ const MobileView = () => {
       </motion.section>
       <span ref={decouvrirSectionRef} />
 
-      {/* <motion.section className=" md:h-[300px] mb-[2rem] flex w-full justify-center">
+      <motion.section className=" md:h-[300px] mb-[2rem] flex w-full justify-center">
         <DefaultCarousel />
-      </motion.section> */}
+      </motion.section>
 
       <section className="flex justify-center py-screen w-full bg-gray-100 text-black-100 mb-[5rem]">
         <Accordion collapseAll>
@@ -169,7 +169,7 @@ const MobileView = () => {
         </Accordion>
       </section>
 
-      <section className="flex w-screen boor">
+      <section className="flex w-screen">
         <div className=" rounded-lg bg-gray-800 text-gray-100 w-screen py-3 px-auto mb-[5rem]">
           <span className="block mb-2 text-xs font-medium tracki text-center uppercase text-violet-400">
             How it works
