@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "./home.css";
 import MobileView from "./MobileView";
 import DesktopView from "./DescktopView";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";

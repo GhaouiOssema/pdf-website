@@ -516,8 +516,6 @@ const DescktopView = () => {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };
