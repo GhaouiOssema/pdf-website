@@ -4,6 +4,7 @@ import DesktopView from "./DescktopView";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import LOGO from "../../assets/logo2.png";
 import { Link } from "react-router-dom";
+import Footer from "../Footer";
 
 const Home = () => {
   const [isNavbarVisible, setIsNavbarVisible] = useState(false);
@@ -84,10 +85,10 @@ const Home = () => {
           </nav>
         </header>
       )}
-      <div className="xl:block lg:block hidden ">
+      <div className="2xl:block xl:block lg:block md:block hidden ">
         <DesktopView />
       </div>
-      <div className="2xl:hidden xl:hidden lg:hidden block">
+      <div className="2xl:hidden xl:hidden lg:hidden md:hidden block">
         <MobileView />
       </div>
 

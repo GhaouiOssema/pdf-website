@@ -1,15 +1,13 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import "./home.css";
-import IMG from "../../assets/ligne.png";
-import IMG_2 from "../../assets/img_4.jpg";
 import { motion, useAnimation } from "framer-motion";
 import Tabs from "@mui/joy/Tabs";
 import TabList from "@mui/joy/TabList";
 import Tab from "@mui/joy/Tab";
 import TabPanel from "@mui/joy/TabPanel";
-import DefaultCarousel from "../DefaultCarousel";
-import { Accordion } from "flowbite-react";
-import Footer from "../Footer";
+import { Accordion, Carousel } from "flowbite-react";
+import IMG_1 from "../../assets/img_1.png";
+
 import { Link } from "react-router-dom";
 
 const MobileView = () => {
@@ -82,10 +80,57 @@ const MobileView = () => {
           <div className="hidden lg:flex lg:col-span-5"></div>
         </div>
       </motion.section>
-      <span ref={decouvrirSectionRef} />
 
-      <motion.section className=" ">
-        <DefaultCarousel />
+      <div ref={decouvrirSectionRef}></div>
+      <motion.section>
+        <div className="w-[17.5rem]">
+          <Carousel>
+            <div className="relative flex flex-col bg-blue-400 w-full h-full pb-10">
+              <div className="w-full">
+                <img alt="..." src={IMG_1} className="object-fit h-full" />
+              </div>
+              <div className="w-full">
+                <h1 className="text-white font-bold opacity-100 text-center text-sm mt-2">
+                  Importez facilement les plans détaillés de vos machines et
+                  gérez leur maintenance de manière efficace et structurée.
+                </h1>
+              </div>
+            </div>
+            <div className="relative flex flex-col bg-red-400 w-full h-full pb-10">
+              <div className="w-full">
+                <img alt="..." src={IMG_1} className="object-fit h-full" />
+              </div>
+              <div className="w-full">
+                <h1 className="text-white font-bold opacity-100 text-center text-sm mt-2">
+                  Importez facilement les plans détaillés de vos machines et
+                  gérez leur maintenance de manière efficace et structurée.
+                </h1>
+              </div>
+            </div>
+            <div className="relative flex flex-col bg-green-400 w-full h-full pb-10">
+              <div className="w-full">
+                <img alt="..." src={IMG_1} className="object-fit h-full" />
+              </div>
+              <div className="w-full">
+                <h1 className="text-white font-bold opacity-100 text-center text-sm mt-2">
+                  Importez facilement les plans détaillés de vos machines et
+                  gérez leur maintenance de manière efficace et structurée.
+                </h1>
+              </div>
+            </div>
+            <div className="relative flex flex-col bg-pink-400 w-full h-full pb-10">
+              <div className="w-full">
+                <img alt="..." src={IMG_1} className="object-fit h-full" />
+              </div>
+              <div className="w-full">
+                <h1 className="text-white font-bold opacity-100 text-center text-sm mt-2">
+                  Importez facilement les plans détaillés de vos machines et
+                  gérez leur maintenance de manière efficace et structurée.
+                </h1>
+              </div>
+            </div>
+          </Carousel>
+        </div>
       </motion.section>
 
       <section className="flex justify-center py-screen w-full bg-gray-100 text-black-100 mb-[5rem]">
@@ -169,37 +214,39 @@ const MobileView = () => {
         </Accordion>
       </section>
 
-      {/* <section className="">
-        <div className=" rounded-lg bg-gray-800 text-gray-100 w-screen py-3 px-0 mb-[5rem]">
-          <span className="block mb-2 text-xs font-medium tracki text-center uppercase text-violet-400">
-            How it works
-          </span>
-          <h2 className="text-lg font-bold text-center text-gray-50">
-            Building with Mamba is simple
-          </h2>
-          <div className="grid gap-6 my-2 lg:grid-cols-3 w-full slides overflow-x-hidden pb-9">
-            <div className="flex flex-col p-8 rounded-md bg-gray-900 overflow-x-auto">
-              <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
-                1
+      <section className="flex justify-center">
+        <div className="w-[17.5rem]">
+          <div className="w-full rounded-lg bg-gray-800 text-gray-100 py-3 px-0 mb-[5rem]">
+            <span className="block mb-2 text-xs font-medium tracki text-center uppercase text-violet-400">
+              How it works
+            </span>
+            <h2 className="text-lg font-bold text-center text-gray-50">
+              Building with Mamba is simple
+            </h2>
+            <div className="grid gap-6 my-2 lg:grid-cols-3 w-full slides overflow-x-hidden pb-9">
+              <div className="flex flex-col p-8 rounded-md bg-gray-900 overflow-x-auto">
+                <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
+                  1
+                </div>
+                <p className="text-lg font-semibold pt-5">
+                  <b>Nulla.</b>Nostrum, corrupti blanditiis. Illum, architecto?
+                </p>
               </div>
-              <p className="text-lg font-semibold pt-5">
-                <b>Nulla.</b>Nostrum, corrupti blanditiis. Illum, architecto?
-              </p>
-            </div>
-            <div className="flex flex-col p-8 rounded-md bg-gray-900 overflow-x-auto">
-              <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
-                2
+              <div className="flex flex-col p-8 rounded-md bg-gray-900 overflow-x-auto">
+                <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
+                  2
+                </div>
+                <p className="text-lg font-semibold pt-5">
+                  <b>Nulla.</b>Nostrum, corrupti blanditiis. Illum, architecto?
+                </p>
               </div>
-              <p className="text-lg font-semibold pt-5">
-                <b>Nulla.</b>Nostrum, corrupti blanditiis. Illum, architecto?
-              </p>
             </div>
           </div>
         </div>
-      </section> */}
+      </section>
 
       <section className="md:w-lg md:h-[77vh] mb-[5rem]" id="decouvrir">
-        <div className="md:absolute bg-[#f3f3ff] bg-opacity-60 rounded-3xl shadow-lg md:mt-[-430px] py-8 px-4 md:h-[83vh] mx-auto md:max-w-screen-lg sm:py-16 lg:px-6 shadow-xl">
+        <div className="md:absolute bg-[#f3f3ff] bg-opacity-60 rounded-3xl md:mt-[-430px] py-8 px-4 md:h-[83vh] mx-auto md:max-w-screen-lg sm:py-16 lg:px-6 shadow-xl">
           <div className="mb-8 max-w-screen-xl lg:mb-16 md:mt-[-20px]">
             <h2 className="text-center mb-4 text-2xl font-extrabold text-gray-900 dark:text-white">
               Avantages clés
