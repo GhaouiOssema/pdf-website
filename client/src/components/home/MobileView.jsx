@@ -18,7 +18,7 @@ const MobileView = () => {
   };
 
   return (
-    <div className="h-full w-full boor">
+    <div className="h-full">
       <motion.section
         className="flex flex-col items-center justify-center h-screen"
         initial={{ opacity: 0, y: -50 }}
