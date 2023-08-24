@@ -22,7 +22,7 @@ const DescktopView = () => {
     decouvrirSectionRef.current.scrollIntoView({ behavior: "smooth" });
   };
   return (
-    <div className=" bg-gray-100 w-full">
+    <div className=" bg-gray-100 w-full pl-0 ml-0 pr-0 mr-0">
       <section className="flex flex-col items-center justify-center h-screen">
         <div className="flex flex-col r">
           <div className="relative place-self-center py-8 px-10 rounded-xl">

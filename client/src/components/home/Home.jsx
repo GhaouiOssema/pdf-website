@@ -89,7 +89,7 @@ const Home = () => {
       <div className="2xl:block xl:block lg:hidden md:block hidden ">
         <DesktopView />
       </div>
-      <div className="2xl:hidden xl:hidden lg:block md:hidden hidden w-screen h-full bg-gray-100">
+      <div className="2xl:hidden xl:hidden lg:block md:hidden hidden  bg-gray-100">
         <MidiumView />
       </div>
       <div className="2xl:hidden xl:hidden lg:hidden md:hidden block">
