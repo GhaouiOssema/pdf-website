@@ -85,7 +85,7 @@ const Home = () => {
           </nav>
         </header>
       )}
-      <div className="2xl:block xl:block lg:block md:block hidden  w-screen">
+      <div className="2xl:block xl:block lg:block md:block hidden">
         <DesktopView />
       </div>
       <div className="2xl:hidden xl:hidden lg:hidden md:hidden block">

@@ -8,9 +8,12 @@ import TabList from "@mui/joy/TabList";
 import Tab from "@mui/joy/Tab";
 import TabPanel from "@mui/joy/TabPanel";
 import DefaultCarousel from "../DefaultCarousel";
-import { Accordion } from "flowbite-react";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Footer from "../Footer";
-import { Typography } from "@mui/material";
 
 const DescktopView = () => {
   const decouvrirSectionRef = useRef(null);
@@ -19,15 +22,11 @@ const DescktopView = () => {
     decouvrirSectionRef.current.scrollIntoView({ behavior: "smooth" });
   };
   return (
-    <div className=" bg-gray-100">
-      <motion.section
-        className="flex flex-col items-center justify-center h-screen"
-        initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
-      >
-        <div className="flex flex-col items-center justify-center lg:gap-8 xl:gap-0 lg:py-16 lg:flex-row">
-          <div className="md:absolute place-self-center py-8 px-10 rounded-xl">
-            <div
+    <div className=" bg-gray-100 w-full">
+      <section className="flex flex-col items-center justify-center h-full">
+        <div className="flex flex-col r">
+          <div className="relative place-self-center py-8 px-10 rounded-xl">
+            {/* <div
               className="w-[450px] h-[350px] ml-[450px] md:absolute md:mt-[-250px]"
               style={{
                 background:
@@ -37,7 +36,7 @@ const DescktopView = () => {
                 display: "flex",
                 justifyContent: "flex-end",
               }}
-            />
+            /> */}
             <motion.h1
               className="md:h-[23vh] gradient-text text-4xl text-black text-center font-extrabold md:text-5xl xl:text-6xl"
               initial={{ opacity: 0, y: -20 }}
@@ -100,95 +99,66 @@ const DescktopView = () => {
           </div>
           <div className="hidden lg:flex lg:col-span-5"></div>
         </div>
-      </motion.section>
-
-      <motion.section
-        className="  md:h-[300px] mb-[5rem]"
-        ref={decouvrirSectionRef}
-      >
+      </section>
+      {/* this */}
+      <motion.section className=" mb-[5rem]" ref={decouvrirSectionRef}>
         <DefaultCarousel />
       </motion.section>
 
-      <section className="mb-[5rem]">
-        <Accordion collapseAll>
-          <Accordion.Panel>
-            <Accordion.Title style={{ color: "#000" }}>
-              wLorem ipsum dolor sit amet consectetur adipisicing elit.
-            </Accordion.Title>
-            <Accordion.Content>
-              <p className="mb-2 text-black">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Similique, recusandae molestiae deleniti ut voluptatibus,
-                corrupti porro culpa modi nulla distinctio perspiciatis
-                blanditiis praesentium repellat eveniet in tenetur, dicta sunt
-                minus.
-              </p>
-              <p className="text-black">
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Similique, recusandae molestiae deleniti ut voluptatibus,
-                  corrupti porro culpa modi nulla distinctio perspiciatis
-                  blanditiis praesentium repellat eveniet in tenetur, dicta sunt
-                  minus.
-                </p>
-              </p>
-            </Accordion.Content>
-          </Accordion.Panel>
-          <Accordion.Panel>
-            <Accordion.Title
-              style={{ color: "#000", ":hover": { color: "#000" } }}
-            >
-              orem ipsum dolor sit amet consectetur adipisicing elit.{" "}
-            </Accordion.Title>
-            <Accordion.Content>
-              <p className="mb-2 text-black">
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Accusantium repellat sed error voluptas voluptates, maxime
-                  reiciendis eius, itaque sint voluptatibus, accusamus earum
-                  praesentium ipsam. Quidem obcaecati voluptate ipsa aspernatur
-                  nisi.
-                </p>
-              </p>
-              <p className="text-black">
-                <p>Check out the</p>
-                <a className="text-black">
-                  <p>Figma design system</p>
-                </a>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-              </p>
-            </Accordion.Content>
-          </Accordion.Panel>
-          <Accordion.Panel>
-            <Accordion.Title
-              style={{ color: "#000", ":hover": { color: "#000" } }}
-            >
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            </Accordion.Title>
-            <Accordion.Content>
-              <p className="mb-2 text-black">
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Temporibus maiores sint accusantium nulla a nihil recusandae
-                  aliquid, dolor consectetur nostrum ab corrupti esse, dolorem
-                  veniam qui? Laboriosam esse voluptates repudiandae!
-                </p>
-              </p>
-              <p className="mb-2 text-black">
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum
-                  totam reiciendis est omnis eveniet amet, repudiandae error
-                  molestias commodi magnam enim minima tenetur eligendi!
-                  Assumenda expedita neque sequi voluptates vero.
-                </p>
-              </p>
-              <p className="mb-2 text-black">
-                Learn more about these technologies:
-              </p>
-            </Accordion.Content>
-          </Accordion.Panel>
+      {/* this */}
+
+      <section className="w-full mb-[5rem]">
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography>Accordion 1</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
+              eget.
+            </Typography>
+          </AccordionDetails>
+        </Accordion>
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel2a-content"
+            id="panel2a-header"
+          >
+            <Typography>Accordion 2</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
+              eget.
+            </Typography>
+          </AccordionDetails>
+        </Accordion>
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel2a-content"
+            id="panel2a-header"
+          >
+            <Typography>Accordion 2</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
+              eget.
+            </Typography>
+          </AccordionDetails>
         </Accordion>
       </section>
+
+      {/* this */}
 
       <section className="flex flex-col items-center justify-center">
         <div className="p-6 bg-gray-800 text-gray-100 max-w-screen-xl mb-[5rem] rounded-xl">
@@ -278,6 +248,7 @@ const DescktopView = () => {
           </div>
         </div>
       </section>
+      {/* this */}
 
       <section
         className="md:w-lg h-full w-full flex justify-center mb-10 "
@@ -530,10 +501,10 @@ const DescktopView = () => {
         </div>
       </section>
 
-      <section className="dark:bg-gray-900">
+      <section className="dark:bg-gray-900 w-full">
         <div className="py-8 mx-auto">
-          <div className="mx-auto text-center">
-            <h2 className="mb-4 text-4xl font-extrabold leading-tight text-gray-900 dark:text-white">
+          <div className="text-center">
+            <h2 className="mb-4 text-xl font-extrabold leading-tight text-gray-900 dark:text-white">
               Boostez l'efficacité de votre maintenance dès à présent !
             </h2>
             <p className="mb-6 font-light text-gray-500 dark:text-gray-400 md:text-lg">
