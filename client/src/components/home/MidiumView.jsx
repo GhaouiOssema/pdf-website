@@ -20,9 +20,9 @@ const MidiumView = () => {
     decouvrirSectionRef.current.scrollIntoView({ behavior: "smooth" });
   };
   return (
-    <div className=" relative bg-gray-100  border border-black">
+    <div className=" relative bg-gray-100">
       <section className=" flex flex-col items-center justify-center w-full h-screen ">
-        <div className=" relative place-self-center py-8 rounded-xl">
+        <div className=" relative place-self-center rounded-xl">
           <div
             className=" w-[450px] h-[350px] ml-[450px] md:absolute md:mt-[-250px]"
             style={{
@@ -35,12 +35,12 @@ const MidiumView = () => {
             }}
           />
           <motion.h1
-            className=" md:h-[23vh] gradient-text text-4xl text-black text-center font-extrabold md:text-5xl xl:text-6xl"
+            className=" gradient-text text-4xl text-black text-center font-extrabold md:text-5xl"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
           >
             <h3 className="md:pb-[5px]">
-              maintenance simplifiée{" "}
+              maintenance simplifiée
               {/* <img
                   alt="scribble"
                   src={IMG}
@@ -51,11 +51,11 @@ const MidiumView = () => {
           </motion.h1>
           <br />
           <motion.div
-            className="md:h-[13vh] mb-6"
+            className=" mb-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
           >
-            <p className="flex flex-col text-center md:w-[50rem] text-xl ">
+            <p className="flex flex-col text-center w-full text-lg ">
               Maximisez l'efficacité de votre gestion et entretien d'équipements
               grâce à notre solution QR . Bénéficiez d'une maintenance
               simplifiée qui assure une performance optimale de vos
@@ -73,7 +73,7 @@ const MidiumView = () => {
             >
               Découvrir plus
               <svg
-                className="ml-2 -mr-1 w-5 h-5"
+                className="ml-2 mr-1 w-5 h-5"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
@@ -156,7 +156,7 @@ const MidiumView = () => {
         {/* this */}
 
         <section className="flex flex-col items-center justify-center mb-[5rem]">
-          <div className="p-6 bg-gray-800 text-gray-100 md:max-w-[1000px] rounded-xl">
+          <div className="p-6 bg-gray-800 text-gray-100 rounded-xl">
             <div className="container mx-auto">
               <span className="block mb-2 text-xs font-medium tracki text-center uppercase text-violet-400">
                 How it works
