@@ -109,7 +109,7 @@ const DescktopView = () => {
         <DefaultCarousel />
       </motion.section>
 
-      <section className="flex flex-col items-center justify-center mb-[5rem]">
+      <section className="mb-[5rem]">
         <Accordion collapseAll>
           <Accordion.Panel>
             <Accordion.Title style={{ color: "#000" }}>
