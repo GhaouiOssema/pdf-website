@@ -19,7 +19,7 @@ const DescktopView = () => {
     decouvrirSectionRef.current.scrollIntoView({ behavior: "smooth" });
   };
   return (
-    <div className="w-full bg-gray-100">
+    <div className=" bg-gray-100">
       <motion.section
         className="flex flex-col items-center justify-center h-screen"
         initial={{ opacity: 0, y: -50 }}
@@ -109,7 +109,7 @@ const DescktopView = () => {
         <DefaultCarousel />
       </motion.section>
 
-      <section className="p-6 bg-gray-100 text-black-100 mb-[5rem]">
+      <section className="flex flex-col items-center justify-center mb-[5rem]">
         <Accordion collapseAll>
           <Accordion.Panel>
             <Accordion.Title style={{ color: "#000" }}>
@@ -190,7 +190,7 @@ const DescktopView = () => {
         </Accordion>
       </section>
 
-      <section className="w-full flex justify-center flex-wrap gap-1">
+      <section className="flex flex-col items-center justify-center">
         <div className="p-6 bg-gray-800 text-gray-100 max-w-screen-xl mb-[5rem] rounded-xl">
           <div className="container mx-auto">
             <span className="block mb-2 text-xs font-medium tracki text-center uppercase text-violet-400">
