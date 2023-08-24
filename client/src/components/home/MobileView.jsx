@@ -82,7 +82,7 @@ const MobileView = () => {
       </motion.section>
 
       <div ref={decouvrirSectionRef}></div>
-      <motion.section className="max-w-xs ml-2">
+      <motion.section className="max-w-sm">
         <div className="">
           <Carousel>
             <div className="relative flex flex-col bg-pink-400 w-full h-full pb-10">
@@ -214,7 +214,7 @@ const MobileView = () => {
         </Accordion>
       </section>
 
-      <section className="flex justify-center max-w-xs">
+      <section className="flex justify-center max-w-md">
         <div className="w-full">
           <div className="w-full rounded-lg bg-gray-800 text-gray-100 py-3 px-0 mb-[5rem]">
             <span className="block mb-2 text-xs font-medium tracki text-center uppercase text-violet-400">
@@ -227,6 +227,30 @@ const MobileView = () => {
               <div className="flex flex-col p-8 rounded-md bg-gray-900 overflow-x-auto">
                 <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
                   1
+                </div>
+                <p className="text-lg font-semibold pt-5">
+                  <b>Nulla.</b>Nostrum, corrupti blanditiis. Illum, architecto?
+                </p>
+              </div>
+              <div className="flex flex-col p-8 rounded-md bg-gray-900 overflow-x-auto">
+                <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
+                  2
+                </div>
+                <p className="text-lg font-semibold pt-5">
+                  <b>Nulla.</b>Nostrum, corrupti blanditiis. Illum, architecto?
+                </p>
+              </div>
+              <div className="flex flex-col p-8 rounded-md bg-gray-900 overflow-x-auto">
+                <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
+                  2
+                </div>
+                <p className="text-lg font-semibold pt-5">
+                  <b>Nulla.</b>Nostrum, corrupti blanditiis. Illum, architecto?
+                </p>
+              </div>
+              <div className="flex flex-col p-8 rounded-md bg-gray-900 overflow-x-auto">
+                <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
+                  2
                 </div>
                 <p className="text-lg font-semibold pt-5">
                   <b>Nulla.</b>Nostrum, corrupti blanditiis. Illum, architecto?
