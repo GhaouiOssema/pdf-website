@@ -33,7 +33,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="bg-gray-100 w-screen">
+    <div className="bg-gray-100">
       {isNavbarVisible && (
         <header className="fixed w-full z-50 transition-all bg-white top-0 left-0 right-0">
           <nav className="px-4 lg:px-6 py-2.5 bg-none dark:bg-gray-800">
@@ -85,7 +85,7 @@ const Home = () => {
           </nav>
         </header>
       )}
-      <div className="2xl:block xl:block lg:block md:block hidden ">
+      <div className="2xl:block xl:block lg:block md:block hidden  w-screen">
         <DesktopView />
       </div>
       <div className="2xl:hidden xl:hidden lg:hidden md:hidden block">
