@@ -18,7 +18,7 @@ const MobileView = () => {
   };
 
   return (
-    <div className="h-full w-auto">
+    <div className="h-full w-full">
       <motion.section
         className="flex flex-col items-center justify-center h-screen"
         initial={{ opacity: 0, y: -50 }}
@@ -82,10 +82,10 @@ const MobileView = () => {
       </motion.section>
 
       <div ref={decouvrirSectionRef}></div>
-      <motion.section>
-        <div className="w-[17.5rem]">
+      <motion.section className="max-w-xs ml-2">
+        <div className="">
           <Carousel>
-            <div className="relative flex flex-col bg-blue-400 w-full h-full pb-10">
+            <div className="relative flex flex-col bg-pink-400 w-full h-full pb-10">
               <div className="w-full">
                 <img alt="..." src={IMG_1} className="object-fit h-full" />
               </div>
@@ -214,8 +214,8 @@ const MobileView = () => {
         </Accordion>
       </section>
 
-      <section className="flex justify-center">
-        <div className="w-[17.5rem]">
+      <section className="flex justify-center max-w-xs">
+        <div className="w-full">
           <div className="w-full rounded-lg bg-gray-800 text-gray-100 py-3 px-0 mb-[5rem]">
             <span className="block mb-2 text-xs font-medium tracki text-center uppercase text-violet-400">
               How it works

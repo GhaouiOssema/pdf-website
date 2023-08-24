@@ -199,7 +199,7 @@ const DescktopView = () => {
             <h2 className="text-5xl font-bold text-center text-gray-50 mb-6">
               Building with Mamba is simple
             </h2>
-            <div className="border border-white">
+            <div className="">
               <div className="grid slides pb-6 w-auto">
                 <div className="flex flex-col p-8 space-y-4 rounded-md bg-gray-900 ml-5">
                   <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
