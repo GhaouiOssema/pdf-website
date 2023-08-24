@@ -13,101 +13,96 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Footer from "../Footer";
-
-const DescktopView = () => {
+const MidiumView = () => {
   const decouvrirSectionRef = useRef(null);
 
   const scrollToDecouvrir = () => {
     decouvrirSectionRef.current.scrollIntoView({ behavior: "smooth" });
   };
   return (
-    <div className=" bg-gray-100 w-full">
-      <section className="flex flex-col items-center justify-center h-screen">
-        <div className="flex flex-col r">
-          <div className="relative place-self-center py-8 px-10 rounded-xl">
-            <div
-              className="w-[450px] h-[350px] ml-[450px] md:absolute md:mt-[-250px]"
-              style={{
-                background:
-                  "linear-gradient(to bottom, #3291F0 40%, #3291F0 50%)",
-                opacity: 0.3,
-                filter: "blur(120px)",
-                display: "flex",
-                justifyContent: "flex-end",
-              }}
-            />
-            <motion.h1
-              className="md:h-[23vh] gradient-text text-4xl text-black text-center font-extrabold md:text-5xl xl:text-6xl"
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              <h3 className="md:pb-[5px]">
-                Une maintenance simplifiée{" "}
-                <img
+    <div className=" relative py-auto mx-auto md:max-w-[1000px] bg-gray-100">
+      <section className=" flex flex-col items-center justify-center w-full h-screen">
+        <div className=" relative place-self-center py-8 rounded-xl">
+          <div
+            className=" w-[450px] h-[350px] ml-[450px] md:absolute md:mt-[-250px]"
+            style={{
+              background:
+                "linear-gradient(to bottom, #3291F0 40%, #3291F0 50%)",
+              opacity: 0.3,
+              filter: "blur(120px)",
+              display: "flex",
+              justifyContent: "flex-end",
+            }}
+          />
+          <motion.h1
+            className=" md:h-[23vh] gradient-text text-4xl text-black text-center font-extrabold md:text-5xl xl:text-6xl"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <h3 className="md:pb-[5px]">
+              maintenance simplifiée{" "}
+              {/* <img
                   alt="scribble"
                   src={IMG}
                   className="mx-auto md:absolute md:ml-[35rem] md:h-[3rem] md:mt-[-23px] md:w-[300px]"
-                />
-              </h3>
-              <span>dès aujourd'hui.</span>
-            </motion.h1>
-            <br />
-            <motion.div
-              className="md:h-[13vh] mb-6"
+                /> */}
+            </h3>
+            <span>dès aujourd'hui.</span>
+          </motion.h1>
+          <br />
+          <motion.div
+            className="md:h-[13vh] mb-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            <p className="flex flex-col text-center md:w-[50rem] text-xl ">
+              Maximisez l'efficacité de votre gestion et entretien d'équipements
+              grâce à notre solution QR . Bénéficiez d'une maintenance
+              simplifiée qui assure une performance optimale de vos
+              installations.
+            </p>
+          </motion.div>
+          <motion.div
+            className="flex items-center justify-center cursor-pointer "
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            <a
+              onClick={scrollToDecouvrir}
+              className="inline-flex justify-center items-center py-3 px-5 mr-3 text-base font-medium text-center text-white rounded-lg custome__border__blue bg-[#F0854A] hover:bg-[#F0854A]"
+            >
+              Découvrir plus
+              <svg
+                className="ml-2 -mr-1 w-5 h-5"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                ></path>
+              </svg>
+            </a>
+            <motion.button
+              className="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-[#125ba3] hover:text-white rounded-lg custome__border border-[#125ba3] hover:bg-[#125ba3]"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
-              <p className="flex flex-col text-center md:w-[50rem] text-xl ">
-                Maximisez l'efficacité de votre gestion et entretien
-                d'équipements grâce à notre solution QR . Bénéficiez d'une
-                maintenance simplifiée qui assure une performance optimale de
-                vos installations.
-              </p>
-            </motion.div>
-            <motion.div
-              className="flex items-center justify-center cursor-pointer"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-            >
-              <a
-                onClick={scrollToDecouvrir}
-                className="inline-flex justify-center items-center py-3 px-5 mr-3 text-base font-medium text-center text-white rounded-lg custome__border__blue bg-[#F0854A] hover:bg-[#F0854A]"
-              >
-                Découvrir plus
-                <svg
-                  className="ml-2 -mr-1 w-5 h-5"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
-              </a>
-              <motion.button
-                className="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-[#125ba3] hover:text-white rounded-lg custome__border border-[#125ba3] hover:bg-[#125ba3]"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-              >
-                Nous contacter
-              </motion.button>
-            </motion.div>
-          </div>
-          <div className="hidden lg:flex lg:col-span-5"></div>
+              Nous contacter
+            </motion.button>
+          </motion.div>
         </div>
       </section>
       {/* this */}
-      <motion.section className=" mb-[5rem]" ref={decouvrirSectionRef}>
+      <motion.section className=" mb-[5rem] w-full" ref={decouvrirSectionRef}>
         <DefaultCarousel />
       </motion.section>
 
       {/* this */}
 
-      <section className="w-full mb-[5rem]">
+      <section className=" mb-[5rem]">
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
@@ -160,8 +155,8 @@ const DescktopView = () => {
 
       {/* this */}
 
-      <section className="flex flex-col items-center justify-center">
-        <div className="p-6 bg-gray-800 text-gray-100 max-w-screen-xl mb-[5rem] rounded-xl">
+      <section className="flex flex-col items-center justify-center mb-[5rem]">
+        <div className="p-6 bg-gray-800 text-gray-100 md:max-w-[1000px] rounded-xl">
           <div className="container mx-auto">
             <span className="block mb-2 text-xs font-medium tracki text-center uppercase text-violet-400">
               How it works
@@ -501,20 +496,20 @@ const DescktopView = () => {
         </div>
       </section>
 
-      <section className="dark:bg-gray-900 w-full">
-        <div className="py-8 mx-auto">
+      <section className="dark:bg-gray-900">
+        <div className="py-8">
           <div className="text-center">
-            <h2 className="mb-4 text-xl font-extrabold leading-tight text-gray-900 dark:text-white">
+            <h2 className="mb-4 text-2xl font-extrabold leading-tight text-gray-900 dark:text-white">
               Boostez l'efficacité de votre maintenance dès à présent !
             </h2>
-            <p className="mb-6 font-light text-gray-500 dark:text-gray-400 md:text-lg">
+            <p className="mb-6 text-gray-500 dark:text-gray-400 md:text-lg">
               Prêt à transformer votre gestion de maintenance ?
             </p>
             <a
               href="#"
-              className="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+              className="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 inline-block transition-colors duration-300 ease-in-out dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
             >
-              s'inscrire
+              S'inscrire
             </a>
           </div>
         </div>
@@ -523,4 +518,4 @@ const DescktopView = () => {
   );
 };
 
-export default DescktopView;
+export default MidiumView;
