@@ -13,6 +13,11 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import IMG_3 from "../../assets/carousel3.jpg";
+import IMG_4 from "../../assets/carrousel4.jpg";
+import IMG_1 from "../../assets/img_1.png";
+
+import { Carousel } from "flowbite-react";
 const MidiumView = () => {
   const decouvrirSectionRef = useRef(null);
 
@@ -20,7 +25,7 @@ const MidiumView = () => {
     decouvrirSectionRef.current.scrollIntoView({ behavior: "smooth" });
   };
   return (
-    <div className=" relative bg-gray-100">
+    <div className="bg-gray-100">
       <section className=" flex flex-col items-center justify-center w-full h-screen ">
         <div className=" relative place-self-center rounded-xl">
           <div
@@ -55,7 +60,7 @@ const MidiumView = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
           >
-            <p className="flex flex-col text-center w-full text-lg ">
+            <p className="flex flex-col text-center w-full text-lg">
               Maximisez l'efficacité de votre gestion et entretien d'équipements
               grâce à notre solution QR . Bénéficiez d'une maintenance
               simplifiée qui assure une performance optimale de vos
@@ -95,14 +100,46 @@ const MidiumView = () => {
           </motion.div>
         </div>
       </section>
-      <div className=" w-full bg-gray-100">
-        <motion.section className=" mb-[5rem]" ref={decouvrirSectionRef}>
-          <DefaultCarousel />
-        </motion.section>
+      <div className=" bg-gray-100">
+        {/* <section className="w-full mb-[5rem]" ref={decouvrirSectionRef}>
+          <Carousel>
+            <div className="relative flex justify-around bg-blue-400 w-full h-full">
+              <div className="w-1/2 h-full">
+                <img alt="..." src={IMG_1} className="object-cover h-full" />
+              </div>
+              <div className=" w-1/2">
+                <h1 className="w-full h-full flex flex-col justify-center text-white font-bold opacity-100 text-center text-xl">
+                  Importez facilement les plans détaillés de vos machines et
+                  gérez leur maintenance de manière efficace et structurée.
+                </h1>
+              </div>
+            </div>
+            <div className="relative flex justify-around bg-red-400 w-full h-full">
+              <div className="w-1/2 h-full">
+                <img alt="..." src={IMG_1} className="object-cover h-full" />
+              </div>
+              <div className=" w-1/2">
+                <h1 className="w-full h-full flex flex-col justify-center text-white font-bold opacity-100 text-center text-xl">
+                  Importez facilement les plans détaillés de vos machines et
+                  gérez leur maintenance de manière efficace et structurée.
+                </h1>
+              </div>
+            </div>
+            <div className="relative flex justify-around bg-green-400 w-full h-full">
+              <div className="w-1/2 h-full">
+                <img alt="..." src={IMG_1} className="object-cover h-full" />
+              </div>
+              <div className=" w-1/2">
+                <h1 className="w-full h-full flex flex-col justify-center text-white font-bold opacity-100 text-center text-xl">
+                  Importez facilement les plans détaillés de vos machines et
+                  gérez leur maintenance de manière efficace et structurée.
+                </h1>
+              </div>
+            </div>
+          </Carousel>
+        </section> */}
 
-        {/* this */}
-
-        <section className=" mb-[5rem]">
+        <section className="w-full mb-[5rem]">
           <Accordion>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
@@ -152,8 +189,6 @@ const MidiumView = () => {
             </AccordionDetails>
           </Accordion>
         </section>
-
-        {/* this */}
 
         <section className="flex flex-col items-center justify-center mb-[5rem]">
           <div className="p-6 bg-gray-800 text-gray-100 rounded-xl">
@@ -243,14 +278,13 @@ const MidiumView = () => {
             </div>
           </div>
         </section>
-        {/* this */}
 
         <section
           className="md:w-lg h-full w-full flex justify-center mb-10 "
           id="decouvrir"
         >
-          <div className="h-fullbg-[#f3f3ff] bg-opacity-60 rounded-xl shadow-lg py-10 px-4 h-full mx-auto md:max-w-screen-xl lg:px-6">
-            <div className="mb-8 max-w-screen-xl lg:mb-16 md:mt-[-20px]">
+          <div className="h-full bg-[#f3f3ff] bg-opacity-60 shadow-lg py-10 px-4 mx-auto w-5/6 lg:px-6 rounded-xl">
+            <div className="mb-8 max-w-screen-xl lg:mb-16">
               <h2 className="text-center mb-4 text-4xl font-extrabold text-gray-900 dark:text-white">
                 Avantages clés
               </h2>
@@ -265,7 +299,7 @@ const MidiumView = () => {
               transition={{ duration: 0.5 }}
             >
               <div className="h-full">
-                <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 dark:bg-primary-900">
+                <div className="rounded-xl flex justify-center items-center mb-4 w-10 h-10  bg-primary-100 dark:bg-primary-900">
                   <svg
                     className="w-5 h-5 text-primary-600 lg:w-6 lg:h-6 dark:text-primary-300"
                     fill="currentColor"
