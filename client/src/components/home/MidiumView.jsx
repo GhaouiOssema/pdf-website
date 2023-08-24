@@ -20,8 +20,8 @@ const MidiumView = () => {
     decouvrirSectionRef.current.scrollIntoView({ behavior: "smooth" });
   };
   return (
-    <div className=" relative py-auto mx-auto md:max-w-[1000px] bg-gray-100">
-      <section className=" flex flex-col items-center justify-center w-full h-screen">
+    <div className=" relative bg-gray-100  border border-black">
+      <section className=" flex flex-col items-center justify-center w-full h-screen ">
         <div className=" relative place-self-center py-8 rounded-xl">
           <div
             className=" w-[450px] h-[350px] ml-[450px] md:absolute md:mt-[-250px]"
@@ -95,8 +95,8 @@ const MidiumView = () => {
           </motion.div>
         </div>
       </section>
-      <div className="boor bg-gray-100 w-screen">
-        <motion.section className=" mb-[5rem] w-full" ref={decouvrirSectionRef}>
+      <div className=" w-full bg-gray-100">
+        <motion.section className=" mb-[5rem]" ref={decouvrirSectionRef}>
           <DefaultCarousel />
         </motion.section>
 
