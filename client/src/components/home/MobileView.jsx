@@ -18,7 +18,7 @@ const MobileView = () => {
   };
 
   return (
-    <div className="h-full w-full">
+    <div className="h-full w-full boor">
       <motion.section
         className="flex flex-col items-center justify-center h-screen"
         initial={{ opacity: 0, y: -50 }}
@@ -214,9 +214,9 @@ const MobileView = () => {
         </Accordion>
       </section>
 
-      <section className="flex justify-center w-[21rem]">
-        <div className="w-full">
-          <div className="w-full rounded-lg bg-gray-800 text-gray-100 py-3 px-0 mb-[5rem]">
+      <section className="w-[21rem] bg-gray-800 rounded-lg">
+        <div className="w-full ">
+          <div className="w-full text-gray-100 py-3 px-0 mb-[5rem]">
             <span className="block mb-2 text-xs font-medium tracki text-center uppercase text-violet-400">
               How it works
             </span>
