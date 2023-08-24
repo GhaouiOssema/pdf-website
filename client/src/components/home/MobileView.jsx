@@ -223,46 +223,53 @@ const MobileView = () => {
             <h2 className="text-lg font-bold text-center text-gray-50">
               Building with Mamba is simple
             </h2>
-            <div className="grid gap-6 my-2 lg:grid-cols-3 w-full slides overflow-x-hidden pb-9">
-              <div className="flex flex-col p-8 rounded-md bg-gray-900 overflow-x-auto">
-                <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
-                  1
+            <div className="grid w-full">
+              <div className="ml-6 mr-6 my-2 gap-6 slides overflow-x-hidden pb-9">
+                <div className="flex flex-col p-8 rounded-md bg-gray-900 overflow-x-auto">
+                  <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
+                    1
+                  </div>
+                  <p className="text-lg font-semibold pt-5">
+                    <b>Nulla.</b>Nostrum, corrupti blanditiis. Illum,
+                    architecto?
+                  </p>
                 </div>
-                <p className="text-lg font-semibold pt-5">
-                  <b>Nulla.</b>Nostrum, corrupti blanditiis. Illum, architecto?
-                </p>
-              </div>
-              <div className="flex flex-col p-8 rounded-md bg-gray-900 overflow-x-auto">
-                <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
-                  2
+                <div className="flex flex-col p-8 rounded-md bg-gray-900 overflow-x-auto">
+                  <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
+                    2
+                  </div>
+                  <p className="text-lg font-semibold pt-5">
+                    <b>Nulla.</b>Nostrum, corrupti blanditiis. Illum,
+                    architecto?
+                  </p>
                 </div>
-                <p className="text-lg font-semibold pt-5">
-                  <b>Nulla.</b>Nostrum, corrupti blanditiis. Illum, architecto?
-                </p>
-              </div>
-              <div className="flex flex-col p-8 rounded-md bg-gray-900 overflow-x-auto">
-                <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
-                  2
+                <div className="flex flex-col p-8 rounded-md bg-gray-900 overflow-x-auto">
+                  <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
+                    2
+                  </div>
+                  <p className="text-lg font-semibold pt-5">
+                    <b>Nulla.</b>Nostrum, corrupti blanditiis. Illum,
+                    architecto?
+                  </p>
                 </div>
-                <p className="text-lg font-semibold pt-5">
-                  <b>Nulla.</b>Nostrum, corrupti blanditiis. Illum, architecto?
-                </p>
-              </div>
-              <div className="flex flex-col p-8 rounded-md bg-gray-900 overflow-x-auto">
-                <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
-                  2
+                <div className="flex flex-col p-8 rounded-md bg-gray-900 overflow-x-auto">
+                  <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
+                    2
+                  </div>
+                  <p className="text-lg font-semibold pt-5">
+                    <b>Nulla.</b>Nostrum, corrupti blanditiis. Illum,
+                    architecto?
+                  </p>
                 </div>
-                <p className="text-lg font-semibold pt-5">
-                  <b>Nulla.</b>Nostrum, corrupti blanditiis. Illum, architecto?
-                </p>
-              </div>
-              <div className="flex flex-col p-8 rounded-md bg-gray-900 overflow-x-auto">
-                <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
-                  2
+                <div className="flex flex-col p-8 rounded-md bg-gray-900 overflow-x-auto">
+                  <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
+                    2
+                  </div>
+                  <p className="text-lg font-semibold pt-5">
+                    <b>Nulla.</b>Nostrum, corrupti blanditiis. Illum,
+                    architecto?
+                  </p>
                 </div>
-                <p className="text-lg font-semibold pt-5">
-                  <b>Nulla.</b>Nostrum, corrupti blanditiis. Illum, architecto?
-                </p>
               </div>
             </div>
           </div>
