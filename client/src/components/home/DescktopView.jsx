@@ -19,7 +19,7 @@ const DescktopView = () => {
     decouvrirSectionRef.current.scrollIntoView({ behavior: "smooth" });
   };
   return (
-    <div className="w-scrren bg-gray-100">
+    <div className="w-full bg-gray-100">
       <motion.section
         className="flex flex-col items-center justify-center h-screen"
         initial={{ opacity: 0, y: -50 }}
