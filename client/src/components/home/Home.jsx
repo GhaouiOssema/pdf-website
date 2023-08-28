@@ -105,7 +105,7 @@ const Home = () => {
         <DesktopView />
       </div>
       <div
-        className={`2xl:hidden xl:hidden lg:hidden md:block hidden bg-gray-100 w-screen h-full`}
+        className={`2xl:hidden xl:hidden lg:hidden md:block hidden bg-gray-100`}
       >
         <MidiumView />
       </div>

@@ -25,8 +25,8 @@ const MidiumView = () => {
     decouvrirSectionRef.current.scrollIntoView({ behavior: "smooth" });
   };
   return (
-    <div className="bg-gray-100">
-      <section className=" flex flex-col items-center justify-center w-full h-screen ">
+    <div className="bg-gray-100 p-2 md:min-w-[61.9rem] mx-auto p-auto">
+      <section className="flex flex-col items-center justify-center w-full h-screen">
         <div className=" relative place-self-center rounded-xl">
           <div
             className=" w-[450px] h-[350px] ml-[450px] md:absolute md:mt-[-250px]"
@@ -45,7 +45,7 @@ const MidiumView = () => {
             animate={{ opacity: 1, y: 0 }}
           >
             <h3 className="md:pb-[5px]">
-              maintenance simplifiée
+              une maintenance simplifiée
               {/* <img
                   alt="scribble"
                   src={IMG}
@@ -100,8 +100,11 @@ const MidiumView = () => {
           </motion.div>
         </div>
       </section>
-      <div className=" bg-gray-100">
-        {/* <section className="w-full mb-[5rem]" ref={decouvrirSectionRef}>
+      <div className=" bg-gray-100 mt-10 min-w-auto mx-auto m-auto p-auto">
+        <section
+          className="w-full mb-[5rem] min-w-auto mx-auto m-auto p-auto"
+          ref={decouvrirSectionRef}
+        >
           <Carousel>
             <div className="relative flex justify-around bg-blue-400 w-full h-full">
               <div className="w-1/2 h-full">
@@ -137,7 +140,7 @@ const MidiumView = () => {
               </div>
             </div>
           </Carousel>
-        </section> */}
+        </section>
 
         <section className="w-full mb-[5rem]">
           <Accordion>
@@ -191,88 +194,86 @@ const MidiumView = () => {
         </section>
 
         <section className="flex flex-col items-center justify-center mb-[5rem]">
-          <div className="p-6 bg-gray-800 text-gray-100 rounded-xl">
-            <div className="container mx-auto">
+          <div className="p-3 bg-gray-800 text-gray-100 rounded-xl">
+            <div className="container px-auto mx-auto py-auto my-auto">
               <span className="block mb-2 text-xs font-medium tracki text-center uppercase text-violet-400">
                 How it works
               </span>
-              <h2 className="text-5xl font-bold text-center text-gray-50 mb-6">
+              <h2 className="text-xl font-bold text-center text-gray-50 mb-6">
                 Building with Mamba is simple
               </h2>
-              <div className="">
-                <div className="grid slides pb-6 w-auto">
-                  <div className="flex flex-col p-8 space-y-4 rounded-md bg-gray-900 ml-5">
-                    <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
-                      1
-                    </div>
-                    <p className="text-2xl font-semibold">
-                      <b>Nulla.</b>Nostrum, corrupti blanditiis. Illum,
-                      architecto?
-                    </p>
+              <div className="grid slides pb-6 w-full h-full min-w-0 mx-auto justify-center items-center">
+                <div className="flex flex-col p-8 space-y-4 rounded-md bg-gray-900 ml-5">
+                  <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
+                    1
                   </div>
-                  <div className="flex flex-col p-8 space-y-4 rounded-md bg-gray-900 ml-5">
-                    <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
-                      2
-                    </div>
-                    <p className="text-2xl font-semibold">
-                      <b>Accusantium.</b>Vitae saepe atque neque sunt eius dolor
-                      veniam alias debitis?
-                    </p>
+                  <p className="text-lg font-semibold">
+                    <b>Nulla.</b>Nostrum, corrupti blanditiis. Illum,
+                    architecto?
+                  </p>
+                </div>
+                <div className="flex flex-col p-8 space-y-4 rounded-md bg-gray-900 ml-5">
+                  <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
+                    2
                   </div>
-                  <div className="flex flex-col p-8 space-y-4 rounded-md bg-gray-900 ml-5">
-                    <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
-                      3
-                    </div>
-                    <p className="text-2xl font-semibold">
-                      <b>Maxime.</b>Expedita temporibus culpa reprehenderit
-                      doloribus consectetur odio!
-                    </p>
+                  <p className="text-lg font-semibold">
+                    <b>Accusantium.</b>Vitae saepe atque neque sunt eius dolor
+                    veniam alias debitis?
+                  </p>
+                </div>
+                <div className="flex flex-col p-8 space-y-4 rounded-md bg-gray-900 ml-5">
+                  <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
+                    3
                   </div>
-                  <div className="flex flex-col p-8 space-y-4 rounded-md bg-gray-900 ml-5">
-                    <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
-                      3
-                    </div>
-                    <p className="text-2xl font-semibold">
-                      <b>Maxime.</b>Expedita temporibus culpa reprehenderit
-                      doloribus consectetur odio!
-                    </p>
+                  <p className="text-lg font-semibold">
+                    <b>Maxime.</b>Expedita temporibus culpa reprehenderit
+                    doloribus consectetur odio!
+                  </p>
+                </div>
+                <div className="flex flex-col p-8 space-y-4 rounded-md bg-gray-900 ml-5">
+                  <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
+                    3
                   </div>
-                  <div className="flex flex-col p-8 space-y-4 rounded-md bg-gray-900 ml-5">
-                    <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
-                      3
-                    </div>
-                    <p className="text-2xl font-semibold">
-                      <b>Maxime.</b>Expedita temporibus culpa reprehenderit
-                      doloribus consectetur odio!
-                    </p>
+                  <p className="text-lg font-semibold">
+                    <b>Maxime.</b>Expedita temporibus culpa reprehenderit
+                    doloribus consectetur odio!
+                  </p>
+                </div>
+                <div className="flex flex-col p-8 space-y-4 rounded-md bg-gray-900 ml-5">
+                  <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
+                    3
                   </div>
-                  <div className="flex flex-col p-8 space-y-4 rounded-md bg-gray-900 ml-5">
-                    <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
-                      3
-                    </div>
-                    <p className="text-2xl font-semibold">
-                      <b>Maxime.</b>Expedita temporibus culpa reprehenderit
-                      doloribus consectetur odio!
-                    </p>
+                  <p className="text-lg font-semibold">
+                    <b>Maxime.</b>Expedita temporibus culpa reprehenderit
+                    doloribus consectetur odio!
+                  </p>
+                </div>
+                <div className="flex flex-col p-8 space-y-4 rounded-md bg-gray-900 ml-5">
+                  <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
+                    3
                   </div>
-                  <div className="flex flex-col p-8 space-y-4 rounded-md bg-gray-900 ml-5">
-                    <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
-                      3
-                    </div>
-                    <p className="text-2xl font-semibold">
-                      <b>Maxime.</b>Expedita temporibus culpa reprehenderit
-                      doloribus consectetur odio!
-                    </p>
+                  <p className="text-2xl font-semibold">
+                    <b>Maxime.</b>Expedita temporibus culpa reprehenderit
+                    doloribus consectetur odio!
+                  </p>
+                </div>
+                <div className="flex flex-col p-8 space-y-4 rounded-md bg-gray-900 ml-5">
+                  <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
+                    3
                   </div>
-                  <div className="flex flex-col p-8 space-y-4 rounded-md bg-gray-900 ml-5">
-                    <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
-                      3
-                    </div>
-                    <p className="text-2xl font-semibold">
-                      <b>Maxime.</b>Expedita temporibus culpa reprehenderit
-                      doloribus consectetur odio!
-                    </p>
+                  <p className="text-2xl font-semibold">
+                    <b>Maxime.</b>Expedita temporibus culpa reprehenderit
+                    doloribus consectetur odio!
+                  </p>
+                </div>
+                <div className="flex flex-col p-8 space-y-4 rounded-md bg-gray-900 ml-5">
+                  <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
+                    3
                   </div>
+                  <p className="text-2xl font-semibold">
+                    <b>Maxime.</b>Expedita temporibus culpa reprehenderit
+                    doloribus consectetur odio!
+                  </p>
                 </div>
               </div>
             </div>
@@ -280,12 +281,12 @@ const MidiumView = () => {
         </section>
 
         <section
-          className="md:w-lg h-full w-full flex justify-center mb-10 "
+          className="h-full w-full flex justify-center mb-10 "
           id="decouvrir"
         >
-          <div className="h-full bg-[#f3f3ff] bg-opacity-60 shadow-lg py-10 px-4 mx-auto w-5/6 lg:px-6 rounded-xl">
-            <div className="mb-8 max-w-screen-xl lg:mb-16">
-              <h2 className="text-center mb-4 text-4xl font-extrabold text-gray-900 dark:text-white">
+          <div className="h-full bg-[#f3f3ff] bg-opacity-60 shadow-lg py-10 px-4 mx-auto w-5/6 rounded-xl">
+            <div className="mb-8 ">
+              <h2 className="text-center mb-4 text-2xl font-extrabold text-gray-900 dark:text-white">
                 Avantages clés
               </h2>
               <p className="text-gray-500 text-center sm:text-xl dark:text-gray-400">
@@ -341,7 +342,7 @@ const MidiumView = () => {
                   vos machines.
                 </p>
               </div>
-              <div className="">
+              <div className="h-full">
                 <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
                   <svg
                     className="w-5 h-5 text-primary-600 lg:w-6 lg:h-6 dark:text-primary-300"
