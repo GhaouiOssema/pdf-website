@@ -138,13 +138,9 @@ const Register = () => {
         </nav>
       </header>
 
-      <div className="flex justify-center items-center mt-[8rem] mb-[1rem] h-full w-full">
+      <div className="flex justify-center items-center mt-[6rem] mb-[1rem] h-full w-full">
         <form
-          className={`${
-            screenSize.width > 700
-              ? "w-1/3 p-6 bg-white rounded shadow-lg"
-              : "bg-white rounded shadow-lg w-full p-3"
-          }`}
+          className="bg-white rounded shadow-lg w-1/2 p-3"
           onSubmit={handleSubmit}
         >
           <h2 className="text-2xl font-bold mb-6">Register</h2>

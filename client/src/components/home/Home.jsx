@@ -104,9 +104,7 @@ const Home = () => {
       <div className="2xl:block xl:block lg:hidden md:hidden hidden ">
         <DesktopView />
       </div>
-      <div
-        className={`2xl:hidden xl:hidden lg:hidden md:block hidden bg-gray-100`}
-      >
+      <div className="2xl:hidden xl:hidden lg:hidden md:block hidden bg-gray-100">
         <MidiumView />
       </div>
       <div className="2xl:hidden xl:hidden lg:hidden md:hidden block">

@@ -137,12 +137,8 @@ const Login = () => {
           </div>
         </nav>
       </header>
-      <div className="flex justify-center items-center mt-[8rem] mb-[1rem] h-full">
-        <div
-          className={`mb-5 ${
-            screenSize.width > 700 ? "w-1/3" : "w-full"
-          } p-6 bg-white rounded shadow-lg`}
-        >
+      <div className="flex justify-center items-center mt-[8rem] mb-[1rem] h-full w-full">
+        <div className={`mb-5 w-1/2 p-6 bg-white rounded shadow-lg`}>
           <form onSubmit={handleSubmit} className="bg-white">
             <h1 className="text-gray-800 font-bold text-2xl mb-1">
               Hello Again!
@@ -150,7 +146,11 @@ const Login = () => {
             <p className="text-sm font-normal text-gray-600 mb-7">
               Welcome Back
             </p>
-            <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
+            <div
+              className={`flex items-center border-2 py-2 px-3 rounded-2xl mb-4 ${
+                screenSize.width <= 700 ? "flex-col" : ""
+              }`}
+            >
               <input
                 type="email"
                 id="email"
@@ -164,7 +164,11 @@ const Login = () => {
                 pattern={emailRegex}
               />
             </div>
-            <div className="flex items-center border-2 py-2 px-3 rounded-2xl">
+            <div
+              className={`flex items-center border-2 py-2 px-3 rounded-2xl ${
+                screenSize.width <= 700 ? "flex-col" : ""
+              }`}
+            >
               <input
                 type="password"
                 id="password"
