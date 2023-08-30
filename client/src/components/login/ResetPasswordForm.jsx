@@ -32,7 +32,7 @@ const ResetPasswordForm = () => {
     setLoading(true);
 
     if (password !== confirmPassword) {
-      alert("Passwords do not match. Please try again.");
+      alert("Les mots de passe ne correspondent pas. Veuillez réessayer.");
       return;
     }
 
@@ -66,7 +66,7 @@ const ResetPasswordForm = () => {
           <i className="fa-solid fa-triangle-exclamation"></i>
         </div>
         <p className="text-xl font-semibold text-red-500 mb-4 text-center">
-          link expired
+          Le lien a expiré
         </p>
       </div>
     );
@@ -80,7 +80,7 @@ const ResetPasswordForm = () => {
             <i className="fa-solid fa-circle-check"></i>
           </div>
           <p className="text-xl font-semibold text-green-500 mb-4 text-center">
-            Your password has been successfully reset.
+            Votre mot de passe a été réinitialisé avec succès.
           </p>
           <Stack
             direction="row"
@@ -116,7 +116,7 @@ const ResetPasswordForm = () => {
               htmlFor="password"
               className="block text-gray-700 text-sm font-bold mb-2"
             >
-              New Password
+              Nouveau mot de passe
             </label>
             <input
               type="password"
@@ -133,7 +133,7 @@ const ResetPasswordForm = () => {
               htmlFor="confirmPassword"
               className="block text-gray-700 text-sm font-bold mb-2"
             >
-              Confirm New Password
+              Confirmer le nouveau mot de passe
             </label>
             <input
               type="password"
@@ -149,7 +149,7 @@ const ResetPasswordForm = () => {
             type="submit"
             className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
-            Reset Password
+            réinitialiser le mot de passe
           </button>
         </form>
       )}

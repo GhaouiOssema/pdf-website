@@ -142,10 +142,10 @@ const Login = () => {
           <div className="mb-5 w-full md:w-1/2 lg:w-1/2 xl:w-1/2 p-6 bg-white rounded shadow-lg">
             <form onSubmit={handleSubmit} className="bg-white">
               <h1 className="text-gray-800 font-bold text-2xl mb-1 text-center">
-                Hello Again!
+                Bonjour à nouveau !
               </h1>
               <p className="text-sm font-normal text-gray-600 mb-7 text-center">
-                Welcome Back
+                Content de te revoir
               </p>
               <div
                 className={`flex items-center border-2 py-2 px-3 rounded-2xl mb-4 ${
@@ -158,7 +158,7 @@ const Login = () => {
                   className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring ${
                     screenSize.width > 700 ? "" : "text-sm"
                   }`}
-                  placeholder="Enter your email"
+                  placeholder="Entrez votre adresse e-mail"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -176,7 +176,7 @@ const Login = () => {
                   className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring ${
                     screenSize.width > 700 ? "" : "text-sm"
                   }`}
-                  placeholder="Enter your password"
+                  placeholder="Entrez votre mot de passe."
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
@@ -186,14 +186,14 @@ const Login = () => {
                 type="submit"
                 className="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2"
               >
-                Login
+                Se connecter
               </button>
               <Link
                 to="/seconnecter/oublier"
                 className="w-full flex justify-center"
               >
                 <span className="text-center text-sm ml-2 hover:text-blue-500 cursor-pointer">
-                  Forgot Password?
+                  Mot de passe oublié ?
                 </span>
               </Link>
             </form>

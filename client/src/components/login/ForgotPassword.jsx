@@ -52,7 +52,7 @@ const ForgotPassword = () => {
               type="email"
               id="email"
               className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              placeholder="Enter your email"
+              placeholder="Entrez votre adresse e-mail"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -62,7 +62,7 @@ const ForgotPassword = () => {
             type="submit"
             className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
-            Send Reset Email
+            Envoyer un e-mail de réinitialisation
           </button>
         </form>
       )}

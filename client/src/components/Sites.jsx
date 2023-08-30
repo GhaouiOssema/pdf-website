@@ -382,7 +382,7 @@ const Sites = () => {
       </Backdrop>
       <div className="pt-10">
         <div className="flex justify-center items-center">
-          <h1 className="text-3xl text-center font-bold pr-10">Votre Sites</h1>
+          <h1 className="text-3xl text-center font-bold pr-10">Vos Sites</h1>
         </div>
       </div>
 

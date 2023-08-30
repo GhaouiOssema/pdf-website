@@ -103,8 +103,9 @@ const Home = () => {
       <section className="text-gray-600 body-font">
         <div className="container mx-auto flex px-5 py-24 h-screen items-center justify-center flex-col">
           <div className="text-center lg:w-2/3 w-full">
-            <h1 className="gradient-text title-font md:text-5xl xl:text-6xl sm:text-3xl text-3xl mb-4 font-extrabold text-gray-900">
-              Une maintenance simplifiée dès aujourd'hui.
+            <h1 className=" py-10 tracking-wide leading-10 gradient-text title-font md:text-5xl xl:text-6xl sm:text-3xl text-3xl mb-4 font-extrabold text-gray-900">
+              Une maintenance simplifiée <br />
+              <span>dès aujourd'hui</span>.
             </h1>
             <p className="mb-8 leading-relaxed md:text-xl xl:text-xl sm:text-lg text-base ">
               Maximisez l'efficacité de votre gestion et entretien d'équipements
@@ -523,7 +524,7 @@ const Home = () => {
             <h2 className="mb-4 text-xl font-extrabold leading-tight text-gray-900 dark:text-white">
               Boostez l'efficacité de votre maintenance dès à présent !
             </h2>
-            <p className="mb-6 font-light text-gray-500 dark:text-gray-400 md:text-lg">
+            <p className="mb-6 font-light text-gray-500 dark:text-gray-400 md:text-lg text-center boor">
               Prêt à transformer votre gestion de maintenance ?
             </p>
             <a

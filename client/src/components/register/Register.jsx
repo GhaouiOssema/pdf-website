@@ -104,7 +104,7 @@ const Register = () => {
           className="bg-white rounded shadow- w-full md:w-1/2 lg:w-1/2 xl:w-1/2 p-6"
           onSubmit={handleSubmit}
         >
-          <h2 className="text-2xl font-bold mb-6">Register</h2>
+          <h2 className="text-2xl font-bold mb-6 text-center">inscription</h2>
           {error && <p className="text-red-500 mb-4">{error}</p>}
           <div>
             <label className="flex justify-between text-gray-700 font-bold mb-2">
@@ -176,13 +176,13 @@ const Register = () => {
               htmlFor="userName"
               className="block text-gray-700 font-bold mb-2"
             >
-              Username
+              Nom d'utilisateur
             </label>
             <input
               type="text"
               id="userName"
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring"
-              placeholder="Enter your username"
+              placeholder="Entrez votre nom d'utilisateur"
               value={userName}
               onChange={(e) => setUserName(e.target.value)}
               required
@@ -199,7 +199,7 @@ const Register = () => {
               type="email"
               id="email"
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring"
-              placeholder="Enter your email"
+              placeholder="Entrez votre adresse e-mail"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -210,13 +210,13 @@ const Register = () => {
               htmlFor="password"
               className="block text-gray-700 font-bold mb-2"
             >
-              Password
+              Mot de passe
             </label>
             <input
               type="password"
               id="password"
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring"
-              placeholder="Enter your password"
+              placeholder="Entrez votre mot de passe."
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -244,7 +244,7 @@ const Register = () => {
               type="submit"
               className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700"
             >
-              Register
+              S'inscrire
             </button>
           </div>
         </form>

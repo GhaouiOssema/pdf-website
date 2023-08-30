@@ -71,7 +71,7 @@ const App = () => {
           <Route path="/reset-password" element={<ResetPasswordForm />} />
         </Routes>
 
-        <div className="container bg-gray-100">
+        <div className=" bg-gray-100">
           {isAuthenticated && (
             <TopBar
               toggleSidebar={toggleSidebar}
