@@ -24,6 +24,7 @@ import PublicDoeFiles from "./components/public/PublicDoeFiles";
 import PublicView from "./components/public/PublicView";
 import TopBar from "./components/TopBar";
 import Footer from "./components/Footer";
+import DescktopView from "./components/home/DescktopView";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -51,7 +52,7 @@ const App = () => {
   };
 
   return (
-    <div className="flex h-screen">
+    <div className="flex">
       {isAuthenticated && (
         <SideBar
           isSidebarOpen={isSidebarOpen}
@@ -125,6 +126,7 @@ const App = () => {
                   path="/publique/:site/:dossier/pdf/view/:id"
                   element={<PublicView />}
                 />
+                <Route path="/HomePage" element={<DescktopView />} />
               </>
             )}
           </Routes>

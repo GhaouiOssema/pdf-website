@@ -45,7 +45,7 @@ const MidiumView = () => {
             animate={{ opacity: 1, y: 0 }}
           >
             <h3 className="md:pb-[5px]">
-              une maintenance simplifiée
+              maintenance simplifiée
               {/* <img
                   alt="scribble"
                   src={IMG}
