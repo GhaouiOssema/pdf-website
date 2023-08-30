@@ -52,7 +52,7 @@ const App = () => {
   };
 
   return (
-    <div className="flex">
+    <div className="flex ">
       {isAuthenticated && (
         <SideBar
           isSidebarOpen={isSidebarOpen}
@@ -64,6 +64,13 @@ const App = () => {
 
       <div className="flex-grow">
         {/* {!isAuthenticated && <Navbar isAuthenticated={isAuthenticated} />} */}
+        <Routes>
+          <Route path="/" element={isAuthenticated ? null : <Home />} />
+          <Route path="/seconnecter" element={<Login />} />
+          <Route path="/inscription" element={<Register />} />
+          <Route path="/seconnecter/oublier" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPasswordForm />} />
+        </Routes>
 
         <div className="container bg-gray-100">
           {isAuthenticated && (
@@ -73,12 +80,6 @@ const App = () => {
             />
           )}
           <Routes>
-            <Route path="/" element={isAuthenticated ? null : <Home />} />
-            <Route path="/seconnecter" element={<Login />} />
-            <Route path="/inscription" element={<Register />} />
-            <Route path="/seconnecter/oublier" element={<ForgotPassword />} />
-            <Route path="/reset-password" element={<ResetPasswordForm />} />
-
             {isAuthenticated && (
               <>
                 <Route path="/telecharger" element={<FormSend />} />

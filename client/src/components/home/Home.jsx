@@ -113,31 +113,28 @@ const Home = () => {
         </header>
       )}
 
-      <section className="text-gray-600 body-font py-64">
-        <div className="container mx-auto flex px-5 items-center justify-center flex-col h-full">
-          {/* <img
-            className="lg:w-2/6 md:w-3/6 w-5/6 mb-10 object-cover object-center rounded"
-            alt="hero"
-            src={Logo}
-          /> */}
-          <div className="text-center lg:w-2/3 w-full">
-            <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">
-              Microdosing synth tattooed vexillologist
-            </h1>
-            <p className="mb-8 leading-relaxed">
-              Meggings kinfolk echo park stumptown DIY, kale chips beard
-              jianbing tousled. Chambray dreamcatcher trust fund, kitsch vice
-              godard disrupt ramps hexagon mustache umami snackwave tilde
-              chillwave ugh. Pour-over meditation PBR&B pickled ennui celiac
-              mlkshk freegan photo booth af fingerstache pitchfork.
-            </p>
-            <div className="flex justify-center">
-              <button className="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
-                Découvrir plus
-              </button>
-              <button className="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg">
-                Nous contacter
-              </button>
+      <section className="bg-gray-50 dark:bg-gray-800">
+        <div className="py-8 mx-auto max-w-screen-xl sm:py-16 px-6">
+          <div className="w-full">
+            <div className="text-center w-full">
+              <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">
+                Microdosing synth tattooed vexillologist
+              </h1>
+              <p className="mb-8 leading-relaxed">
+                Meggings kinfolk echo park stumptown DIY, kale chips beard
+                jianbing tousled. Chambray dreamcatcher trust fund, kitsch vice
+                godard disrupt ramps hexagon mustache umami snackwave tilde
+                chillwave ugh. Pour-over meditation PBR&B pickled ennui celiac
+                mlkshk freegan photo booth af fingerstache pitchfork.
+              </p>
+              <div className="flex justify-center">
+                <button className="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+                  Découvrir plus
+                </button>
+                <button className="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg">
+                  Nous contacter
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -145,7 +142,7 @@ const Home = () => {
 
       <br />
 
-      {/* <Carousel className="">
+      <Carousel className="">
         <div className="relative flex justify-around bg-blue-400 w-full h-full">
           <div className="w-full sm:w-1/2 h-full">
             <img alt="..." src={IMG_1} className="object-cover h-full" />
@@ -157,7 +154,7 @@ const Home = () => {
             </h1>
           </div>
         </div>
-      </Carousel> */}
+      </Carousel>
 
       <section className="p-2">
         <Accordion>
@@ -210,7 +207,7 @@ const Home = () => {
         </Accordion>
       </section>
 
-      <section className="bg-gray-50 dark:bg-gray-800">
+      <section className="bg-gray-50 dark:bg-gray-800 ">
         <div className="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
           <div className="max-w-screen-md mb-8 lg:mb-16">
             <h2 className="mb-4 text-4xl font-extrabold text-gray-900 dark:text-white">

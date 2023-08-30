@@ -7,7 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
-      <div className="bg-gray-100">
+      <div className="bg-gray-100 ">
         <App />
       </div>
     </BrowserRouter>
