@@ -63,7 +63,6 @@ const App = () => {
       )}
 
       <div className="flex-grow">
-        {/* {!isAuthenticated && <Navbar isAuthenticated={isAuthenticated} />} */}
         <Routes>
           <Route path="/" element={isAuthenticated ? null : <Home />} />
           <Route path="/seconnecter" element={<Login />} />

@@ -25,7 +25,7 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center h-screen">
       {isEmailSent ? (
         <div className="mt-20">
           <div className="text-green-500 text-4xl mb-4 flex justify-center items-center">

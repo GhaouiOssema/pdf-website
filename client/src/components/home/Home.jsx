@@ -143,7 +143,7 @@ const Home = () => {
                 </span>
               </div>
             </div>
-            <div className="relative flex flex-col sm:flex-row justify-around bg-blue-400 w-full h-full">
+            <div className="relative flex flex-col sm:flex-row justify-around bg-red-400 w-full h-full">
               <div className="w-full sm:w-1/2 h-full">
                 <img
                   alt="..."
@@ -158,7 +158,7 @@ const Home = () => {
                 </span>
               </div>
             </div>
-            <div className="relative flex flex-col sm:flex-row justify-around bg-blue-400 w-full h-full">
+            {/* <div className="relative flex flex-col sm:flex-row justify-around bg-blue-400 w-full h-full">
               <div className="w-full sm:w-1/2 h-full">
                 <img
                   alt="..."
@@ -172,7 +172,7 @@ const Home = () => {
                   gérez leur maintenance de manière efficace et structurée.
                 </span>
               </div>
-            </div>
+            </div> */}
           </Carousel>
         </div>
       </section>
