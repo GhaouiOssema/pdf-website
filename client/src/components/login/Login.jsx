@@ -90,7 +90,7 @@ const Login = () => {
   }, []);
 
   return (
-    <div className="">
+    <div className="h-screen flex flex-col">
       <header className="fixed w-full z-50 transition-all bg-white top-0 left-0 right-0">
         <nav className="px-4 lg:px-6 py-2.5 bg-none dark:bg-gray-800">
           <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-2xl">
@@ -137,62 +137,67 @@ const Login = () => {
           </div>
         </nav>
       </header>
-      <div className="flex justify-center items-center mt-[8rem] mb-[1rem] h-full w-full">
-        <div className={`mb-5 w-1/2 p-6 bg-white rounded shadow-lg`}>
-          <form onSubmit={handleSubmit} className="bg-white">
-            <h1 className="text-gray-800 font-bold text-2xl mb-1">
-              Hello Again!
-            </h1>
-            <p className="text-sm font-normal text-gray-600 mb-7">
-              Welcome Back
-            </p>
-            <div
-              className={`flex items-center border-2 py-2 px-3 rounded-2xl mb-4 ${
-                screenSize.width <= 700 ? "flex-col" : ""
-              }`}
-            >
-              <input
-                type="email"
-                id="email"
-                className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring ${
-                  screenSize.width > 700 ? "" : "text-sm"
+      <div className="h-full bg-gray-100">
+        <div className="flex justify-center items-center h-full w-full p-5">
+          <div className="mb-5 w-full md:w-1/2 lg:w-1/2 xl:w-1/2 p-6 bg-white rounded shadow-lg">
+            <form onSubmit={handleSubmit} className="bg-white">
+              <h1 className="text-gray-800 font-bold text-2xl mb-1 text-center">
+                Hello Again!
+              </h1>
+              <p className="text-sm font-normal text-gray-600 mb-7 text-center">
+                Welcome Back
+              </p>
+              <div
+                className={`flex items-center border-2 py-2 px-3 rounded-2xl mb-4 ${
+                  screenSize.width <= 700 ? "flex-col" : ""
                 }`}
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                pattern={emailRegex}
-              />
-            </div>
-            <div
-              className={`flex items-center border-2 py-2 px-3 rounded-2xl ${
-                screenSize.width <= 700 ? "flex-col" : ""
-              }`}
-            >
-              <input
-                type="password"
-                id="password"
-                className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring ${
-                  screenSize.width > 700 ? "" : "text-sm"
+              >
+                <input
+                  type="email"
+                  id="email"
+                  className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring ${
+                    screenSize.width > 700 ? "" : "text-sm"
+                  }`}
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  pattern={emailRegex}
+                />
+              </div>
+              <div
+                className={`flex items-center border-2 py-2 px-3 rounded-2xl ${
+                  screenSize.width <= 700 ? "flex-col" : ""
                 }`}
-                placeholder="Enter your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
-            <button
-              type="submit"
-              className="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2"
-            >
-              Login
-            </button>
-            <Link to="/seconnecter/oublier">
-              <span className="text-sm ml-2 hover:text-blue-500 cursor-pointer">
-                Forgot Password?
-              </span>
-            </Link>
-          </form>
+              >
+                <input
+                  type="password"
+                  id="password"
+                  className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring ${
+                    screenSize.width > 700 ? "" : "text-sm"
+                  }`}
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+              <button
+                type="submit"
+                className="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2"
+              >
+                Login
+              </button>
+              <Link
+                to="/seconnecter/oublier"
+                className="w-full flex justify-center"
+              >
+                <span className="text-center text-sm ml-2 hover:text-blue-500 cursor-pointer">
+                  Forgot Password?
+                </span>
+              </Link>
+            </form>
+          </div>
         </div>
       </div>
     </div>

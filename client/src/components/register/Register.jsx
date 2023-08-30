@@ -51,47 +51,8 @@ const Register = () => {
     setSelectedFile(null);
   };
 
-  const [screenSize, setScreenSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
-  });
-
-  useEffect(() => {
-    const handleResize = () => {
-      setScreenSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  const handleScroll = () => {
-    if (window.scrollY > 100) {
-      setIsNavbarVisible(true);
-    } else {
-      setIsNavbarVisible(false);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  const isActiveNavItem = (navItem) => {
-    return location.pathname === navItem;
-  };
-
   return (
-    <div className="">
+    <div className="h-full flex flex-col bg-gray-100">
       <header className="fixed w-full z-50 transition-all bg-white top-0 left-0 right-0">
         <nav className="px-4 lg:px-6 py-2.5 bg-none dark:bg-gray-800">
           <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-2xl">
@@ -138,9 +99,9 @@ const Register = () => {
         </nav>
       </header>
 
-      <div className="flex justify-center items-center mt-[6rem] mb-[1rem] h-full w-full">
+      <div className="mt-10 flex justify-center items-center h-full w-full">
         <form
-          className="bg-white rounded shadow-lg w-1/2 p-3"
+          className="bg-white rounded shadow- w-full md:w-1/2 lg:w-1/2 xl:w-1/2 p-6"
           onSubmit={handleSubmit}
         >
           <h2 className="text-2xl font-bold mb-6">Register</h2>

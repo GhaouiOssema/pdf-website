@@ -113,10 +113,10 @@ const Home = () => {
               installations.
             </p>
             <div onClick={scrollToDecouvrir} className="flex justify-center">
-              <button className="inline-flex justify-center items-center py-3 px-5 mr-3 text-base font-medium text-center text-white rounded-lg custome__border__blue bg-[#F0854A] hover:bg-[#F0854A]">
+              <button className="sm:text-base inline-flex justify-center items-center py-3 px-5 mr-3 text-base font-medium text-center text-white rounded-lg custome__border__blue bg-[#F0854A] hover:bg-[#F0854A]">
                 Découvrir plus
               </button>
-              <button className="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-[#125ba3] hover:text-white rounded-lg custome__border border-[#125ba3] hover:bg-[#125ba3]">
+              <button className="sm:text-base inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-[#125ba3] hover:text-white rounded-lg custome__border border-[#125ba3] hover:bg-[#125ba3]">
                 Nous contacter
               </button>
             </div>
@@ -128,15 +128,49 @@ const Home = () => {
       <section className="bg-gray-50 dark:bg-gray-800">
         <div className="px-4 py-6 mx-auto max-w-screen-xl lg:px-6">
           <Carousel>
-            <div className="relative flex justify-around bg-blue-400 w-full h-full">
+            <div className="relative flex flex-col sm:flex-row justify-around bg-blue-400 w-full h-full">
               <div className="w-full sm:w-1/2 h-full">
-                <img alt="..." src={IMG_1} className="object-cover h-full" />
+                <img
+                  alt="..."
+                  src={IMG_1}
+                  className="object-cover h-full w-full"
+                />
               </div>
-              <div className="w-full sm:w-1/2">
-                <h1 className="w-full h-full flex flex-col justify-center text-white font-bold opacity-100 text-center text-xl">
+              <div className="w-full sm:w-1/2 flex justify-center items-center p-4">
+                <span className="text-white font-bold text-center text-lg sm:text-xl md:text-2xl lg:text-3xl">
                   Importez facilement les plans détaillés de vos machines et
                   gérez leur maintenance de manière efficace et structurée.
-                </h1>
+                </span>
+              </div>
+            </div>
+            <div className="relative flex flex-col sm:flex-row justify-around bg-blue-400 w-full h-full">
+              <div className="w-full sm:w-1/2 h-full">
+                <img
+                  alt="..."
+                  src={IMG_1}
+                  className="object-cover h-full w-full"
+                />
+              </div>
+              <div className="w-full sm:w-1/2 flex justify-center items-center p-4">
+                <span className="text-white font-bold text-center text-lg sm:text-xl md:text-2xl lg:text-3xl">
+                  Importez facilement les plans détaillés de vos machines et
+                  gérez leur maintenance de manière efficace et structurée.
+                </span>
+              </div>
+            </div>
+            <div className="relative flex flex-col sm:flex-row justify-around bg-blue-400 w-full h-full">
+              <div className="w-full sm:w-1/2 h-full">
+                <img
+                  alt="..."
+                  src={IMG_1}
+                  className="object-cover h-full w-full"
+                />
+              </div>
+              <div className="w-full sm:w-1/2 flex justify-center items-center p-4">
+                <span className="text-white font-bold text-center text-lg sm:text-xl md:text-2xl lg:text-3xl">
+                  Importez facilement les plans détaillés de vos machines et
+                  gérez leur maintenance de manière efficace et structurée.
+                </span>
               </div>
             </div>
           </Carousel>
@@ -502,98 +536,8 @@ const Home = () => {
         </div>
       </section>
 
-      <footer className="text-gray-600 body-font">
-        <div className="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col">
-          <div className="w-full flex sm:flex-row flex-col items-center justify-around">
-            <a className="ml-0 lg:ml20 xl:ml:40 2xl:ml-40 flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                className="w-10 h-10 text-white p-2 bg-blue-500 rounded-full"
-                viewBox="0 0 24 24"
-              >
-                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-              </svg>
-              <span className="ml-3 text-xl">Tailblocks</span>
-            </a>
-            <p className="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">
-              © 2020 Tailblocks —
-              <a
-                href="https://twitter.com/knyttneve"
-                className="text-gray-600 ml-1"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                @knyttneve
-              </a>
-            </p>
-            <span className="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start mr-0 lg:mr20 xl:mr:40 2xl:mr-40">
-              <a className="text-gray-500">
-                <svg
-                  fill="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  className="w-5 h-5"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
-                </svg>
-              </a>
-              <a className="ml-3 text-gray-500">
-                <svg
-                  fill="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  className="w-5 h-5"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
-                </svg>
-              </a>
-              <a className="ml-3 text-gray-500">
-                <svg
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  className="w-5 h-5"
-                  viewBox="0 0 24 24"
-                >
-                  <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
-                  <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01"></path>
-                </svg>
-              </a>
-              <a className="ml-3 text-gray-500">
-                <svg
-                  fill="currentColor"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="0"
-                  className="w-5 h-5"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="none"
-                    d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"
-                  ></path>
-                  <circle cx="4" cy="4" r="2" stroke="none"></circle>
-                </svg>
-              </a>
-            </span>
-          </div>
-        </div>
-      </footer>
-
       {isNavbarVisible && (
-        <div className="fixed bottom-6 right-6 z-50">
+        <div className="fixed bottom-20 right-6 z-50">
           <button
             onClick={scrollToTop}
             className="bg-[#F0854A] text-white py-2 px-4 rounded-full shadow-md focus:outline-none focus:bg-[#125ba3] hover:bg-[#125ba3]"
