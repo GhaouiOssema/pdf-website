@@ -26,7 +26,7 @@ const MidiumView = () => {
   };
   return (
     <div className="bg-gray-100 p-2 md:min-w-[61.9rem] mx-auto p-auto">
-      <section className="flex flex-col items-center justify-center w-full h-screen">
+      <section className="flex flex-col items-center justify-center">
         <div className=" relative place-self-center rounded-xl">
           <div
             className=" w-[450px] h-[350px] ml-[450px] md:absolute md:mt-[-250px]"
