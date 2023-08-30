@@ -841,7 +841,7 @@ const FormSend = () => {
   };
 
   return (
-    <div className="h-[92vh] bg-gray-100">
+    <div className="h-[90vh] bg-gray-100">
       <div className="text-3xl text-center font-bold pt-5" />
       <form onReset={handleReset}>
         <div className="flex justify-center items-center">
