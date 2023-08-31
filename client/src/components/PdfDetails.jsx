@@ -308,10 +308,10 @@ const PdfDetails = () => {
           <div>
             {/* Desktop View */}
             <div className="hidden md:flex flex-col lg:flex-row items-center justify-around py-2 lg:px-5 mx-auto w-full">
-              <div className="w-full md:w-[80%] mt-12">
+              <div className="w-full md:w-[80%] mt-12 h-full">
                 <p className="font-bold text-lg mb-4">Tableau des Rapports</p>
-                <div className="pdf-preview ">
-                  <div style={{ height: "300px" }}>
+                <div className="pdf-preview">
+                  <div className="sm:h-full">
                     <div className="shadow-md shadow-black/20 p-1 rounded-xl bg-white h-auto">
                       <div className="mb-3 flex flex-col sm:flex-row items-center">
                         <h1 className="font-bold text-base">Titre :</h1>
@@ -330,7 +330,11 @@ const PdfDetails = () => {
                           <div className="mb-3 flex flex-col sm:flex-row items-center">
                             <h1 className="font-bold">Date d'installation :</h1>
                             <span className="text-black ml-3">
-                              {pdfData?.pdfDetails?.installationDate}
+                              {
+                                new Date(pdfData?.pdfDetails?.installationDate)
+                                  .toISOString()
+                                  .split("T")[0]
+                              }
                             </span>
                           </div>
                         </>
@@ -346,7 +350,7 @@ const PdfDetails = () => {
                         </div>
                       )}
                     </div>
-                    <div className="mt-4">
+                    <div className="mt-4 ">
                       {!imageLoading && !imageError && (
                         <figure className="relative">
                           <img

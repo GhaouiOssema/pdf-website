@@ -234,7 +234,11 @@ const PublicPdfView = () => {
                           <div className="mb-3 flex flex-col sm:flex-row items-center">
                             <h1 className="font-bold">Date d'installation :</h1>
                             <span className="text-black ml-3">
-                              {pdfData?.pdfDetails?.installationDate}
+                              {
+                                new Date(pdfData?.pdfDetails?.installationDate)
+                                  .toISOString()
+                                  .split("T")[0]
+                              }
                             </span>
                           </div>
                         </>
