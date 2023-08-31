@@ -3,7 +3,6 @@ import React from "react";
 import IMG_1 from "../assets/img_1.png";
 import IMG_2 from "../assets/carousel2.jpg";
 import IMG_3 from "../assets/carousel3.jpg";
-import IMG_4 from "../assets/carrousel4.jpg";
 
 const DefaultCarousel = () => {
   return (

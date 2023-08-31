@@ -101,17 +101,17 @@ const Home = () => {
           </nav>
         </header>
       )}
-      <section className="text-gray-600 body-font">
+      <section className="text-gray-600 body-font ">
         <div className="container mx-auto flex px-5 py-24 h-screen items-center justify-center flex-col">
           <div className="text-center lg:w-2/3 w-full">
-            <h1 className=" py-10 tracking-wide leading-10 gradient-text title-font md:text-4xl xl:text-5xl sm:text-3xl text-3xl mb-4 font-extrabold text-gray-900">
+            <h1 className="py-10 tracking-wide leading-10 gradient-text title-font md:text-4xl xl:text-5xl sm:text-3xl text-3xl mb-4 font-extrabold text-gray-900">
               Une maintenance simplifiée
               {/* <img
                 alt="scribble"
                 src={IMG}
-                className="mx-auto md:absolute md:ml-[35rem] md:h-[3rem] md:mt-[-23px] md:w-[300px]"
-              />
-              <br /> */}
+                className="mx-auto md:absolute md:ml-[37rem] md:h-[3rem] md:mt-[-23px] md:w-[310px]"
+              /> */}
+              <br />
               <span>dès aujourd'hui.</span>
             </h1>
 
@@ -132,59 +132,50 @@ const Home = () => {
           </div>
         </div>
       </section>
+
       <span ref={decouvrirSectionRef} />
       <div className="mt-[15vh] md:mt-[8vh] lg:mt-[8vh] xl:mt-[8vh]" />
+
       <section className="bg-gray-50 dark:bg-gray-800">
-        <div className="px-4 py-6 mx-auto max-w lg:px-6">
+        <div className="px-4 py-6 max-w lg:px-6">
           <Carousel>
             <div className="relative flex flex-col sm:flex-row justify-around bg-blue-400 w-full h-full">
-              <div className="w-full sm:w-1/2 h-full">
-                <img
-                  alt="..."
-                  src={IMG_1}
-                  className="object-cover h-full w-full"
-                />
+              <div className="sm:w-1/2 h-full">
+                <img alt="..." src={IMG_1} className="object-cover h-full" />
               </div>
-              <div className="w-full sm:w-1/2 flex justify-center items-center p-4">
-                <span className="text-white font-bold text-center text-lg sm:text-xl md:text-2xl lg:text-3xl">
+              <div className="sm:w-1/2 py-6">
+                <h1 className="w-full h-full flex flex-col justify-center text-white font-bold opacity-100 text-center text-sm lg:text-lg xl:textxl">
                   Importez facilement les plans détaillés de vos machines et
                   gérez leur maintenance de manière efficace et structurée.
-                </span>
+                </h1>
               </div>
             </div>
             <div className="relative flex flex-col sm:flex-row justify-around bg-red-400 w-full h-full">
-              <div className="w-full sm:w-1/2 h-full">
-                <img
-                  alt="..."
-                  src={IMG_1}
-                  className="object-cover h-full w-full"
-                />
+              <div className="sm:w-1/2 h-full">
+                <img alt="..." src={IMG_1} className="object-cover h-full" />
               </div>
-              <div className="w-full sm:w-1/2 flex justify-center items-center p-4">
-                <span className="text-white font-bold text-center text-lg sm:text-xl md:text-2xl lg:text-3xl">
+              <div className="sm:w-1/2 py-6">
+                <h1 className="w-full h-full flex flex-col justify-center text-white font-bold opacity-100 text-center text-sm lg:text-lg xl:textxl">
                   Importez facilement les plans détaillés de vos machines et
                   gérez leur maintenance de manière efficace et structurée.
-                </span>
+                </h1>
               </div>
             </div>
-            {/* <div className="relative flex flex-col sm:flex-row justify-around bg-blue-400 w-full h-full">
-              <div className="w-full sm:w-1/2 h-full">
-                <img
-                  alt="..."
-                  src={IMG_1}
-                  className="object-cover h-full w-full"
-                />
+            <div className="relative flex flex-col sm:flex-row justify-around bg-green-400 w-full h-full">
+              <div className="sm:w-1/2">
+                <img alt="..." src={IMG_1} className="object-cover h-full" />
               </div>
-              <div className="w-full sm:w-1/2 flex justify-center items-center p-4">
-                <span className="text-white font-bold text-center text-lg sm:text-xl md:text-2xl lg:text-3xl">
+              <div className="sm:w-1/2 py-6">
+                <h1 className="w-full h-full flex flex-col justify-center text-white font-bold opacity-100 text-center text-sm lg:text-lg xl:textxl">
                   Importez facilement les plans détaillés de vos machines et
                   gérez leur maintenance de manière efficace et structurée.
-                </span>
+                </h1>
               </div>
-            </div> */}
+            </div>
           </Carousel>
         </div>
       </section>
+
       <section className="bg-gray-50 dark:bg-gray-800">
         <div className="px-4 py-6 mx-auto max-w-screen-xl lg:px-6">
           <div className="flex justify-center">
@@ -263,94 +254,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-      {/* <section className="flex flex-col items-center justify-center">
-        <div className="p-6 bg-gray-800 text-gray-100 max-w-screen-xl mb-[5rem] rounded-xl">
-          <div className="container mx-auto">
-            <span className="block mb-2 text-xs font-medium tracki text-center uppercase text-violet-400">
-              How it works
-            </span>
-            <h2 className="text-5xl font-bold text-center text-gray-50 mb-6">
-              Building with Mamba is simple
-            </h2>
-            <div className="">
-              <div className="grid slides pb-6 w-auto">
-                <div className="flex flex-col p-8 space-y-4 rounded-md bg-gray-900 ml-5">
-                  <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
-                    1
-                  </div>
-                  <p className="text-2xl font-semibold">
-                    <b>Nulla.</b>Nostrum, corrupti blanditiis. Illum,
-                    architecto?
-                  </p>
-                </div>
-                <div className="flex flex-col p-8 space-y-4 rounded-md bg-gray-900 ml-5">
-                  <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
-                    2
-                  </div>
-                  <p className="text-2xl font-semibold">
-                    <b>Accusantium.</b>Vitae saepe atque neque sunt eius dolor
-                    veniam alias debitis?
-                  </p>
-                </div>
-                <div className="flex flex-col p-8 space-y-4 rounded-md bg-gray-900 ml-5">
-                  <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
-                    3
-                  </div>
-                  <p className="text-2xl font-semibold">
-                    <b>Maxime.</b>Expedita temporibus culpa reprehenderit
-                    doloribus consectetur odio!
-                  </p>
-                </div>
-                <div className="flex flex-col p-8 space-y-4 rounded-md bg-gray-900 ml-5">
-                  <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
-                    3
-                  </div>
-                  <p className="text-2xl font-semibold">
-                    <b>Maxime.</b>Expedita temporibus culpa reprehenderit
-                    doloribus consectetur odio!
-                  </p>
-                </div>
-                <div className="flex flex-col p-8 space-y-4 rounded-md bg-gray-900 ml-5">
-                  <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
-                    3
-                  </div>
-                  <p className="text-2xl font-semibold">
-                    <b>Maxime.</b>Expedita temporibus culpa reprehenderit
-                    doloribus consectetur odio!
-                  </p>
-                </div>
-                <div className="flex flex-col p-8 space-y-4 rounded-md bg-gray-900 ml-5">
-                  <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
-                    3
-                  </div>
-                  <p className="text-2xl font-semibold">
-                    <b>Maxime.</b>Expedita temporibus culpa reprehenderit
-                    doloribus consectetur odio!
-                  </p>
-                </div>
-                <div className="flex flex-col p-8 space-y-4 rounded-md bg-gray-900 ml-5">
-                  <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
-                    3
-                  </div>
-                  <p className="text-2xl font-semibold">
-                    <b>Maxime.</b>Expedita temporibus culpa reprehenderit
-                    doloribus consectetur odio!
-                  </p>
-                </div>
-                <div className="flex flex-col p-8 space-y-4 rounded-md bg-gray-900 ml-5">
-                  <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-violet-400 text-gray-900">
-                    3
-                  </div>
-                  <p className="text-2xl font-semibold">
-                    <b>Maxime.</b>Expedita temporibus culpa reprehenderit
-                    doloribus consectetur odio!
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section> */}
+
       <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
         <div className="max-w-xl mb-10 md:mx-auto sm:text-center lg:max-w-2xl md:mb-12">
           <div>

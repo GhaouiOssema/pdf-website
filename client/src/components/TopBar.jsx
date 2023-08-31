@@ -117,9 +117,6 @@ const TopBar = ({ toggleSidebar, isSidebarOpen }) => {
                         </Avatar>
                       </IconButton>
                     </Tooltip>
-                    <p className="font-semibold text-sm ml-2">
-                      {userData?.userName}
-                    </p>
                   </Box>
                   <Menu
                     anchorEl={anchorEl}

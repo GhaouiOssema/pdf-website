@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import LOGO from "../../assets/logo2.png";
-import Footer from "../Footer";
 
 const isEmailValid = (email) => {
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -12,13 +11,7 @@ const isEmailValid = (email) => {
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
-  const [isNavbarVisible, setIsNavbarVisible] = useState(false);
   const pages = ["connexion", "inscription", "Home"];
-
-  const isActiveNavItem = (navItem) => {
-    return location.pathname === navItem;
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -94,13 +87,12 @@ const Login = () => {
       <header className="fixed w-full z-50 transition-all bg-white top-0 left-0 right-0">
         <nav className="px-4 lg:px-6 py-2.5 bg-none dark:bg-gray-800">
           <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-2xl">
-            <Link
-              to={"/"}
+            <a
               href="#"
               className="flex w-full lg:w-1/6 md:w-1/6 justify-center lg:justify-start md:justify-start items-center lg:mb-0 mb-5"
             >
               <img src={LOGO} className="mr-3 h-6 sm:h-9" alt="Flowbite Logo" />
-            </Link>
+            </a>
             <div className="flex justify-center items-center lg:w-[26.2%] md:w-[26.2%] w-full">
               <Link
                 to={"/"}
@@ -138,69 +130,73 @@ const Login = () => {
           </div>
         </nav>
       </header>
-      <div className="h-full bg-gray-100">
-        <div className="flex justify-center items-center h-full w-full p-5">
-          <div className="mb-5 w-full md:w-1/2 lg:w-1/2 xl:w-1/2 p-6 bg-white rounded shadow-lg">
-            <form onSubmit={handleSubmit} className="bg-white">
-              <h1 className="text-gray-800 font-bold text-2xl mb-1 text-center">
-                Bonjour à nouveau !
-              </h1>
-              <p className="text-sm font-normal text-gray-600 mb-7 text-center">
-                Content de te revoir
-              </p>
-              <div
-                className={`flex items-center border-2 py-2 px-3 rounded-2xl mb-4 ${
-                  screenSize.width <= 700 ? "flex-col" : ""
-                }`}
-              >
+      <section class="min-h-screen flex items-stretch text-white ">
+        <div className="lg:flex w-1/2 hidden bg-gray-500 bg-no-repeat bg-cover relative items-center IMAG__SCAN">
+          <div className="absolute bg-black opacity-60 inset-0 z-0"></div>
+          <div className="w-full px-24 z-10">
+            <h1 className="text-5xl font-bold text-left tracking-wide">
+              Keep it special
+            </h1>
+            <p className="text-3xl my-4">
+              Capture your personal memory in unique way, anywhere.
+            </p>
+          </div>
+        </div>
+        <div
+          className="lg:w-1/2 w-full flex items-center justify-center text-center md:px-16 px-0 z-0"
+          style={{ backgroundColor: "#161616" }}
+        >
+          <div className="absolute lg:hidden z-10 inset-0 bg-gray-500 bg-no-repeat object-right items-center IMAG__SCAN">
+            <div className="absolute bg-black opacity-60 inset-0 z-0"></div>
+          </div>
+          <div className="w-full py-6 z-20">
+            <h1 className="text-gray-100 font-bold text-2xl mb-1 text-center">
+              Bonjour à nouveau !
+            </h1>
+            <p className="text-sm font-normal text-gray-50 mb-7 text-center">
+              Content de te revoir
+            </p>
+            <form
+              onSubmit={handleSubmit}
+              className="sm:w-2/3 w-full px-4 lg:px-0 mx-auto"
+            >
+              <div className="pb-2 pt-4">
                 <input
                   type="email"
+                  name="email"
                   id="email"
-                  className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring ${
-                    screenSize.width > 700 ? "" : "text-sm"
-                  }`}
                   placeholder="Entrez votre adresse e-mail"
+                  className="block w-full p-4 text-lg rounded-sm bg-black"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   pattern={emailRegex}
                 />
               </div>
-              <div
-                className={`flex items-center border-2 py-2 px-3 rounded-2xl ${
-                  screenSize.width <= 700 ? "flex-col" : ""
-                }`}
-              >
+              <div className="pb-2 pt-4">
                 <input
+                  className="block w-full p-4 text-lg rounded-sm bg-black"
                   type="password"
+                  name="password"
                   id="password"
-                  className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring ${
-                    screenSize.width > 700 ? "" : "text-sm"
-                  }`}
                   placeholder="Entrez votre mot de passe."
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
               </div>
-              <button
-                type="submit"
-                className="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2"
-              >
-                Se connecter
-              </button>
-              <Link
-                to="/seconnecter/oublier"
-                className="w-full flex justify-center"
-              >
-                <span className="text-center text-sm ml-2 hover:text-blue-500 cursor-pointer">
-                  Mot de passe oublié ?
-                </span>
-              </Link>
+              <div className="text-center text-gray-400 hover:underline hover:text-gray-100">
+                <Link to={"/seconnecter/oublier"}>Forgot your password?</Link>
+              </div>
+              <div className="px-4 pb-2 pt-4">
+                <button className="uppercase block w-full p-4 text-lg rounded-full bg-indigo-500 hover:bg-indigo-600 focus:outline-none">
+                  sign in
+                </button>
+              </div>
             </form>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 };

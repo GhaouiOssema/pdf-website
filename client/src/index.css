@@ -333,3 +333,7 @@ body {
 .boor {
   border: 1px solid black;
 }
+
+.IMAG__SCAN {
+  background-image: url(./assets/scaner.jpeg);
+}
