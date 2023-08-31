@@ -94,12 +94,13 @@ const Login = () => {
       <header className="fixed w-full z-50 transition-all bg-white top-0 left-0 right-0">
         <nav className="px-4 lg:px-6 py-2.5 bg-none dark:bg-gray-800">
           <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-2xl">
-            <a
+            <Link
+              to={"/"}
               href="#"
               className="flex w-full lg:w-1/6 md:w-1/6 justify-center lg:justify-start md:justify-start items-center lg:mb-0 mb-5"
             >
               <img src={LOGO} className="mr-3 h-6 sm:h-9" alt="Flowbite Logo" />
-            </a>
+            </Link>
             <div className="flex justify-center items-center lg:w-[26.2%] md:w-[26.2%] w-full">
               <Link
                 to={"/"}

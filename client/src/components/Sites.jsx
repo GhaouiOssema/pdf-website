@@ -8,6 +8,7 @@ import {
   Box,
   Button,
   Checkbox,
+  CircularProgress,
   Dialog,
   DialogContent,
   DialogTitle,
@@ -27,7 +28,7 @@ import axios from "axios";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Link } from "react-router-dom";
 import SiteOption from "./SiteOption";
-import FilterListIcon from "@mui/icons-material/FilterList";
+import HourglassDisabledRoundedIcon from "@mui/icons-material/HourglassDisabledRounded";
 
 function MultiSelectTreeView({
   folders,
@@ -144,19 +145,19 @@ const Sites = () => {
     height: window.innerHeight,
   });
   const [openSection, setOpenSection] = useState(false);
-  const [folders, setFolders] = useState(null);
+  const [folders, setFolders] = useState([]);
   const [open, setOpen] = useState(false);
   const [alertMsg, setAlertMsg] = useState(null);
   const [buttonType, setButtonType] = useState("");
   const [folderIdUpdate, setFolderIdUpdate] = useState();
   const [searchQuery, setSearchQuery] = useState("");
   const [filterOpen, setFilterOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [filterOptions, setFilterOptions] = useState({
     address: true,
     code_postal: true,
     subfolder: true,
   });
-  const [filterQuery, setFilterQuery] = useState("");
 
   const handleCloseAlert = (event, reason) => {
     if (reason === "clickaway") {
@@ -201,25 +202,24 @@ const Sites = () => {
           `${import.meta.env.VITE_SERVER_API_URL}/sites`,
           config
         );
-        setFolders(response.data);
+        if (response.status === 200) {
+          setFolders(response.data);
+        } else {
+          setFolders([]);
+        }
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     };
 
+    setLoading(true);
     fetchFolders();
   }, []);
 
-  const handleSearchQueryChange = (e) => {
-    setSearchQuery(e.target.value);
-  };
-
   const handleClose = () => {
     setOpenSection(false);
-  };
-
-  const handleOpenFilter = () => {
-    setFilterOpen(true);
   };
 
   const handleCloseFilter = () => {
@@ -227,7 +227,7 @@ const Sites = () => {
   };
 
   return (
-    <div className="h-full bg-gray-100">
+    <div className="h-screen bg-gray-100">
       <Dialog open={filterOpen} onClose={handleCloseFilter}>
         <DialogTitle>Filter Options</DialogTitle>
         <DialogContent>
@@ -425,7 +425,7 @@ const Sites = () => {
           </div>
 
           {/* Add button */}
-          <div className="md:w-[20%] mt-4 md:mt-0 flex flex-col items-center">
+          <div className="md:w-[40%] mt-4 md:mt-0 flex flex-col items-center">
             <button
               type="button"
               className="md:flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none hidden "
@@ -477,18 +477,18 @@ const Sites = () => {
       </div>
 
       <div
-        className={` mt-10 ${
+        className={`mt-10 ${
           screenSize.width < 700
-            ? "w-full h-full"
-            : "flex justify-center items-center w-full"
+            ? "w-full"
+            : "flex justify-center items-center w-full "
         } `}
       >
         <div
           className={`${
-            screenSize.width < 700 ? "h-screen " : "flex flex-wrap w-full"
+            screenSize.width < 700 ? "h-full " : "flex flex-wrap w-full h-full"
           }`}
         >
-          {folders && folders.length ? (
+          {!loading && folders && folders.length > 0 ? (
             folders
               ?.filter((folder) => {
                 const lowerCaseSearchQuery = searchQuery.toLowerCase();
@@ -533,8 +533,25 @@ const Sites = () => {
                   />
                 </div>
               ))
+          ) : loading ? (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "30vh",
+                width: "100%",
+              }}
+            >
+              <CircularProgress />
+            </Box>
           ) : (
-            <p>No folders exsist</p>
+            <div className="w-full h-[65vh] flex flex-col justify-center items-center">
+              <HourglassDisabledRoundedIcon sx={{ fontSize: 100 }} />
+              <p className="mt-5 font-sans font-bold">
+                Il n'existe aucun dossier
+              </p>
+            </div>
           )}
         </div>
       </div>

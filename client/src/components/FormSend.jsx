@@ -49,7 +49,11 @@ const FormSend = () => {
   const [open, setOpen] = useState(false);
   const [alertMsg, setAlertMsg] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [folders, setFolders] = useState([]);
+  const [formState, setFormState] = useState(initialState);
   const [isUploading, setIsUploading] = useState(false);
+  const [formComplated, setFormComplated] = useState(0);
+  const [fieldEmpty, setFieldEmpty] = useState([]);
 
   const token = localStorage.getItem("token");
   if (!token) {
@@ -74,7 +78,6 @@ const FormSend = () => {
     setOpen(false);
   };
 
-  const [folders, setFolders] = useState([]);
   useEffect(() => {
     const fetchFolders = async () => {
       try {
@@ -90,10 +93,6 @@ const FormSend = () => {
 
     fetchFolders();
   }, []);
-  console.log(folders);
-
-  const [formState, setFormState] = useState(initialState);
-  console.log(formState);
 
   const handleChange = (event) => {
     const { name, value, files } = event.target;
@@ -198,6 +197,7 @@ const FormSend = () => {
         setAlertMsg("success");
         handleClick();
         setLoading(false);
+        setFormComplated((prev) => prev + 1);
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
       }
     } catch (error) {
@@ -209,6 +209,8 @@ const FormSend = () => {
       setIsUploading(false); // Upload complete or error, stop uploading
     }
   };
+
+  console.log(formComplated);
 
   const handleSubmitStep2 = async (event) => {
     event.preventDefault();
@@ -255,6 +257,7 @@ const FormSend = () => {
         setAlertMsg("success");
         handleClick();
         setLoading(false);
+        setFormComplated((prev) => prev + 1);
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
       }
     } catch (error) {
@@ -311,6 +314,7 @@ const FormSend = () => {
         setAlertMsg("success");
         handleClick();
         setLoading(false);
+        setFormComplated((prev) => prev + 1);
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
       }
     } catch (error) {
@@ -374,6 +378,7 @@ const FormSend = () => {
         setAlertMsg("success");
         handleClick();
         setLoading(false);
+        setFormComplated((prev) => prev + 1);
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
       }
     } catch (error) {
@@ -465,7 +470,7 @@ const FormSend = () => {
                         )}
                       </select>
                       <input
-                        className="w-[15rem] bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg pl-5 "
+                        className="max w-[28%] bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg pl-5 "
                         type="text"
                         placeholder="Nom d'equipement"
                         value={formState.title}
@@ -499,18 +504,18 @@ const FormSend = () => {
                       </select>
                     </div>
                     {formState.publicOrPrivate === "Armoire electrique" && (
-                      <div className="mt-2 flex items-center justify-around">
+                      <div className="mt-2 flex sm:flex-row flex-col items-center justify-around">
                         <input
-                          className="w-[15rem] bg-gray-100 text-gray-900  p-3 rounded-lg pl-5"
+                          className="max w-[28%] bg-gray-100 text-gray-900 p-3 rounded-lg pl-5"
                           type="text"
-                          placeholder=""
+                          placeholder="PTA"
                           value={formState.input1}
                           onChange={handleChange}
                           name="input1"
                           required
                         />
                         <input
-                          className="w-[15rem] bg-gray-100 text-gray-900  p-3 rounded-lg pl-5"
+                          className="max w-[28%] bg-gray-100 text-gray-900 p-3 rounded-lg pl-5 mt-2 sm:mt-0"
                           type="date"
                           placeholder="Input 2"
                           value={formState.input2}
@@ -753,7 +758,6 @@ const FormSend = () => {
             )}
           </>
         );
-
       case 3:
         return (
           <>
@@ -840,6 +844,14 @@ const FormSend = () => {
     }
   };
 
+  const skipLength = () => {
+    setActiveStep((prev) => prev + 1);
+    setFormComplated((prev) => prev - 1);
+    setFieldEmpty([...fieldEmpty, steps[activeStep]]);
+  };
+
+  console.log("FIELD NOT FIELD", fieldEmpty);
+
   return (
     <div className="h-[90vh] bg-gray-100">
       <div className="text-3xl text-center font-bold pt-5" />
@@ -855,6 +867,20 @@ const FormSend = () => {
                   <h1 className="text-2xl text-center font-bold mb-4">
                     Ajout complété!
                   </h1>
+                  {formComplated !== 4 && fieldEmpty.length > 0 && (
+                    <div className="flex flex-col items-center mb-4">
+                      <h1 className="w-full text-center font-bold text-red-500 uppercase">
+                        Les champs non renseignés :
+                      </h1>
+                      <h4 className="text-md w-full text-center flex flex-col md:flex-row lg:flex-row xl:flex-row justify-center items-center">
+                        {fieldEmpty.map((el, idx) => (
+                          <div key={idx} className="pl-2">
+                            | {el}
+                          </div>
+                        ))}
+                      </h4>
+                    </div>
+                  )}
                   <div className="text-center">
                     <Button
                       variant="contained"
@@ -871,10 +897,7 @@ const FormSend = () => {
                     <span className=" font-bold text-base ">
                       {steps[activeStep]}
                     </span>
-                    <Button
-                      onClick={() => setActiveStep((prev) => prev + 1)} // Move to the next step
-                      color="primary"
-                    >
+                    <Button onClick={skipLength} color="primary">
                       ignorer
                     </Button>
                   </div>

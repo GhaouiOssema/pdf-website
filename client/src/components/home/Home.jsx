@@ -13,6 +13,8 @@ import Tabs from "@mui/joy/Tabs";
 import TabList from "@mui/joy/TabList";
 import Tab from "@mui/joy/Tab";
 import TabPanel from "@mui/joy/TabPanel";
+import IMG from "../../assets/ligne.png";
+
 const Home = () => {
   const [isNavbarVisible, setIsNavbarVisible] = useState(false);
   const pages = ["connexion", "inscription", "Home"];
@@ -99,14 +101,20 @@ const Home = () => {
           </nav>
         </header>
       )}
-
       <section className="text-gray-600 body-font">
         <div className="container mx-auto flex px-5 py-24 h-screen items-center justify-center flex-col">
           <div className="text-center lg:w-2/3 w-full">
-            <h1 className=" py-10 tracking-wide leading-10 gradient-text title-font md:text-5xl xl:text-6xl sm:text-3xl text-3xl mb-4 font-extrabold text-gray-900">
-              Une maintenance simplifiée <br />
-              <span>dès aujourd'hui</span>.
+            <h1 className=" py-10 tracking-wide leading-10 gradient-text title-font md:text-4xl xl:text-5xl sm:text-3xl text-3xl mb-4 font-extrabold text-gray-900">
+              Une maintenance simplifiée
+              {/* <img
+                alt="scribble"
+                src={IMG}
+                className="mx-auto md:absolute md:ml-[35rem] md:h-[3rem] md:mt-[-23px] md:w-[300px]"
+              />
+              <br /> */}
+              <span>dès aujourd'hui.</span>
             </h1>
+
             <p className="mb-8 leading-relaxed md:text-xl xl:text-xl sm:text-lg text-base ">
               Maximisez l'efficacité de votre gestion et entretien d'équipements
               grâce à notre solution QR . Bénéficiez d'une maintenance
@@ -124,10 +132,10 @@ const Home = () => {
           </div>
         </div>
       </section>
-
-      <div ref={decouvrirSectionRef} />
+      <span ref={decouvrirSectionRef} />
+      <div className="mt-[15vh] md:mt-[8vh] lg:mt-[8vh] xl:mt-[8vh]" />
       <section className="bg-gray-50 dark:bg-gray-800">
-        <div className="px-4 py-6 mx-auto max-w-screen-xl lg:px-6">
+        <div className="px-4 py-6 mx-auto max-w lg:px-6">
           <Carousel>
             <div className="relative flex flex-col sm:flex-row justify-around bg-blue-400 w-full h-full">
               <div className="w-full sm:w-1/2 h-full">
@@ -177,60 +185,84 @@ const Home = () => {
           </Carousel>
         </div>
       </section>
-
       <section className="bg-gray-50 dark:bg-gray-800">
         <div className="px-4 py-6 mx-auto max-w-screen-xl lg:px-6">
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
+          <div className="flex justify-center">
+            <Tabs
+              aria-label="Vertical tabs"
+              orientation="vertical"
+              sx={{
+                width: "100%",
+                borderRadius: 0,
+                backgroundColor: "#fff",
+              }}
             >
-              <Typography>Accordion 1</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel2a-content"
-              id="panel2a-header"
-            >
-              <Typography>Accordion 2</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel2a-content"
-              id="panel2a-header"
-            >
-              <Typography>Accordion 2</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
+              <TabList
+                sx={{
+                  backgroundColor: "#eee",
+                  padding: "0.1rem",
+                  color: "#000",
+                  borderRadius: 0,
+                }}
+              >
+                <Tab
+                  sx={{
+                    color: "#000",
+                    width: "100%",
+                    borderRadius: 0,
+                    boxShadow: "none",
+                  }}
+                >
+                  Qestion 1 :
+                </Tab>
+                <Tab
+                  sx={{
+                    color: "#000",
+                    width: "100%",
+                    borderRadius: 0,
+                    boxShadow: "none",
+                  }}
+                >
+                  Qestion 2 :
+                </Tab>
+              </TabList>
+              <TabPanel
+                value={1}
+                sx={{
+                  p: 2,
+                  minHeight: "100%",
+                  backgroundColor: "#fff",
+                  color: "#000",
+                  width: "50%",
+                }}
+              >
+                <b>seconde tab : </b> <br />
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Ducimus quisquam soluta quo ullam eligendi cumque nemo repellat
+                nisi sit pariatur. Corporis nostrum reiciendis magni mollitia
+                sed ea eveniet, voluptatibus unde!{" "}
+              </TabPanel>
+              <TabPanel
+                value={0}
+                sx={{
+                  p: 2,
+                  minHeight: "100%",
+                  backgroundColor: "#fff",
+                  color: "#000",
+                  width: "50%",
+                }}
+              >
+                <b>First tab : </b> <br />
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Ducimus quisquam soluta quo ullam eligendi cumque nemo repellat
+                nisi sit pariatur. Corporis nostrum reiciendis magni mollitia
+                sed ea eveniet, voluptatibus unde!{" "}
+              </TabPanel>
+              {/* ... (Other tab panels) */}
+            </Tabs>
+          </div>
         </div>
       </section>
-
       {/* <section className="flex flex-col items-center justify-center">
         <div className="p-6 bg-gray-800 text-gray-100 max-w-screen-xl mb-[5rem] rounded-xl">
           <div className="container mx-auto">
@@ -319,7 +351,108 @@ const Home = () => {
           </div>
         </div>
       </section> */}
-
+      <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
+        <div className="max-w-xl mb-10 md:mx-auto sm:text-center lg:max-w-2xl md:mb-12">
+          <div>
+            <p className="inline-block px-3 py-px mb-4 text-xs font-semibold tracking-wider text-teal-900 uppercase rounded-full bg-teal-accent-400">
+              Brand new
+            </p>
+          </div>
+          <h2 className="max-w-lg mb-6 font-sans text-3xl font-bold leading-none tracking-tight text-gray-900 sm:text-4xl md:mx-auto">
+            <span className="relative inline-block">
+              <svg
+                viewBox="0 0 52 24"
+                fill="currentColor"
+                className="absolute top-0 left-0 z-0 hidden w-32 -mt-8 -ml-20 text-blue-gray-100 lg:w-32 lg:-ml-28 lg:-mt-10 sm:block"
+              >
+                <defs>
+                  <pattern
+                    id="d0d83814-78b6-480f-9a5f-7f637616b267"
+                    x="0"
+                    y="0"
+                    width=".135"
+                    height=".30"
+                  >
+                    <circle cx="1" cy="1" r=".7" />
+                  </pattern>
+                </defs>
+                <rect
+                  fill="url(#d0d83814-78b6-480f-9a5f-7f637616b267)"
+                  width="52"
+                  height="24"
+                />
+              </svg>
+              <span className="relative">The</span>
+            </span>{" "}
+            quick, brown fox jumps over a lazy dog
+          </h2>
+          <p className="text-base text-gray-700 md:text-lg">
+            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+            accusantium doloremque rem aperiam, eaque ipsa quae.
+          </p>
+        </div>
+        <div className="relative grid gap-8 row-gap-5 mb-8 md:row-gap-8 lg:grid-cols-4 sm:grid-cols-2">
+          <div className="absolute inset-0 flex items-center justify-center sm:hidden lg:flex">
+            <div className="w-px h-full bg-gray-300 lg:w-full lg:h-px" />
+          </div>
+          <div className="p-5 duration-300 transform bg-white border rounded shadow-sm hover:-translate-y-2">
+            <div className="flex items-center justify-between mb-2">
+              <p className="text-lg font-bold leading-5">Believe</p>
+              <p className="flex items-center justify-center w-6 h-6 font-bold rounded text-deep-purple-accent-400 bg-indigo-50">
+                1
+              </p>
+            </div>
+            <p className="text-sm text-gray-900">
+              Skate ipsum dolor sit amet, alley oop vert mute-air Colby Carter
+              flail 180 berm.
+            </p>
+          </div>
+          <div className="p-5 duration-300 transform bg-white border rounded shadow-sm hover:-translate-y-2">
+            <div className="flex items-center justify-between mb-2">
+              <p className="text-lg font-bold leading-5">Be yourself</p>
+              <p className="flex items-center justify-center w-6 h-6 font-bold rounded text-deep-purple-accent-400 bg-indigo-50">
+                2
+              </p>
+            </div>
+            <p className="text-sm text-gray-900">
+              A flower in my garden, a mystery in my panties. Heart attack never
+              stopped.
+            </p>
+          </div>
+          <div className="p-5 duration-300 transform bg-white border rounded shadow-sm hover:-translate-y-2">
+            <div className="flex items-center justify-between mb-2">
+              <p className="text-lg font-bold leading-5">Just do it</p>
+              <p className="flex items-center justify-center w-6 h-6 font-bold rounded text-deep-purple-accent-400 bg-indigo-50">
+                3
+              </p>
+            </div>
+            <p className="text-sm text-gray-900">
+              Chase ball of string eat plants, meow, and throw up because I ate
+              plants going.
+            </p>
+          </div>
+          <div className="p-5 duration-300 transform bg-white border rounded shadow-sm hover:-translate-y-2">
+            <div className="flex items-center justify-between mb-2">
+              <p className="text-lg font-bold leading-5">Eat that</p>
+              <p className="flex items-center justify-center w-6 h-6 font-bold rounded text-deep-purple-accent-400 bg-indigo-50">
+                4
+              </p>
+            </div>
+            <p className="text-sm text-gray-900">
+              Bro ipsum dolor sit amet gaper backside single track, manny Bike
+              epic clipless.
+            </p>
+          </div>
+        </div>
+        <div className="text-center">
+          <a
+            href="/"
+            className="rounded-lg inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 shadow-md md:w-auto bg-[#F0854A] hover:bg-[#125ba3] focus:shadow-outline focus:outline-none"
+          >
+            Learn more
+          </a>
+        </div>
+      </div>
       <section className="bg-gray-50 dark:bg-gray-800">
         <div className="px-4 py-6 mx-auto max-w-screen-xl lg:px-6">
           <div className="max-w-screen-md mb-8 lg:mb-16">
@@ -330,7 +463,7 @@ const Home = () => {
               Boostez l'efficacité de votre maintenance
             </p>
           </div>
-          <div className="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
+          <div className="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-12 md:space-y-0">
             <div>
               <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-blue-100 lg:h-12 lg:w-12 dark:bg-blue-900">
                 <svg
@@ -349,7 +482,7 @@ const Home = () => {
               <h3 className="mb-2 text-xl font-bold dark:text-white">
                 Gagnez du temps
               </h3>
-              <p className="text-gray-500 dark:text-gray-400">
+              <p className="text-gray-500 text-sm dark:text-gray-400">
                 Notre solution simplifie et accélère le processus de
                 maintenance, réduisant ainsi les temps d'arrêt de production.
               </p>
@@ -368,7 +501,7 @@ const Home = () => {
               <h3 className="mb-2 text-xl font-bold dark:text-white">
                 Réduisez les coûts
               </h3>
-              <p className="text-gray-500 dark:text-gray-400">
+              <p className="text-gray-500 text-sm dark:text-gray-400">
                 Une maintenance préventive basée sur des données précises aide à
                 prévenir les pannes coûteuses et prolonge la durée de vie de vos
                 machines.
@@ -393,7 +526,7 @@ const Home = () => {
               <h3 className="mb-2 text-xl font-bold dark:text-white">
                 Suivi centralisé
               </h3>
-              <p className="text-gray-500 dark:text-gray-400">
+              <p className="text-gray-500 text-sm dark:text-gray-400">
                 Tous les rapports de maintenance sont automatiquement
                 enregistrés dans notre système, vous permettant de suivre
                 l'historique de chaque machine et de planifier les interventions
@@ -419,7 +552,7 @@ const Home = () => {
               <h3 className="mb-2 text-xl font-bold dark:text-white">
                 Facilité d'utilisation
               </h3>
-              <p className="text-gray-500 dark:text-gray-400">
+              <p className="text-gray-500 text-sm dark:text-gray-400">
                 une installation simple des codes QR et une interface
                 conviviale, facilitant ainsi leur utilisation.
               </p>
@@ -427,7 +560,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-
       <section className="bg-gray-50 dark:bg-gray-800">
         <div className="px-4 py-6 mx-auto max-w-screen-xl lg:px-6">
           <Typography
@@ -441,102 +573,74 @@ const Home = () => {
           >
             Questions fréquemment posées
           </Typography>
-          <div className="flex justify-center">
-            <Tabs
-              aria-label="Vertical tabs"
-              orientation="vertical"
-              sx={{
-                width: "100%",
-                borderRadius: 0,
-                backgroundColor: "#fff",
-              }}
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
             >
-              <TabList
-                sx={{
-                  backgroundColor: "#eee",
-                  padding: "0.1rem",
-                  color: "#000",
-                  borderRadius: 0,
-                }}
-              >
-                <Tab
-                  sx={{
-                    color: "#000",
-                    width: "100%",
-                    borderRadius: 0,
-                    boxShadow: "none",
-                  }}
-                >
-                  Qestion 1 :
-                </Tab>
-                <Tab
-                  sx={{
-                    color: "#000",
-                    width: "100%",
-                    borderRadius: 0,
-                    boxShadow: "none",
-                  }}
-                >
-                  Qestion 2 :
-                </Tab>
-              </TabList>
-              <TabPanel
-                value={1}
-                sx={{
-                  p: 2,
-                  minHeight: "100%",
-                  backgroundColor: "#fff",
-                  color: "#000",
-                  width: "50%",
-                }}
-              >
-                <b>seconde tab : </b> <br />
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Ducimus quisquam soluta quo ullam eligendi cumque nemo repellat
-                nisi sit pariatur. Corporis nostrum reiciendis magni mollitia
-                sed ea eveniet, voluptatibus unde!{" "}
-              </TabPanel>
-              <TabPanel
-                value={0}
-                sx={{
-                  p: 2,
-                  minHeight: "100%",
-                  backgroundColor: "#fff",
-                  color: "#000",
-                  width: "50%",
-                }}
-              >
-                <b>First tab : </b> <br />
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Ducimus quisquam soluta quo ullam eligendi cumque nemo repellat
-                nisi sit pariatur. Corporis nostrum reiciendis magni mollitia
-                sed ea eveniet, voluptatibus unde!{" "}
-              </TabPanel>
-              {/* ... (Other tab panels) */}
-            </Tabs>
-          </div>
+              <Typography>Accordion 1</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
+                eget.
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel2a-content"
+              id="panel2a-header"
+            >
+              <Typography>Accordion 2</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
+                eget.
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel2a-content"
+              id="panel2a-header"
+            >
+              <Typography>Accordion 2</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
+                eget.
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
         </div>
       </section>
-
       <section className="dark:bg-gray-900 w-full">
-        <div className="py-8 mx-auto">
+        <div className="py-8 px-5 mx-auto">
           <div className="text-center">
             <h2 className="mb-4 text-xl font-extrabold leading-tight text-gray-900 dark:text-white">
               Boostez l'efficacité de votre maintenance dès à présent !
             </h2>
-            <p className="mb-6 font-light text-gray-500 dark:text-gray-400 md:text-lg text-center boor">
+            <p className="mb-6 font-light text-gray-500 dark:text-gray-400 md:text-lg text-center">
               Prêt à transformer votre gestion de maintenance ?
             </p>
-            <a
-              href="#"
+            <Link
+              to="/inscription"
               className="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
             >
               s'inscrire
-            </a>
+            </Link>
           </div>
         </div>
       </section>
-
       {isNavbarVisible && (
         <div className="fixed bottom-20 right-6 z-50">
           <button

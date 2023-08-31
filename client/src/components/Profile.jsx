@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Box, CircularProgress } from "@mui/material";
 
 function formatDate(dateString) {
   const options = { year: "numeric", month: "short", day: "numeric" };
@@ -21,12 +22,6 @@ const Profile = () => {
         if (!token) {
           return;
         }
-        console.log(token);
-        const config = {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        };
 
         const response = await axios.get(
           `${import.meta.env.VITE_SERVER_API_URL}/profile/user`,
@@ -46,10 +41,20 @@ const Profile = () => {
     fetchData();
   }, []);
 
-  if (userData === null) {
-    return <div>Loading...</div>;
+  if (userData === null || userData === undefined) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "80vh",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
   }
-  console.log(userData);
   return (
     <div>
       <div className="bg-gray-100 lg:h-[89.7vh] md:h-[89.7vh] h-screen">

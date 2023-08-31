@@ -91,7 +91,7 @@ const TopBar = ({ toggleSidebar, isSidebarOpen }) => {
                       textAlign: "center",
                     }}
                   >
-                    <Tooltip title="Account settings">
+                    <Tooltip title="Paramètres du compte">
                       <IconButton
                         onClick={handleClick}
                         size="small"
@@ -111,13 +111,8 @@ const TopBar = ({ toggleSidebar, isSidebarOpen }) => {
                               alt="user_picture"
                             />
                           ) : (
-                            <Avatar>
-                              {userData?.userName &&
-                                userData.userName
-                                  .trim()
-                                  .charAt(0)
-                                  .toUpperCase()}
-                            </Avatar>
+                            userData?.userName &&
+                            userData.userName.trim().charAt(0).toUpperCase()
                           )}
                         </Avatar>
                       </IconButton>

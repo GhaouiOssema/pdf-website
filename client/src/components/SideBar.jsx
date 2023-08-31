@@ -84,7 +84,7 @@ const SideBar = ({
                   </p>
                 </Link>
               </div>
-              <div
+              {/* <div
                 className="mt-5 bg-top bg-cover space-y-1 pl-1"
                 onClick={logout}
               >
@@ -97,7 +97,7 @@ const SideBar = ({
                     <span className="uppercase ml-2">Déconnecter</span>
                   </p>
                 </Link>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
