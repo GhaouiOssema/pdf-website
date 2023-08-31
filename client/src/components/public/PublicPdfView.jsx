@@ -149,7 +149,7 @@ const PublicPdfView = () => {
   return (
     <>
       {pdfData ? (
-        <div className="h-screen ">
+        <div className="h-full w-full">
           <div className="flex flex-col items-center justify-center mt-20">
             <h1 className="text-3xl text-center font-bold mb-5">
               <span className="">Fiche d'équipement</span>
@@ -211,54 +211,61 @@ const PublicPdfView = () => {
 
           <div>
             {/* Desktop View */}
-            <div className="hidden md:flex items-center justify-around md:w-full">
-              <div className="block w-1/2">
-                <div className="shadow-md shadow-black/20 p-4 rounded-xl bg-white h-auto">
-                  <div className="mb-3 flex items-center">
-                    <h1 className="font-bold">Titre :</h1>
-                    <span className="text-black ml-3">{pdfData.title}</span>
-                  </div>
-                  {dossier === "Armoire electrique" && (
-                    <>
-                      <div className="mb-3 flex items-center">
-                        <h1 className="font-bold">PTA :</h1>
-                        <span className="text-black ml-3">
-                          {pdfData?.pdfDetails?.PAT}
+            <div className="hidden md:flex flex-col lg:flex-row items-center justify-around py-2 lg:px-5 mx-auto w-full">
+              <div className="w-full md:w-[80%] mt-12">
+                <p className="font-bold text-lg mb-4">Tableau des Rapports</p>
+                <div className="pdf-preview ">
+                  <div style={{ height: "300px", overflow: "auto" }}>
+                    <div className="shadow-md shadow-black/20 p-1 rounded-xl bg-white h-auto">
+                      <div className="mb-3 flex flex-col sm:flex-row items-center">
+                        <h1 className="font-bold text-base">Titre :</h1>
+                        <span className="text-black ml-3 text-base">
+                          {pdfData.title}
                         </span>
                       </div>
-                      <div className="mb-3 flex items-center">
-                        <h1 className="font-bold">Date d'installation :</h1>
-                        <span className="text-black ml-3">
-                          {pdfData?.pdfDetails?.installationDate}
-                        </span>
-                      </div>
-                    </>
-                  )}
-                  {["Climatisation", "Chauffage", "Ventilasion"].includes(
-                    dossier
-                  ) && (
-                    <div className="mb-3 flex items-center">
-                      <h1 className="font-bold">Modéle :</h1>
-                      <span className="text-black ml-3">
-                        {pdfData?.pdfDetails?.pdfModel}
-                      </span>
+                      {dossier === "Armoire electrique" && (
+                        <>
+                          <div className="mb-3 flex flex-col sm:flex-row items-center">
+                            <h1 className="font-bold">PTA :</h1>
+                            <span className="text-black ml-3">
+                              {pdfData?.pdfDetails?.PAT}
+                            </span>
+                          </div>
+                          <div className="mb-3 flex flex-col sm:flex-row items-center">
+                            <h1 className="font-bold">Date d'installation :</h1>
+                            <span className="text-black ml-3">
+                              {pdfData?.pdfDetails?.installationDate}
+                            </span>
+                          </div>
+                        </>
+                      )}
+                      {["Climatisation", "Chauffage", "Ventilasion"].includes(
+                        dossier
+                      ) && (
+                        <div className="mb-3 flex flex-col sm:flex-row items-center">
+                          <h1 className="font-bold">Modéle :</h1>
+                          <span className="text-black ml-3">
+                            {pdfData?.pdfDetails?.pdfModel}
+                          </span>
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-                <div className="mt-4">
-                  {!imageLoading && !imageError && (
-                    <figure className="relative">
-                      <img
-                        className="h-auto max-w-full rounded-lg"
-                        src={image}
-                        alt="image"
-                      />
-                    </figure>
-                  )}
+                    <div className="mt-4">
+                      {!imageLoading && !imageError && (
+                        <figure className="relative">
+                          <img
+                            className="h-auto w-auto rounded-lg"
+                            src={image}
+                            alt="image"
+                          />
+                        </figure>
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div className="w-1/2 ml-5 pt-5 mt-12">
+              <div className="w-full md:w-[80%]  mt-12">
                 {/* Adjust margin top */}
                 <p className="font-bold text-lg mb-4">Tableau des Rapports</p>
                 <div className="pdf-preview bg-white">

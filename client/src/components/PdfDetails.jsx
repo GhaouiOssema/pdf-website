@@ -235,19 +235,19 @@ const PdfDetails = () => {
         />
       )}
       {pdfData ? (
-        <div className="h-screen">
+        <div className="h-full w-full">
           <div className="flex flex-col items-center justify-center mt-20">
             <h1 className="text-3xl text-center font-bold mb-5">
               <span className="">Fiche d'équipement</span>
             </h1>
-            <div className="flex flex-col space-y-3 md:space-y-0 md:flex-row md:space-x-3">
+            <div className="flex flex-col space-y-3 md:space-y-0 md:flex-row md:space-x-1 lg:space-x-3">
               <Link
                 to={`/${site}/${dossier}/pdf/detail/doe/${id}`}
                 className="w-full md:w-auto"
               >
                 <button
                   type="button"
-                  className="w-full md:w-auto flex items-center justify-start text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+                  className="text-xs w-full md:w-auto flex items-center justify-start text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
                 >
                   <InfoOutlinedIcon className="mr-2" />
                   <span>Ouvrir les DOE</span>
@@ -260,7 +260,7 @@ const PdfDetails = () => {
               >
                 <button
                   type="button"
-                  className="w-full md:w-auto flex items-center justify-start text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+                  className="w-full md:w-auto flex items-center justify-start text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-xs px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
                 >
                   <InfoOutlinedIcon className="mr-2" />
                   <span> Ouvrir le Plan </span>
@@ -273,7 +273,7 @@ const PdfDetails = () => {
                 <button
                   type="button"
                   onClick={() => setQrViewModal(true)}
-                  className="w-full md:w-auto flex items-center justify-start text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+                  className="w-full md:w-auto flex items-center justify-start text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-xs px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
                 >
                   <InfoOutlinedIcon className="mr-2" />
                   <span> QR Code</span>
@@ -286,7 +286,7 @@ const PdfDetails = () => {
               >
                 <button
                   type="button"
-                  className="w-full md:w-auto flex items-center justify-start text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+                  className="w-full md:w-auto flex items-center justify-start text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-xs px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
                 >
                   <InfoOutlinedIcon className="mr-2" />
                   <span> Fiche d'entretien</span>
@@ -296,7 +296,7 @@ const PdfDetails = () => {
               <Link to={`/plan/${id}`} className="w-full md:w-auto">
                 <button
                   type="button"
-                  className="w-full md:w-auto flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+                  className="w-full md:w-auto flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-xs px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
                 >
                   <InfoOutlinedIcon className="mr-2" />
                   <span> Fiche technique</span>
@@ -307,58 +307,61 @@ const PdfDetails = () => {
 
           <div>
             {/* Desktop View */}
-            <div className="hidden md:flex items-center justify-around md:w-full">
-              <div className="block w-1/2">
-                <div className="shadow-md shadow-black/20 p-4 rounded-xl bg-white h-auto">
-                  <div className="mb-3 flex items-center">
-                    <h1 className="font-bold">Titre :</h1>
-                    <span className="text-black ml-3">{pdfData.title}</span>
-                  </div>
-                  {dossier === "Armoire electrique" && (
-                    <>
-                      <div className="mb-3 flex items-center">
-                        <h1 className="font-bold">PTA :</h1>
-                        <span className="text-black ml-3">
-                          {pdfData?.pdfDetails?.PAT}
+            <div className="hidden md:flex flex-col lg:flex-row items-center justify-around py-2 lg:px-5 mx-auto w-full">
+              <div className="w-full md:w-[80%] mt-12">
+                <p className="font-bold text-lg mb-4">Tableau des Rapports</p>
+                <div className="pdf-preview ">
+                  <div style={{ height: "300px" }}>
+                    <div className="shadow-md shadow-black/20 p-1 rounded-xl bg-white h-auto">
+                      <div className="mb-3 flex flex-col sm:flex-row items-center">
+                        <h1 className="font-bold text-base">Titre :</h1>
+                        <span className="text-black ml-3 text-base">
+                          {pdfData.title}
                         </span>
                       </div>
-                      <div className="mb-3 flex items-center">
-                        <h1 className="font-bold">Date d'installation :</h1>
-                        <span className="text-black ml-3">
-                          {
-                            new Date(pdfData?.pdfDetails?.installationDate)
-                              .toISOString()
-                              .split("T")[0]
-                          }
-                        </span>
-                      </div>
-                    </>
-                  )}
-                  {["Climatisation", "Chauffage", "Ventilasion"].includes(
-                    dossier
-                  ) && (
-                    <div className="mb-3 flex items-center">
-                      <h1 className="font-bold">Modéle :</h1>
-                      <span className="text-black ml-3">
-                        {pdfData?.pdfDetails?.pdfModel}
-                      </span>
+                      {dossier === "Armoire electrique" && (
+                        <>
+                          <div className="mb-3 flex flex-col sm:flex-row items-center">
+                            <h1 className="font-bold">PTA :</h1>
+                            <span className="text-black ml-3">
+                              {pdfData?.pdfDetails?.PAT}
+                            </span>
+                          </div>
+                          <div className="mb-3 flex flex-col sm:flex-row items-center">
+                            <h1 className="font-bold">Date d'installation :</h1>
+                            <span className="text-black ml-3">
+                              {pdfData?.pdfDetails?.installationDate}
+                            </span>
+                          </div>
+                        </>
+                      )}
+                      {["Climatisation", "Chauffage", "Ventilasion"].includes(
+                        dossier
+                      ) && (
+                        <div className="mb-3 flex flex-col sm:flex-row items-center">
+                          <h1 className="font-bold">Modéle :</h1>
+                          <span className="text-black ml-3">
+                            {pdfData?.pdfDetails?.pdfModel}
+                          </span>
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-                <div className="mt-4">
-                  {!imageLoading && !imageError && (
-                    <figure className="relative">
-                      <img
-                        className="h-auto max-w-full rounded-lg"
-                        src={image}
-                        alt="image"
-                      />
-                    </figure>
-                  )}
+                    <div className="mt-4">
+                      {!imageLoading && !imageError && (
+                        <figure className="relative">
+                          <img
+                            className="h-auto w-auto rounded-lg"
+                            src={image}
+                            alt="image"
+                          />
+                        </figure>
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div className="w-1/2 ml-5 pt-5 mt-12">
+              <div className="w-full md:w-[80%]  mt-12">
                 {/* Adjust margin top */}
                 <p className="font-bold text-lg mb-4">Tableau des Rapports</p>
                 <div className="pdf-preview bg-white">
@@ -513,6 +516,9 @@ const PdfDetails = () => {
               )}
               {selectedView === "table" && (
                 <div className="mt-5">
+                  <p className="font-bold text-lg mb-4 text-center">
+                    Tableau des Rapports
+                  </p>
                   <div className="pdf-preview bg-white" key={pdfData._id}>
                     <div style={{ height: "400px", overflowX: "auto" }}>
                       <Table size="small" aria-label="a dense table">

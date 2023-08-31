@@ -485,7 +485,7 @@ const Sites = () => {
       >
         <div
           className={`${
-            screenSize.width < 700 ? "h-screen " : "flex flex-wrap w-[60rem] "
+            screenSize.width < 700 ? "h-screen " : "flex flex-wrap w-full"
           }`}
         >
           {folders && folders.length ? (

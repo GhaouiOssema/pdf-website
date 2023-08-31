@@ -157,15 +157,21 @@ const PdfFile = () => {
           config
         );
 
-        setPdfs(response.data.pdfs);
+        if (response.status === 200) {
+          setPdfs(response.data.pdfs);
+        } else {
+          setPdfs([]);
+        }
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     };
 
+    setLoading(true);
     fetchPdfs();
   }, [site, dossier]);
-  console.log(pdfs);
 
   const handleDelete = async (title) => {
     setLoading(true);
@@ -184,7 +190,7 @@ const PdfFile = () => {
       console.log("Error deleting PDF file:", error);
     }
   };
-  const handleEdit = (id) => {};
+  console.log(loading);
 
   return (
     <>
@@ -200,7 +206,7 @@ const PdfFile = () => {
               <div className="w-full md:w-1/2">
                 <form className="flex items-center">
                   <label htmlFor="simple-search" className="sr-only">
-                    Search
+                    Recherche
                   </label>
                   <div className="relative w-full">
                     <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -222,7 +228,7 @@ const PdfFile = () => {
                       type="text"
                       id="simple-search"
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                      placeholder="Search"
+                      placeholder="Recherche"
                       required
                       value={searchQuery}
                       onChange={handleSearch}
@@ -232,7 +238,7 @@ const PdfFile = () => {
               </div>
             </div>
             {/* PDF file table */}
-            {pdfs.length > 0 || pdfs.length !== 0 || filteredPdfs.length < 0 ? (
+            {!loading && pdfs.length > 0 ? (
               <div className="overflow-x-auto max-h-100">
                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -240,7 +246,7 @@ const PdfFile = () => {
                       <th scope="col" className="px-4 py-3">
                         Titre
                       </th>
-                      <th scope="col" className="text-center py-3">
+                      <th scope="col" className="text-left py-3">
                         Date du création
                       </th>
                     </tr>
@@ -293,8 +299,19 @@ const PdfFile = () => {
                   </tbody>
                 </table>
               </div>
+            ) : loading ? (
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "20vh",
+                }}
+              >
+                <CircularProgress />
+              </Box>
             ) : (
-              <p className="text-center mt-4">No PDFs available.</p>
+              <p className="text-center mt-4">Aucun PDF disponible.</p>
             )}
             {/* Pagination */}
             <nav

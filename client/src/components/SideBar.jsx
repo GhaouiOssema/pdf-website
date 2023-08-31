@@ -43,7 +43,7 @@ const SideBar = ({
               isSidebarOpen
                 ? "fixed top-0 left-0 h-screen w-60 bg-white shadow-lg"
                 : "hidden"
-            } lg:flex w-60 md:flex-col z-20`}
+            } xl:flex w-60 md:flex-col z-20`}
           >
             <div className="space-y-4">
               <div className="bg-top bg-cover space-y-1 pt-4 p-4 left-0">
