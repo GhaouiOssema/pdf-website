@@ -517,8 +517,8 @@ const Sites = () => {
               })
               .map((folder, index) => (
                 <div
-                  className={`${
-                    screenSize.width < 700 ? "w-full mt-5" : "w-1/3 px-4 mt-4"
+                  className={`px-5 ${
+                    screenSize.width < 700 ? "w-full mt-5 boor" : "w-1/3 mt-4"
                   }`}
                   key={index}
                 >

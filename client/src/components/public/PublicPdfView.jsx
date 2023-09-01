@@ -211,68 +211,78 @@ const PublicPdfView = () => {
 
           <div>
             {/* Desktop View */}
-            <div className="hidden md:flex flex-col lg:flex-row items-center justify-around py-2 lg:px-5 mx-auto w-full">
-              <div className="w-full md:w-[80%] mt-12">
-                <p className="font-bold text-lg mb-4">Tableau des Rapports</p>
-                <div className="pdf-preview ">
-                  <div style={{ height: "300px", overflow: "auto" }}>
-                    <div className="shadow-md shadow-black/20 p-1 rounded-xl bg-white h-auto">
-                      <div className="mb-3 flex flex-col sm:flex-row items-center">
-                        <h1 className="font-bold text-base">Titre :</h1>
-                        <span className="text-black ml-3 text-base">
-                          {pdfData.title}
-                        </span>
+            <div className="hidden md:flex flex-col items-center justify-around py-2 lg:px-5 mx-auto w-full">
+              <div className=" md:w-[55%] w-full mt-5 h-full">
+                <p className="font-bold text-lg mb-4 text-center">
+                  Information d'équipement
+                </p>
+                <div className="pdf-preview">
+                  <div className="sm:h-full">
+                    <div className="shadow-md shadow-black/20 pt-2 pb-2 pr-5 rounded-lg bg-white h-auto flex items-center justify-around flex-wrap ">
+                      <div>
+                        {!imageLoading && !imageError && (
+                          <figure className="relative">
+                            <img
+                              className="h-40 w-80 bg-no-repeat object-cover rounded-lg"
+                              src={image}
+                              alt="image"
+                            />
+                          </figure>
+                        )}
                       </div>
-                      {dossier === "Armoire electrique" && (
-                        <>
-                          <div className="mb-3 flex flex-col sm:flex-row items-center">
-                            <h1 className="font-bold">PTA :</h1>
-                            <span className="text-black ml-3">
-                              {pdfData?.pdfDetails?.PAT}
-                            </span>
-                          </div>
-                          <div className="mb-3 flex flex-col sm:flex-row items-center">
-                            <h1 className="font-bold">Date d'installation :</h1>
-                            <span className="text-black ml-3">
-                              {
-                                new Date(pdfData?.pdfDetails?.installationDate)
-                                  .toISOString()
-                                  .split("T")[0]
-                              }
-                            </span>
-                          </div>
-                        </>
-                      )}
-                      {["Climatisation", "Chauffage", "Ventilasion"].includes(
-                        dossier
-                      ) && (
-                        <div className="mb-3 flex flex-col sm:flex-row items-center">
-                          <h1 className="font-bold">Modéle :</h1>
-                          <span className="text-black ml-3">
-                            {pdfData?.pdfDetails?.pdfModel}
+                      <div>
+                        <div className="mb-3 flex flex-col  sm:flex-row justify-start items-center">
+                          <h1 className="font-bold text-base">Titre :</h1>
+                          <span className="text-black ml-3 text-base">
+                            {pdfData.title}
                           </span>
                         </div>
-                      )}
-                    </div>
-                    <div className="mt-4">
-                      {!imageLoading && !imageError && (
-                        <figure className="relative">
-                          <img
-                            className="h-auto w-auto rounded-lg"
-                            src={image}
-                            alt="image"
-                          />
-                        </figure>
-                      )}
+                        {dossier === "Armoire electrique" && (
+                          <>
+                            <div className="mb-3 flex flex-col sm:flex-row items-center justify-start text-center">
+                              <h1 className="font-bold">PTA :</h1>
+                              <span className="text-black ml-3">
+                                {pdfData?.pdfDetails?.PAT}
+                              </span>
+                            </div>
+                            <div className="mb-3 flex flex-col sm:flex-row justify-center text-center">
+                              <h1 className="font-bold">
+                                Date d'installation :
+                              </h1>
+                              <span className="text-black ml-3">
+                                {
+                                  new Date(
+                                    pdfData?.pdfDetails?.installationDate
+                                  )
+                                    .toISOString()
+                                    .split("T")[0]
+                                }
+                              </span>
+                            </div>
+                          </>
+                        )}
+                        {["Climatisation", "Chauffage", "Ventilasion"].includes(
+                          dossier
+                        ) && (
+                          <div className="mb-3 flex flex-col sm:flex-row justify-center items-center">
+                            <h1 className="font-bold">Modéle :</h1>
+                            <span className="text-black ml-3">
+                              {pdfData?.pdfDetails?.pdfModel}
+                            </span>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="w-full md:w-[80%]  mt-12">
+              <div className="w-full md:w-[55%] mt-5">
                 {/* Adjust margin top */}
-                <p className="font-bold text-lg mb-4">Tableau des Rapports</p>
-                <div className="pdf-preview bg-white">
+                <p className="font-bold text-lg text-center mb-4">
+                  Tableau des Rapports
+                </p>
+                <div className="pdf-preview bg-white shadow-md shadow-black/20 rounded-lg">
                   <div style={{ height: "400px", overflow: "auto" }}>
                     <Table
                       sx={{ minWidth: 650 }}
@@ -281,13 +291,22 @@ const PublicPdfView = () => {
                     >
                       <TableHead>
                         <TableRow>
-                          <TableCell align="center" sx={{ fontWeight: "bold" }}>
+                          <TableCell
+                            align="center"
+                            sx={{ fontWeight: "bold", p: 1, m: 0 }}
+                          >
                             Sociéte
                           </TableCell>
-                          <TableCell align="center" sx={{ fontWeight: "bold" }}>
+                          <TableCell
+                            align="center"
+                            sx={{ fontWeight: "bold", p: 1, m: 0 }}
+                          >
                             Date du dernier entretien
                           </TableCell>
-                          <TableCell align="center" sx={{ fontWeight: "bold" }}>
+                          <TableCell
+                            align="center"
+                            sx={{ fontWeight: "bold", p: 1, m: 0 }}
+                          >
                             Date du prochain entretien
                           </TableCell>
                         </TableRow>
@@ -346,21 +365,6 @@ const PublicPdfView = () => {
             {/* Mobile View */}
             <div className="md:hidden">
               <div className="mt-5">
-                <label
-                  htmlFor="viewSelector"
-                  className="block font-bold text-lg mb-2"
-                >
-                  sélectionner l'option :
-                </label>
-                <select
-                  id="viewSelector"
-                  className="w-full p-2 border rounded-md"
-                  onChange={handleViewChange}
-                  value={selectedView}
-                >
-                  <option value="image">Image de l'équipement</option>
-                  <option value="table">Tableau des rapports</option>
-                </select>
                 <div className="qr-code-section bg-white">
                   <div className="flex flex-wrap mb-3">
                     <h1 className="ml-3 font-bold">Titre :</h1>
@@ -400,115 +404,113 @@ const PublicPdfView = () => {
                   )}
                 </div>
               </div>
-              {selectedView === "image" && (
-                <div className="mt-5">
-                  {!imageLoading && !imageError && (
-                    <div
-                      className={`max-w-lg relative ${
-                        isImageFullscreen
-                          ? "fixed top-0 left-0 w-screen h-screen z-50 bg-black flex justify-center items-center"
-                          : ""
+              <div className="mt-5">
+                {!imageLoading && !imageError && (
+                  <div
+                    className={`max-w-lg relative ${
+                      isImageFullscreen
+                        ? "fixed top-0 left-0 w-screen h-screen z-50 bg-black flex justify-center items-center"
+                        : ""
+                    }`}
+                  >
+                    <img
+                      className={`h-auto max-w-full rounded-lg ${
+                        isImageFullscreen ? "cursor-pointer" : ""
                       }`}
-                      onClick={handleImageClick}
-                    >
-                      <img
-                        className={`h-auto max-w-full rounded-lg ${
-                          isImageFullscreen ? "cursor-pointer" : ""
-                        }`}
-                        src={image}
-                        alt="image"
-                      />
-                    </div>
-                  )}
-                </div>
-              )}
-              {selectedView === "table" && (
-                <div className="mt-5">
-                  <div className="pdf-preview bg-white" key={pdfData._id}>
-                    <div style={{ height: "400px", overflowX: "auto" }}>
-                      <Table size="small" aria-label="a dense table">
-                        <TableHead>
-                          <TableRow>
-                            <TableCell
-                              align="center"
-                              sx={{
-                                fontWeight: "bold",
-                                fontSize: 11,
-                              }}
-                            >
-                              Sociéte
-                            </TableCell>
-                            <TableCell
-                              align="center"
-                              sx={{
-                                fontWeight: "bold",
-                                fontSize: 11,
-                              }}
-                            >
-                              Date du dernier entretien
-                            </TableCell>
-                            <TableCell
-                              align="center"
-                              sx={{
-                                fontWeight: "bold",
-                                fontSize: 11,
-                              }}
-                            >
-                              Date du prochain entretien
-                            </TableCell>
-                          </TableRow>
-                        </TableHead>
-                        <TableBody>
-                          {raports &&
-                            raports
-                              .slice(
-                                page * rowsPerPage,
-                                page * rowsPerPage + rowsPerPage
-                              )
-                              .map((raport) => (
-                                <TableRow
-                                  key={raport.id}
-                                  sx={{
-                                    "&:last-child td, &:last-child th": {
-                                      border: 0,
-                                    },
-                                  }}
-                                >
-                                  <TableCell align="center">
-                                    {raport.société}
-                                  </TableCell>
-                                  <TableCell align="center">
-                                    {
-                                      new Date(raport.dateDernierEntretien)
-                                        .toISOString()
-                                        .split("T")[0]
-                                    }
-                                  </TableCell>
-                                  <TableCell align="center">
-                                    {
-                                      new Date(raport.dateProchainEntretien)
-                                        .toISOString()
-                                        .split("T")[0]
-                                    }
-                                  </TableCell>
-                                </TableRow>
-                              ))}
-                        </TableBody>
-                      </Table>
-                    </div>
-                    <TablePagination
-                      rowsPerPageOptions={[10, 25, 50]}
-                      component="div"
-                      count={raports ? raports.length : 0}
-                      rowsPerPage={rowsPerPage}
-                      page={page}
-                      onPageChange={handleChangePage}
-                      onRowsPerPageChange={handleChangeRowsPerPage}
-                      labelRowsPerPage="Lignes par page"
+                      src={image}
+                      alt="image"
                     />
                   </div>
+                )}
+              </div>
+              <div className="mt-5">
+                <p className="font-bold text-lg mb-4 text-center">
+                  Tableau des Rapports
+                </p>
+                <div className="pdf-preview bg-white" key={pdfData._id}>
+                  <div style={{ height: "400px", overflowX: "auto" }}>
+                    <Table size="small" aria-label="a dense table">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell
+                            align="center"
+                            sx={{
+                              fontWeight: "bold",
+                              fontSize: 11,
+                            }}
+                          >
+                            Sociéte
+                          </TableCell>
+                          <TableCell
+                            align="center"
+                            sx={{
+                              fontWeight: "bold",
+                              fontSize: 11,
+                            }}
+                          >
+                            Date du dernier entretien
+                          </TableCell>
+                          <TableCell
+                            align="center"
+                            sx={{
+                              fontWeight: "bold",
+                              fontSize: 11,
+                            }}
+                          >
+                            Date du prochain entretien
+                          </TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {raports &&
+                          raports
+                            .slice(
+                              page * rowsPerPage,
+                              page * rowsPerPage + rowsPerPage
+                            )
+                            .map((raport) => (
+                              <TableRow
+                                key={raport.id}
+                                sx={{
+                                  "&:last-child td, &:last-child th": {
+                                    border: 0,
+                                  },
+                                }}
+                              >
+                                <TableCell align="center">
+                                  {raport.société}
+                                </TableCell>
+                                <TableCell align="center">
+                                  {
+                                    new Date(raport.dateDernierEntretien)
+                                      .toISOString()
+                                      .split("T")[0]
+                                  }
+                                </TableCell>
+                                <TableCell align="center">
+                                  {
+                                    new Date(raport.dateProchainEntretien)
+                                      .toISOString()
+                                      .split("T")[0]
+                                  }
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                  <TablePagination
+                    rowsPerPageOptions={[10, 25, 50]}
+                    component="div"
+                    count={raports ? raports.length : 0}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    labelRowsPerPage="Lignes par page"
+                  />
                 </div>
-              )}
+              </div>
             </div>
           </div>
         </div>
