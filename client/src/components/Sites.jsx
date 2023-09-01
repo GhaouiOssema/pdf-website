@@ -492,7 +492,7 @@ const Sites = () => {
           className={`px-3 h-full ${
             screenSize.width < 700
               ? ""
-              : folders.length > 0
+              : folders.length > 0 && screenSize.width > 700
               ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 flex-wrap w-full"
               : "flex w-full"
           }`}
@@ -532,7 +532,7 @@ const Sites = () => {
               .map((folder, index) => (
                 <div
                   className={`rounded-lg ${
-                    screenSize.width < 700 ? "w-full mt-4" : "w-[99%]"
+                    screenSize.width < 700 ? "w-full mt-4" : "w-[99%] py-3"
                   }`}
                   key={index}
                 >
