@@ -170,7 +170,7 @@ const Register = () => {
                 <input
                   type="text"
                   id="userName"
-                  className="border-none w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring"
+                  className="text-black border-none w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring"
                   placeholder="Entrez votre nom d'utilisateur"
                   value={userName}
                   onChange={(e) => setUserName(e.target.value)}
@@ -188,7 +188,7 @@ const Register = () => {
                 <input
                   type="email"
                   id="email"
-                  className="border-none w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring"
+                  className="text-black border-none w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring"
                   placeholder="Entrez votre adresse e-mail"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -205,7 +205,7 @@ const Register = () => {
                 <input
                   type="password"
                   id="password"
-                  className="border-none w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring"
+                  className="text-black border-none w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring"
                   placeholder="Entrez votre mot de passe."
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -222,7 +222,7 @@ const Register = () => {
                 <input
                   type="text"
                   id="userRole"
-                  className="border-none w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring"
+                  className="text-black border-none w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring"
                   placeholder="Enter your user role"
                   value={userRole}
                   onChange={(e) => setUserRole(e.target.value)}
