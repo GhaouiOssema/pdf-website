@@ -1,17 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Document, Page, pdfjs } from "react-pdf";
-import QRCode from "react-qr-code";
 import html2canvas from "html2canvas";
 import { Link } from "react-router-dom";
-import { IoIosArrowForward, IoIosWarning, IoIosDownload } from "react-icons/io";
-import Stack from "@mui/material/Stack";
-import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
-import CustomizedFileFolder from "./CustomizedFileFolder";
+
 import {
   Box,
   CircularProgress,
@@ -31,18 +25,17 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 const PdfDetails = () => {
   const { site, dossier, id } = useParams();
   const [pdfData, setPdfData] = useState(null);
-  const [open, setOpen] = useState(false);
   const qrCodeRef = useRef(null);
   const Navigate = useNavigate();
   const [alertMsg, setAlertMsg] = useState("");
-  const [loading, setLoading] = useState(true);
   const [raports, setRaports] = useState(null);
   const [image, setImage] = useState(null);
   const [imageLoading, setImageLoading] = useState(true);
   const [imageError, setImageError] = useState(false);
-  const [selectedView, setSelectedView] = useState("image");
   const [isImageFullscreen, setIsImageFullscreen] = useState(false);
   const [QrViewModal, setQrViewModal] = useState(false);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const token = localStorage.getItem("token");
   if (!token) {
@@ -52,16 +45,6 @@ const PdfDetails = () => {
   const handleClick = () => {
     setOpen(true);
   };
-
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpen(false);
-  };
-
-  const handleOpenTable = () => setOpen(true);
-  const handleCloseTable = () => setOpen(false);
 
   const config = {
     headers: {
@@ -118,40 +101,6 @@ const PdfDetails = () => {
     getImageFile();
   }, [site, dossier, id]);
 
-  console.log(pdfData);
-
-  const handleDownloadQRCode = () => {
-    html2canvas(qrCodeRef.current).then((canvas) => {
-      const qrCodeDataURL = canvas.toDataURL();
-      const downloadLink = document.createElement("a");
-      downloadLink.href = qrCodeDataURL;
-      downloadLink.download = "qr_code.png";
-      downloadLink.click();
-    });
-  };
-  const handleDelete = async () => {
-    try {
-      const response = await axios.delete(
-        `${import.meta.env.VITE_SERVER_API_URL}/${site}/${dossier}/pdfs/${
-          pdfData.title
-        }`,
-        config
-      );
-      if (response.status === 200) {
-        setAlertMsg("success");
-        handleClick();
-      } else {
-        console.error("Failed to delete PDF.");
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  const [pdfLoaded, setPdfLoaded] = useState(false);
-  const handlePdfLoadSuccess = () => {
-    setPdfLoaded(true);
-  };
-
   useEffect(() => {
     if (alertMsg === "success") {
       const performActionAfterInterval = () => {
@@ -163,26 +112,6 @@ const PdfDetails = () => {
       };
     }
   }, [alertMsg]);
-
-  const [screenSize, setScreenSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
-  });
-
-  useEffect(() => {
-    const handleResize = () => {
-      setScreenSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -203,9 +132,6 @@ const PdfDetails = () => {
     fetchData();
   }, [pdfData]);
 
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -213,13 +139,6 @@ const PdfDetails = () => {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
-  };
-
-  const handleViewChange = (event) => {
-    setSelectedView(event.target.value);
-  };
-  const handleImageClick = () => {
-    setIsImageFullscreen(!isImageFullscreen);
   };
 
   return (
@@ -313,12 +232,12 @@ const PdfDetails = () => {
                 </p>
                 <div className="pdf-preview">
                   <div className="sm:h-full">
-                    <div className="shadow-md shadow-black/20 pt-2 pb-2 pr-5 rounded-lg bg-white h-auto flex items-center justify-around flex-wrap gap-2">
+                    <div className="shadow-md shadow-black/20 pt-2 pb-2 pr-5 rounded-lg bg-white h-auto flex items-center justify-around flex-wrap ">
                       <div>
                         {!imageLoading && !imageError && (
                           <figure className="relative">
                             <img
-                              className="h-40 w-auto rounded-lg"
+                              className="h-40 w-80 bg-no-repeat object-cover rounded-lg"
                               src={image}
                               alt="image"
                             />
@@ -460,21 +379,6 @@ const PdfDetails = () => {
             {/* Mobile View */}
             <div className="md:hidden">
               <div className="mt-5">
-                {/* <label
-                  htmlFor="viewSelector"
-                  className="block font-bold text-lg mb-2"
-                >
-                  sélectionner l'option :
-                </label>
-                <select
-                  id="viewSelector"
-                  className="w-full p-2 border rounded-md"
-                  onChange={handleViewChange}
-                  value={selectedView}
-                >
-                  <option value="image">Image de l'équipement</option>
-                  <option value="table">Tableau des rapports</option>
-                </select> */}
                 <div className="qr-code-section bg-white">
                   <div className="flex flex-wrap mb-3">
                     <h1 className="ml-3 font-bold">Titre :</h1>
