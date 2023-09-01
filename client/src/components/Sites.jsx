@@ -8,7 +8,6 @@ import {
   Box,
   Button,
   Checkbox,
-  CircularProgress,
   Dialog,
   DialogContent,
   DialogTitle,
@@ -30,19 +29,25 @@ import { Link } from "react-router-dom";
 import SiteOption from "./SiteOption";
 import HourglassDisabledRoundedIcon from "@mui/icons-material/HourglassDisabledRounded";
 
-function MultiSelectTreeView({
+const MultiSelectTreeView = ({
   folders,
   setOpenSection,
   setButtonType,
   setFolderIdUpdate,
-}) {
+  expanded,
+  setExpanded,
+}) => {
   const ID = folders._id;
-  const [expanded, setExpanded] = useState([]);
   const contentRef = useRef(null);
 
   const handleToggle = (event, nodeIds) => {
     const nodeId = nodeIds[0];
-    const isNodeExpanded = isExpanded(nodeId);
+    const isNodeExpanded = expanded.includes(nodeId);
+
+    console.log(nodeId);
+    console.log(isNodeExpanded);
+
+    // Toggle the expanded state for the clicked item
     if (isNodeExpanded) {
       setExpanded(expanded.filter((id) => id !== nodeId));
     } else {
@@ -67,8 +72,11 @@ function MultiSelectTreeView({
 
   let labelFormat = (
     <div className="flex w-full items-center justify-between">
-      <span className=" w-[50%] ">{`${folders.adresse}`}</span>
-      <span className=" w-[21%] ">CP:{`${folders.code_postal}`}</span>
+      {/* <span className="w-full">
+        <b>Nom:</b> {`${folders.name}`}
+      </span> */}
+      <span className="w-full">{folders.adresse}</span>
+      <span className="w-full">CP : {`${folders.code_postal}`}</span>
       <SiteOption
         folders={folders}
         setOpenSection={setOpenSection}
@@ -83,12 +91,12 @@ function MultiSelectTreeView({
     <Box
       sx={{
         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
-        borderRadius: "8px",
         overflow: "hidden",
         transition: "height 0.3s",
         height: isExpanded(folders._id) ? "auto" : "40px",
         backgroundColor: "white",
       }}
+      className="rounded-b-lg"
     >
       <TreeView
         aria-label="multi-select"
@@ -103,7 +111,6 @@ function MultiSelectTreeView({
           key={folders._id}
           nodeId={folders._id}
           label={labelFormat}
-          icon={<ChevronRightIcon />}
           onClick={() => {
             handleToggle(null, [folders._id]);
           }}
@@ -133,7 +140,7 @@ function MultiSelectTreeView({
       </TreeView>
     </Box>
   );
-}
+};
 
 const ATert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -153,7 +160,9 @@ const Sites = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterOpen, setFilterOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [expanded, setExpanded] = useState([]);
   const [filterOptions, setFilterOptions] = useState({
+    name: true,
     address: true,
     code_postal: true,
     subfolder: true,
@@ -222,13 +231,9 @@ const Sites = () => {
     setOpenSection(false);
   };
 
-  const handleCloseFilter = () => {
-    setFilterOpen(false);
-  };
-
   return (
     <div className="h-screen bg-gray-100">
-      <Dialog open={filterOpen} onClose={handleCloseFilter}>
+      {/* <Dialog open={filterOpen} onClose={handleCloseFilter}>
         <DialogTitle>Filter Options</DialogTitle>
         <DialogContent>
           <FormControl component="fieldset">
@@ -337,7 +342,7 @@ const Sites = () => {
             Apply Filter
           </Button>
         </DialogContent>
-      </Dialog>
+      </Dialog> */}
       <Backdrop
         sx={{
           color: "#fff",
@@ -480,12 +485,16 @@ const Sites = () => {
         className={`mt-10 ${
           screenSize.width < 700
             ? "w-full"
-            : "flex justify-center items-center w-full "
+            : "flex justify-center items-center w-full"
         } `}
       >
         <div
-          className={`${
-            screenSize.width < 700 ? "h-full " : "flex flex-wrap w-full h-full"
+          className={`px-3 h-full ${
+            screenSize.width < 700
+              ? ""
+              : folders.length > 0
+              ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 flex-wrap w-full"
+              : "flex w-full"
           }`}
         >
           {!loading && folders && folders.length > 0 ? (
@@ -493,10 +502,12 @@ const Sites = () => {
               ?.filter((folder) => {
                 const lowerCaseSearchQuery = searchQuery.toLowerCase();
 
-                // Apply filters based on filterOptions
                 const shouldFilterByAddress =
                   filterOptions.address &&
                   folder.adresse.toLowerCase().includes(lowerCaseSearchQuery);
+                const shouldFilterByName =
+                  filterOptions.name &&
+                  folder.name.toLowerCase().includes(lowerCaseSearchQuery);
                 const shouldFilterByCodePostal =
                   filterOptions.code_postal &&
                   folder.code_postal?.includes(lowerCaseSearchQuery);
@@ -512,41 +523,39 @@ const Sites = () => {
                 return (
                   shouldFilterByAddress ||
                   shouldFilterByCodePostal ||
-                  shouldFilterBySubfolder
+                  shouldFilterBySubfolder ||
+                  shouldFilterByName
                 );
               })
               .map((folder, index) => (
                 <div
-                  className={`px-5 ${
-                    screenSize.width < 700 ? "w-full mt-5 boor" : "w-1/3 mt-4"
+                  className={`rounded-lg ${
+                    screenSize.width < 700 ? "w-full mt-4" : "w-[99%]"
                   }`}
                   key={index}
                 >
                   {/* <span className=" w-[50%] ">{`${folder.name}`}</span> */}
-
+                  <div className="bg-primary-700 text-white p-2 w-full text-center rounded-t-lg">
+                    <h1 className="flex items-center justify-center flex-wrap text-center font-bold">
+                      Nom du Site :
+                      <span className="ml-3 font-medium">{folder.name}</span>
+                    </h1>
+                  </div>
                   <MultiSelectTreeView
                     folders={folder}
                     key={index}
                     setOpenSection={setOpenSection}
                     setButtonType={setButtonType}
                     setFolderIdUpdate={setFolderIdUpdate}
+                    expanded={expanded}
+                    setExpanded={setExpanded}
                   />
                 </div>
               ))
           ) : loading ? (
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "30vh",
-                width: "100%",
-              }}
-            >
-              <CircularProgress />
-            </Box>
+            <div></div>
           ) : (
-            <div className="w-full h-[65vh] flex flex-col justify-center items-center">
+            <div className="boor w-full h-[65vh] flex flex-col justify-center items-center">
               <HourglassDisabledRoundedIcon sx={{ fontSize: 100 }} />
               <p className="mt-5 font-sans font-bold">
                 Il n'existe aucun dossier
