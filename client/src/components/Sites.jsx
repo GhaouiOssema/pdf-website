@@ -503,20 +503,22 @@ const Sites = () => {
                 const lowerCaseSearchQuery = searchQuery.toLowerCase();
 
                 const shouldFilterByAddress =
-                  filterOptions.address &&
-                  folder.adresse.toLowerCase().includes(lowerCaseSearchQuery);
+                  filterOptions?.address &&
+                  folder?.adresse
+                    ?.toLowerCase()
+                    ?.includes(lowerCaseSearchQuery);
                 const shouldFilterByName =
-                  filterOptions.name &&
-                  folder.name.toLowerCase().includes(lowerCaseSearchQuery);
+                  filterOptions?.name &&
+                  folder?.name?.toLowerCase()?.includes(lowerCaseSearchQuery);
                 const shouldFilterByCodePostal =
-                  filterOptions.code_postal &&
-                  folder.code_postal?.includes(lowerCaseSearchQuery);
+                  filterOptions?.code_postal &&
+                  folder?.code_postal?.includes(lowerCaseSearchQuery);
                 const shouldFilterBySubfolder =
-                  filterOptions.subfolder &&
-                  folder.content.some((subFolder) =>
-                    subFolder.subFolder.name
-                      .toLowerCase()
-                      .includes(lowerCaseSearchQuery)
+                  filterOptions?.subfolder &&
+                  folder?.content?.some((subFolder) =>
+                    subFolder?.subFolder?.name
+                      ?.toLowerCase()
+                      ?.includes(lowerCaseSearchQuery)
                   );
 
                 // Return true if any of the filters match
