@@ -3,7 +3,6 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import LOGO from "../../assets/logo2.png";
 import { Link } from "react-router-dom";
 import { Carousel } from "flowbite-react";
-import IMG_1 from "../../assets/img_1.png";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
@@ -14,6 +13,10 @@ import TabList from "@mui/joy/TabList";
 import Tab from "@mui/joy/Tab";
 import TabPanel from "@mui/joy/TabPanel";
 import IMG from "../../assets/ligne.png";
+// import IMG_1 from "../../assets/img_1.png";
+import IMG_1 from "../../assets/carrousel1.jpg";
+import IMG_2 from "../../assets/carousel2.jpg";
+import IMG_3 from "../../assets/carousel3.jpg";
 
 const Home = () => {
   const [isNavbarVisible, setIsNavbarVisible] = useState(false);
@@ -44,7 +47,10 @@ const Home = () => {
 
   const scrollToDecouvrir = () => {
     if (decouvrirSectionRef.current) {
-      decouvrirSectionRef.current.scrollIntoView({ behavior: "smooth" });
+      const yOffset = -85; // Adjust this value to fine-tune the scrolling position
+      const rect = decouvrirSectionRef.current.getBoundingClientRect();
+      const y = rect.top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: "smooth" });
     }
   };
 
@@ -133,161 +139,49 @@ const Home = () => {
         </div>
       </section>
 
-      <span ref={decouvrirSectionRef} />
-      <div className="mt-[15vh] md:mt-[8vh] lg:mt-[8vh] xl:mt-[8vh]" />
+      <span />
+      {/* <div className="mt-[15vh] md:mt-[8vh] lg:mt-[8vh] xl:mt-[8vh]" /> */}
 
-      <section className="bg-gray-50 dark:bg-gray-800">
+      <section
+        className="bg-gray-50 dark:bg-gray-800"
+        ref={decouvrirSectionRef}
+      >
         <div className="px-4 py-6 max-w lg:px-6">
           <Carousel>
-            <div className="relative flex flex-col sm:flex-row justify-around bg-blue-400 w-full h-full">
-              <div className="sm:w-1/2 h-full">
-                <img alt="..." src={IMG_1} className="object-cover h-full" />
-              </div>
-              <div className="sm:w-1/2 py-6">
-                <h1 className="w-full h-full flex flex-col justify-center text-white font-bold opacity-100 text-center text-sm lg:text-lg xl:textxl">
-                  Importez facilement les plans détaillés de vos machines et
-                  gérez leur maintenance de manière efficace et structurée.
-                </h1>
+            <div className="relative bg-blue-400 w-full">
+              <div className="h-64 overflow-hidden">
+                <img
+                  alt="..."
+                  src={IMG_1}
+                  className="object-cover w-full h-full"
+                />
               </div>
             </div>
-            <div className="relative flex flex-col sm:flex-row justify-around bg-red-400 w-full h-full">
-              <div className="sm:w-1/2 h-full">
-                <img alt="..." src={IMG_1} className="object-cover h-full" />
-              </div>
-              <div className="sm:w-1/2 py-6">
-                <h1 className="w-full h-full flex flex-col justify-center text-white font-bold opacity-100 text-center text-sm lg:text-lg xl:textxl">
-                  Importez facilement les plans détaillés de vos machines et
-                  gérez leur maintenance de manière efficace et structurée.
-                </h1>
+            <div className="relative bg-blue-400 w-full">
+              <div className="h-64 overflow-hidden">
+                <img
+                  alt="..."
+                  src={IMG_2}
+                  className="object-cover w-full h-full"
+                />
               </div>
             </div>
-            <div className="relative flex flex-col sm:flex-row justify-around bg-green-400 w-full h-full">
-              <div className="sm:w-1/2">
-                <img alt="..." src={IMG_1} className="object-cover h-full" />
-              </div>
-              <div className="sm:w-1/2 py-6">
-                <h1 className="w-full h-full flex flex-col justify-center text-white font-bold opacity-100 text-center text-sm lg:text-lg xl:textxl">
-                  Importez facilement les plans détaillés de vos machines et
-                  gérez leur maintenance de manière efficace et structurée.
-                </h1>
+            <div className="relative bg-blue-400 w-full">
+              <div className="h-64 overflow-hidden">
+                <img
+                  alt="..."
+                  src={IMG_3}
+                  className="object-cover w-full h-full"
+                />
               </div>
             </div>
           </Carousel>
         </div>
       </section>
 
-      <section className="bg-gray-50 dark:bg-gray-800">
-        <div className="px-4 py-6 mx-auto max-w-screen-xl lg:px-6">
-          <div className="flex justify-center">
-            <Tabs
-              aria-label="Vertical tabs"
-              orientation="vertical"
-              sx={{
-                width: "100%",
-                borderRadius: 0,
-                backgroundColor: "#fff",
-              }}
-            >
-              <TabList
-                sx={{
-                  backgroundColor: "#eee",
-                  padding: "0.1rem",
-                  color: "#000",
-                  borderRadius: 0,
-                }}
-              >
-                <Tab
-                  sx={{
-                    color: "#000",
-                    width: "100%",
-                    borderRadius: 0,
-                    boxShadow: "none",
-                  }}
-                >
-                  Qestion 1 :
-                </Tab>
-                <Tab
-                  sx={{
-                    color: "#000",
-                    width: "100%",
-                    borderRadius: 0,
-                    boxShadow: "none",
-                  }}
-                >
-                  Qestion 2 :
-                </Tab>
-              </TabList>
-              <TabPanel
-                value={1}
-                sx={{
-                  p: 2,
-                  minHeight: "100%",
-                  backgroundColor: "#fff",
-                  color: "#000",
-                  width: "50%",
-                }}
-              >
-                <b>seconde tab : </b> <br />
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Ducimus quisquam soluta quo ullam eligendi cumque nemo repellat
-                nisi sit pariatur. Corporis nostrum reiciendis magni mollitia
-                sed ea eveniet, voluptatibus unde!{" "}
-              </TabPanel>
-              <TabPanel
-                value={0}
-                sx={{
-                  p: 2,
-                  minHeight: "100%",
-                  backgroundColor: "#fff",
-                  color: "#000",
-                  width: "50%",
-                }}
-              >
-                <b>First tab : </b> <br />
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Ducimus quisquam soluta quo ullam eligendi cumque nemo repellat
-                nisi sit pariatur. Corporis nostrum reiciendis magni mollitia
-                sed ea eveniet, voluptatibus unde!{" "}
-              </TabPanel>
-              {/* ... (Other tab panels) */}
-            </Tabs>
-          </div>
-        </div>
-      </section>
-
       <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
         <div className="max-w-xl mb-10 md:mx-auto sm:text-center lg:max-w-2xl md:mb-12">
-          <div>
-            <p className="inline-block px-3 py-px mb-4 text-xs font-semibold tracking-wider text-teal-900 uppercase rounded-full bg-teal-accent-400">
-              Brand new
-            </p>
-          </div>
           <h2 className="max-w-lg mb-6 font-sans text-3xl font-bold leading-none tracking-tight text-gray-900 sm:text-4xl md:mx-auto">
-            <span className="relative inline-block">
-              <svg
-                viewBox="0 0 52 24"
-                fill="currentColor"
-                className="absolute top-0 left-0 z-0 hidden w-32 -mt-8 -ml-20 text-blue-gray-100 lg:w-32 lg:-ml-28 lg:-mt-10 sm:block"
-              >
-                <defs>
-                  <pattern
-                    id="d0d83814-78b6-480f-9a5f-7f637616b267"
-                    x="0"
-                    y="0"
-                    width=".135"
-                    height=".30"
-                  >
-                    <circle cx="1" cy="1" r=".7" />
-                  </pattern>
-                </defs>
-                <rect
-                  fill="url(#d0d83814-78b6-480f-9a5f-7f637616b267)"
-                  width="52"
-                  height="24"
-                />
-              </svg>
-              <span className="relative">The</span>
-            </span>{" "}
             quick, brown fox jumps over a lazy dog
           </h2>
           <p className="text-base text-gray-700 md:text-lg">
