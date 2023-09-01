@@ -190,7 +190,6 @@ const PdfFile = () => {
       console.log("Error deleting PDF file:", error);
     }
   };
-  console.log(loading);
 
   return (
     <>

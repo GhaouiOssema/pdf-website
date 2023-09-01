@@ -190,7 +190,7 @@ const DOEButtonsGroup = ({ pdfData }) => {
                 <Document
                   file={`data:application/pdf;base64,${file}`}
                   onLoadSuccess={handlePdfLoadSuccess}
-                  className="flex justify-center"
+                  className="flex flex-col items-center justify-center"
                 >
                   {pdfLoaded &&
                     Array.from(new Array(numPages), (el, index) => (

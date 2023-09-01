@@ -47,41 +47,6 @@ const Login = () => {
 
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
-  const [screenSize, setScreenSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
-  });
-
-  useEffect(() => {
-    const handleResize = () => {
-      setScreenSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  const handleScroll = () => {
-    if (window.scrollY > 100) {
-      setIsNavbarVisible(true);
-    } else {
-      setIsNavbarVisible(false);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
   return (
     <div className="h-screen flex flex-col">
       <header className="fixed w-full z-50 transition-all bg-white top-0 left-0 right-0">
@@ -130,7 +95,7 @@ const Login = () => {
           </div>
         </nav>
       </header>
-      <section class="min-h-screen flex items-stretch text-white ">
+      <section className="min-h-screen flex items-stretch text-white ">
         <div className="lg:flex w-1/2 hidden bg-gray-500 bg-no-repeat bg-cover relative items-center IMAG__SCAN">
           <div className="absolute bg-black opacity-60 inset-0 z-0"></div>
           <div className="w-full px-24 z-10">
@@ -142,56 +107,67 @@ const Login = () => {
             </p>
           </div>
         </div>
-        <div
-          className="lg:w-1/2 w-full flex items-center justify-center text-center md:px-16 px-0 z-0"
-          style={{ backgroundColor: "#161616" }}
-        >
+        <div className="bg-gray-100 lg:w-1/2 w-full flex items-center justify-center text-center md:px-16 px-0 z-0">
           <div className="absolute lg:hidden z-10 inset-0 bg-gray-500 bg-no-repeat object-right items-center IMAG__SCAN">
             <div className="absolute bg-black opacity-60 inset-0 z-0"></div>
           </div>
           <div className="w-full py-6 z-20">
-            <h1 className="text-gray-100 font-bold text-2xl mb-1 text-center">
+            <h1 className="text-white md:text-gray-800 lg:text-gray-800 xl:text-gray-800 2xl:text-gray-800 font-extrabold text-2xl mb-1 text-center">
               Bonjour à nouveau !
             </h1>
-            <p className="text-sm font-normal text-gray-50 mb-7 text-center">
+            <p className="text-sm font-medium text-white md:text-gray-600 lg:text-gray-600 xl:text-gray-600 2xl:text-gray-600 mb-7 text-center">
               Content de te revoir
             </p>
             <form
               onSubmit={handleSubmit}
               className="sm:w-2/3 w-full px-4 lg:px-0 mx-auto"
             >
-              <div className="pb-2 pt-4">
+              <div className="pb-2 pt-2">
+                <label
+                  htmlFor="password"
+                  className="block text-white md:text-gray-700 lg:text-gray-700 xl:text-gray-700 2xl:text-gray-700 font-medium mb-2 text-start"
+                >
+                  Email :
+                </label>
                 <input
+                  id="email"
                   type="email"
                   name="email"
-                  id="email"
+                  className="text-black w-full px-4 py-2 border-none rounded-lg focus:outline-none focus:ring"
                   placeholder="Entrez votre adresse e-mail"
-                  className="block w-full p-4 text-lg rounded-sm bg-black"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   pattern={emailRegex}
                 />
               </div>
-              <div className="pb-2 pt-4">
+
+              <div className="pb-2 pt-2">
+                <label
+                  htmlFor="password"
+                  className="block text-white  lg:text-gray-700 xl:text-gray-700 2xl:text-gray-700 font-medium mb-2 text-start"
+                >
+                  Mot de passe :
+                </label>
                 <input
-                  className="block w-full p-4 text-lg rounded-sm bg-black"
                   type="password"
                   name="password"
                   id="password"
+                  className="text-black w-full px-4 py-2 border-none rounded-lg focus:outline-none focus:ring"
                   placeholder="Entrez votre mot de passe."
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
               </div>
-              <div className="text-center text-gray-400 hover:underline hover:text-gray-100">
-                <Link to={"/seconnecter/oublier"}>Forgot your password?</Link>
-              </div>
-              <div className="px-4 pb-2 pt-4">
-                <button className="uppercase block w-full p-4 text-lg rounded-full bg-indigo-500 hover:bg-indigo-600 focus:outline-none">
-                  sign in
+
+              <div className="pb-2 pt-7">
+                <button className="font-medium  block w-full px-4 py-2 text-lg rounded-lg bg-primary-700">
+                  Se connecter
                 </button>
+              </div>
+              <div className="text-center text-white md:text-gray-600 lg:text-gray-600 xl:text-gray-600 2xl:text-gray-600 hover:underline font-medium hover:text-gray-800">
+                <Link to={"/seconnecter/oublier"}>Mot de passe oublié?</Link>
               </div>
             </form>
           </div>

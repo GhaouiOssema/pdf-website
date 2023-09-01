@@ -47,6 +47,7 @@ const Register = () => {
       console.error(err);
     }
   };
+
   const handleImageClear = () => {
     setSelectedFile(null);
   };
@@ -99,45 +100,35 @@ const Register = () => {
         </nav>
       </header>
 
-      <div className="mt-10 flex justify-center items-center h-full w-full">
-        <form
-          className="bg-white rounded shadow- w-full md:w-1/2 lg:w-1/2 xl:w-1/2 p-6"
-          onSubmit={handleSubmit}
-        >
-          <h2 className="text-2xl font-bold mb-6 text-center">inscription</h2>
-          {error && <p className="text-red-500 mb-4">{error}</p>}
-          <div>
-            <label className="flex justify-between text-gray-700 font-bold mb-2">
-              Votre Image
-              {selectedFile && (
-                <div
-                  className="text-black cursor-pointer"
-                  onClick={handleImageClear}
-                >
-                  <CancelOutlinedIcon />
-                </div>
-              )}
-            </label>
-            <div className="flex items-center justify-center w-full">
-              {selectedFile ? (
-                <div className="relative mb-4">
-                  <label htmlFor="pdf-image" className="cursor-pointer">
-                    <img
-                      src={URL.createObjectURL(selectedFile)}
-                      alt="Selected file"
-                      style={{
-                        width: "100%",
-                        height: "auto",
-                        maxWidth: "300px",
-                        maxHeight: "300px",
-                      }}
-                    />
-                  </label>
-                </div>
-              ) : (
+      <section className="min-h-screen flex items-stretch text-white flex-row-reverse">
+        <div className="lg:flex w-1/2 hidden bg-gray-500 bg-no-repeat bg-cover relative items-center IMAG__SCAN">
+          <div className="absolute bg-black opacity-60 inset-0 z-0"></div>
+          <div className="w-full px-24 z-10">
+            <h1 className="text-5xl font-bold text-left tracking-wide">
+              Keep it special
+            </h1>
+            <p className="text-3xl my-4">
+              Capture your personal memory in unique way, anywhere.
+            </p>
+          </div>
+        </div>
+        <div className="bg-gray-100 lg:w-1/2 w-full flex items-center justify-center text-center md:px-16 px-0 z-0">
+          <div className="absolute lg:hidden z-10 inset-0 bg-gray-500 bg-no-repeat object-right items-center IMAG__SCAN">
+            <div className="absolute bg-black opacity-60 inset-0 z-0"></div>
+          </div>
+          <div className="w-full py-6 z-20 pt-20">
+            <h1 className="text-white md:text-gray-800 lg:text-gray-800 xl:text-gray-800 2xl:text-gray-800 font-extrabold text-2xl mb-1 text-center">
+              inscription
+            </h1>
+            {error && <p className="text-red-500 mb-4">{error}</p>}
+            <form
+              onSubmit={handleSubmit}
+              className="sm:w-2/3 w-full px-4 lg:px-0 mx-auto"
+            >
+              <div className="pb-2 pt-2">
                 <label
                   htmlFor="pdf-image"
-                  className="flex flex-col items-center justify-center w-full h-19 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100 dark:hover:border-gray-500"
+                  className="flex flex-col items-center justify-center w-full h-19 border-2 border-none rounded-lg cursor-pointer bg-white dark:hover:bg-bray-800 hover:bg-gray-100 dark:hover:border-gray-500"
                 >
                   <div className="flex flex-col items-center justify-center pt-5 pb-2">
                     <svg
@@ -168,87 +159,86 @@ const Register = () => {
                     onChange={handleFileChange}
                   />
                 </label>
-              )}
-            </div>
-          </div>{" "}
-          <div className="mb-4">
-            <label
-              htmlFor="userName"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              Nom d'utilisateur
-            </label>
-            <input
-              type="text"
-              id="userName"
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring"
-              placeholder="Entrez votre nom d'utilisateur"
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
-              required
-            />
+              </div>
+              <div className="pb-2 pt-2">
+                <label
+                  htmlFor="userName"
+                  className="text-start font-medium block text-white  lg:text-gray-700 xl:text-gray-700 2xl:text-gray-700 mb-2"
+                >
+                  Nom d'utilisateur
+                </label>
+                <input
+                  type="text"
+                  id="userName"
+                  className="border-none w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring"
+                  placeholder="Entrez votre nom d'utilisateur"
+                  value={userName}
+                  onChange={(e) => setUserName(e.target.value)}
+                  required
+                />
+              </div>
+
+              <div className="pb-2 pt-2">
+                <label
+                  htmlFor="email"
+                  className="block text-white  lg:text-gray-700 xl:text-gray-700 2xl:text-gray-700 text-start font-medium mb-2"
+                >
+                  Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  className="border-none w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring"
+                  placeholder="Entrez votre adresse e-mail"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="pb-2 pt-2">
+                <label
+                  htmlFor="password"
+                  className="block text-white  lg:text-gray-700 xl:text-gray-700 2xl:text-gray-700 text-start font-medium mb-2"
+                >
+                  Mot de passe
+                </label>
+                <input
+                  type="password"
+                  id="password"
+                  className="border-none w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring"
+                  placeholder="Entrez votre mot de passe."
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="pb-2 pt-2">
+                <label
+                  htmlFor="userRole"
+                  className="block text-white  lg:text-gray-700 xl:text-gray-700 2xl:text-gray-700 text-start font-medium mb-2"
+                >
+                  User Role
+                </label>
+                <input
+                  type="text"
+                  id="userRole"
+                  className="border-none w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring"
+                  placeholder="Enter your user role"
+                  value={userRole}
+                  onChange={(e) => setUserRole(e.target.value)}
+                  required
+                />
+              </div>
+
+              <div className="pb-2 pt-7 w-full flex justify-center">
+                <button className="font-medium  block w-1/2 px-4 py-2 text-lg rounded-lg bg-primary-700">
+                  S'inscrire
+                </button>
+              </div>
+            </form>
           </div>
-          <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring"
-              placeholder="Entrez votre adresse e-mail"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="password"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              Mot de passe
-            </label>
-            <input
-              type="password"
-              id="password"
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring"
-              placeholder="Entrez votre mot de passe."
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          <div className="mb-6">
-            <label
-              htmlFor="userRole"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              User Role
-            </label>
-            <input
-              type="text"
-              id="userRole"
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring"
-              placeholder="Enter your user role"
-              value={userRole}
-              onChange={(e) => setUserRole(e.target.value)}
-              required
-            />
-          </div>
-          <div>
-            <button
-              type="submit"
-              className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700"
-            >
-              S'inscrire
-            </button>
-          </div>
-        </form>
-      </div>
+        </div>
+      </section>
     </div>
   );
 };
