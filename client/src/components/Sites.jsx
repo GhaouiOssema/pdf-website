@@ -555,7 +555,7 @@ const Sites = () => {
           ) : loading ? (
             <div></div>
           ) : (
-            <div className="boor w-full h-[65vh] flex flex-col justify-center items-center">
+            <div className="w-full h-[65vh] flex flex-col justify-center items-center">
               <HourglassDisabledRoundedIcon sx={{ fontSize: 100 }} />
               <p className="mt-5 font-sans font-bold">
                 Il n'existe aucun dossier
