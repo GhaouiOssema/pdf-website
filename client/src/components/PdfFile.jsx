@@ -195,9 +195,9 @@ const PdfFile = () => {
   };
 
   return (
-    <>
-      <section className="bg-gray-50 dark:bg-gray-900 h-screen">
-        <h1 className="text-xl sm:text-xl md:text-xl lg:text-xl text-center font-bold mb-4 mt-10 flex justify-center flex-wrap px-4">
+    <section className="bg-gray-100 dark:bg-gray-900 h-screen">
+      <div>
+        <h1 className="text-xl sm:text-xl md:text-xl lg:text-xl text-center font-bold mb-4 pt-2 flex justify-center flex-wrap px-4">
           Tous les équipements pour {dossier}
         </h1>
 
@@ -395,7 +395,7 @@ const PdfFile = () => {
             </nav>
           </div>
         </div>
-      </section>
+      </div>
 
       <Stack spacing={2} sx={{ width: "100%" }}>
         <Snackbar
@@ -422,7 +422,7 @@ const PdfFile = () => {
           ) : null}
         </Snackbar>
       </Stack>
-    </>
+    </section>
   );
 };
 
