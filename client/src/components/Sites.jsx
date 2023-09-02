@@ -68,26 +68,27 @@ const MultiSelectTreeView = ({
   }, [expanded, isExpanded, folders._id]);
 
   let labelFormat = (
-    <div className="mt-[5px]">
-      <div className="flex w-full items-center justify-between">
-        <span className="w-[60%] font-sans tex-md ">Nom: {folders.name}</span>
-        <span className=" tex-md font-normal w-[40%]">
-          <span className="font-bold">CP:</span> {folders.code_postal}
+    <div className="flex items-center w-full justify-between">
+      <div className="w-full">
+        <div className="flex w-full items-center justify-between">
+          <span className="w-[60%] font-sans tex-md ">Nom: {folders.name}</span>
+          <span className=" tex-md font-normal w-[40%]">
+            <span className="font-bold">CP:</span> {folders.code_postal}
+          </span>
+        </div>
+        <span className="w-full h-full tex-md class__ligth ">
+          Adresse: {folders.adresse.replace(/^site:\s*/i, "")}
         </span>
-
-        <SiteOption
-          folders={folders}
-          setOpenSection={setOpenSection}
-          setButtonType={setButtonType}
-          setFolderIdUpdate={setFolderIdUpdate}
-          ID={ID}
-          setExpanded={setExpanded}
-          expanded={expanded}
-        />
       </div>
-      <span className="w-full h-full tex-md class__ligth ">
-        Adresse: {folders.adresse.replace(/^site:\s*/i, "")}
-      </span>
+      <SiteOption
+        folders={folders}
+        setOpenSection={setOpenSection}
+        setButtonType={setButtonType}
+        setFolderIdUpdate={setFolderIdUpdate}
+        ID={ID}
+        setExpanded={setExpanded}
+        expanded={expanded}
+      />
     </div>
   );
 
@@ -97,7 +98,7 @@ const MultiSelectTreeView = ({
         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
         overflow: "hidden",
         transition: "height 0.3s",
-        height: isExpanded(folders._id) ? "auto" : "54px",
+        height: isExpanded(folders._id) ? "auto" : "47px",
         backgroundColor: "white",
       }}
       className="rounded-b-lg"

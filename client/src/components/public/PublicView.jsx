@@ -90,7 +90,7 @@ const TransitionsModal = ({ open, handleClose, raports, filteredRaports }) => {
               filteredRaports.map((raport, index) => (
                 <Box sx={{ maxHeight: "400px", overflow: "auto" }} key={index}>
                   <Box sx={itemsStyle}>
-                    <Typography variant="h6" gutterBottom>
+                    <Typography variant="h7" gutterBottom>
                       Société
                     </Typography>
                     <Typography variant="h7" gutterBottom sx={itemTextStyle}>
@@ -98,7 +98,7 @@ const TransitionsModal = ({ open, handleClose, raports, filteredRaports }) => {
                     </Typography>
                   </Box>
                   <Box sx={itemsStyle}>
-                    <Typography variant="h6" gutterBottom>
+                    <Typography variant="h7" gutterBottom>
                       Date
                     </Typography>
                     <Typography variant="h7" gutterBottom sx={itemTextStyle}>
@@ -110,7 +110,7 @@ const TransitionsModal = ({ open, handleClose, raports, filteredRaports }) => {
                     </Typography>
                   </Box>
                   <Box sx={itemsStyle}>
-                    <Typography variant="h6" gutterBottom>
+                    <Typography variant="h7" gutterBottom>
                       Correctif ou Préventif
                     </Typography>
                     <Typography variant="h7" gutterBottom sx={itemTextStyle}>
@@ -118,7 +118,7 @@ const TransitionsModal = ({ open, handleClose, raports, filteredRaports }) => {
                     </Typography>
                   </Box>
                   <Box sx={itemsStyle}>
-                    <Typography variant="h6" gutterBottom>
+                    <Typography variant="h7" gutterBottom>
                       Observation
                     </Typography>
                     <Typography variant="h7" gutterBottom sx={itemTextStyle}>
@@ -126,7 +126,7 @@ const TransitionsModal = ({ open, handleClose, raports, filteredRaports }) => {
                     </Typography>
                   </Box>
                   <Box sx={itemsStyle}>
-                    <Typography variant="h6" gutterBottom>
+                    <Typography variant="h7" gutterBottom>
                       Tàche effectuer
                     </Typography>
                     <Typography variant="h7" gutterBottom sx={itemTextStyle}>
@@ -134,7 +134,7 @@ const TransitionsModal = ({ open, handleClose, raports, filteredRaports }) => {
                     </Typography>
                   </Box>
                   <Box sx={itemsStyle}>
-                    <Typography variant="h6" gutterBottom>
+                    <Typography variant="h7" gutterBottom>
                       Date prochain maintenance
                     </Typography>
                     <Typography variant="h7" gutterBottom sx={itemTextStyle}>
@@ -520,7 +520,7 @@ const PublicView = () => {
                   htmlFor="email"
                   className="block mb-2 text-md font-sans font-medium text-gray-900 dark:text-white"
                 >
-                  Envoyez un Rpaort
+                  Rpaort
                 </label>
                 <div className="mb-6 mt-5">
                   <label
