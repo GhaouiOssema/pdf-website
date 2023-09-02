@@ -173,8 +173,10 @@ const PdfFile = () => {
     fetchPdfs();
   }, [site, dossier]);
 
+  const [deleteLoading, setDeleteLoading] = useState(false);
+
   const handleDelete = async (title) => {
-    setLoading(true);
+    setDeleteLoading(true);
     setDeletingPdfTitle(title);
     try {
       const res = await axios.delete(
@@ -184,6 +186,7 @@ const PdfFile = () => {
         config
       );
       if (res.status === 200) {
+        setDeleteLoading(false);
         window.location.reload();
       }
     } catch (error) {
@@ -286,7 +289,7 @@ const PdfFile = () => {
                             onClick={() => handleDelete(pdf.title)}
                             className="w-full flex justify-around items-center font-bold text-red-500"
                           >
-                            {loading && deletingPdfTitle === pdf.title ? (
+                            {deleteLoading && deletingPdfTitle === pdf.title ? (
                               <CircularIndeterminate />
                             ) : (
                               <DeleteIcon sx={{ color: "red" }} />
