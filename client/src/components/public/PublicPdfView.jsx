@@ -300,7 +300,7 @@ const PublicPdfView = () => {
                             </span>
                           </TableCell>
                           <TableCell align="center" sx={{ p: 1, m: 0 }}>
-                            <span className="font-sans font-bold text-[10px]">
+                            <span className="font-sans font-bold">
                               Date du prochain entretien
                             </span>
                           </TableCell>
@@ -424,7 +424,10 @@ const PublicPdfView = () => {
                 <p className="font-sans font-bold text-lg mb-4 text-center">
                   Tableau des Rapports
                 </p>
-                <div className="pdf-preview bg-white" key={pdfData._id}>
+                <div
+                  className="pdf-preview bg-white rounded-lg"
+                  key={pdfData._id}
+                >
                   <div
                     style={{
                       height: "400px",
