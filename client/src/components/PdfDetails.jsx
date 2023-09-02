@@ -155,7 +155,7 @@ const PdfDetails = () => {
       {pdfData ? (
         <div className="h-full w-full">
           <div className="flex flex-col items-center justify-center mt-5">
-            <h1 className="text-3xl text-center font-bold mb-5">
+            <h1 className="text-3xl text-center font-sans font-bold mb-5">
               <span className="">Fiche d'équipement</span>
             </h1>
             <div className="flex flex-col space-y-3 md:space-y-0 md:flex-row md:space-x-1 lg:space-x-3">
@@ -293,7 +293,7 @@ const PdfDetails = () => {
 
               <div className="w-full md:w-[70%] mt-5">
                 {/* Adjust margin top */}
-                <p className="font-bold text-lg text-center mb-4">
+                <p className="font-sans font-bold text-lg text-center mb-4">
                   Tableau des Rapports
                 </p>
                 <div className="pdf-preview bg-white shadow-md shadow-black/20 rounded-lg">
@@ -305,23 +305,18 @@ const PdfDetails = () => {
                     >
                       <TableHead>
                         <TableRow>
-                          <TableCell
-                            align="center"
-                            sx={{ fontWeight: "bold", p: 1, m: 0 }}
-                          >
-                            Sociéte
+                          <TableCell align="center" sx={{ p: 1, m: 0 }}>
+                            <span className="font-sans font-bold">Sociéte</span>
                           </TableCell>
-                          <TableCell
-                            align="center"
-                            sx={{ fontWeight: "bold", p: 1, m: 0 }}
-                          >
-                            Date du dernier entretien
+                          <TableCell align="center" sx={{ p: 1, m: 0 }}>
+                            <span className="font-sans font-bold">
+                              Date du dernier entretien
+                            </span>
                           </TableCell>
-                          <TableCell
-                            align="center"
-                            sx={{ fontWeight: "bold", p: 1, m: 0 }}
-                          >
-                            Date du prochain entretien
+                          <TableCell align="center" sx={{ p: 1, m: 0 }}>
+                            <span className="font-sans font-bold text-[10px]">
+                              Date du prochain entretien
+                            </span>
                           </TableCell>
                         </TableRow>
                       </TableHead>
@@ -378,25 +373,27 @@ const PdfDetails = () => {
 
             {/* Mobile View */}
             <div className="md:hidden">
-              <div className="mt-5">
+              <div className="mt-5 px-3">
                 <div className="qr-code-section bg-white">
                   <div className="flex flex-wrap mb-3">
-                    <h1 className="ml-3 font-bold">Titre :</h1>
-                    <span className="ml-3 text-black">{pdfData.title}</span>
+                    <h1 className="ml-3 font-sans font-bold">Titre :</h1>
+                    <span className="ml-3 font-sans font-light text-black">
+                      {pdfData.title}
+                    </span>
                   </div>
                   {dossier === "Armoire electrique" && (
                     <>
                       <div className="flex flex-wrap mb-3">
-                        <h1 className="ml-3 font-bold">PTA :</h1>
-                        <span className="ml-3 text-black">
+                        <h1 className="ml-3 font-sans font-bold">PTA :</h1>
+                        <span className="ml-3 font-sans font-light text-black">
                           {pdfData?.pdfDetails?.PAT}
                         </span>
                       </div>
                       <div className="flex flex-wrap mb-3">
-                        <h1 className="ml-3 font-bold">
+                        <h1 className="ml-3 font-sans font-bold">
                           Date d'installation :
                         </h1>
-                        <span className="ml-3 text-black">
+                        <span className="ml-3 font-sans font-light text-black">
                           {
                             new Date(pdfData?.pdfDetails?.installationDate)
                               .toISOString()
@@ -410,15 +407,15 @@ const PdfDetails = () => {
                     dossier
                   ) && (
                     <div className="flex flex-wrap mb-3">
-                      <h1 className="ml-3 font-bold">Modéle:</h1>
-                      <span className="ml-3 text-black">
+                      <h1 className="ml-3 font-sans font-bold">Modéle:</h1>
+                      <span className="ml-3 font-sans font-light text-black">
                         {pdfData?.pdfDetails?.pdfModel}
                       </span>
                     </div>
                   )}
                 </div>
               </div>
-              <div className="mt-5">
+              <div className="mt-5 px-3">
                 {!imageLoading && !imageError && (
                   <div
                     className={`max-w-lg relative ${
@@ -437,41 +434,35 @@ const PdfDetails = () => {
                   </div>
                 )}
               </div>
-              <div className="mt-5">
-                <p className="font-bold text-lg mb-4 text-center">
+              <div className="mt-5 px-3">
+                <p className="font-sans font-bold text-lg mb-4 text-center">
                   Tableau des Rapports
                 </p>
                 <div className="pdf-preview bg-white" key={pdfData._id}>
-                  <div style={{ height: "400px", overflowX: "auto" }}>
+                  <div
+                    style={{
+                      height: "400px",
+                      overflowX: "auto",
+                      width: "100%",
+                    }}
+                  >
                     <Table size="small" aria-label="a dense table">
                       <TableHead>
                         <TableRow>
-                          <TableCell
-                            align="center"
-                            sx={{
-                              fontWeight: "bold",
-                              fontSize: 11,
-                            }}
-                          >
-                            Sociéte
+                          <TableCell align="center">
+                            <span className="font-sans font-bold text-[10px]">
+                              Sociéte
+                            </span>
                           </TableCell>
-                          <TableCell
-                            align="center"
-                            sx={{
-                              fontWeight: "bold",
-                              fontSize: 11,
-                            }}
-                          >
-                            Date du dernier entretien
+                          <TableCell align="center">
+                            <span className="font-sans font-bold text-[10px]">
+                              Date du dernier entretien
+                            </span>
                           </TableCell>
-                          <TableCell
-                            align="center"
-                            sx={{
-                              fontWeight: "bold",
-                              fontSize: 11,
-                            }}
-                          >
-                            Date du prochain entretien
+                          <TableCell align="center">
+                            <span className="font-sans font-bold text-[10px]">
+                              Date du prochain entretien
+                            </span>
                           </TableCell>
                         </TableRow>
                       </TableHead>
@@ -491,22 +482,28 @@ const PdfDetails = () => {
                                   },
                                 }}
                               >
-                                <TableCell align="center">
-                                  {raport.société}
+                                <TableCell align="center" sx={{ fontSize: 10 }}>
+                                  <span className="font-sans font-medium text-[10px]">
+                                    {raport.société}
+                                  </span>
                                 </TableCell>
                                 <TableCell align="center">
-                                  {
-                                    new Date(raport.dateDernierEntretien)
-                                      .toISOString()
-                                      .split("T")[0]
-                                  }
+                                  <span className="font-sans font-medium text-[10px]">
+                                    {
+                                      new Date(raport.dateDernierEntretien)
+                                        .toISOString()
+                                        .split("T")[0]
+                                    }
+                                  </span>
                                 </TableCell>
                                 <TableCell align="center">
-                                  {
-                                    new Date(raport.dateProchainEntretien)
-                                      .toISOString()
-                                      .split("T")[0]
-                                  }
+                                  <span className="w-full font-sans font-medium text-[10px]">
+                                    {
+                                      new Date(raport.dateProchainEntretien)
+                                        .toISOString()
+                                        .split("T")[0]
+                                    }
+                                  </span>
                                 </TableCell>
                               </TableRow>
                             ))}
