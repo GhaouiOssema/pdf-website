@@ -67,20 +67,25 @@ const MultiSelectTreeView = ({
   }, [expanded, isExpanded, folders._id]);
 
   let labelFormat = (
-    <div className="flex w-full items-center justify-between">
-      <span className="w-full">
-        Address : {folders.adresse.replace(/^site:\s*/i, "")}
+    <div className="mt-[5px] w-full">
+      <div className="flex w-full items-center justify-between">
+        <span className="w-full font-sans boor">Nom: {folders.name}</span>
+        <span className=" boor text-base font-normal w-2/3">
+          <span className="font-bold">CP:</span> {folders.code_postal}
+        </span>
+        <SiteOption
+          folders={folders}
+          setOpenSection={setOpenSection}
+          setButtonType={setButtonType}
+          setFolderIdUpdate={setFolderIdUpdate}
+          ID={ID}
+          setExpanded={setExpanded}
+          expanded={expanded}
+        />
+      </div>
+      <span className="w-full h-full class__ligth boor">
+        Adresse: {folders.adresse.replace(/^site:\s*/i, "")}
       </span>
-      <span className="w-full">CP : {folders.code_postal}</span>
-      <SiteOption
-        folders={folders}
-        setOpenSection={setOpenSection}
-        setButtonType={setButtonType}
-        setFolderIdUpdate={setFolderIdUpdate}
-        ID={ID}
-        setExpanded={setExpanded}
-        expanded={expanded}
-      />
     </div>
   );
 
@@ -90,7 +95,7 @@ const MultiSelectTreeView = ({
         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
         overflow: "hidden",
         transition: "height 0.3s",
-        height: isExpanded(folders._id) ? "auto" : "40px",
+        height: isExpanded(folders._id) ? "auto" : "54px",
         backgroundColor: "white",
       }}
       className="rounded-b-lg"
@@ -509,7 +514,7 @@ const Sites = () => {
             screenSize.width < 700
               ? ""
               : folders.length > 0 && screenSize.width > 700
-              ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 flex-wrap w-full"
+              ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 w-full"
               : "flex w-full"
           }`}
         >
@@ -553,12 +558,12 @@ const Sites = () => {
                   key={index}
                 >
                   {/* <span className=" w-[50%] ">{`${folder.name}`}</span> */}
-                  <div className="bg-primary-700 text-white p-2 w-full text-center rounded-t-lg">
+                  {/* <div className="bg-primary-700 text-white p-2 w-full text-center rounded-t-lg">
                     <h1 className="flex items-center justify-start flex-wrap font-bold pl-3">
                       Nom du Site :
                       <span className="ml-3 font-medium">{folder.name}</span>
                     </h1>
-                  </div>
+                  </div> */}
                   <MultiSelectTreeView
                     folders={folder}
                     key={index}

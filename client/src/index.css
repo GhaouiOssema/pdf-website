@@ -337,3 +337,8 @@ body {
 .IMAG__SCAN {
   background-image: url(./assets/scaner.jpeg);
 }
+
+.class__ligth {
+  font-weight: 100;
+  opacity: 0.6;
+}

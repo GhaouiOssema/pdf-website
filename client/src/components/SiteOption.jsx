@@ -102,7 +102,7 @@ const SiteOption = ({
   }, [open]);
 
   return (
-    <div>
+    <div className="h-6">
       <IconButton
         aria-label="more"
         id="long-button"
@@ -112,7 +112,7 @@ const SiteOption = ({
         onClick={(event) => handleClick(event)}
         onClose={(event) => handleClose(event)}
       >
-        <MoreVertIcon />
+        <MoreVertIcon sx={{ mt: -1 }} />
       </IconButton>
       <Menu
         id="long-menu"

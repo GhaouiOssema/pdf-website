@@ -164,12 +164,6 @@ const TopBar = ({ toggleSidebar, isSidebarOpen }) => {
                     </MenuItem>
                     <Divider />
                     <MenuItem onClick={handleClose}>
-                      <ListItemIcon>
-                        <Settings fontSize="small" />
-                      </ListItemIcon>
-                      Settings
-                    </MenuItem>
-                    <MenuItem onClick={handleClose}>
                       <Link
                         to={"/"}
                         onClick={logout}
