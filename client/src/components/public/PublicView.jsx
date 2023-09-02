@@ -16,6 +16,7 @@ import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { Table } from "flowbite-react";
 import {
   Backdrop,
+  CircularProgress,
   Fade,
   Modal,
   Paper,
@@ -90,7 +91,7 @@ const TransitionsModal = ({ open, handleClose, raports, filteredRaports }) => {
                 <Box sx={{ maxHeight: "400px", overflow: "auto" }} key={index}>
                   <Box sx={itemsStyle}>
                     <Typography variant="h6" gutterBottom>
-                      société
+                      Société
                     </Typography>
                     <Typography variant="h7" gutterBottom sx={itemTextStyle}>
                       {raport.société}
@@ -218,25 +219,6 @@ const PublicView = () => {
     };
   }, []);
 
-  const handleDownload = () => {
-    const url = `${import.meta.env.VITE_SERVER_API_URL}/files/${
-      pdfData.filename
-    }`;
-    fetch(url)
-      .then((response) => response.blob())
-      .then((blob) => {
-        const downloadLink = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = downloadLink;
-        a.download = "download.pdf";
-        a.click();
-        URL.revokeObjectURL(downloadLink);
-      })
-      .catch((error) => {
-        console.log("Error downloading PDF:", error);
-      });
-  };
-
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
 
@@ -247,7 +229,6 @@ const PublicView = () => {
   const handleChangeIndex = (index) => {
     setValue(index);
   };
-  console.log(confirmationCode);
 
   const sendRaport = async () => {
     try {
@@ -265,7 +246,6 @@ const PublicView = () => {
             : null,
         code: confirmationCode,
       };
-      console.log(requestData);
 
       const response = await axios.post(
         `${import.meta.env.VITE_SERVER_API_URL}/pdfs/${id}/raport`,
@@ -282,8 +262,6 @@ const PublicView = () => {
       alert(error.response.data.error);
     }
   };
-
-  console.log(pdfData);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -302,16 +280,24 @@ const PublicView = () => {
 
     fetchData();
   }, [pdfData]);
-  console.log(pdfData);
-
-  console.log("RAPORT : ", raports);
 
   if (!pdfData) {
-    return <div>Loading PDF...</div>;
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
   }
 
   return (
-    <section className="flex flex-col mt-20">
+    <section className="flex flex-col h-screen">
       {open && (
         <TransitionsModal
           open={open}
@@ -322,11 +308,17 @@ const PublicView = () => {
           filteredRaports={filteredRaports}
         />
       )}
-      <h1 className="text-2xl text-center font-bold mt-5 mb-5">
-        Fiche de Maintenance
+      <h1 className="text-3xl text-center font-bold mt-5 mb-5">
+        Fiche d'entretien
       </h1>
-      <div className="flex justify-center">
-        <Box sx={{ bgcolor: "", width: "80%", color: "white" }}>
+      <div className="flex justify-center bg-gray-100">
+        <Box
+          sx={{
+            width: { sm: "100%", md: "80%", lg: "80%", xl: "80%" },
+            color: "white",
+            px: 2,
+          }}
+        >
           <Box
             sx={{
               color: "white",
@@ -356,7 +348,7 @@ const PublicView = () => {
               }}
             >
               <Tab
-                label="Historiqye maintenance"
+                label="Historique de maintenance"
                 {...a11yProps(0)}
                 sx={{
                   color: "white",
@@ -376,15 +368,19 @@ const PublicView = () => {
             axis={theme.direction === "rtl" ? "x-reverse" : "x"}
             index={value}
             onChangeIndex={handleChangeIndex}
-            className="text-black"
+            className="text-black lg:w-full md:w-full w-screen-xl"
           >
             <TabPanel value={value} index={0} dir={theme.direction}>
-              <TableContainer className="bg-white w-full">
+              <TableContainer className="bg-white rounded-lg w-full">
                 <Table size="small" aria-label="a dense table">
                   <TableHead>
                     <TableRow>
-                      <TableCell align="center">Date</TableCell>
-                      <TableCell align="center">Société</TableCell>
+                      <TableCell align="center" sx={{ fontWeight: "bold" }}>
+                        Date
+                      </TableCell>
+                      <TableCell align="center" sx={{ fontWeight: "bold" }}>
+                        Société
+                      </TableCell>
                       <TableCell
                         align="center"
                         sx={{
@@ -394,6 +390,7 @@ const PublicView = () => {
                             md: "table-cell",
                             lg: "table-cell",
                           },
+                          fontWeight: "bold",
                         }}
                       >
                         Tâche effectuée
@@ -407,6 +404,7 @@ const PublicView = () => {
                             md: "table-cell",
                             lg: "table-cell",
                           },
+                          fontWeight: "bold",
                         }}
                       >
                         Date du prochain entretien
@@ -416,10 +414,11 @@ const PublicView = () => {
                         sx={{
                           display: {
                             xs: "none",
-                            sm: "none",
+                            sm: "table-cell",
                             md: "table-cell",
                             lg: "table-cell",
                           },
+                          fontWeight: "bold",
                         }}
                       >
                         P/C
@@ -435,26 +434,17 @@ const PublicView = () => {
                             "&:last-child td, &:last-child th": { border: 0 },
                           }}
                         >
-                          <TableCell component="th" scope="row">
-                            {
-                              new Date(raport.dateDernierEntretien)
-                                .toISOString()
-                                .split("T")[0]
-                            }
+                          <TableCell component="th" align="center" scope="row">
+                            <span className="font-sans">
+                              {
+                                new Date(raport.dateDernierEntretien)
+                                  .toISOString()
+                                  .split("T")[0]
+                              }
+                            </span>
                           </TableCell>
-                          <TableCell align="center">{raport.société}</TableCell>
-                          <TableCell
-                            align="center"
-                            sx={{
-                              display: {
-                                xs: "none",
-                                sm: "none",
-                                md: "table-cell",
-                                lg: "table-cell",
-                              },
-                            }}
-                          >
-                            {truncateText(raport.piècesChangées, 40)}
+                          <TableCell align="center">
+                            <span className="font-sans">{raport.société}</span>
                           </TableCell>
                           <TableCell
                             align="center"
@@ -467,11 +457,9 @@ const PublicView = () => {
                               },
                             }}
                           >
-                            {
-                              new Date(raport.dateProchainEntretien)
-                                .toISOString()
-                                .split("T")[0]
-                            }
+                            <span className="font-sans">
+                              {truncateText(raport.piècesChangées, 40)}
+                            </span>
                           </TableCell>
                           <TableCell
                             align="center"
@@ -484,7 +472,28 @@ const PublicView = () => {
                               },
                             }}
                           >
-                            {raport.options.map((el) => el)}
+                            <span className="font-sans">
+                              {
+                                new Date(raport.dateProchainEntretien)
+                                  .toISOString()
+                                  .split("T")[0]
+                              }
+                            </span>
+                          </TableCell>
+                          <TableCell
+                            align="center"
+                            sx={{
+                              display: {
+                                xs: "none",
+                                sm: "table-cell",
+                                md: "table-cell",
+                                lg: "table-cell",
+                              },
+                            }}
+                          >
+                            <span className="font-sans">
+                              {raport.options.map((el) => el)}
+                            </span>
                           </TableCell>
                           <TableCell align="center" sx={{ cursor: "pointer" }}>
                             <InfoOutlinedIcon
@@ -503,16 +512,19 @@ const PublicView = () => {
               value={value}
               index={1}
               dir={theme.direction}
-              className="bg-white"
+              className="bg-white my-5 rounded-lg"
             >
               <div>
-                <Typography variant="h5" gutterBottom>
-                  Raport
-                </Typography>
+                <label
+                  htmlFor="email"
+                  className="block mb-2 text-md font-sans font-medium text-gray-900 dark:text-white"
+                >
+                  Envoyez un Rpaort
+                </label>
                 <div className="mb-6 mt-5">
                   <label
                     htmlFor="email"
-                    className="block mb-2 text-md font-medium text-gray-900 dark:text-white"
+                    className="block mb-2 text-md font-sans font-medium text-gray-900 dark:text-white"
                   >
                     Sociéte
                   </label>
@@ -528,7 +540,7 @@ const PublicView = () => {
                 <div className="mb-6">
                   <label
                     for="message"
-                    className="block mb-2 text-md font-medium text-gray-900 dark:text-white"
+                    className="block mb-2 text-md font-sans font-medium text-gray-900 dark:text-white"
                   >
                     Observation
                   </label>
@@ -544,7 +556,7 @@ const PublicView = () => {
                 <div className="mb-6">
                   <label
                     htmlFor="repeat-password"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    className="block mb-2 text-md font-sans font-medium text-gray-900 dark:text-white"
                   >
                     Piéce changée
                   </label>
@@ -556,48 +568,50 @@ const PublicView = () => {
                     onChange={(e) => setPartChanged(e.target.value)}
                   />
                 </div>
-                <div className="flex items-center justify-between w-1/4 flex-wrap gap-2">
-                  <div className="flex items-start mb-6">
-                    <div className="flex items-center h-5">
-                      <input
-                        id="option1"
-                        type="radio"
-                        className="w-4 h-4 border border-gray-300 rounded bg-gray-50 dark:bg-gray-700 dark:border-gray-600"
-                        value="Correctif"
-                        checked={selectedOption === "Correctif"}
-                        onChange={() => handleOptionChange("Correctif")}
-                      />
+                <div className="w-full mb-6">
+                  <div className="flex items-center justify-between w-[20rem]">
+                    <div className="py-2 flex items-center justify-start">
+                      <div className="py-2 flex items-center h-5">
+                        <input
+                          id="option1"
+                          type="radio"
+                          className="w-4 h-4 border border-gray-300 rounded bg-gray-50 dark:bg-gray-700 dark:border-gray-600"
+                          value="Correctif"
+                          checked={selectedOption === "Correctif"}
+                          onChange={() => handleOptionChange("Correctif")}
+                        />
+                      </div>
+                      <label
+                        htmlFor="option1"
+                        className="ml-2 text-sm font-sans text-gray-900 dark:text-gray-300"
+                      >
+                        Correctif
+                      </label>
                     </div>
-                    <label
-                      htmlFor="option1"
-                      className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                    >
-                      Correctif
-                    </label>
-                  </div>
-                  <div className="flex items-start mb-6 ">
-                    <div className="flex items-center h-5">
-                      <input
-                        id="option2"
-                        type="radio"
-                        className="w-4 h-4 border border-gray-300 rounded bg-gray-50 dark:bg-gray-700 dark:border-gray-600"
-                        value="Préventif"
-                        checked={selectedOption === "Préventif"}
-                        onChange={() => handleOptionChange("Préventif")}
-                      />
+                    <div className="flex items-center justify-end">
+                      <div className="flex items-center h-5">
+                        <input
+                          id="option2"
+                          type="radio"
+                          className="w-4 h-4 border border-gray-300 rounded bg-gray-50 dark:bg-gray-700 dark:border-gray-600"
+                          value="Préventif"
+                          checked={selectedOption === "Préventif"}
+                          onChange={() => handleOptionChange("Préventif")}
+                        />
+                      </div>
+                      <label
+                        htmlFor="option2"
+                        className="ml-2 text-sm font-sans text-gray-900 dark:text-gray-300"
+                      >
+                        Préventif
+                      </label>
                     </div>
-                    <label
-                      htmlFor="option2"
-                      className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                    >
-                      Préventif
-                    </label>
                   </div>
                 </div>
-                <div className="block mb-6 w-1/2">
+                <div className="block mb-6 sm:w-1/2 w-full">
                   <label
                     for="date"
-                    className="w-full text-md sm:text-sm font-medium text-gray-900 dark:text-white flex flex-wrap gap-2"
+                    className="w-full h-full text-md font-sans font-medium text-gray-900 dark:text-white"
                   >
                     Date du prochain entretie :
                   </label>
@@ -615,7 +629,7 @@ const PublicView = () => {
                 <div className="mb-6">
                   <label
                     htmlFor="repeat-password"
-                    className="block mb-2 text-sm text-gray-900 dark:text-white font-bold"
+                    className="block mb-2 text-sm text-gray-900 dark:text-white font-sans font-bold"
                   >
                     Code du confirmation
                   </label>

@@ -60,12 +60,13 @@ export const itemTextStyle = {
   border: "1px solid #f3f4f6",
   p: 1.5,
   width: "100%",
+  height: "100%",
   background: "#f3f4f6",
   borderRadius: 2,
   whiteSpace: "normal",
   wordWrap: "break-word",
+  fontWeight: "lighter",
 };
-
 export const style = {
   position: "absolute",
   top: "50%",
