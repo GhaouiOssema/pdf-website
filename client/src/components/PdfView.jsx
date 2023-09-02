@@ -12,6 +12,7 @@ import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { Table } from "flowbite-react";
 import {
   Backdrop,
+  CircularProgress,
   Fade,
   Modal,
   Paper,
@@ -272,8 +273,6 @@ const PdfView = () => {
     }
   };
 
-  console.log(pdfData);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -292,12 +291,20 @@ const PdfView = () => {
 
     fetchData();
   }, [pdfData]);
-  console.log(pdfData);
-
-  console.log("RAPORT : ", raports);
 
   if (!pdfData) {
-    return <div>Loading PDF...</div>;
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
   }
 
   return (
@@ -316,7 +323,12 @@ const PdfView = () => {
         Fiche d'entretien
       </h1>
       <div className="flex justify-center bg-gray-100">
-        <Box sx={{ bgcolor: "", width: "80%", color: "white" }}>
+        <Box
+          sx={{
+            width: { sm: "90%", md: "80%", lg: "80%", xl: "80%" },
+            color: "white",
+          }}
+        >
           <Box
             sx={{
               color: "white",
@@ -369,7 +381,7 @@ const PdfView = () => {
             className="text-black lg:w-full md:w-full w-screen-xl"
           >
             <TabPanel value={value} index={0} dir={theme.direction}>
-              <TableContainer className="bg-white w-full">
+              <TableContainer className="bg-white w-full ">
                 <Table size="small" aria-label="a dense table">
                   <TableHead>
                     <TableRow>

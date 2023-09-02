@@ -8,6 +8,7 @@ import {
   Box,
   Button,
   Checkbox,
+  CircularProgress,
   Dialog,
   DialogContent,
   DialogTitle,
@@ -236,7 +237,7 @@ const Sites = () => {
         if (response.status === 200) {
           setFolders(response.data);
         } else {
-          setFolders([]);
+          setFolders(null);
         }
       } catch (error) {
         console.error(error);
@@ -252,6 +253,7 @@ const Sites = () => {
   const handleClose = () => {
     setOpenSection(false);
   };
+  console.log(folders);
 
   return (
     <div className="h-screen bg-gray-100">
@@ -514,78 +516,94 @@ const Sites = () => {
           className={`px-3 h-full ${
             screenSize.width < 700
               ? ""
-              : folders.length > 0 && screenSize.width > 700
+              : folders &&
+                folders.length > 0 &&
+                screenSize.width > 700 &&
+                !loading
               ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 w-full"
-              : "flex w-full"
+              : !folders &&
+                !folders.length < 0 &&
+                !loading &&
+                screenSize.width > 700
+              ? "flex w-full"
+              : ""
           }`}
         >
-          {!loading && folders && folders.length > 0 ? (
-            folders
-              ?.filter((folder) => {
-                const lowerCaseSearchQuery = searchQuery.toLowerCase();
+          <>
+            {folders !== [] && !loading && folders.length !== 0 ? (
+              folders
+                ?.filter((folder) => {
+                  const lowerCaseSearchQuery = searchQuery.toLowerCase();
 
-                const shouldFilterByAddress =
-                  filterOptions?.address &&
-                  folder?.adresse
-                    ?.toLowerCase()
-                    ?.includes(lowerCaseSearchQuery);
-                const shouldFilterByName =
-                  filterOptions?.name &&
-                  folder?.name?.toLowerCase()?.includes(lowerCaseSearchQuery);
-                const shouldFilterByCodePostal =
-                  filterOptions?.code_postal &&
-                  folder?.code_postal?.includes(lowerCaseSearchQuery);
-                const shouldFilterBySubfolder =
-                  filterOptions?.subfolder &&
-                  folder?.content?.some((subFolder) =>
-                    subFolder?.subFolder?.name
+                  const shouldFilterByAddress =
+                    filterOptions?.address &&
+                    folder?.adresse
                       ?.toLowerCase()
-                      ?.includes(lowerCaseSearchQuery)
-                  );
+                      ?.includes(lowerCaseSearchQuery);
+                  const shouldFilterByName =
+                    filterOptions?.name &&
+                    folder?.name?.toLowerCase()?.includes(lowerCaseSearchQuery);
+                  const shouldFilterByCodePostal =
+                    filterOptions?.code_postal &&
+                    folder?.code_postal?.includes(lowerCaseSearchQuery);
+                  const shouldFilterBySubfolder =
+                    filterOptions?.subfolder &&
+                    folder?.content?.some((subFolder) =>
+                      subFolder?.subFolder?.name
+                        ?.toLowerCase()
+                        ?.includes(lowerCaseSearchQuery)
+                    );
 
-                // Return true if any of the filters match
-                return (
-                  shouldFilterByAddress ||
-                  shouldFilterByCodePostal ||
-                  shouldFilterBySubfolder ||
-                  shouldFilterByName
-                );
-              })
-              .map((folder, index) => (
-                <div
-                  className={`rounded-lg ${
-                    screenSize.width < 700 ? "w-full mt-4" : "w-[99%] py-3"
-                  }`}
-                  key={index}
-                >
-                  {/* <span className=" w-[50%] ">{`${folder.name}`}</span> */}
-                  {/* <div className="bg-primary-700 text-white p-2 w-full text-center rounded-t-lg">
+                  // Return true if any of the filters match
+                  return (
+                    shouldFilterByAddress ||
+                    shouldFilterByCodePostal ||
+                    shouldFilterBySubfolder ||
+                    shouldFilterByName
+                  );
+                })
+                .map((folder, index) => (
+                  <div
+                    className={`rounded-lg ${
+                      screenSize.width < 700 ? "w-full mt-4" : "w-[99%] py-3"
+                    }`}
+                    key={index}
+                  >
+                    {/* <span className=" w-[50%] ">{`${folder.name}`}</span> */}
+                    {/* <div className="bg-primary-700 text-white p-2 w-full text-center rounded-t-lg">
                     <h1 className="flex items-center justify-start flex-wrap font-bold pl-3">
                       Nom du Site :
                       <span className="ml-3 font-medium">{folder.name}</span>
                     </h1>
                   </div> */}
-                  <MultiSelectTreeView
-                    folders={folder}
-                    key={index}
-                    setOpenSection={setOpenSection}
-                    setButtonType={setButtonType}
-                    setFolderIdUpdate={setFolderIdUpdate}
-                    expanded={expanded}
-                    setExpanded={setExpanded}
-                  />
-                </div>
-              ))
-          ) : loading ? (
-            <div></div>
-          ) : (
-            <div className="w-full h-[65vh] flex flex-col justify-center items-center">
-              <HourglassDisabledRoundedIcon sx={{ fontSize: 100 }} />
-              <p className="mt-5 font-sans font-bold">
-                Il n'existe aucun dossier
-              </p>
-            </div>
-          )}
+                    <MultiSelectTreeView
+                      folders={folder}
+                      key={index}
+                      setOpenSection={setOpenSection}
+                      setButtonType={setButtonType}
+                      setFolderIdUpdate={setFolderIdUpdate}
+                      expanded={expanded}
+                      setExpanded={setExpanded}
+                    />
+                  </div>
+                ))
+            ) : loading ? (
+              <div className="w-full h-full flex flex-col  items-center">
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "50vh",
+                  }}
+                >
+                  <CircularProgress />
+                </Box>
+              </div>
+            ) : (
+              <p className="text-center mt-4"> Il n'existe aucun dossier .</p>
+            )}
+          </>
         </div>
       </div>
     </div>
