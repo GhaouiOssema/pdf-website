@@ -225,14 +225,14 @@ const PdfDetails = () => {
 
           <div>
             {/* Desktop View */}
-            <div className="hidden md:flex flex-col items-center justify-around py-2 lg:px-5 mx-auto w-full">
-              <div className=" md:w-[55%] w-full mt-5 h-full">
+            <div className="hidden md:flex flex-col items-center justify-cneter py-2 lg:px-5 mx-auto w-full">
+              <div className=" md:w-[70%] w-full mt-5 h-full">
                 <p className="font-bold text-lg mb-4 text-center">
                   Information d'équipement
                 </p>
                 <div className="pdf-preview">
                   <div className="sm:h-full">
-                    <div className="shadow-md shadow-black/20 pt-2 pb-2 pr-5 rounded-lg bg-white h-auto flex items-center justify-around flex-wrap ">
+                    <div className="shadow-md shadow-black/20 pt-2 pb-2 pr-5 rounded-lg bg-white h-auto flex items-center justify-around">
                       <div>
                         {!imageLoading && !imageError && (
                           <figure className="relative">
@@ -291,7 +291,7 @@ const PdfDetails = () => {
                 </div>
               </div>
 
-              <div className="w-full md:w-[55%] mt-5">
+              <div className="w-full md:w-[70%] mt-5">
                 {/* Adjust margin top */}
                 <p className="font-bold text-lg text-center mb-4">
                   Tableau des Rapports

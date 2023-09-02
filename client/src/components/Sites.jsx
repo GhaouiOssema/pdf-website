@@ -24,7 +24,6 @@ import HeatPumpIcon from "@mui/icons-material/HeatPump";
 import View from "./View";
 import MuiAlert from "@mui/material/Alert";
 import axios from "axios";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { Link } from "react-router-dom";
 import SiteOption from "./SiteOption";
 import HourglassDisabledRoundedIcon from "@mui/icons-material/HourglassDisabledRounded";
@@ -43,9 +42,6 @@ const MultiSelectTreeView = ({
   const handleToggle = (event, nodeIds) => {
     const nodeId = nodeIds[0];
     const isNodeExpanded = expanded.includes(nodeId);
-
-    console.log(nodeId);
-    console.log(isNodeExpanded);
 
     // Toggle the expanded state for the clicked item
     if (isNodeExpanded) {
@@ -72,17 +68,18 @@ const MultiSelectTreeView = ({
 
   let labelFormat = (
     <div className="flex w-full items-center justify-between">
-      {/* <span className="w-full">
-        <b>Nom:</b> {`${folders.name}`}
-      </span> */}
-      <span className="w-full">{folders.adresse}</span>
-      <span className="w-full">CP : {`${folders.code_postal}`}</span>
+      <span className="w-full">
+        Address : {folders.adresse.replace(/^site:\s*/i, "")}
+      </span>
+      <span className="w-full">CP : {folders.code_postal}</span>
       <SiteOption
         folders={folders}
         setOpenSection={setOpenSection}
         setButtonType={setButtonType}
         setFolderIdUpdate={setFolderIdUpdate}
         ID={ID}
+        setExpanded={setExpanded}
+        expanded={expanded}
       />
     </div>
   );
@@ -115,27 +112,46 @@ const MultiSelectTreeView = ({
             handleToggle(null, [folders._id]);
           }}
         >
-          {folders.content.map((subFolder) => (
-            <Link
-              to={`/${folders.adresse}/${subFolder.subFolder.name}/pdf`}
-              className="flex item-center"
-            >
-              {subFolder.subFolder.name === "Chauffage" ? (
-                <HvacIcon sx={{ color: "blue" }} />
-              ) : subFolder.subFolder.name === "Climatisation" ? (
-                <AcUnitIcon sx={{ color: "blue" }} />
-              ) : subFolder.subFolder.name === "Ventilasion" ? (
-                <HeatPumpIcon sx={{ color: "blue" }} />
-              ) : subFolder.subFolder.name === "Armoire electrique" ? (
-                <KitchenIcon sx={{ color: "blue" }} />
-              ) : null}
-              <TreeItem
-                key={subFolder._id}
-                nodeId={subFolder._id}
-                label={subFolder.subFolder.name}
-              />
-            </Link>
-          ))}
+          {folders && (
+            <>
+              {folders.content.map((subFolder) => {
+                const folderName = subFolder.subFolder.name;
+                let iconComponent = null;
+
+                switch (folderName) {
+                  case "Chauffage":
+                    iconComponent = <HvacIcon sx={{ color: "blue" }} />;
+                    break;
+                  case "Climatisation":
+                    iconComponent = <AcUnitIcon sx={{ color: "blue" }} />;
+                    break;
+                  case "Ventilasion":
+                    iconComponent = <HeatPumpIcon sx={{ color: "blue" }} />;
+                    break;
+                  case "Armoire electrique":
+                    iconComponent = <KitchenIcon sx={{ color: "blue" }} />;
+                    break;
+                  default:
+                    break;
+                }
+
+                return (
+                  <Link
+                    key={subFolder._id}
+                    to={`/${folders.adresse}/${folderName}/pdf`}
+                    className="flex item-center"
+                  >
+                    {iconComponent}
+                    <TreeItem
+                      key={subFolder._id}
+                      nodeId={subFolder._id}
+                      label={folderName}
+                    />
+                  </Link>
+                );
+              })}
+            </>
+          )}
         </TreeItem>
       </TreeView>
     </Box>
@@ -152,13 +168,13 @@ const Sites = () => {
     height: window.innerHeight,
   });
   const [openSection, setOpenSection] = useState(false);
+
   const [folders, setFolders] = useState([]);
   const [open, setOpen] = useState(false);
   const [alertMsg, setAlertMsg] = useState(null);
   const [buttonType, setButtonType] = useState("");
   const [folderIdUpdate, setFolderIdUpdate] = useState();
   const [searchQuery, setSearchQuery] = useState("");
-  const [filterOpen, setFilterOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [expanded, setExpanded] = useState([]);
   const [filterOptions, setFilterOptions] = useState({
@@ -538,7 +554,7 @@ const Sites = () => {
                 >
                   {/* <span className=" w-[50%] ">{`${folder.name}`}</span> */}
                   <div className="bg-primary-700 text-white p-2 w-full text-center rounded-t-lg">
-                    <h1 className="flex items-center justify-center flex-wrap text-center font-bold">
+                    <h1 className="flex items-center justify-start flex-wrap font-bold pl-3">
                       Nom du Site :
                       <span className="ml-3 font-medium">{folder.name}</span>
                     </h1>

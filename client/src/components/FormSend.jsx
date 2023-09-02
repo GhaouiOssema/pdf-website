@@ -210,8 +210,6 @@ const FormSend = () => {
     }
   };
 
-  console.log(formComplated);
-
   const handleSubmitStep2 = async (event) => {
     event.preventDefault();
 
@@ -849,8 +847,6 @@ const FormSend = () => {
     setFormComplated((prev) => prev - 1);
     setFieldEmpty([...fieldEmpty, steps[activeStep]]);
   };
-
-  console.log("FIELD NOT FIELD", fieldEmpty);
 
   return (
     <div className="h-[90vh] bg-gray-100">

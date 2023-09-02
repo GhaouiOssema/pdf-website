@@ -45,19 +45,29 @@ module.exports = {
       folder.code_postal = code_postal;
 
       if (subfolders && Array.isArray(subfolders)) {
-        // Update subfolders if provided
-        folder.content = [
-          ...folder.content,
-          ...subfolders.map((name) => ({
-            subFolder: {
-              name,
-              type: "folder",
-              ref: [],
-              total: 0,
-              pdfFiles: [],
-            },
-          })),
-        ];
+        // Get the existing subfolder names
+        const existingSubfolderNames = folder.content.map(
+          (subFolder) => subFolder.subFolder.name
+        );
+
+        // Filter out subfolder names that are not already in the existing content
+        const newSubfolderNames = subfolders.filter(
+          (name) => !existingSubfolderNames.includes(name)
+        );
+
+        // Create new subfolder objects for the non-existing names
+        const newSubfolders = newSubfolderNames.map((name) => ({
+          subFolder: {
+            name,
+            type: "folder",
+            ref: [],
+            total: 0,
+            pdfFiles: [],
+          },
+        }));
+
+        // Update the folder's content with the new subfolders
+        folder.content = [...folder.content, ...newSubfolders];
       }
 
       await folder.save();

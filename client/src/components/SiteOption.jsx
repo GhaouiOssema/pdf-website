@@ -23,7 +23,6 @@ const SiteOption = ({
   setOpenSection,
   setButtonType,
   setFolderIdUpdate,
-  ID,
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
