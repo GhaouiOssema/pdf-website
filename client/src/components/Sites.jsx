@@ -67,12 +67,13 @@ const MultiSelectTreeView = ({
   }, [expanded, isExpanded, folders._id]);
 
   let labelFormat = (
-    <div className="mt-[5px] w-full">
+    <div className="mt-[5px]">
       <div className="flex w-full items-center justify-between">
-        <span className="w-full font-sans boor">Nom: {folders.name}</span>
-        <span className=" boor text-base font-normal w-2/3">
+        <span className="w-[60%] font-sans tex-md ">Nom: {folders.name}</span>
+        <span className=" tex-md font-normal w-[40%]">
           <span className="font-bold">CP:</span> {folders.code_postal}
         </span>
+
         <SiteOption
           folders={folders}
           setOpenSection={setOpenSection}
@@ -83,7 +84,7 @@ const MultiSelectTreeView = ({
           expanded={expanded}
         />
       </div>
-      <span className="w-full h-full class__ligth boor">
+      <span className="w-full h-full tex-md class__ligth ">
         Adresse: {folders.adresse.replace(/^site:\s*/i, "")}
       </span>
     </div>
@@ -514,7 +515,7 @@ const Sites = () => {
             screenSize.width < 700
               ? ""
               : folders.length > 0 && screenSize.width > 700
-              ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 w-full"
+              ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 w-full"
               : "flex w-full"
           }`}
         >
