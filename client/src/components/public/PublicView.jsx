@@ -314,9 +314,8 @@ const PublicView = () => {
       <div className="flex justify-center bg-gray-100">
         <Box
           sx={{
-            width: { sm: "100%", md: "80%", lg: "80%", xl: "80%" },
+            width: { sm: "100%", md: "90%", lg: "80%", xl: "80%" },
             color: "white",
-            px: 2,
           }}
         >
           <Box
@@ -352,12 +351,14 @@ const PublicView = () => {
                 {...a11yProps(0)}
                 sx={{
                   color: "white",
+                  fontSize: 12,
                 }}
               />
               <Tab
                 label="écrire un Raport"
                 {...a11yProps(1)}
                 sx={{
+                  fontSize: 12,
                   color: "white",
                 }}
               />
