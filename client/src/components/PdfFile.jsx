@@ -197,12 +197,12 @@ const PdfFile = () => {
   return (
     <>
       <section className="bg-gray-50 dark:bg-gray-900 h-screen">
-        <h1 className="text-xl sm:text-xl md:text-xl lg:text-xl text-center font-bold mb-4 mt-10 flex justify-center flex-wrap boor">
+        <h1 className="text-xl sm:text-xl md:text-xl lg:text-xl text-center font-bold mb-4 mt-10 flex justify-center flex-wrap px-4">
           Tous les équipements pour {dossier}
         </h1>
 
-        <div className="mx-auto max-w-screen-xl lg:px-12">
-          <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
+        <div className="mx-auto max-w-screen-xl lg:px-12 px-4">
+          <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden rounded-lg">
             <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
               {/* Search input */}
               <div className="w-full md:w-1/2">
