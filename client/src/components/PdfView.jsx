@@ -72,6 +72,7 @@ const TransitionsModal = ({ open, handleClose, raports, filteredRaports }) => {
             timeout: 500,
           },
         }}
+        sx={{ border: "none" }}
       >
         <Fade in={open}>
           <Box sx={style}>

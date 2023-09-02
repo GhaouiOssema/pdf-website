@@ -74,7 +74,7 @@ export const style = {
   transform: "translate(-50%, -50%)",
   width: { lg: 600, md: 600, sm: 500, xs: 350 },
   bgcolor: "background.paper",
-  border: "2px solid white",
+  border: "none",
   boxShadow: 24,
   p: 4,
   borderRadius: 2,
