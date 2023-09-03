@@ -36,13 +36,11 @@ const Plan = () => {
           `${
             import.meta.env.VITE_SERVER_API_URL
           }/site/folder/pdf/details/plan/${fichier}`,
-          { responseType: "arraybuffer", ...config } // Add 'responseType' to get the data as an array buffer
+          { responseType: "arraybuffer", ...config }
         );
 
-        // Create a Blob from the array buffer
         const blob = new Blob([response.data], { type: "application/pdf" });
 
-        // Convert the Blob to a base64 string
         const reader = new FileReader();
         reader.onloadend = () => {
           const base64Pdf = reader.result.split(",")[1];
@@ -78,8 +76,6 @@ const Plan = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
-  console.log(pdfData);
 
   return (
     <div className="bg-gray-100 flex justify-center items-center ">

@@ -27,12 +27,6 @@ const TopBar = ({ toggleSidebar, isSidebarOpen }) => {
         if (!token) {
           return;
         }
-        console.log(token);
-        const config = {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        };
 
         const response = await axios.get(
           `${import.meta.env.VITE_SERVER_API_URL}/profile/user`,
@@ -74,9 +68,9 @@ const TopBar = ({ toggleSidebar, isSidebarOpen }) => {
           <div className="w-full border-b-2 border-gray-200">
             <div className="bg-white h-16 justify-center items-center mx-auto px-4 flex">
               <div className="md:space-x-6 justify-between items-center ml-auto flex space-x-3 w-full">
-                <div className="hidden xl:block" />
+                <div className="hidden lg:block xl:block" />
                 <div
-                  className="justify-center items-center flex relative xl:hidden"
+                  className="justify-center items-center flex relative xl:hidden lg:hidden"
                   onClick={toggleSidebar}
                 >
                   {!isSidebarOpen && (
@@ -100,7 +94,13 @@ const TopBar = ({ toggleSidebar, isSidebarOpen }) => {
                         aria-haspopup="true"
                         aria-expanded={open ? "true" : undefined}
                       >
-                        <Avatar sx={{ width: 32, height: 32 }}>
+                        <Avatar
+                          sx={{
+                            width: 32,
+                            height: 32,
+                            bgcolor: "#616161",
+                          }}
+                        >
                           {userData?.profileImage ? (
                             <img
                               src={
@@ -159,7 +159,7 @@ const TopBar = ({ toggleSidebar, isSidebarOpen }) => {
                           {userData?.userName &&
                             userData.userName.trim().charAt(0).toUpperCase()}
                         </Avatar>
-                        Profile
+                        {userData?.userName && userData.userName}
                       </Link>
                     </MenuItem>
                     <Divider />

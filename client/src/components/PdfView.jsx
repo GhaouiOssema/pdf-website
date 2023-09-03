@@ -207,7 +207,6 @@ const PdfView = () => {
   const handleChangeIndex = (index) => {
     setValue(index);
   };
-  console.log(confirmationCode);
 
   const sendRaport = async () => {
     try {
@@ -225,7 +224,6 @@ const PdfView = () => {
             : null,
         code: confirmationCode,
       };
-      console.log(requestData);
 
       const token = localStorage.getItem("token");
       if (!token) {
@@ -263,7 +261,7 @@ const PdfView = () => {
           config
         );
         const filteredRaports = response.data.filter((raport) =>
-          pdfData.raports.includes(raport._id)
+          pdfData?.raports?.includes(raport._id)
         );
         setRaports(filteredRaports);
       } catch (error) {

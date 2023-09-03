@@ -40,7 +40,6 @@ USERS.pre("save", function (next) {
   }
 
   const username = this.userName.toLowerCase();
-  const role = this.userRole.charAt(0).toLowerCase();
   const randomNum = Math.floor(Math.random() * 10000) + 1;
 
   this.verification_code = `maintenance_${username.slice(0, 3)}${randomNum}`;

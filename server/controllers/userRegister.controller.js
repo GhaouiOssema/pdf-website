@@ -1,9 +1,6 @@
 require("dotenv").config();
 const User = require("../models/USER");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const path = require("path");
-const fs = require("fs");
 
 module.exports = {
   async register(req, res) {
@@ -12,11 +9,10 @@ module.exports = {
       let profileImageBase64 = null;
 
       if (req.file) {
-        const { filename, path: imagePath, buffer } = req.file;
+        const { buffer } = req.file;
         profileImageBase64 = buffer.toString("base64");
       }
 
-      // Check if the user already exists
       const existingUser = await User.findOne({
         $or: [{ email }, { userName }],
       });
@@ -24,10 +20,8 @@ module.exports = {
         return res.status(400).json({ error: "User already exists" });
       }
 
-      // Hash the password
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      // Create a new user
       const user = new User({
         profileImage: profileImageBase64,
         userName,

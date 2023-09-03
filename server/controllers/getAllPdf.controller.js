@@ -9,7 +9,6 @@ module.exports = {
     try {
       const { site, folder } = req.params;
 
-      // Check if the Authorization header is provided
       const token = req.headers.authorization.split(" ")[1];
 
       if (!token) {
@@ -18,13 +17,11 @@ module.exports = {
           .json({ message: "Authorization token is missing" });
       }
 
-      // Verify and decode the JWT token
       const decoded = jwt.verify(token, process.env.SECRET_TOKEN);
       if (!decoded) {
         return res.status(401).json({ message: "Invalid token" });
       }
 
-      // Find the folder based on the site and folder name
       const targetFolder = await Folder.findOne({
         adresse: site,
         "content.subFolder.name": folder,
@@ -34,7 +31,6 @@ module.exports = {
         return res.status(404).json({ message: "Folder not found" });
       }
 
-      // Find the subfolder within the folder content
       const subFolder = targetFolder.content.find(
         (sub) => sub.subFolder.name === folder
       );
@@ -43,7 +39,6 @@ module.exports = {
         return res.status(404).json({ message: "Subfolder not found" });
       }
 
-      // Get the PDFs for the subfolder
       const pdfs = await PDF.find(
         {
           _id: { $in: subFolder.subFolder.pdfFiles },

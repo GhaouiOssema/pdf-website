@@ -37,7 +37,7 @@ const ResetPasswordForm = () => {
     }
 
     try {
-      const expiration = Date.now() + 600000; // 10 minutes in milliseconds
+      const expiration = Date.now() + 600000;
       const res = await axios.post(
         `${import.meta.env.VITE_SERVER_API_URL}/reset-password`,
         {

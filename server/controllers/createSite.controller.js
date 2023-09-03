@@ -3,7 +3,6 @@ const USER = require("../models/USER");
 
 const addSite = async (req, res) => {
   const { adresse, code_postal, subFolders, name } = req.body;
-  console.log(name);
 
   try {
     const userId = req.headers["x-user-id"];

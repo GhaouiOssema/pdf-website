@@ -1,7 +1,5 @@
-const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 const PDF = require("../models/PDF");
-const { Readable } = require("stream");
 const path = require("path");
 
 module.exports = {
@@ -48,13 +46,10 @@ module.exports = {
         return res.status(404).json({ error: "infoPDF file not found." });
       }
 
-      // Get a readable stream for the GridFS image file
       const downloadStream = gfs.openDownloadStream(pdfImage.fileId);
 
-      // Set the response headers for streaming the image
       const fileExtension = path.extname(pdfImage.filename).toLowerCase();
 
-      // Set the image content type based on the file extension
       let imageContentType;
       switch (fileExtension) {
         case ".jpg":
@@ -65,16 +60,15 @@ module.exports = {
           imageContentType = "image/png";
           break;
         default:
-          imageContentType = "image/jpeg"; // Set a default content type if the extension is not recognized
+          imageContentType = "image/jpeg";
       }
 
-      res.setHeader("Content-Type", imageContentType); // Set the appropriate content type
+      res.setHeader("Content-Type", imageContentType);
       res.setHeader(
         "Content-Disposition",
         `inline; filename=${pdfImage.filename}`
       );
 
-      // Pipe the image stream to the response
       downloadStream.pipe(res);
     } catch (error) {
       console.error(error);
@@ -100,17 +94,14 @@ module.exports = {
         return res.status(404).json({ error: "Main PDF not found." });
       }
 
-      // Get a readable stream for the GridFS file
       const downloadStream = gfs.openDownloadStream(mainPdf.fileId);
 
-      // Set the response headers for streaming the file
       res.setHeader("Content-Type", "application/pdf");
       res.setHeader(
         "Content-Disposition",
         `attachment; filename=${mainPdf.filename}`
       );
 
-      // Pipe the file stream to the response
       downloadStream.pipe(res);
     } catch (error) {
       console.error(error);
@@ -158,17 +149,14 @@ module.exports = {
         return res.status(404).json({ error: "infoPDF file not found." });
       }
 
-      // Get a readable stream for the GridFS file
       const downloadStream = gfs.openDownloadStream(fiche.fileId);
 
-      // Set the response headers for streaming the file
       res.setHeader("Content-Type", "application/pdf");
       res.setHeader(
         "Content-Disposition",
         `attachment; filename=${fiche.filename}`
       );
 
-      // Pipe the file stream to the response
       downloadStream.pipe(res);
     } catch (error) {
       console.error(error);
@@ -206,7 +194,6 @@ module.exports = {
 
       const fileId = req.params.id;
 
-      // Find the specific DOE file in the GridFS bucket by its ID
       const query = { _id: new mongoose.Types.ObjectId(fileId) };
       const doeFile = await gfs.find(query).toArray();
 

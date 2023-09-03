@@ -1,8 +1,6 @@
 const multer = require("multer");
-const fs = require("fs");
-const path = require("path");
 
-const storage = multer.memoryStorage(); // Use memory storage to store image as binary data
+const storage = multer.memoryStorage();
 
 const fileFilter = (req, file, cb) => {
   if (

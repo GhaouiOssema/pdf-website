@@ -51,8 +51,6 @@ const DOEButtonsGroup = ({ pdfData }) => {
   const theme = useTheme();
   const [selectedFileIndex, setSelectedFileIndex] = useState(0);
   const [doeFiles, setDOEFiles] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [pdfLoaded, setPdfLoaded] = useState(false);
   const [numPages, setNumPages] = useState(null);
   const [screenSize, setScreenSize] = useState({
@@ -81,7 +79,6 @@ const DOEButtonsGroup = ({ pdfData }) => {
   };
 
   const fetchDOEFiles = async (id) => {
-    console.log(id);
     try {
       const token = localStorage.getItem("token");
       if (!token) {
@@ -97,15 +94,13 @@ const DOEButtonsGroup = ({ pdfData }) => {
         `${
           import.meta.env.VITE_SERVER_API_URL
         }/site/folder/pdf/details/doeFiles/${id}`,
-        { responseType: "arraybuffer", ...config } // Add 'responseType' to get the data as an array buffer
+        { responseType: "arraybuffer", ...config }
       );
 
       setLoading(true);
 
-      // Create a Blob from the array buffer
       const blob = new Blob([response.data], { type: "application/pdf" });
 
-      // Convert the Blob to a base64 string
       const reader = new FileReader();
       reader.onloadend = () => {
         const base64Pdf = reader.result.split(",")[1];
@@ -114,7 +109,6 @@ const DOEButtonsGroup = ({ pdfData }) => {
       };
       reader.readAsDataURL(blob);
     } catch (error) {
-      setError("Error retrieving PDF data.");
       setLoading(false);
       console.log("Error retrieving PDF data:", error);
     }

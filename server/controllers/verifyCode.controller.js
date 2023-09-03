@@ -5,14 +5,11 @@ module.exports = {
     const { code } = req.params;
 
     try {
-      // Find the user with the provided verification code
       const user = await UserAccount.findOne({ verification_code: code });
 
       if (user) {
-        // Code matches the user's verification code
         return res.json({ verified: true });
       } else {
-        // Code doesn't match any user's verification code
         return res.json({ verified: false });
       }
     } catch (error) {

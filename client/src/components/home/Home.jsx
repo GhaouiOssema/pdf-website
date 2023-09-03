@@ -8,12 +8,6 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Tabs from "@mui/joy/Tabs";
-import TabList from "@mui/joy/TabList";
-import Tab from "@mui/joy/Tab";
-import TabPanel from "@mui/joy/TabPanel";
-import IMG from "../../assets/ligne.png";
-// import IMG_1 from "../../assets/img_1.png";
 import IMG_1 from "../../assets/carrousel1.jpg";
 import IMG_2 from "../../assets/carousel2.jpg";
 import IMG_3 from "../../assets/carousel3.jpg";
@@ -138,9 +132,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-
-      <span />
-      {/* <div className="mt-[15vh] md:mt-[8vh] lg:mt-[8vh] xl:mt-[8vh]" /> */}
 
       <section
         className="bg-gray-50 dark:bg-gray-800"

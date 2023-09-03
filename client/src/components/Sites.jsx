@@ -6,15 +6,7 @@ import TreeItem from "@mui/lab/TreeItem";
 import {
   Backdrop,
   Box,
-  Button,
-  Checkbox,
   CircularProgress,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  FormControl,
-  FormControlLabel,
-  FormGroup,
   Snackbar,
   Stack,
 } from "@mui/material";
@@ -27,7 +19,6 @@ import MuiAlert from "@mui/material/Alert";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import SiteOption from "./SiteOption";
-import HourglassDisabledRoundedIcon from "@mui/icons-material/HourglassDisabledRounded";
 
 const MultiSelectTreeView = ({
   folders,
@@ -254,120 +245,9 @@ const Sites = () => {
   const handleClose = () => {
     setOpenSection(false);
   };
-  console.log(folders);
 
   return (
     <div className="h-screen bg-gray-100">
-      {/* <Dialog open={filterOpen} onClose={handleCloseFilter}>
-        <DialogTitle>Filter Options</DialogTitle>
-        <DialogContent>
-          <FormControl component="fieldset">
-            <FormGroup>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={filterOptions.address}
-                    onChange={(e) =>
-                      setFilterOptions((prevState) => ({
-                        ...prevState,
-                        address: e.target.checked,
-                      }))
-                    }
-                  />
-                }
-                label="Filter by Address"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={filterOptions.code_postal}
-                    onChange={(e) =>
-                      setFilterOptions((prevState) => ({
-                        ...prevState,
-                        code_postal: e.target.checked,
-                      }))
-                    }
-                  />
-                }
-                label="Filter by Code Postal"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={filterOptions.subfolder}
-                    onChange={(e) =>
-                      setFilterOptions((prevState) => ({
-                        ...prevState,
-                        subfolder: e.target.checked,
-                      }))
-                    }
-                  />
-                }
-                label="Filter by Subfolder"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={filterOptions.chauffage}
-                    onChange={(e) =>
-                      setFilterOptions((prevState) => ({
-                        ...prevState,
-                        chauffage: e.target.checked,
-                      }))
-                    }
-                  />
-                }
-                label="Filter by Chauffage"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={filterOptions.climatiseur}
-                    onChange={(e) =>
-                      setFilterOptions((prevState) => ({
-                        ...prevState,
-                        climatiseur: e.target.checked,
-                      }))
-                    }
-                  />
-                }
-                label="Filter by Climatiseur"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={filterOptions.ventilateur}
-                    onChange={(e) =>
-                      setFilterOptions((prevState) => ({
-                        ...prevState,
-                        ventilateur: e.target.checked,
-                      }))
-                    }
-                  />
-                }
-                label="Filter by Ventilateur"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={filterOptions.armoireElectrique}
-                    onChange={(e) =>
-                      setFilterOptions((prevState) => ({
-                        ...prevState,
-                        armoireElectrique: e.target.checked,
-                      }))
-                    }
-                  />
-                }
-                label="Filter by Armoire Electrique"
-              />
-            </FormGroup>
-          </FormControl>
-          <Button variant="contained" onClick={handleCloseFilter}>
-            Apply Filter
-          </Button>
-        </DialogContent>
-      </Dialog> */}
       <Backdrop
         sx={{
           color: "#fff",

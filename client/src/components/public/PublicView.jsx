@@ -1,13 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
-import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
-import { IoIosArrowBack } from "react-icons/io";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@mui/material/styles";
-import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
@@ -32,8 +29,6 @@ import {
   style,
   truncateText,
 } from "../../utils/utils";
-
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -195,30 +190,6 @@ const PublicView = () => {
     getPdfData();
   }, [id]);
 
-  const handlePdfLoadSuccess = ({ numPages }) => {
-    setNumPages(numPages);
-  };
-
-  const [screenSize, setScreenSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
-  });
-
-  useEffect(() => {
-    const handleResize = () => {
-      setScreenSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
 
@@ -270,7 +241,7 @@ const PublicView = () => {
           `${import.meta.env.VITE_SERVER_API_URL}/public/pdf/raports`
         );
         const filteredRaports = response.data.filter((raport) =>
-          pdfData.raports.includes(raport._id)
+          pdfData?.raports?.includes(raport._id)
         );
         setRaports(filteredRaports);
       } catch (error) {

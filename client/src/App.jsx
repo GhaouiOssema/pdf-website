@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import jwt_decode from "jwt-decode";
-import Navbar from "./components/NavBar";
 import Login from "./components/login/Login";
 import Register from "./components/register/Register";
 import FormSend from "./components/FormSend";
@@ -24,7 +23,6 @@ import PublicDoeFiles from "./components/public/PublicDoeFiles";
 import PublicView from "./components/public/PublicView";
 import TopBar from "./components/TopBar";
 import Footer from "./components/Footer";
-import DescktopView from "./components/home/DescktopView";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -126,7 +124,6 @@ const App = () => {
                   path="/publique/:site/:dossier/pdf/view/:id"
                   element={<PublicView />}
                 />
-                <Route path="/HomePage" element={<DescktopView />} />
               </>
             )}
           </Routes>

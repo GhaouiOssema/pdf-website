@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import LOGO from "../../assets/logo2.png";
-import Footer from "../Footer";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -89,9 +87,9 @@ const Register = () => {
                     bottom: 0,
                     left: "50%",
                     transform: "translateX(-50%)",
-                    width: "40%", // Adjust this value to control the width of the line
-                    height: "3px", // Adjust this value for the height of the line
-                    background: "#F0854A", // Adjust the color as needed
+                    width: "40%",
+                    height: "3px",
+                    background: "#F0854A",
                   }}
                 />
               </Link>

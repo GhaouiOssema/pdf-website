@@ -1,33 +1,123 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import QRCode from "react-qr-code";
-import html2canvas from "html2canvas";
 import { Link } from "react-router-dom";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
 import {
+  Backdrop,
   Box,
-  Button,
   CircularProgress,
+  Fade,
+  Modal,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TablePagination,
   TableRow,
+  Typography,
 } from "@mui/material";
+import { itemTextStyle, itemsStyle, style } from "../../utils/utils";
+
+const TransitionsModal = ({ open, handleClose, raports, filteredRaports }) => {
+  return (
+    <div>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={open}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        slotProps={{
+          backdrop: {
+            timeout: 500,
+          },
+        }}
+        sx={{ border: "none" }}
+      >
+        <Fade in={open}>
+          <Box sx={style}>
+            {filteredRaports &&
+              filteredRaports.map((raport, index) => (
+                <Box sx={{ maxHeight: "400px", overflow: "auto" }} key={index}>
+                  <Box sx={itemsStyle}>
+                    <Typography variant="h7" gutterBottom>
+                      Société
+                    </Typography>
+                    <Typography variant="h7" gutterBottom sx={itemTextStyle}>
+                      {raport.société}
+                    </Typography>
+                  </Box>
+                  <Box sx={itemsStyle}>
+                    <Typography variant="h7" gutterBottom>
+                      Date
+                    </Typography>
+                    <Typography variant="h7" gutterBottom sx={itemTextStyle}>
+                      {
+                        new Date(raport.dateDernierEntretien)
+                          .toISOString()
+                          .split("T")[0]
+                      }
+                    </Typography>
+                  </Box>
+                  <Box sx={itemsStyle}>
+                    <Typography variant="h7" gutterBottom>
+                      Correctif ou Préventif
+                    </Typography>
+                    <Typography variant="h7" gutterBottom sx={itemTextStyle}>
+                      {raport.options.map((el) => el)}
+                    </Typography>
+                  </Box>
+                  <Box sx={itemsStyle}>
+                    <Typography variant="h7" gutterBottom>
+                      Observation
+                    </Typography>
+                    <Typography variant="h7" gutterBottom sx={itemTextStyle}>
+                      {raport.observation}
+                    </Typography>
+                  </Box>
+                  <Box sx={itemsStyle}>
+                    <Typography variant="h7" gutterBottom>
+                      Tàche effectuer
+                    </Typography>
+                    <Typography variant="h7" gutterBottom sx={itemTextStyle}>
+                      {raport.piècesChangées}
+                    </Typography>
+                  </Box>
+                  <Box sx={itemsStyle}>
+                    <Typography variant="h7" gutterBottom>
+                      Date prochain maintenance
+                    </Typography>
+                    <Typography variant="h7" gutterBottom sx={itemTextStyle}>
+                      {
+                        new Date(raport.dateProchainEntretien)
+                          .toISOString()
+                          .split("T")[0]
+                      }{" "}
+                    </Typography>
+                  </Box>
+                </Box>
+              ))}
+          </Box>
+        </Fade>
+      </Modal>
+    </div>
+  );
+};
 
 const PublicPdfView = () => {
   const { site, dossier, id } = useParams();
   const [pdfData, setPdfData] = useState(null);
-  const qrCodeRef = useRef(null);
   const [raports, setRaports] = useState(null);
   const [image, setImage] = useState(null);
   const [imageLoading, setImageLoading] = useState(true);
   const [imageError, setImageError] = useState(false);
-  const [selectedView, setSelectedView] = useState("image");
   const [isImageFullscreen, setIsImageFullscreen] = useState(false);
+  const [filteredRaports, setFilteredRaports] = useState([]);
+  const [socIndex, setSocIndex] = useState(null);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const getPdfData = async () => {
@@ -53,11 +143,10 @@ const PublicPdfView = () => {
             import.meta.env.VITE_SERVER_API_URL
           }/public/site/folder/pdf/details/image/${id}`,
           {
-            responseType: "arraybuffer", // Set the response type to "arraybuffer" to handle binary data correctly
+            responseType: "arraybuffer",
           }
         );
 
-        // Convert the received ArrayBuffer to a base64 string
         const base64Pdf = btoa(
           new Uint8Array(response.data).reduce(
             (data, byte) => data + String.fromCharCode(byte),
@@ -67,7 +156,7 @@ const PublicPdfView = () => {
         setImage(
           `data:${response.headers["content-type"]};base64,${base64Pdf}`
         );
-        setImageLoading(false); // Image loading is complete
+        setImageLoading(false);
       } catch (error) {
         console.log("Error retrieving PDF data:", error);
         setImageError(true);
@@ -77,38 +166,6 @@ const PublicPdfView = () => {
     getImageFile();
   }, [site, dossier, id]);
 
-  console.log(pdfData);
-
-  const handleDownloadQRCode = () => {
-    html2canvas(qrCodeRef.current).then((canvas) => {
-      const qrCodeDataURL = canvas.toDataURL();
-      const downloadLink = document.createElement("a");
-      downloadLink.href = qrCodeDataURL;
-      downloadLink.download = "qr_code.png";
-      downloadLink.click();
-    });
-  };
-
-  const [screenSize, setScreenSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
-  });
-
-  useEffect(() => {
-    const handleResize = () => {
-      setScreenSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -116,7 +173,7 @@ const PublicPdfView = () => {
           `${import.meta.env.VITE_SERVER_API_URL}/public/pdf/raports`
         );
         const filteredRaports = response.data.filter((raport) =>
-          pdfData.raports.includes(raport._id)
+          pdfData?.raports?.includes(raport._id)
         );
         setRaports(filteredRaports);
       } catch (error) {
@@ -139,15 +196,26 @@ const PublicPdfView = () => {
     setPage(0);
   };
 
-  const handleViewChange = (event) => {
-    setSelectedView(event.target.value);
-  };
-  const handleImageClick = () => {
-    setIsImageFullscreen(!isImageFullscreen);
+  const handleClose = () => setOpen(false);
+
+  const handleOpen = (soc) => {
+    setOpen(true);
+    const filteredReports = raports.filter((raport) => raport.société === soc);
+    setFilteredRaports(filteredReports);
   };
 
   return (
     <>
+      {open && (
+        <TransitionsModal
+          open={open}
+          handleClose={handleClose}
+          handleOpen={handleOpen}
+          raports={raports}
+          SOC={socIndex}
+          filteredRaports={filteredRaports}
+        />
+      )}
       {pdfData ? (
         <div className="h-full w-full">
           <div className="flex flex-col items-center justify-center mt-20">
@@ -278,12 +346,11 @@ const PublicPdfView = () => {
               </div>
 
               <div className="w-full md:w-[70%] mt-5">
-                {/* Adjust margin top */}
                 <p className="font-sans font-bold text-lg text-center mb-4">
                   Tableau des Rapports
                 </p>
                 <div className="pdf-preview bg-white shadow-md shadow-black/20 rounded-lg">
-                  <div style={{ height: "400px", overflow: "auto" }}>
+                  <div style={{ height: "100%", overflow: "auto" }}>
                     <Table
                       sx={{ minWidth: 650 }}
                       size="small"
@@ -339,19 +406,29 @@ const PublicPdfView = () => {
                                       .split("T")[0]
                                   }
                                 </TableCell>
+                                <TableCell
+                                  align="center"
+                                  sx={{ cursor: "pointer" }}
+                                >
+                                  <InfoOutlinedIcon
+                                    sx={{ color: "#3291F0" }}
+                                    onClick={() => handleOpen(raport.société)}
+                                  />
+                                </TableCell>
                               </TableRow>
                             ))}
                       </TableBody>
                     </Table>
                   </div>
                   <TablePagination
-                    rowsPerPageOptions={[10, 25, 50]}
+                    rowsPerPageOptions={[]}
                     component="div"
                     count={raports ? raports.length : 0}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
+                    labelRowsPerPage=""
                   />
                 </div>
               </div>
@@ -430,7 +507,7 @@ const PublicPdfView = () => {
                 >
                   <div
                     style={{
-                      height: "400px",
+                      height: "100%",
                       overflowX: "auto",
                       width: "100%",
                     }}
@@ -494,20 +571,30 @@ const PublicPdfView = () => {
                                     }
                                   </span>
                                 </TableCell>
+
+                                <TableCell
+                                  align="center"
+                                  sx={{ cursor: "pointer" }}
+                                >
+                                  <InfoOutlinedIcon
+                                    sx={{ color: "#3291F0" }}
+                                    onClick={() => handleOpen(raport.société)}
+                                  />
+                                </TableCell>
                               </TableRow>
                             ))}
                       </TableBody>
                     </Table>
                   </div>
                   <TablePagination
-                    rowsPerPageOptions={[10, 25, 50]}
+                    rowsPerPageOptions={[]}
                     component="div"
                     count={raports ? raports.length : 0}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
-                    labelRowsPerPage="Lignes par page"
+                    labelRowsPerPage=""
                   />
                 </div>
               </div>

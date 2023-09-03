@@ -1,6 +1,4 @@
-const jwt = require("jsonwebtoken");
 const Raport = require("../models/Raport");
-const PDF = require("../models/PDF");
 
 module.exports = {
   async getPdfReportsById(req, res) {

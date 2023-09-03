@@ -29,10 +29,8 @@ const PublicFicheTechnique = () => {
           { responseType: "arraybuffer" }
         );
 
-        // Create a Blob from the array buffer
         const blob = new Blob([response.data], { type: "application/pdf" });
 
-        // Convert the Blob to a base64 string
         const reader = new FileReader();
         reader.onloadend = () => {
           const base64Pdf = reader.result.split(",")[1];

@@ -1,6 +1,4 @@
 const multer = require("multer");
-const path = require("path");
-const fs = require("fs");
 
 const storage = multer.memoryStorage();
 
@@ -23,7 +21,6 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-// Initialize multer upload
 const multiUpload = multer({
   storage,
   fileFilter,

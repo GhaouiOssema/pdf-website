@@ -1,18 +1,7 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import {
-  IconButton,
-  Menu,
-  MenuItem,
-  Stack,
-  Button,
-  Box,
-  Alert,
-  Snackbar,
-  CircularProgress,
-  Typography,
-} from "@mui/material";
+import { Stack, Box, Snackbar, CircularProgress } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PropTypes from "prop-types";
 import { useSpring, animated } from "@react-spring/web";
@@ -84,7 +73,6 @@ const CircularIndeterminate = () => {
 };
 
 const PdfFile = () => {
-  const [anchorEl, setAnchorEl] = useState(null);
   const [loading, setLoading] = useState(false);
   const [pdfs, setPdfs] = useState([]);
   const { site, dossier } = useParams();

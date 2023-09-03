@@ -2,13 +2,12 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@mui/material/styles";
-import AppBar from "@mui/material/AppBar";
 import Tabs, { tabsClasses } from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
-import { CircularProgress, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import { Document, Page, pdfjs } from "react-pdf";
 import axios from "axios";
 
@@ -52,7 +51,6 @@ const PublicDOEButtonsGroup = ({ pdfData }) => {
   const [selectedFileIndex, setSelectedFileIndex] = useState(0);
   const [doeFiles, setDOEFiles] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [pdfLoaded, setPdfLoaded] = useState(false);
   const [numPages, setNumPages] = useState(null);
   const [screenSize, setScreenSize] = useState({
@@ -93,7 +91,6 @@ const PublicDOEButtonsGroup = ({ pdfData }) => {
 
       const blob = new Blob([response.data], { type: "application/pdf" });
 
-      // Convert the Blob to a base64 string
       const reader = new FileReader();
       reader.onloadend = () => {
         const base64Pdf = reader.result.split(",")[1];
@@ -102,7 +99,6 @@ const PublicDOEButtonsGroup = ({ pdfData }) => {
       };
       reader.readAsDataURL(blob);
     } catch (error) {
-      setError("Error retrieving PDF data.");
       setLoading(false);
       console.log("Error retrieving PDF data:", error);
     }

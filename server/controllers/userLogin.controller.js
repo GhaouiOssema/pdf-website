@@ -9,19 +9,16 @@ module.exports = {
     try {
       const { email, password } = req.body;
 
-      // Check if the user exists
       const user = await User.findOne({ email });
       if (!user) {
         return res.status(400).json({ error: "Invalid credentials" });
       }
 
-      // Check if the password is correct
       const passwordMatch = await bcrypt.compare(password, user.password);
       if (!passwordMatch) {
         return res.status(400).json({ error: "Invalid credentials" });
       }
 
-      // Generate JWT token with expiration date
       const token = jwt.sign(
         {
           userId: user.userId,

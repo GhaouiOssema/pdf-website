@@ -13,7 +13,7 @@ module.exports = {
           .json({ message: "Authorization token is missing" });
       }
 
-      const tokenWithoutBearer = token.split(" ")[1]; // Remove the "Bearer " prefix from the token
+      const tokenWithoutBearer = token.split(" ")[1];
 
       const { userId } = jwt.verify(
         tokenWithoutBearer,
@@ -27,9 +27,8 @@ module.exports = {
       }
 
       const { folderId } = req.params;
-      const { adresse, code_postal, subfolders } = req.body; // Change "subFolders" to "subfolders"
+      const { adresse, code_postal, subfolders } = req.body;
 
-      // Validate required fields
       if (!adresse || !code_postal) {
         return res.status(400).json({ message: "Missing required fields" });
       }
@@ -40,22 +39,18 @@ module.exports = {
         return res.status(404).json({ error: "Folder not found" });
       }
 
-      // Update folder address and code postal
       folder.adresse = adresse;
       folder.code_postal = code_postal;
 
       if (subfolders && Array.isArray(subfolders)) {
-        // Get the existing subfolder names
         const existingSubfolderNames = folder.content.map(
           (subFolder) => subFolder.subFolder.name
         );
 
-        // Filter out subfolder names that are not already in the existing content
         const newSubfolderNames = subfolders.filter(
           (name) => !existingSubfolderNames.includes(name)
         );
 
-        // Create new subfolder objects for the non-existing names
         const newSubfolders = newSubfolderNames.map((name) => ({
           subFolder: {
             name,
@@ -66,7 +61,6 @@ module.exports = {
           },
         }));
 
-        // Update the folder's content with the new subfolders
         folder.content = [...folder.content, ...newSubfolders];
       }
 

@@ -33,7 +33,6 @@ const Login = () => {
       const { token } = response.data;
       localStorage.setItem("token", token);
 
-      // Clear form fields
       setEmail("");
       setPassword("");
       alert("Login successful!");
@@ -78,9 +77,9 @@ const Login = () => {
                     bottom: 0,
                     left: "50%",
                     transform: "translateX(-50%)",
-                    width: "40%", // Adjust this value to control the width of the line
-                    height: "3px", // Adjust this value for the height of the line
-                    background: "#F0854A", // Adjust the color as needed
+                    width: "40%",
+                    height: "3px",
+                    background: "#F0854A",
                   }}
                 ></span>
               </Link>

@@ -68,17 +68,14 @@ module.exports = {
         return res.status(404).json({ message: "User not found" });
       }
 
-      // Check if the reset link has expired
       const currentTime = Date.now();
       if (expiration < currentTime) {
         return res.status(400).json({ message: "Reset link has expired" });
       }
 
-      // Generate a salt and hash the new password
       const saltRounds = 10;
       const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-      // Update the user's password with the new hashed password
       user.password = hashedPassword;
       await user.save();
 

@@ -36,13 +36,11 @@ const FicheTechnique = () => {
           `${
             import.meta.env.VITE_SERVER_API_URL
           }/site/folder/pdf/details/fiche/${pdfid}`,
-          { responseType: "arraybuffer", ...config } // Add 'responseType' to get the data as an array buffer
+          { responseType: "arraybuffer", ...config }
         );
 
-        // Create a Blob from the array buffer
         const blob = new Blob([response.data], { type: "application/pdf" });
 
-        // Convert the Blob to a base64 string
         const reader = new FileReader();
         reader.onloadend = () => {
           const base64Pdf = reader.result.split(",")[1];

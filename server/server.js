@@ -6,7 +6,6 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const helmet = require("helmet");
 
-// Create a connection to MongoDB
 const connectDB = require("./config/Database.config");
 connectDB();
 
@@ -23,7 +22,6 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use(require("./routes"));
 
-// Start the server
 app.listen(process.env.PORT || null, () => {
   console.log(`Server is running on port ${process.env.PORT || null}`);
 });
