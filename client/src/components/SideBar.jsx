@@ -6,12 +6,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import LOGO from "../assets/logo2.png";
 
-const SideBar = ({
-  isSidebarOpen,
-  setIsSidebarOpen,
-  sidebarRef,
-  toggleSidebar,
-}) => {
+const SideBar = ({ isSidebarOpen, setIsSidebarOpen, sidebarRef }) => {
   const handleOutsideClick = (event) => {
     if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
       setIsSidebarOpen(false);

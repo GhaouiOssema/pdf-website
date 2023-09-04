@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -23,6 +23,7 @@ const SiteOption = ({
   setOpenSection,
   setButtonType,
   setFolderIdUpdate,
+  optionRef,
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -101,6 +102,19 @@ const SiteOption = ({
     };
   }, [open]);
 
+  const handleOutsideClick = (event) => {
+    if (optionRef.current && !optionRef.current.contains(event.target)) {
+      handleClose(event);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
+
   return (
     <div>
       <IconButton
@@ -131,32 +145,22 @@ const SiteOption = ({
         <MenuItem
           onClick={(event) => handleDelete(folders._id, event)}
           onClose={(event) => handleClose(event)}
+          ref={optionRef}
         >
-          <div className="w-full flex justify-around items-center font-bold text-red-500">
+          <div className="w-full flex justify-around items-center font-sans font-medium text-red-500">
             {loading ? (
-              <CircularIndeterminate />
+              <CircularIndeterminate sx={{ color: "#EF4444" }} />
             ) : (
-              <DeleteIcon sx={{ color: "red" }} />
+              <DeleteIcon sx={{ color: "#EF4444" }} />
             )}
             <span>Suprimer</span>
           </div>
         </MenuItem>
         <MenuItem onClick={(event) => handleEdit(folders._id, event)}>
-          <div className="w-full flex justify-around font-bold text-blue-500">
-            <EditNoteIcon sx={{ color: "blue" }} />
+          <div className="w-full flex justify-around font-sans font-medium text-blue-500">
+            <EditNoteIcon sx={{ color: "#3B82F6" }} />
             <span>Modifier</span>
           </div>
-        </MenuItem>
-        <MenuItem onClick={(event) => handleClose(event)}>
-          <Stack
-            direction="row"
-            spacing={2}
-            className="w-full flex justify-center"
-          >
-            <Button variant="outlined" color="error">
-              Fermer
-            </Button>
-          </Stack>
         </MenuItem>
       </Menu>
     </div>

@@ -58,6 +58,8 @@ const MultiSelectTreeView = ({
     }
   }, [expanded, isExpanded, folders._id]);
 
+  const optionRef = useRef();
+
   let labelFormat = (
     <div className="flex items-center w-full justify-between">
       <div className="w-full">
@@ -79,6 +81,7 @@ const MultiSelectTreeView = ({
         ID={ID}
         setExpanded={setExpanded}
         expanded={expanded}
+        optionRef={optionRef}
       />
     </div>
   );
