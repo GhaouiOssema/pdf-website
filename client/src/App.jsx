@@ -71,10 +71,12 @@ const App = () => {
 
         <div className=" bg-gray-100">
           {isAuthenticated && (
-            <TopBar
-              toggleSidebar={toggleSidebar}
-              isSidebarOpen={isSidebarOpen}
-            />
+            <div className="md:hidden">
+              <TopBar
+                toggleSidebar={toggleSidebar}
+                isSidebarOpen={isSidebarOpen}
+              />
+            </div>
           )}
           <Routes>
             {isAuthenticated && (

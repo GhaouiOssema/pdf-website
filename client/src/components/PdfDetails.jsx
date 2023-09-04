@@ -258,7 +258,7 @@ const PdfDetails = () => {
       )}
 
       {pdfData ? (
-        <div className="h-full w-full">
+        <div className="h-full w-full md:h-[100vh] lg:h-[100vh] xl:h-[100vh] ">
           <div className="flex flex-col items-center justify-center mt-5">
             <h1 className="text-3xl text-center font-sans font-bold mb-5">
               <span className="">Fiche d'équipement</span>

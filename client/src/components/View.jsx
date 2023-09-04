@@ -6,14 +6,12 @@ import {
   Checkbox,
   TextField,
   Stack,
-  Typography,
 } from "@mui/material";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import axios from "axios";
@@ -207,54 +205,78 @@ const RaportView = ({
                 <div className="w-full max-w-lg ">
                   {type === "siteButton" ? (
                     <>
-                      <h1 className="pt-10 uppercase tracking-wide text-center text-gray-700 text-lg font-bold mb-10 flex justify-center items-center flex-wrap whitespace-normal sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
+                      <h1 className="pt-10 tracking-wide text-center text-gray-700 text-lg font-sans font-bold mb-10 flex justify-center items-center flex-wrap whitespace-normal sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
                         <span className="text-sm sm:text-base md:text-lg lg:text-lg xl:text-lg">
                           Veuillez saisir les informations du site
                         </span>
                       </h1>
 
-                      <div className=" w-full mb-6 md:flex md:flex-wrap mx-auto flex justify-center">
-                        <TextField
-                          className="m-1 w-[80%]"
+                      <div className="px-3 mb-6">
+                        <label
+                          htmlFor="nom_site"
+                          className="w-full block mb-2 text-md font-sans font-medium text-gray-900 dark:text-white"
+                        >
+                          Nom
+                        </label>
+                        <input
+                          type="text"
                           id="nom_site"
-                          label="Nom du site"
-                          variant="outlined"
-                          size="small"
+                          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:shadow-sm-light"
+                          placeholder="le nom du site"
                           value={name}
                           onChange={handleNameChange}
                           required
                         />
                       </div>
 
-                      <div className="flex flex-wrap mb-2 justify-center">
-                        <div className=" w-full mb-6 md:flex md:flex-wrap mx-auto flex justify-center">
-                          <TextField
-                            className="m-1 w-[80%]"
-                            id="adress_site"
-                            label="Adresse du site"
-                            variant="outlined"
-                            size="small"
-                            value={siteAddress}
-                            onChange={handleSiteAddressChange}
-                          />
-                        </div>
-                        <div className=" w-full mb-6 md:flex md:flex-wrap mx-auto flex justify-center">
-                          <TextField
-                            className="m-1 w-[80%]"
-                            id="code_postal"
-                            label="Code postal"
-                            variant="outlined"
-                            size="small"
-                            value={siteCodePostal}
-                            onChange={handleSiteCodePostalChange}
-                          />
-                        </div>
+                      <div className="px-3 mb-6">
+                        <label
+                          htmlFor="adress_site"
+                          className="w-full block mb-2 text-md font-sans font-medium text-gray-900 dark:text-white"
+                        >
+                          Adresse
+                        </label>
+                        <input
+                          type="text"
+                          id="adress_site"
+                          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:shadow-sm-light"
+                          placeholder="Adresse du site"
+                          value={siteAddress}
+                          onChange={handleSiteAddressChange}
+                          required
+                        />
+                      </div>
+                      <div className="px-3 mb-6">
+                        <label
+                          htmlFor="code_postal"
+                          className="w-full block mb-2 text-md font-sans font-medium text-gray-900 dark:text-white"
+                        >
+                          Code postal
+                        </label>
+                        <input
+                          type="text"
+                          id="code_postal"
+                          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:shadow-sm-light"
+                          placeholder="Code postal"
+                          value={siteCodePostal}
+                          onChange={handleSiteCodePostalChange}
+                          required
+                        />
                       </div>
 
-                      <div className=" w-full mb-6 md:flex md:flex-wrap mx-auto flex justify-center">
-                        <FormControl size="small" className="m-1 w-[80%]">
-                          <InputLabel id="demo-multiple-checkbox-label">
-                            Category
+                      <div className="px-3 mb-6">
+                        <label
+                          htmlFor="code_postal"
+                          className="w-full block mb-2 text-md font-sans font-medium text-gray-900 dark:text-white"
+                        >
+                          Catégorie
+                        </label>
+                        <FormControl size="small" className="w-[100%]">
+                          <InputLabel
+                            id="checkbox-label"
+                            sx={{ width: "100%" }}
+                          >
+                            Sélectionnez un Catégorie
                           </InputLabel>
                           <Select
                             labelId="demo-multiple-checkbox-label"
@@ -262,9 +284,13 @@ const RaportView = ({
                             multiple
                             value={selectedCategories}
                             onChange={handleCategoryChange}
-                            input={<OutlinedInput label="Category" />}
+                            input={
+                              <OutlinedInput label="Sélectionnez un Catégorie" />
+                            }
                             renderValue={(selected) => selected.join(", ")}
                             MenuProps={MenuProps}
+                            fullWidth
+                            sx={{ bgcolor: "#FAFAFA" }}
                           >
                             {names.map((name) => (
                               <MenuItem key={name} value={name}>
@@ -299,74 +325,81 @@ const RaportView = ({
                     </>
                   ) : type === "editSite" ? (
                     <>
-                      <h1 className="pt-10 uppercase tracking-wide text-center text-gray-700 text-lg font-bold mb-10 flex justify-center items-center flex-wrap whitespace-normal sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
+                      <h1 className="pt-10 tracking-wide text-center text-gray-700 text-lg font-sans font-bold mb-10 flex justify-center items-center flex-wrap whitespace-normal sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
                         <span className="text-sm sm:text-base md:text-lg lg:text-lg xl:text-lg">
                           Modifier les informations du site
                         </span>
                       </h1>
-                      <FormControl
-                        fullWidth
-                        sx={{
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "center",
-                        }}
-                      >
-                        <div className="w-full md:flex">
-                          <div className="w-full md:w-1/2 px-2 mb-4 md:mb-0 ">
-                            <TextField
-                              id="adress_site"
-                              label="Adresse du site"
-                              fullWidth
-                              variant="outlined"
-                              size="small"
-                              value={adresse}
-                              onChange={(e) => setAdresse(e.target.value)}
-                            />
-                          </div>
-                          <div className="w-full md:w-1/2 px-1">
-                            <TextField
-                              fullWidth
-                              id="code_postal"
-                              label="Code postal"
-                              variant="outlined"
-                              size="small"
-                              value={codePostal}
-                              onChange={(e) => setCodePostal(e.target.value)}
-                            />
-                          </div>
-                        </div>
-                      </FormControl>
 
-                      <div className="flex flex-wrap mb-2 mt-6">
-                        <div className="w-full px-1 mb-6">
-                          <div>
-                            <FormControl sx={{ width: "100%" }} size="small">
-                              <InputLabel id="demo-multiple-checkbox-label">
-                                Category
-                              </InputLabel>
-                              <Select
-                                labelId="demo-multiple-checkbox-label"
-                                id="demo-multiple-checkbox"
-                                multiple
-                                value={subContent}
-                                onChange={(e) => setSubContent(e.target.value)}
-                                input={<OutlinedInput label="Category" />}
-                                renderValue={(selected) => selected.join(", ")}
-                                MenuProps={MenuProps}
-                              >
-                                {names.map((name) => (
-                                  <MenuItem key={name} value={name}>
-                                    <Checkbox
-                                      checked={subContent.indexOf(name) > -1}
-                                    />
-                                    <ListItemText primary={name} />
-                                  </MenuItem>
-                                ))}
-                              </Select>
-                            </FormControl>
-                          </div>
-                        </div>
+                      <div className="px-3 mb-6">
+                        <label
+                          htmlFor="adress_site"
+                          className="w-full block mb-2 text-md font-sans font-medium text-gray-900 dark:text-white"
+                        >
+                          Adresse du site
+                        </label>
+                        <input
+                          type="text"
+                          id="adress_site"
+                          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:shadow-sm-light"
+                          placeholder="Adresse du site"
+                          value={adresse}
+                          onChange={(e) => setAdresse(e.target.value)}
+                          required
+                        />
+                      </div>
+
+                      <div className="px-3 mb-6">
+                        <label
+                          htmlFor="code_postal"
+                          className="w-full block mb-2 text-md font-sans font-medium text-gray-900 dark:text-white"
+                        >
+                          Code postal
+                        </label>
+                        <input
+                          type="text"
+                          id="code_postal"
+                          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:shadow-sm-light"
+                          placeholder="Code postal"
+                          value={codePostal}
+                          onChange={(e) => setCodePostal(e.target.value)}
+                          required
+                        />
+                      </div>
+
+                      <div className="px-3 mb-6">
+                        <label
+                          htmlFor="code_postal"
+                          className="w-full block mb-2 text-md font-sans font-medium text-gray-900 dark:text-white"
+                        >
+                          Catégorie
+                        </label>
+                        <FormControl sx={{ width: "100%" }} size="small">
+                          <InputLabel id="demo-multiple-checkbox-label">
+                            Sélectionnez un Catégorie
+                          </InputLabel>
+                          <Select
+                            labelId="demo-multiple-checkbox-label"
+                            id="demo-multiple-checkbox"
+                            multiple
+                            value={subContent}
+                            onChange={(e) => setSubContent(e.target.value)}
+                            input={
+                              <OutlinedInput label="Sélectionnez un Catégorie" />
+                            }
+                            renderValue={(selected) => selected.join(", ")}
+                            MenuProps={MenuProps}
+                          >
+                            {names.map((name) => (
+                              <MenuItem key={name} value={name}>
+                                <Checkbox
+                                  checked={subContent.indexOf(name) > -1}
+                                />
+                                <ListItemText primary={name} />
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
                       </div>
                       <Stack
                         spacing={2}

@@ -403,7 +403,7 @@ const FormSend = () => {
           <>
             {!isUploading ? (
               <>
-                <div className=" mt-5">
+                <div className="h-full">
                   <div className="w-full flex flex-col">
                     <div className="flex items-center justify-center w-full">
                       <label
@@ -445,7 +445,7 @@ const FormSend = () => {
                         name="site"
                         value={formState.site}
                         onChange={handleChange}
-                        className="max w-[28%] bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg pl-5 "
+                        className="max w-[32%] bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg pl-5 "
                       >
                         <option value="Sites" selected>
                           Sites
@@ -463,7 +463,7 @@ const FormSend = () => {
                         )}
                       </select>
                       <input
-                        className="max w-[28%] bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg pl-5 "
+                        className="max w-[32%] bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg pl-5 "
                         type="text"
                         placeholder="Nom d'equipement"
                         value={formState.title}
@@ -476,7 +476,7 @@ const FormSend = () => {
                         name="publicOrPrivate"
                         value={formState.publicOrPrivate}
                         onChange={handleChange}
-                        className="max w-[28%] bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg pl-5"
+                        className="max w-[32%] bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg pl-5"
                       >
                         <option value="Categorie" selected>
                           Categorie
@@ -499,7 +499,7 @@ const FormSend = () => {
                     {formState.publicOrPrivate === "Armoire electrique" && (
                       <div className="mt-2 flex sm:flex-row flex-col items-center justify-around">
                         <input
-                          className="max w-[28%] bg-gray-100 text-gray-900 p-3 rounded-lg pl-5"
+                          className="max w-[46%] bg-gray-100 text-gray-900 p-3 rounded-lg pl-5"
                           type="text"
                           placeholder="PTA"
                           value={formState.input1}
@@ -508,7 +508,7 @@ const FormSend = () => {
                           required
                         />
                         <input
-                          className="max w-[28%] bg-gray-100 text-gray-900 p-3 rounded-lg pl-5 mt-2 sm:mt-0"
+                          className="max w-[46%] bg-gray-100 text-gray-900 p-3 rounded-lg pl-5 mt-2 sm:mt-0"
                           type="date"
                           placeholder="Input 2"
                           value={formState.input2}
@@ -559,7 +559,7 @@ const FormSend = () => {
                     variant="contained"
                     color="primary"
                     onClick={handleSubmitStep1}
-                    sx={{ mt: 5 }}
+                    sx={{ mt: 5, borderRadius: "8px" }}
                   >
                     Suivant
                   </Button>
@@ -584,24 +584,19 @@ const FormSend = () => {
           <>
             {!isUploading ? (
               <>
-                <div className="mt-5">
+                <div className="h-[21vh]">
                   {formState.selectedImage ? (
-                    <div className="relative mb-4">
+                    <div className="relative flex mb-4">
                       <img
                         src={URL.createObjectURL(formState.selectedImage)}
                         alt="Selected file"
-                        style={{
-                          width: "100%",
-                          height: "auto",
-                          maxWidth: "300px",
-                          maxHeight: "300px",
-                        }}
+                        className="h-auto w-40"
                       />
                     </div>
                   ) : (
                     <label
                       htmlFor="pdf-image"
-                      className="flex flex-col items-center justify-center w-full h-19 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100 dark:hover:border-gray-500"
+                      className="flex flex-col items-center justify-center w-full h-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100 dark:hover:border-gray-500"
                     >
                       <div className="flex flex-col items-center justify-center pt-5 pb-2">
                         <svg
@@ -640,19 +635,10 @@ const FormSend = () => {
                       variant="contained"
                       color="primary"
                       onClick={handleSubmitStep2}
+                      sx={{ borderRadius: "8px" }}
                     >
                       Suivant
                     </Button>
-                    {formState.selectedImage && (
-                      <div
-                        className="text-black cursor-pointer ml-5"
-                        onClick={() =>
-                          setFormState({ ...formState, selectedImage: null })
-                        }
-                      >
-                        <CancelOutlinedIcon />
-                      </div>
-                    )}
                   </div>
                 )}
               </>
@@ -675,67 +661,75 @@ const FormSend = () => {
           <>
             {!isUploading ? (
               <>
-                <label
-                  htmlFor="fiche-tech"
-                  className="flex flex-col items-center justify-center w-full h-19 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100 dark:hover:border-gray-500"
-                >
-                  <div className="flex flex-col items-center justify-center pt-5 pb-2">
-                    <svg
-                      aria-hidden="true"
-                      className="w-10 h-10 text-gray-400"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                      ></path>
-                    </svg>
-                    <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                      Sélectionner un ou plussieur fichier (PDF)
-                    </p>
+                <div className="h-full">
+                  <div className="w-full flex flex-col">
+                    <div className="flex items-center justify-center w-full">
+                      <label
+                        htmlFor="fiche-tech"
+                        className="flex flex-col items-center justify-center w-full h-[21vh] border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100 dark:hover:border-gray-500"
+                      >
+                        <div className="flex flex-col items-center justify-center pt-5 pb-2">
+                          <svg
+                            aria-hidden="true"
+                            className="w-10 h-10 text-gray-400"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                            ></path>
+                          </svg>
+                          <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                            Sélectionner un fichier (PDF)
+                          </p>
+                        </div>
+                        <input
+                          name="selectedInfo"
+                          id="fiche-tech"
+                          type="file"
+                          accept=".pdf"
+                          hidden
+                          onChange={handleChange}
+                        />
+                      </label>
+                    </div>
+
+                    {formState.selectedInfo && (
+                      <Stack
+                        sx={{
+                          width: "100%",
+                          color: "black",
+                          marginTop: "10px",
+                        }}
+                        spacing={2}
+                      >
+                        <Alert severity="info" icon={false}>
+                          <PictureAsPdfIcon sx={{ color: "black" }} />
+                          <span className="font-bold ml-2">
+                            {formState.selectedInfo.name}
+                          </span>
+                        </Alert>
+                      </Stack>
+                    )}
+                    {activeStep < steps.length - 1 && (
+                      <div className="flex items-center mt-10">
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={handleSubmitStep3}
+                          sx={{ borderRadius: "8px" }}
+                        >
+                          Suivant
+                        </Button>
+                      </div>
+                    )}
                   </div>
-                  <input
-                    name="selectedInfo"
-                    id="fiche-tech"
-                    type="file"
-                    accept=".pdf"
-                    hidden
-                    onChange={handleChange}
-                  />
-                </label>
-                {formState.selectedInfo && (
-                  <Stack
-                    sx={{
-                      width: "100%",
-                      color: "black",
-                      marginTop: "10px",
-                    }}
-                    spacing={2}
-                  >
-                    <Alert severity="info" icon={false}>
-                      <PictureAsPdfIcon sx={{ color: "black" }} />
-                      <span className="font-bold ml-2">
-                        {formState.selectedInfo.name}
-                      </span>
-                    </Alert>
-                  </Stack>
-                )}
-                {activeStep < steps.length - 1 && (
-                  <div className="flex items-center mt-10">
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={handleSubmitStep3}
-                    >
-                      Suivant
-                    </Button>
-                  </div>
-                )}
+                </div>
               </>
             ) : (
               <div className="mt-3">
@@ -756,67 +750,76 @@ const FormSend = () => {
           <>
             {!isUploading ? (
               <>
-                <label
-                  htmlFor="DOE-PDF"
-                  className="flex flex-col items-center justify-center w-full h-19 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100 dark:hover:border-gray-500"
-                >
-                  <div className="flex flex-col items-center justify-center pt-5 pb-2">
-                    <svg
-                      aria-hidden="true"
-                      className="w-10 h-10 text-gray-400"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                      ></path>
-                    </svg>
-                    <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                      Sélectionner un ou plussieur fichier (PDF)
-                    </p>
+                <div className="h-full">
+                  <div className="w-full flex flex-col">
+                    <div className="flex items-center justify-center w-full">
+                      <label
+                        htmlFor="DOE-PDF"
+                        className="flex flex-col items-center justify-center w-full h-[21vh] border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100 dark:hover:border-gray-500"
+                      >
+                        <div className="flex flex-col items-center justify-center pt-5 pb-2">
+                          <svg
+                            aria-hidden="true"
+                            className="w-10 h-10 text-gray-400"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                            ></path>
+                          </svg>
+                          <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                            Sélectionner un ou plussieur fichier (PDF)
+                          </p>
+                        </div>
+                        <input
+                          name="selectedDOE"
+                          id="DOE-PDF"
+                          type="file"
+                          accept=".pdf"
+                          hidden
+                          multiple
+                          onChange={handleChange}
+                        />
+                      </label>
+                    </div>
+
+                    {formState.selectedDOE && (
+                      <Stack
+                        sx={{
+                          width: "100%",
+                          color: "black",
+                          marginTop: "10px",
+                        }}
+                        spacing={2}
+                      >
+                        {formState.selectedDOE.map((file, index) => (
+                          <Alert key={index} severity="info" icon={false}>
+                            <PictureAsPdfIcon sx={{ color: "black" }} />
+                            <span className="font-bold ml-2">{file.name}</span>
+                          </Alert>
+                        ))}
+                      </Stack>
+                    )}
+                    {activeStep && (
+                      <div className="flex items-center mt-10">
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={handleSubmitStep3}
+                          sx={{ borderRadius: "8px" }}
+                        >
+                          Suivant
+                        </Button>
+                      </div>
+                    )}
                   </div>
-                  <input
-                    name="selectedDOE"
-                    id="DOE-PDF"
-                    type="file"
-                    accept=".pdf"
-                    hidden
-                    multiple
-                    onChange={handleChange}
-                  />
-                </label>
-                {formState.selectedDOE && (
-                  <Stack
-                    sx={{
-                      width: "100%",
-                      color: "black",
-                      marginTop: "10px",
-                    }}
-                    spacing={2}
-                  >
-                    {formState.selectedDOE.map((file, index) => (
-                      <Alert key={index} severity="info" icon={false}>
-                        <PictureAsPdfIcon sx={{ color: "black" }} />
-                        <span className="font-bold ml-2">{file.name}</span>
-                      </Alert>
-                    ))}
-                  </Stack>
-                )}
-                {activeStep && (
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleSubmitStep4}
-                    sx={{ mt: 5 }}
-                  >
-                    Suivant
-                  </Button>
-                )}
+                </div>
               </>
             ) : (
               <div className="mt-3">
@@ -844,57 +847,75 @@ const FormSend = () => {
   };
 
   return (
-    <div className="h-[90vh] bg-gray-100">
-      <div className="text-3xl text-center font-bold pt-5" />
+    <div className="h-screen bg-gray-100">
+      <div className="text-3xl text-center font-bold" />
       <form onReset={handleReset}>
         <div className="flex justify-center items-center">
-          <div className="lg:w-[80%] md:w-[80%] w-full container mx-auto my-4 px-4 lg:px-20">
-            <div className=" p-6 mr-auto rounded-2xl shadow-2xl bg-white">
-              {activeStep === steps.length ? (
-                <>
-                  <div className="text-green-500 text-4xl mb-4 flex justify-center items-center">
-                    <i className="fa-solid fa-circle-check"></i>
-                  </div>
-                  <h1 className="text-2xl text-center font-bold mb-4">
-                    Ajout complété!
-                  </h1>
-                  {formComplated !== 4 && fieldEmpty.length > 0 && (
-                    <div className="flex flex-col items-center mb-4">
-                      <h1 className="w-full text-center font-bold text-red-500 uppercase">
-                        Les champs non renseignés :
+          <div className="w-full h-[97vh] my-0 container mx-auto px-4 lg:px-20 flex justify-center items-center">
+            <div className="w-full md:w-[70%] lg:w-[70%] xl:w-[70%] p-6 mx-auto rounded-lg shadow-2xl bg-white">
+              <div className="w-full flex flex-col justify-center items-center">
+                {activeStep === steps.length ? (
+                  <div className="boor w-full p-2 h-[304.09px]">
+                    <div className="boor flex flex-col justify-center items-center h-full">
+                      <div className="boor text-green-500 text-4xl mb-4 flex justify-center items-center">
+                        <i className="fa-solid fa-circle-check"></i>
+                      </div>
+                      <h1 className="boor text-2xl text-center font-bold mb-4">
+                        Ajout complété!
                       </h1>
-                      <h4 className="text-md w-full text-center flex flex-col md:flex-row lg:flex-row xl:flex-row justify-center items-center">
-                        {fieldEmpty.map((el, idx) => (
-                          <div key={idx} className="pl-2">
-                            | {el}
-                          </div>
-                        ))}
-                      </h4>
+                      {formComplated !== 4 && fieldEmpty.length > 0 && (
+                        <div className="w-full flex flex-col items-center mb-4">
+                          <h1 className="w-full text-center font-bold text-red-500 uppercase">
+                            Les champs non renseignés :
+                          </h1>
+                          <h4 className="text-md w-full text-center flex flex-col justify-center items-center">
+                            {fieldEmpty.map((el, idx) => (
+                              <div key={idx} className="w-[50%]">
+                                <span className="boor w-full">| {el}</span>
+                              </div>
+                            ))}
+                          </h4>
+                        </div>
+                      )}
+                      <div className="boor text-center">
+                        <Button
+                          variant="contained"
+                          color="success"
+                          onClick={() => Navigate("/messites")}
+                        >
+                          Retourner à la liste
+                        </Button>
+                      </div>
                     </div>
-                  )}
-                  <div className="text-center">
-                    <Button
-                      variant="contained"
-                      color="success"
-                      onClick={() => Navigate("/messites")}
-                    >
-                      Retourner à la liste
-                    </Button>
                   </div>
-                </>
-              ) : (
-                <>
-                  <div className="flex justify-between items-center my-4">
-                    <span className=" font-bold text-base ">
-                      {steps[activeStep]}
-                    </span>
-                    <Button onClick={skipLength} color="primary">
-                      ignorer
-                    </Button>
-                  </div>
-                  <div className="mb-10">{getStepContent(activeStep)}</div>
-                </>
-              )}
+                ) : (
+                  <>
+                    <div className="flex w-full justify-between items-center my-4">
+                      <span className="font-sans font-bold text-sm md:text-base lg:text-base xl:text-base">
+                        {steps[activeStep]}
+                      </span>
+                      {formState.selectedImage && (
+                        <div
+                          className="text-black cursor-pointer ml-5"
+                          onClick={() =>
+                            setFormState({ ...formState, selectedImage: null })
+                          }
+                        >
+                          <CancelOutlinedIcon />
+                        </div>
+                      )}
+                      <Button
+                        onClick={skipLength}
+                        color="primary"
+                        className="font-sans font-bold text-sm md:text-base lg:text-base xl:text-base"
+                      >
+                        Ignorer
+                      </Button>
+                    </div>
+                    <div className="w-full">{getStepContent(activeStep)}</div>
+                  </>
+                )}
+              </div>
             </div>
           </div>
         </div>

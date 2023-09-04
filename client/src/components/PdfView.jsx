@@ -509,9 +509,9 @@ const PdfView = () => {
               <div>
                 <label
                   htmlFor="email"
-                  className="block mb-2 text-md font-sans font-medium text-gray-900 dark:text-white"
+                  className="text-center block mb-2 text-md font-sans font-medium text-gray-900 dark:text-white"
                 >
-                  Rpaort
+                  Veuillez saisir les informations ci dessous
                 </label>
                 <div className="mb-6 mt-5">
                   <label
