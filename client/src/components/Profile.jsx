@@ -109,7 +109,7 @@ const Popup = ({ open, setOpen, dialogType }) => {
         <>
           <DialogTitle>
             {dialogType !== "change" && (
-              <h1 className="font-sans font-semibold tracking-wide text-center">
+              <h1 className="text-base font-sans font-semibold tracking-wide text-center">
                 Merci de saisir les informations ci dessous
               </h1>
             )}
@@ -180,7 +180,7 @@ const Popup = ({ open, setOpen, dialogType }) => {
           {dialogType === "change" ? "Fermer" : "Annuler"}
         </Button>
         {dialogType !== "change" && (
-          <Button onClick={handleClose}>Agree</Button>
+          <Button onClick={handleClose}>Modifier</Button>
         )}
       </DialogActions>
     </Dialog>
