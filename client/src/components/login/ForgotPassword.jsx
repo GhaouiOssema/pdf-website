@@ -13,6 +13,7 @@ const ForgotPassword = () => {
         `${import.meta.env.VITE_SERVER_API_URL}/forgot-password`,
         {
           email,
+          emailType: "reset",
         }
       );
       setIsEmailSent(true);

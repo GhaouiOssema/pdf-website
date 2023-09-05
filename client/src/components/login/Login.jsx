@@ -35,7 +35,7 @@ const Login = () => {
 
       setEmail("");
       setPassword("");
-      alert("Login successful!");
+      // alert("Login successful!");
 
       window.location.href = "/messites";
     } catch (err) {
@@ -123,7 +123,7 @@ const Login = () => {
             >
               <div className="pb-2 pt-2">
                 <label
-                  htmlFor="password"
+                  htmlFor="email"
                   className="block text-white md:text-gray-700 lg:text-gray-700 xl:text-gray-700 2xl:text-gray-700 font-medium mb-2 text-start"
                 >
                   Email :

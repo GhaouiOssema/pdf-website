@@ -855,12 +855,12 @@ const FormSend = () => {
             <div className="w-full md:w-[70%] lg:w-[70%] xl:w-[70%] p-6 mx-auto rounded-lg shadow-2xl bg-white">
               <div className="w-full flex flex-col justify-center items-center">
                 {activeStep === steps.length ? (
-                  <div className="boor w-full p-2 h-[304.09px]">
-                    <div className="boor flex flex-col justify-center items-center h-full">
-                      <div className="boor text-green-500 text-4xl mb-4 flex justify-center items-center">
+                  <div className="w-full p-2 h-[304.09px]">
+                    <div className="flex flex-col justify-center items-center h-full">
+                      <div className="text-green-500 text-4xl mb-4 flex justify-center items-center">
                         <i className="fa-solid fa-circle-check"></i>
                       </div>
-                      <h1 className="boor text-2xl text-center font-bold mb-4">
+                      <h1 className="text-2xl text-center font-bold mb-4">
                         Ajout complété!
                       </h1>
                       {formComplated !== 4 && fieldEmpty.length > 0 && (
@@ -870,14 +870,14 @@ const FormSend = () => {
                           </h1>
                           <h4 className="text-md w-full text-center flex flex-col justify-center items-center">
                             {fieldEmpty.map((el, idx) => (
-                              <div key={idx} className="w-[50%]">
-                                <span className="boor w-full">| {el}</span>
-                              </div>
+                              <ul key={idx} className="w-full ">
+                                <li className="w-full text-center">{el}</li>
+                              </ul>
                             ))}
                           </h4>
                         </div>
                       )}
-                      <div className="boor text-center">
+                      <div className="text-center">
                         <Button
                           variant="contained"
                           color="success"

@@ -76,6 +76,14 @@ router.delete("/:site/:folder/pdfs/:title", controllers.deletePdf.delete);
 router.delete("/site/:folderId", controllers.deleteSite.delete);
 
 router.put("/site/:folderId", controllers.updateSite.updateFolder);
+router.put(
+  "/profile/user/:userId/username",
+  controllers.updateUserData.userName
+);
+router.put(
+  "/profile/user/:userId/code",
+  controllers.updateUserData.verificationCode
+);
 
 /**
  * @route GET POST PUT DELETE /public-route
@@ -109,6 +117,6 @@ router.get(
   "/public/site/folder/pdf/details/image/:id",
   controllers.public.pdfImage
 );
-router.get("/public/pdf/raports",controllers.getRaports.getPdfReportsById );
+router.get("/public/pdf/raports", controllers.getRaports.getPdfReportsById);
 
 module.exports = router;

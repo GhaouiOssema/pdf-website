@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 const fs = require("fs");
 const path = require("path");
 
-const sendResetEmail = async (email, resetLink, expirationTime) => {
+const sendResetEmail = async (email, resetLink, expirationTime, type) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -18,14 +18,25 @@ const sendResetEmail = async (email, resetLink, expirationTime) => {
     "utf-8"
   );
 
+  let text, buttonText;
+  if (type === "change") {
+    text = "changez votre mot de passe";
+    buttonText = "changer";
+  } else if (type === "reset") {
+    text = "Réinitialisez votre mot de passe";
+    buttonText = "Réinitialisez";
+  }
+
   const emailContentWithExpiration = htmlTemplate
     .replace("{resetLink}", resetLink)
-    .replace("{expiration}", expirationTime);
+    .replace("{expiration}", expirationTime)
+    .replace("{type}", text)
+    .replace("{buttonText}", buttonText);
 
   const mailOptions = {
     from: "no-reply@qrsolution.com",
     to: email,
-    subject: "Password Reset",
+    subject: text,
     html: emailContentWithExpiration,
   };
 
@@ -34,7 +45,7 @@ const sendResetEmail = async (email, resetLink, expirationTime) => {
 
 module.exports = {
   async forgotPassword(req, res) {
-    const { email } = req.body;
+    const { email, emailType } = req.body;
 
     try {
       const user = await User.findOne({ email });
@@ -43,13 +54,13 @@ module.exports = {
         return res.status(404).json({ message: "User not found" });
       }
 
-      const expirationTime = Date.now() + 600000; // 10 minutes in milliseconds
+      const expirationTime = Date.now() + 600000;
 
       const resetLink = `https://qr-solution-beta.netlify.app/reset-password?email=${encodeURIComponent(
         email
       )}&expiration=${expirationTime}`;
 
-      await sendResetEmail(email, resetLink, expirationTime);
+      await sendResetEmail(email, resetLink, expirationTime, emailType);
 
       res.status(200).json({ message: "Reset email sent successfully" });
     } catch (err) {

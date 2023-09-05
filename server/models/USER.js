@@ -32,17 +32,20 @@ const USERS = new mongoose.Schema({
   allPdfs: [{ type: mongoose.Schema.Types.ObjectId, ref: "PDFs" }],
   folders: [{ type: mongoose.Schema.Types.ObjectId, ref: "Folder" }],
   userCreationAccountDate: { type: Date, default: Date.now },
+  modified: Date,
 });
 
 USERS.pre("save", function (next) {
-  if (!this.userId) {
-    this.userId = this._id;
+  if (this.isNew) {
+    if (!this.userId) {
+      this.userId = this._id;
+    }
+
+    const username = this.userName.toLowerCase();
+    const randomNum = Math.floor(Math.random() * 10000) + 1;
+
+    this.verification_code = `maintenance_${username.slice(0, 3)}${randomNum}`;
   }
-
-  const username = this.userName.toLowerCase();
-  const randomNum = Math.floor(Math.random() * 10000) + 1;
-
-  this.verification_code = `maintenance_${username.slice(0, 3)}${randomNum}`;
 
   next();
 });

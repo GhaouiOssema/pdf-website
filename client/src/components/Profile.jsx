@@ -1,6 +1,191 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Box, CircularProgress } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Slide,
+} from "@mui/material";
+
+import jwt_decode from "jwt-decode";
+import DoneAllOutlinedIcon from "@mui/icons-material/DoneAllOutlined";
+import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
+import KeyboardArrowLeftOutlinedIcon from "@mui/icons-material/KeyboardArrowLeftOutlined";
+import EditNoteOutlinedIcon from "@mui/icons-material/EditNoteOutlined";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
+const Popup = ({ open, setOpen, dialogType }) => {
+  const [userPassword, setUserPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [userName, setUserName] = useState("");
+  const [codeVerification, setCodeVerification] = useState("");
+
+  const token = localStorage.getItem("token");
+  if (!token) {
+    return;
+  }
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const handleSubmitUserName = async (e) => {
+    setOpen(true);
+
+    try {
+      const requestData = {
+        userName,
+        userPassword,
+      };
+
+      const decoded = jwt_decode(token);
+      const id = decoded.userId;
+
+      const response = await axios.put(
+        `${import.meta.env.VITE_SERVER_API_URL}/profile/user/${id}/username`,
+        requestData,
+        config
+      );
+
+      if (response.status === 201) {
+        window.location.reload();
+      }
+    } catch (err) {
+      console.error(err);
+      setErrorMessage("Mot de passe incorrect");
+    }
+  };
+
+  const handleSubmitVerificationCode = async (e) => {
+    try {
+      const requestData = {
+        verificationCode: codeVerification,
+        userPassword,
+      };
+
+      const decoded = jwt_decode(token);
+      const id = decoded.userId;
+
+      const response = await axios.put(
+        `${import.meta.env.VITE_SERVER_API_URL}/profile/user/${id}/code`,
+        requestData,
+        config
+      );
+
+      if (response.status === 201) {
+        window.location.reload();
+      }
+    } catch (err) {
+      console.error(err);
+      setErrorMessage("Mot de passe incorrect");
+    }
+  };
+
+  const handleClose = () => {
+    if (dialogType === "Nom d'utilisateur") {
+      handleSubmitUserName();
+    } else if (dialogType === "Code de vérification") {
+      handleSubmitVerificationCode();
+    }
+  };
+
+  return (
+    <Dialog
+      open={open}
+      TransitionComponent={Transition}
+      keepMounted
+      aria-describedby="alert-dialog-slide-description"
+    >
+      {dialogType !== "change" ? (
+        <>
+          <DialogTitle>
+            {dialogType !== "change" && (
+              <h1 className="font-sans font-semibold tracking-wide text-center">
+                Merci de saisir les informations ci dessous
+              </h1>
+            )}
+          </DialogTitle>
+          <DialogContent>
+            {errorMessage && (
+              <p className="text-red-500 mb-4">{errorMessage}</p>
+            )}
+            <label
+              htmlFor="repeat-password"
+              className="block mb-2 text-md font-sans font-medium text-gray-900 dark:text-white"
+            >
+              {dialogType === "Nom d'utilisateur"
+                ? "Nom"
+                : "code du verification"}
+            </label>
+            <input
+              type="text"
+              className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:shadow-sm-light"
+              placeholder={
+                dialogType === "Nom d'utilisateur"
+                  ? "nouveaux nom d'utilisateur"
+                  : "Nouvelle code de vérification"
+              }
+              required
+              value={
+                dialogType === "Nom d'utilisateur" ? userName : codeVerification
+              }
+              onChange={(e) =>
+                dialogType === "Nom d'utilisateur"
+                  ? setUserName(e.target.value)
+                  : setCodeVerification(e.target.value)
+              }
+            />
+            <label
+              htmlFor="repeat-password"
+              className="block mb-2 text-md font-sans font-medium text-gray-900 dark:text-white"
+            >
+              Mot de passe
+            </label>
+            <input
+              type="text"
+              className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:shadow-sm-light"
+              placeholder="mot de passe"
+              required
+              value={userPassword}
+              onChange={(e) => setUserPassword(e.target.value)}
+            />
+          </DialogContent>
+        </>
+      ) : (
+        <>
+          <DialogContent>
+            <div className="">
+              <div className="text-green-500 text-4xl mb-4 flex justify-center items-center">
+                <i className="fa-solid fa-circle-check"></i>
+              </div>
+              <p className="text-xl font-sans font-medium text-green-500 text-center">
+                Un email a été envoyé à votre boîte mail.
+              </p>
+            </div>
+          </DialogContent>
+        </>
+      )}
+
+      <DialogActions>
+        <Button onClick={() => setOpen(false)}>
+          {dialogType === "change" ? "Fermer" : "Annuler"}
+        </Button>
+        {dialogType !== "change" && (
+          <Button onClick={handleClose}>Agree</Button>
+        )}
+      </DialogActions>
+    </Dialog>
+  );
+};
 
 function formatDate(dateString) {
   const options = { year: "numeric", month: "short", day: "numeric" };
@@ -13,7 +198,15 @@ function formatDate(dateString) {
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);
-  const [imageData, setImageData] = useState(null); // To store the Base64 image data
+  const [email, setEmail] = useState(userData?.email);
+  const [showPassword, setShowPassword] = useState(false);
+  const [open, setOpen] = React.useState(false);
+  const [dialogType, setDialogType] = useState("");
+  const [isExpended, setIsExpended] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,6 +234,30 @@ const Profile = () => {
     fetchData();
   }, []);
 
+  const handleResetPassword = async (e) => {
+    e.preventDefault();
+
+    setDialogType("change");
+
+    try {
+      const res = await axios.post(
+        `${import.meta.env.VITE_SERVER_API_URL}/forgot-password`,
+        {
+          email: userData.email,
+          emailType: "change",
+        }
+      );
+      if (res.status === 200) {
+        setOpen(true);
+      }
+    } catch (err) {
+      console.error(err);
+      alert(
+        "An error occurred while sending the reset email. Please try again."
+      );
+    }
+  };
+
   if (userData === null || userData === undefined) {
     return (
       <Box
@@ -55,114 +272,47 @@ const Profile = () => {
       </Box>
     );
   }
+
   return (
     <div>
-      <div className="bg-gray-100 lg:h-[89.7vh] md:h-[89.7vh] h-screen">
-        <div className="container mx-auto my-5 p-5">
-          <div className="md:flex no-wrap md:-mx-2">
-            <div className="w-full md:w-3/12 md:mx-2">
-              <div className="bg-white p-3 border-t-4 border-green-400">
-                <div className="flex justify-center">
-                  {userData.profileImage && (
-                    <img
-                      src={`data:image/jpeg;base64,${userData.profileImage}`}
-                      alt="User Profile"
-                      className="h-40 w-40 "
-                    />
-                  )}
-                </div>
+      {open && <Popup open={open} setOpen={setOpen} dialogType={dialogType} />}
+      <div className="bg-gray-100 h-screen py-0 md:py-[10%]">
+        <div className="container mx-auto">
+          <div className="md:flex flex-col justify-center items-center flex-wrap">
+            <div className="w-full md:w-[75%] flex justify-center flex-wrap lg:flex-nowrap xl:flex-nowrap">
+              <div className="h-full w-full flex justify-between items-center flex-wrap lg:flex-nowrap xl:flex-nowrap mb-3 rounded-b-md shadow-md border-t-4 border-blue-700">
+                <div className="bg-white rounded-b-md w-full p-3">
+                  <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">
+                    {userData.userName}
+                  </h1>
 
-                <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">
-                  {userData.userName}
-                </h1>
-
-                <ul className="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
-                  <li className="flex items-center py-3">
-                    <span>Status</span>
-                    <span className="ml-auto">
-                      <span className="bg-green-500 py-1 px-2 rounded text-white text-sm">
-                        Active
+                  <ul className="text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded">
+                    <li className="flex items-center py-3">
+                      <span>Status</span>
+                      <span className="ml-auto">
+                        <span className="bg-blue-700 py-1 px-2 rounded text-white text-sm">
+                          Active
+                        </span>
                       </span>
-                    </span>
-                  </li>
-                  <li className="flex items-center py-3">
-                    <span>Member since</span>
-                    <span className="ml-auto">
-                      {formatDate(userData.userCreationAccountDate)}
-                    </span>
-                  </li>
-                </ul>
-              </div>
-              <div className="my-4"></div>
-            </div>
-            <div className="w-full md:w-9/12 mx-2 h-64">
-              <div className="bg-white p-3 shadow-sm rounded-sm">
-                <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
-                  <span clas="text-green-500">
-                    <svg
-                      className="h-5"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                      />
-                    </svg>
-                  </span>
-                  <span className="tracking-wide">About</span>
-                </div>
-                <div className="text-gray-700">
-                  <div className="grid md:grid-cols-2 text-sm">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
-                      <div className="px-4 py-2 font-semibold">
-                        nom d'utilisateur
-                      </div>
-                      <div className="px-4 py-2"> {userData.userName} </div>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
-                      <div className="px-4 py-2 font-semibold">Password</div>
-                      <div className="px-4 py-2">password</div>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
-                      <div className="px-4 py-2 font-semibold">Role</div>
-                      <div className="px-4 py-2">{userData.userRole}</div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
-                      <div className="px-4 py-2 font-semibold">Email.</div>
-                      <div className="px-4 py-2">
-                        <a
-                          className="text-blue-800"
-                          href="mailto:jane@example.com"
-                        >
-                          {userData.email}
-                        </a>
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
-                      <div className="px-4 py-2 font-semibold">
-                        Code de vérification
-                      </div>
-                      <div className="px-4 py-2">
-                        {userData.verification_code}
-                      </div>
-                    </div>
-                  </div>
+                    </li>
+                    <li className="flex items-center py-3">
+                      <span>Membre depuis</span>
+                      <span className="ml-auto">
+                        {formatDate(userData.userCreationAccountDate)}
+                      </span>
+                    </li>
+                  </ul>
                 </div>
               </div>
 
-              <div className="my-4"></div>
-
-              <div className="bg-white p-3 shadow-sm rounded-sm lg:w-1/2 md:w-1/2">
-                <div className="flex flex-col ">
-                  <div className="flex justify-between items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
-                    <div className="flex items-center  font-semibold text-gray-900 leading-8 ">
-                      <span className="text-green-500 mr-2">
+              <div className="bg-white h-full mb-4 lg:mb-4 xl:mb-4 ml-0 lg:ml-3 pb-[8.8px] xl:ml-3 flex justify-between items-center flex-wrap lg:flex-nowrap xl:flex-nowrap w-full rounded-b-md shadow-md border-t-4 border-blue-700">
+                <div className="flex flex-col w-full p-3 rounded-b-md">
+                  <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">
+                    {userData.userName}
+                  </h1>
+                  <div className="my-2 mt-3 flex justify-between items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
+                    <div className="flex items-center font-semibold text-gray-900 leading-8 ">
+                      <span className="text-blue-700 mr-2">
                         <svg
                           className="h-5"
                           xmlns="http://www.w3.org/2000/svg"
@@ -178,21 +328,21 @@ const Profile = () => {
                           />
                         </svg>
                       </span>
-                      <span className="tracking-wide">
+                      <span className="tracking-wide whitespace-nowrap">
                         Nombre des equiments
                       </span>
                     </div>
                     <ul className="list-inside space-y-2">
                       <li>
-                        <div className="text-green-500">
+                        <div className="text-blue-700">
                           {userData.allPdfs.length}
                         </div>
                       </li>
                     </ul>
                   </div>
-                  <div className="flex justify-between items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
+                  <div className="my-2 mt-3 flex justify-between items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
                     <div className="flex items-center  font-semibold text-gray-900 leading-8 ">
-                      <span className="text-green-500 mr-2">
+                      <span className="text-blue-700 mr-2">
                         <svg
                           className="h-5"
                           xmlns="http://www.w3.org/2000/svg"
@@ -213,11 +363,13 @@ const Profile = () => {
                           />
                         </svg>
                       </span>
-                      <span className="tracking-wide">Nombre des sites</span>
+                      <span className="tracking-wide whitespace-nowrap">
+                        Nombre des sites
+                      </span>
                     </div>
                     <ul className="list-inside space-y-2">
                       <li>
-                        <div className="text-green-500">
+                        <div className="text-blue-700">
                           {userData.folders.length}
                         </div>
                       </li>
@@ -225,6 +377,154 @@ const Profile = () => {
                   </div>
                 </div>
               </div>
+            </div>
+            <div className="w-full md:w-[75%]">
+              <div className="bg-white shadow-md border-t-4 rounded-b-md border-blue-700">
+                <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
+                  <span className="text-blue-700">
+                    <svg
+                      className="h-5"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                      />
+                    </svg>
+                  </span>
+                  <span className="tracking-wide">À propos</span>
+                </div>
+                <div className="text-gray-700">
+                  <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 text-sm">
+                    <div className="grid grid-cols-2">
+                      <div className="px-4 py-2 font-semibold">
+                        Nom d'utilisateur
+                      </div>
+                      <div className="px-4 py-2"> {userData.userName} </div>
+                    </div>
+                    <div className="grid grid-cols-2">
+                      <div className="px-4 py-2 font-semibold">
+                        Mot de passe
+                      </div>
+                      <div className="px-4 py-2">password</div>
+                    </div>
+
+                    <div className="grid grid-cols-2">
+                      <div className="px-4 py-2 font-semibold text-xs md:text-sm">
+                        Code de vérification
+                      </div>
+                      <div className="px-4 py-2">
+                        {userData.verification_code}
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2">
+                      <div className="px-4 py-2 font-semibold text-xs md:text-sm">
+                        Email
+                      </div>
+                      <div className="px-4 py-2 break-words">
+                        {userData.email}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="my-4"></div>
+            </div>
+            <div className="w-full md:w-[75%]">
+              <div className="bg-white shadow-md border-t-4 rounded-b-md border-blue-700">
+                <div
+                  onClick={() => setIsExpended((prev) => !prev)}
+                  className="flex items-center space-x-2 font-semibold text-gray-900 leading-8 cursor-pointer"
+                >
+                  <span className="text-blue-700">
+                    <svg
+                      className="h-5"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                      />
+                    </svg>
+                  </span>
+                  <div className="w-full flex justify-between items-center flex-wrap">
+                    <span className="text-sm lg:tex-base xl:text-base tracking-wide my-1">
+                      Modifier vos information personnel
+                    </span>
+                    <span className="cursor-pointer">
+                      {isExpended ? (
+                        <KeyboardArrowDownOutlinedIcon />
+                      ) : (
+                        <KeyboardArrowLeftOutlinedIcon />
+                      )}
+                    </span>
+                  </div>
+                </div>
+                {isExpended && (
+                  <div
+                    className={`${
+                      isExpended
+                        ? "translate-x-0 opacity-100 transition-transform transition-opacity ease-in-out duration-300"
+                        : "translate-x-full opacity-0"
+                    } text-gray-700 transform`}
+                  >
+                    <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 text-sm py-3 px-3">
+                      <div className="grid items-center grid-cols-2 justify-between">
+                        <div className="font-semibold">Nom d'utilisateur</div>
+                        <div className="flex justify-end w-[85%] cursor-pointer">
+                          <EditNoteOutlinedIcon
+                            sx={{ fontSize: 20 }}
+                            className="w-5 h-5 text-blue-700"
+                            onClick={() => {
+                              setOpen(true);
+                              setDialogType("Nom d'utilisateur");
+                            }}
+                          />
+                        </div>
+                      </div>
+                      <div className="grid items-center grid-cols-2 py-2">
+                        <div className="px-0 lg:px-4 xl:px-4 font-semibold">
+                          Mot de passe
+                        </div>
+                        <div className="flex justify-end w-[85%] cursor-pointer">
+                          <EditNoteOutlinedIcon
+                            sx={{ fontSize: 20 }}
+                            className="w-5 h-5 text-blue-700"
+                            onClick={handleResetPassword}
+                          />
+                        </div>
+                      </div>
+                      <div className=" grid items-center grid-cols-2 py-2">
+                        <div className="text-sm font-semibold">
+                          Code de vérification
+                        </div>
+                        <div className="flex justify-end w-[85%] cursor-pointer">
+                          <EditNoteOutlinedIcon
+                            sx={{ fontSize: 20 }}
+                            className="w-5 h-5 text-blue-700"
+                            onClick={() => {
+                              setOpen(true);
+                              setDialogType("Code de vérification");
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+              <div className="my-4"></div>
             </div>
           </div>
         </div>
