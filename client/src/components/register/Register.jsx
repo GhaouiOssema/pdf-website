@@ -56,7 +56,7 @@ const Register = () => {
   const [error, setError] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const pages = ["connexion", "inscription", "Home"];
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleFileChange = (e) => {
     setSelectedFile(e.target.files[0]);

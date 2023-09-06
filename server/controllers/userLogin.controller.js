@@ -11,12 +11,14 @@ module.exports = {
 
       const user = await User.findOne({ email });
       if (!user) {
-        return res.status(400).json({ error: "Invalid credentials" });
+        return res
+          .status(400)
+          .json({ error: "Aucun compte n'est associe à cette email" });
       }
 
       const passwordMatch = await bcrypt.compare(password, user.password);
       if (!passwordMatch) {
-        return res.status(400).json({ error: "Invalid credentials" });
+        return res.status(400).json({ error: "Mot de passe incorrect" });
       }
 
       const token = jwt.sign(
@@ -25,6 +27,7 @@ module.exports = {
           email: user.email,
           userName: user.userName,
           userRole: user.userRole,
+          emailVerified: user.emailVerified,
         },
         process.env.SECRET_TOKEN,
         { expiresIn: "4d" }

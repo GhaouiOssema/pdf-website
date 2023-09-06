@@ -145,7 +145,7 @@ const TransitionsModal = ({ open, handleClose, raports, filteredRaports }) => {
 };
 
 const PdfView = () => {
-  const { id } = useParams();
+  const { site, dossier, id } = useParams();
   const [pdfData, setPdfData] = useState(null);
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
@@ -223,6 +223,8 @@ const PdfView = () => {
             ? "Correctif"
             : null,
         code: confirmationCode,
+        site,
+        dossier,
       };
 
       const token = localStorage.getItem("token");

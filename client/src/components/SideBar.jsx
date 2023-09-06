@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import LOGO from "../assets/logo2.png";
+import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 
 const SideBar = ({ isSidebarOpen, setIsSidebarOpen, sidebarRef }) => {
   const handleOutsideClick = (event) => {
@@ -60,7 +61,18 @@ const SideBar = ({ isSidebarOpen, setIsSidebarOpen, sidebarRef }) => {
             </div>
             <div className="mt-5 bg-top bg-cover space-y-1 pl-1">
               <Link
-                to={"profile"}
+                to={"/notification"}
+                className="text-lg text-gray-700 hover:text-black font-sans font-light hover:font-medium px-4 py-2.5 flex justify-start items-center transition-all duration-200 hover:bg-gray-200 group cursor-pointer"
+              >
+                <p className="flex items-center">
+                  <NotificationsNoneOutlinedIcon />
+                  <span className="ml-2">Notification</span>
+                </p>
+              </Link>
+            </div>
+            <div className="mt-5 bg-top bg-cover space-y-1 pl-1">
+              <Link
+                to={"/profile"}
                 className="text-lg text-gray-700 hover:text-black font-sans font-light hover:font-medium px-4 py-2.5 flex justify-start items-center transition-all duration-200 hover:bg-gray-200 group cursor-pointer"
               >
                 <p className="flex items-center">
@@ -119,6 +131,17 @@ const SideBar = ({ isSidebarOpen, setIsSidebarOpen, sidebarRef }) => {
                 <p className="flex items-center">
                   <HiViewBoards />
                   <span className="ml-2">Mes Sites</span>
+                </p>
+              </Link>
+            </div>
+            <div className="mt-5 bg-top bg-cover space-y-1 pl-1">
+              <Link
+                to={"/notification"}
+                className="text-lg text-gray-700 hover:text-black font-sans font-light hover:font-medium px-4 py-2.5 flex justify-start items-center transition-all duration-200 hover:bg-gray-200 group cursor-pointer"
+              >
+                <p className="flex items-center">
+                  <NotificationsNoneOutlinedIcon />
+                  <span className="ml-2">Notification</span>
                 </p>
               </Link>
             </div>

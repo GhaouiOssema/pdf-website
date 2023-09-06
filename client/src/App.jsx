@@ -24,11 +24,13 @@ import PublicView from "./components/public/PublicView";
 import TopBar from "./components/TopBar";
 import Footer from "./components/Footer";
 import VerificationPage from "./components/register/VerificationPage";
+import Notification from "./components/notification/Notification";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const sidebarRef = useRef(null);
+  const [verified, setVerified] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -40,6 +42,7 @@ const App = () => {
         localStorage.removeItem("token");
       } else {
         setIsAuthenticated(true);
+        setVerified(decoded.emailVerified);
       }
     } else {
       setIsAuthenticated(false);
@@ -52,7 +55,7 @@ const App = () => {
 
   return (
     <div className="flex ">
-      {isAuthenticated && (
+      {isAuthenticated && verified && (
         <SideBar
           isSidebarOpen={isSidebarOpen}
           setIsSidebarOpen={setIsSidebarOpen}
@@ -71,7 +74,7 @@ const App = () => {
         </Routes>
 
         <div className=" bg-gray-100">
-          {isAuthenticated && (
+          {isAuthenticated && verified && (
             <div className="md:hidden">
               <TopBar
                 toggleSidebar={toggleSidebar}
@@ -80,9 +83,10 @@ const App = () => {
             </div>
           )}
           <Routes>
-            {isAuthenticated && (
+            {isAuthenticated && verified && (
               <>
                 <Route path="/telecharger" element={<FormSend />} />
+                <Route path="/notification" element={<Notification />} />
                 <Route path="/:site/:dossier/pdf" element={<PdfFile />} />
                 <Route
                   path="/:site/:dossier/pdf/détails/:id"

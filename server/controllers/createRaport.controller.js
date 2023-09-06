@@ -2,6 +2,7 @@ const Raport = require("../models/Raport");
 const PDF = require("../models/PDF");
 const UserAccount = require("../models/USER");
 const jwt = require("jsonwebtoken");
+const Notification = require("../models/Notification");
 
 module.exports = {
   async addRaport(req, res) {
@@ -14,6 +15,8 @@ module.exports = {
         dateProchainEntretien,
         option,
         code,
+        site,
+        dossier,
       } = req.body;
 
       const token = req?.headers?.authorization?.split(" ")[1] || null;
@@ -54,6 +57,18 @@ module.exports = {
 
         const savedRaport = await newRaport.save();
 
+        const newNotification = new Notification({
+          site,
+          dossier,
+          société,
+          equipementId: pdf._id,
+          equipementName: pdf.mainPdf.filename,
+          notificationDate: Date.now(),
+          message: "Nouveau rapport ajouté",
+        });
+
+        await newNotification.save();
+
         pdf.raports.push(savedRaport._id);
         await pdf.save();
 
@@ -89,6 +104,18 @@ module.exports = {
         });
 
         const savedRaport = await newRaport.save();
+
+        const newNotification = new Notification({
+          site,
+          dossier,
+          société,
+          equipementId: pdf._id,
+          equipementName: pdf.mainPdf.filename,
+          notificationDate: Date.now(),
+          message: "Nouveau rapport ajouté",
+        });
+
+        await newNotification.save();
 
         pdf.raports.push(savedRaport._id);
         await pdf.save();
