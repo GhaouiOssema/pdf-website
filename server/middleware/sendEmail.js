@@ -12,7 +12,7 @@ const sendVerificationEmail = async (email, verificationToken) => {
       },
     });
 
-    const verificationLink = `https://qr-solution-beta.netlify.app/verify?token=${verificationToken}`;
+    const verificationLink = `https://qr-solution-beta.netlify.app/verifier?token=${verificationToken}`;
 
     const htmlTemplate = fs.readFileSync(
       path.join(__dirname, "../public/accountConfirmation.html"),
