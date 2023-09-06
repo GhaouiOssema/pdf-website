@@ -72,6 +72,7 @@ router.get(
 router.get("/sites", controllers.allSites.sites);
 router.get("/pdf/raports", controllers.getRaports.getPdfReportsById);
 router.get("/profile/user", controllers.getUserDataById.getData);
+router.get("/notification", controllers.Notification.getNotification);
 
 router.delete("/:site/:folder/pdfs/:title", controllers.deletePdf.delete);
 router.delete("/site/:folderId", controllers.deleteSite.delete);

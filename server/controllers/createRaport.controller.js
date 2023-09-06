@@ -58,13 +58,13 @@ module.exports = {
         const savedRaport = await newRaport.save();
 
         const newNotification = new Notification({
-          site,
-          dossier,
           société,
           equipementId: pdf._id,
           equipementName: pdf.mainPdf.filename,
           notificationDate: Date.now(),
           message: "Nouveau rapport ajouté",
+          site,
+          dossier,
         });
 
         await newNotification.save();
@@ -113,6 +113,8 @@ module.exports = {
           equipementName: pdf.mainPdf.filename,
           notificationDate: Date.now(),
           message: "Nouveau rapport ajouté",
+          site,
+          dossier,
         });
 
         await newNotification.save();

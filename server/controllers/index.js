@@ -17,4 +17,5 @@ module.exports = {
   public: require("./publicetPdfData.controller"),
   updateUserData: require("./updateUserDate.controller"),
   verification: require("./accountVerification.controller"),
+  Notification: require("./fetchNotifications.controller"),
 };

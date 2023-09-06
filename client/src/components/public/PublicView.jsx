@@ -150,7 +150,7 @@ const TransitionsModal = ({ open, handleClose, raports, filteredRaports }) => {
 };
 
 const PublicView = () => {
-  const { id } = useParams();
+  const { site, dossier, id } = useParams();
   const [pdfData, setPdfData] = useState(null);
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
@@ -216,6 +216,8 @@ const PublicView = () => {
             ? "Correctif"
             : null,
         code: confirmationCode,
+        site,
+        dossier,
       };
 
       const response = await axios.post(

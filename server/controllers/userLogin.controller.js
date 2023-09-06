@@ -28,6 +28,7 @@ module.exports = {
           userName: user.userName,
           userRole: user.userRole,
           emailVerified: user.emailVerified,
+          pdfList: user.allPdfs,
         },
         process.env.SECRET_TOKEN,
         { expiresIn: "4d" }
