@@ -27,6 +27,7 @@ const MultiSelectTreeView = ({
   setFolderIdUpdate,
   expanded,
   setExpanded,
+  optionRef,
 }) => {
   const ID = folders._id;
   const contentRef = useRef(null);
@@ -58,20 +59,18 @@ const MultiSelectTreeView = ({
     }
   }, [expanded, isExpanded, folders._id]);
 
-  const optionRef = useRef();
-
   let labelFormat = (
-    <div className="flex items-center w-full justify-between">
+    <div className="w-full flex items-center justify-center py-1">
       <div className="w-full">
-        <div className="flex w-full items-center justify-between">
-          <span className="w-[60%] font-sans tex-md ">Nom: {folders.name}</span>
-          <span className=" tex-md font-normal w-[40%]">
-            <span className="font-bold">CP:</span> {folders.code_postal}
+        <div className="w-full flex flex-col">
+          <span className="pl-4 font-sans tex-md">Nom: {folders.name}</span>
+          <span className="pl-4 w-full h-full tex-md class__ligth">
+            Adresse: {folders.adresse.replace(/^site:\s*/i, "")}
+          </span>
+          <span className=" tex-md font-normal">
+            <span className="pl-4 font-bold">CP:</span> {folders.code_postal}
           </span>
         </div>
-        <span className="w-full h-full tex-md class__ligth ">
-          Adresse: {folders.adresse.replace(/^site:\s*/i, "")}
-        </span>
       </div>
       <SiteOption
         folders={folders}
@@ -92,10 +91,11 @@ const MultiSelectTreeView = ({
         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
         overflow: "hidden",
         transition: "height 0.3s",
-        height: isExpanded(folders._id) ? "auto" : "47px",
+        height: isExpanded(folders._id) ? "auto" : "87px",
         backgroundColor: "white",
       }}
-      className="rounded-b-lg"
+      className="rounded-lg w-full lg:w-[80%] xl:w-[85%]"
+      ref={optionRef}
     >
       <TreeView
         aria-label="multi-select"
@@ -185,6 +185,8 @@ const Sites = () => {
     code_postal: true,
     subfolder: true,
   });
+
+  const optionRef = useRef();
 
   const handleCloseAlert = (event, reason) => {
     if (reason === "clickaway") {
@@ -404,7 +406,7 @@ const Sites = () => {
                 folders.length > 0 &&
                 screenSize.width > 700 &&
                 !loading
-              ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 w-full"
+              ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 w-full"
               : !folders &&
                 !folders.length < 0 &&
                 !loading &&
@@ -449,17 +451,12 @@ const Sites = () => {
                 .map((folder, index) => (
                   <div
                     className={`rounded-lg ${
-                      screenSize.width < 700 ? "w-full mt-4" : "w-[99%] py-3"
+                      screenSize.width < 700
+                        ? "w-full mt-4"
+                        : "w-[99%] py-3 flex justify-center"
                     }`}
                     key={index}
                   >
-                    {/* <span className=" w-[50%] ">{`${folder.name}`}</span> */}
-                    {/* <div className="bg-primary-700 text-white p-2 w-full text-center rounded-t-lg">
-                    <h1 className="flex items-center justify-start flex-wrap font-bold pl-3">
-                      Nom du Site :
-                      <span className="ml-3 font-medium">{folder.name}</span>
-                    </h1>
-                  </div> */}
                     <MultiSelectTreeView
                       folders={folder}
                       key={index}
@@ -468,6 +465,7 @@ const Sites = () => {
                       setFolderIdUpdate={setFolderIdUpdate}
                       expanded={expanded}
                       setExpanded={setExpanded}
+                      optionRef={optionRef}
                     />
                   </div>
                 ))

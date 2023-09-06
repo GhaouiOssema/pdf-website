@@ -33,6 +33,14 @@ const USERS = new mongoose.Schema({
   folders: [{ type: mongoose.Schema.Types.ObjectId, ref: "Folder" }],
   userCreationAccountDate: { type: Date, default: Date.now },
   modified: Date,
+  emailVerified: {
+    type: Boolean,
+    default: false,
+  },
+  verificationToken: {
+    type: String,
+    default: null,
+  },
 });
 
 USERS.pre("save", function (next) {

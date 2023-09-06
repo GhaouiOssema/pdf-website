@@ -23,6 +23,7 @@ import PublicDoeFiles from "./components/public/PublicDoeFiles";
 import PublicView from "./components/public/PublicView";
 import TopBar from "./components/TopBar";
 import Footer from "./components/Footer";
+import VerificationPage from "./components/register/VerificationPage";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -66,7 +67,7 @@ const App = () => {
           <Route path="/seconnecter" element={<Login />} />
           <Route path="/inscription" element={<Register />} />
           <Route path="/seconnecter/oublier" element={<ForgotPassword />} />
-          <Route path="/reset-password" element={<ResetPasswordForm />} />
+          <Route path="/verifier" element={<VerificationPage />} />
         </Routes>
 
         <div className=" bg-gray-100">

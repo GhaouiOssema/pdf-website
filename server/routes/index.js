@@ -46,6 +46,7 @@ router.post(
 router.post("/pdfs/:pdfID/raport", controllers.createPdfRaport.addRaport);
 router.post("/forgot-password", controllers.forgotUserPassword.forgotPassword);
 router.post("/reset-password", controllers.forgotUserPassword.resetPassword);
+router.post("/verify-email", controllers.verification.verifyUser);
 
 router.get("/:site/:folder/pdfs", controllers.allPdfs.allPdfs);
 router.get(

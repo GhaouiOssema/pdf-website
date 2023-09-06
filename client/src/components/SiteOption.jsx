@@ -145,7 +145,6 @@ const SiteOption = ({
         <MenuItem
           onClick={(event) => handleDelete(folders._id, event)}
           onClose={(event) => handleClose(event)}
-          ref={optionRef}
         >
           <div className="w-full flex justify-around items-center font-sans font-medium text-red-500">
             {loading ? (
