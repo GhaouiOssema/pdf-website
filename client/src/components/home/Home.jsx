@@ -51,7 +51,7 @@ const Home = () => {
   return (
     <div className="bg-gray-100">
       {isNavbarVisible && (
-        <header className="fixed w-full z-50 transition-all bg-white top-0 left-0 right-0">
+        <header className="fixed w-full z-50 transition-all bg-white bg-opacity-80 top-0 left-0 right-0">
           <nav className="px-4 lg:px-6 py-2.5 bg-none dark:bg-gray-800">
             <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-2xl">
               <a
@@ -92,7 +92,7 @@ const Home = () => {
                 </Link>
                 <Link
                   to={"/inscription"}
-                  className="cursor-pointer text-black font-medium text-sm px-4 py-2.5 mr-2"
+                  className="cursor-pointer text-black text-sm px-4 py-2.5 mr-2"
                 >
                   {pages[1]}
                 </Link>
@@ -133,128 +133,98 @@ const Home = () => {
         </div>
       </section>
 
-      <section
-        className="bg-gray-50 dark:bg-gray-800"
+      <div
         ref={decouvrirSectionRef}
+        className=" bg-white rounded-lg px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20"
       >
-        <div className="px-4 py-6 max-w lg:px-6">
-          <Carousel>
-            <div className="relative bg-blue-400 w-full">
-              <div className="h-64 overflow-hidden">
-                <img
-                  alt="..."
-                  src={IMG_1}
-                  className="object-cover w-full h-full"
-                />
-              </div>
-            </div>
-            <div className="relative bg-blue-400 w-full">
-              <div className="h-64 overflow-hidden">
-                <img
-                  alt="..."
-                  src={IMG_2}
-                  className="object-cover w-full h-full"
-                />
-              </div>
-            </div>
-            <div className="relative bg-blue-400 w-full">
-              <div className="h-64 overflow-hidden">
-                <img
-                  alt="..."
-                  src={IMG_3}
-                  className="object-cover w-full h-full"
-                />
-              </div>
-            </div>
-          </Carousel>
-        </div>
-      </section>
-
-      <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
-        <div className="max-w-xl mb-10 md:mx-auto sm:text-center lg:max-w-2xl md:mb-12">
-          <h2 className="max-w-lg mb-6 font-sans text-3xl font-bold leading-none tracking-tight text-gray-900 sm:text-4xl md:mx-auto">
-            quick, brown fox jumps over a lazy dog
+        <div className="w-full mb-10 md:mx-auto sm:text-center  md:mb-12">
+          <h2 className="  w-full mb-6 font-sans text-2xl font-normal tracking-tight leading-[2rem] text-gray-900 sm:text-4xl ">
+            Le technicien n'a qu'à scanner le QR pour consulter les anciennes
+            interventions et rédiger de nouveaux rapports,{" "}
+            <span className="font-bold text-[#125ba3]">
+              mais c'est à toi de :{" "}
+            </span>
           </h2>
-          <p className="text-base text-gray-700 md:text-lg">
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-            accusantium doloremque rem aperiam, eaque ipsa quae.
-          </p>
         </div>
         <div className="relative grid gap-8 row-gap-5 mb-8 md:row-gap-8 lg:grid-cols-4 sm:grid-cols-2">
           <div className="absolute inset-0 flex items-center justify-center sm:hidden lg:flex">
             <div className="w-px h-full bg-gray-300 lg:w-full lg:h-px" />
           </div>
-          <div className="p-5 duration-300 transform bg-white border rounded shadow-sm hover:-translate-y-2">
+          <div className="p-5 duration-300 transform bg-white border rounded  hover:-translate-y-2">
             <div className="flex items-center justify-between mb-2">
-              <p className="text-lg font-bold leading-5">Believe</p>
-              <p className="flex items-center justify-center w-6 h-6 font-bold rounded text-deep-purple-accent-400 bg-indigo-50">
+              <p className=" text-gray-900 text-lg font-bold leading-5">
+                {" "}
+                Connexion à Votre Espace Compte
+              </p>
+              <p className="text-white flex items-center justify-center w-6 h-6 font-bold rounded text-deep-purple-accent-400 bg-[#125ba3]">
                 1
               </p>
             </div>
-            <p className="text-sm text-gray-900">
-              Skate ipsum dolor sit amet, alley oop vert mute-air Colby Carter
-              flail 180 berm.
+            <p className="font-sans text-sm text-gray-500">
+              Connectez-vous à votre espace compte pour accéder à toutes les
+              fonctionnalités.
             </p>
           </div>
-          <div className="p-5 duration-300 transform bg-white border rounded shadow-sm hover:-translate-y-2">
+          <div className="p-5 duration-300 transform bg-white border rounded  hover:-translate-y-2">
             <div className="flex items-center justify-between mb-2">
-              <p className="text-lg font-bold leading-5">Be yourself</p>
-              <p className="flex items-center justify-center w-6 h-6 font-bold rounded text-deep-purple-accent-400 bg-indigo-50">
+              <p className="text-gray-900 text-lg font-bold leading-5">
+                Ajout de Sites
+              </p>
+              <p className="text-white flex items-center justify-center w-6 h-6 font-bold rounded text-deep-purple-accent-400 bg-[#125ba3]">
                 2
               </p>
             </div>
-            <p className="text-sm text-gray-900">
-              A flower in my garden, a mystery in my panties. Heart attack never
-              stopped.
+            <p className="font-sans text-sm text-gray-500">
+              Ajoutez des sites en fonction de l'emplacement de vos équipements.
             </p>
           </div>
-          <div className="p-5 duration-300 transform bg-white border rounded shadow-sm hover:-translate-y-2">
+          <div className="p-5 duration-300 transform bg-white border rounded  hover:-translate-y-2">
             <div className="flex items-center justify-between mb-2">
-              <p className="text-lg font-bold leading-5">Just do it</p>
-              <p className="flex items-center justify-center w-6 h-6 font-bold rounded text-deep-purple-accent-400 bg-indigo-50">
+              <p className="text-gray-900 text-lg font-bold leading-5">
+                Ajout d'Équipements
+              </p>
+              <p className="text-white flex items-center justify-center w-6 h-6 font-bold rounded text-deep-purple-accent-400 bg-[#125ba3]">
                 3
               </p>
             </div>
-            <p className="text-sm text-gray-900">
-              Chase ball of string eat plants, meow, and throw up because I ate
-              plants going.
+            <p className="font-sans text-sm text-gray-500">
+              Ajoutez les équipements correspondants à chaque site en incluant
+              leurs détails essentiels.
             </p>
           </div>
-          <div className="p-5 duration-300 transform bg-white border rounded shadow-sm hover:-translate-y-2">
+          <div className="p-5 duration-300 transform bg-white  border rounded hover:-translate-y-2">
             <div className="flex items-center justify-between mb-2">
-              <p className="text-lg font-bold leading-5">Eat that</p>
-              <p className="flex items-center justify-center w-6 h-6 font-bold rounded text-deep-purple-accent-400 bg-indigo-50">
+              <p className="text-gray-900 text-lg font-sans font-bold leading-5">
+                {" "}
+                Maintenance Facilitée
+              </p>
+              <p className="text-white flex items-center justify-center w-6 h-6 font-bold rounded text-deep-purple-accent-400 bg-[#125ba3]">
                 4
               </p>
             </div>
-            <p className="text-sm text-gray-900">
-              Bro ipsum dolor sit amet gaper backside single track, manny Bike
-              epic clipless.
+            <p className="font-sans text-sm text-gray-500">
+              Imprimez et collez le QR code sur chaque équipement.
             </p>
           </div>
         </div>
-        <div className="text-center">
-          <a
-            href="/"
-            className="rounded-lg inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 shadow-md md:w-auto bg-[#F0854A] hover:bg-[#125ba3] focus:shadow-outline focus:outline-none"
-          >
-            Learn more
-          </a>
-        </div>
       </div>
-      <section className="bg-gray-50 dark:bg-gray-800">
+
+      <section className="bg-white rounded-lg px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10 mt-[14vh] ">
         <div className="px-4 py-6 mx-auto max-w-screen-xl lg:px-6">
-          <div className="max-w-screen-md mb-8 lg:mb-16">
-            <h2 className="mb-4 text-4xl font-extrabold text-gray-900 dark:text-white">
+          <div className="w-full mb-8 lg:mb-16">
+            <h2 className=" text-center mb-4 text-4xl font-extrabold text-[#125ba3] dark:text-white">
               Avantages clés
             </h2>
-            <p className="text-gray-500 sm:text-xl dark:text-gray-400">
-              Boostez l'efficacité de votre maintenance
+            <p className="font-sans text-center text-gray-900 sm:text-xl dark:text-gray-400">
+              <span className=" font-sans text-[#F0854A]">
+                Boostez l'efficacité
+              </span>{" "}
+              de votre maintenance
             </p>
           </div>
           <div className="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-12 md:space-y-0">
             <div>
-              <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-blue-100 lg:h-12 lg:w-12 dark:bg-blue-900">
+              <div>
                 <svg
                   className="w-5 h-5 text-primary-600 lg:w-6 lg:h-6 dark:text-primary-300"
                   fill="currentColor"
@@ -268,16 +238,16 @@ const Home = () => {
                   ></path>
                 </svg>
               </div>
-              <h3 className="mb-2 text-xl font-bold dark:text-white">
+              <h3 className="mb-2 font-sans text-lg font-sans text-gray-900 font-bold dark:text-white">
                 Gagnez du temps
               </h3>
-              <p className="text-gray-500 text-sm dark:text-gray-400">
+              <p className=" font-sans text-gray-500 text-sm dark:text-gray-400">
                 Notre solution simplifie et accélère le processus de
                 maintenance, réduisant ainsi les temps d'arrêt de production.
               </p>
             </div>
             <div>
-              <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-blue-100 lg:h-12 lg:w-12 dark:bg-blue-900">
+              <div>
                 <svg
                   className="w-5 h-5 text-primary-600 lg:w-6 lg:h-6 dark:text-primary-300"
                   fill="currentColor"
@@ -287,17 +257,17 @@ const Home = () => {
                   <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"></path>
                 </svg>
               </div>
-              <h3 className="mb-2 text-xl font-bold dark:text-white">
+              <h3 className="mb-2 font-sans text-lg font-bold text-gray-900 dark:text-white">
                 Réduisez les coûts
               </h3>
-              <p className="text-gray-500 text-sm dark:text-gray-400">
+              <p className=" font-sans text-gray-500 text-sm dark:text-gray-400">
                 Une maintenance préventive basée sur des données précises aide à
                 prévenir les pannes coûteuses et prolonge la durée de vie de vos
                 machines.
               </p>
             </div>
             <div>
-              <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-blue-100 lg:h-12 lg:w-12 dark:bg-blue-900">
+              <div>
                 <svg
                   className="w-5 h-5 text-primary-600 lg:w-6 lg:h-6 dark:text-primary-300"
                   fill="currentColor"
@@ -312,10 +282,10 @@ const Home = () => {
                   <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z"></path>
                 </svg>
               </div>
-              <h3 className="mb-2 text-xl font-bold dark:text-white">
+              <h3 className="mb-2 font-sans text-lg font-bold text-gray-900 dark:text-white">
                 Suivi centralisé
               </h3>
-              <p className="text-gray-500 text-sm dark:text-gray-400">
+              <p className=" font-sans text-gray-500 text-sm dark:text-gray-400">
                 Tous les rapports de maintenance sont automatiquement
                 enregistrés dans notre système, vous permettant de suivre
                 l'historique de chaque machine et de planifier les interventions
@@ -323,7 +293,7 @@ const Home = () => {
               </p>
             </div>
             <div>
-              <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-blue-100 lg:h-12 lg:w-12 dark:bg-blue-900">
+              <div>
                 <svg
                   className="w-5 h-5 text-primary-600 lg:w-6 lg:h-6 dark:text-primary-300"
                   fill="currentColor"
@@ -338,10 +308,10 @@ const Home = () => {
                   ></path>
                 </svg>
               </div>
-              <h3 className="mb-2 text-xl font-bold dark:text-white">
+              <h3 className="mb-2 font-sans text-lg font-bold text-gray-900 dark:text-white">
                 Facilité d'utilisation
               </h3>
-              <p className="text-gray-500 text-sm dark:text-gray-400">
+              <p className=" font-sans text-gray-500 text-sm dark:text-gray-400">
                 une installation simple des codes QR et une interface
                 conviviale, facilitant ainsi leur utilisation.
               </p>
@@ -349,7 +319,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <section className="bg-gray-50 dark:bg-gray-800">
+      <section className="bg-gray-100 dark:bg-gray-800">
         <div className="px-4 py-6 mx-auto max-w-screen-xl lg:px-6">
           <Typography
             variant="h4"
@@ -368,13 +338,17 @@ const Home = () => {
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
-              <Typography>Accordion 1</Typography>
+              <Typography>
+                Dois-je acheter un équipement spécial pour utiliser la solution
+                QR ?
+              </Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
+                Réponse : Non, vous n'avez pas besoin d'équipement spécial.
+                Notre solution QR fonctionne en ligne, et vous pouvez l'utiliser
+                avec les équipements que vous avez déjà. Vous avez simplement
+                besoin d'un téléphone ou d'un ordinateur pour y accéder.
               </Typography>
             </AccordionDetails>
           </Accordion>
@@ -384,13 +358,16 @@ const Home = () => {
               aria-controls="panel2a-content"
               id="panel2a-header"
             >
-              <Typography>Accordion 2</Typography>
+              <Typography>
+                {" "}
+                Comment puis-je obtenir de l'aide en cas de problème technique ?
+              </Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
+                Réponse : Si vous rencontrez des problèmes techniques, contactez
+                notre service clientèle. Nous sommes là pour vous aider à
+                résoudre vos problèmes.
               </Typography>
             </AccordionDetails>
           </Accordion>
@@ -400,13 +377,16 @@ const Home = () => {
               aria-controls="panel2a-content"
               id="panel2a-header"
             >
-              <Typography>Accordion 2</Typography>
+              <Typography>
+                Comment puis-je résoudre les problèmes de lecture des QR codes
+                sur mes équipements ?
+              </Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
+                Réponse : Assurez-vous que les QR codes sont propres et
+                lisibles. Si vous avez des problèmes persistants, contactez
+                notre support technique pour obtenir de l'aide.
               </Typography>
             </AccordionDetails>
           </Accordion>
