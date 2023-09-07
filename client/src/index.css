@@ -321,6 +321,7 @@ body {
     line-height: 1.4; /* Adjust the value as needed */
   }
 }
+
 @media screen and (min-width: 1024px) {
   .gradient-text {
     background: linear-gradient(75deg, #125ba3, #125ba3);
@@ -460,4 +461,20 @@ body {
     opacity: 0;
     border-radius: 10%;
   }
+}
+.rotate-animation {
+  transition: rotate() 0.5s ease-in-out;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rotate-animation {
+  animation: rotate 1s linear infinite; /* You can adjust the animation duration and timing here */
 }

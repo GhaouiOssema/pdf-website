@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const jwt = require("jsonwebtoken");
 const Notification = require("../models/Notification");
+const USER = require("../models/USER");
 
 module.exports = {
   getNotification: async (req, res) => {
@@ -19,11 +20,13 @@ module.exports = {
         return res.status(401).json({ message: "Invalid token" });
       }
 
-      const pdfs = decoded.pdfList;
+      const { userId } = decoded;
+      const user = await USER.findById(userId);
+
       let notificationList = [];
 
       const notifications = await Notification.find({
-        equipementId: { $in: pdfs },
+        equipementId: { $in: user.allPdfs },
       });
 
       if (notifications.length === 0) {
