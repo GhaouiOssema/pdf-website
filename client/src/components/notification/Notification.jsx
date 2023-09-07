@@ -142,7 +142,7 @@ const Notification = () => {
                       return (
                         <div
                           key={idx}
-                          className="w-full flex justify-between py-2 px-4 bg-white rounded-md mt-5"
+                          className="w-full flex justify-between py-2 px-2 bg-white rounded-md mt-5"
                         >
                           <Link
                             to={`/${el.site}/${el.dossier}/pdf/détails/${el.equipementId}`}
