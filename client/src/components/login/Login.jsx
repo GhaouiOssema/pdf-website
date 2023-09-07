@@ -146,7 +146,7 @@ const Login = () => {
             </div>
           </nav>
         </header>
-        <div className="relative min-h-screen flex boor bg-gray-100">
+        <div className="relative h-full flex mt-[10%] md:mt-0 lg:mt-0 xl:mt-0 2xl:pt-0 bg-gray-100">
           <div className="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0 bg-gray-100">
             <div className="w-full xl:w-3/5 h-full md:flex flex-auto items-center justify-center p-10 overflow-hidden bg-purple-900 text-white bg-no-repeat bg-cover relative">
               <div className="absolute bg-white inset-0 z-0"></div>
@@ -164,7 +164,7 @@ const Login = () => {
               </ul>
             </div>
           </div>
-          <div className="absolute inset-0  flex justify-center items-center">
+          <div className="absolute inset-0 flex justify-center items-center">
             <div className="md:flex md:items-center md:justify-center w-full sm:w-auto md:h-full w-2/5 xl:w-2/5 p-8  md:p-10 lg:p-14 sm:rounded-lg md:rounded-none ">
               <div className="max-w-md w-full space-y-8 bg-gray-100 px-10 py-3 rounded-lg">
                 <div className="text-center ">
