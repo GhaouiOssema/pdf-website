@@ -165,8 +165,8 @@ const Notification = () => {
                               </span>
                             </div>
                           </Link>
-                          <div className="flex flex-col items-center justify-center px-4 text-stone-600 text-xs md:text-sm">
-                            <span className="w-full flex justify-end">
+                          <div className="flex flex-col items-center justify-center px-1 md:px-4 lg:px-4 xl:px-4 text-stone-600 text-xs md:text-sm">
+                            <span className="w-full flex justify-end ">
                               {timePart}
                             </span>
                             <span className="">{datePart}</span>
