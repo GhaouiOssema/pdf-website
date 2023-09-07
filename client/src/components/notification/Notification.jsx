@@ -6,7 +6,7 @@ import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import React, { useEffect, useState } from "react";
-
+import NotificationsOffRoundedIcon from "@mui/icons-material/NotificationsOffRounded";
 function handleClick(event) {
   event.preventDefault();
   console.info("You clicked a breadcrumb.");
@@ -52,8 +52,8 @@ const Notification = () => {
   console.log(notifications);
 
   return (
-    <>
-      {loading ? (
+    <div className="bg-gray-100">
+      {/* {loading ? (
         <div className="w-full h-full flex flex-col items-center">
           <Box
             sx={{
@@ -111,11 +111,6 @@ const Notification = () => {
                           className="flex justify-between py-2 px-4 bg-white rounded-md mt-5"
                         >
                           <div className="flex items-center space-x-4">
-                            <img
-                              src="https://flowbite.com/docs/images/people/profile-picture-1.jpg"
-                              className="rounded-full h-14 w-14"
-                              alt=""
-                            />
                             <div className="flex flex-col space-y-1">
                               <span className="font-bold">
                                 Un nouveaux raport a été ajouté
@@ -132,10 +127,11 @@ const Notification = () => {
                               </span>
                             </div>
                           </div>
-                          <div className="flex-none px-4 py-2 text-stone-600 text-xs md:text-sm">
-                            {timePart}
-                            <br />
-                            {datePart}
+                          <div className="flex flex-col items-center justify-center px-4 text-stone-600 text-xs md:text-sm">
+                            <span className="w-full flex justify-end">
+                              {timePart}
+                            </span>
+                            <span className="">{datePart}</span>
                           </div>
                         </div>
                       );
@@ -146,8 +142,23 @@ const Notification = () => {
         </div>
       ) : !notifications && !loading ? (
         <p className="text-center mt-4">Il n'existe aucun dossier.</p>
-      ) : null}
-    </>
+        ) : null} */}
+      <div className="p-0 m-0 min-h-[90vh] flex justify-center items-center md:min-h-[100vh] lg:min-h-0 lg:h-[100vh] xl:h-[100vh] opacity-20">
+        <div className="flex flex-col justify-center items-center">
+          <NotificationsOffRoundedIcon
+            sx={{
+              height: 250,
+              width: 250,
+              opacity: "100%",
+              color: "black",
+            }}
+          />
+          <p className="w-full font-sans font-bold text-xl text-center">
+            Vous n'avez reçu aucun rapport jusqu'à présent.
+          </p>
+        </div>
+      </div>
+    </div>
   );
 };
 

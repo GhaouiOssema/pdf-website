@@ -135,7 +135,6 @@ const App = () => {
             )}
           </Routes>
         </div>
-        {!isAuthenticated && <Footer />}
       </div>
     </div>
   );

@@ -165,7 +165,7 @@ const PdfView = () => {
   };
   const handleOpen = (soc) => {
     setOpen(true);
-    const filteredReports = raports.filter((raport) => raport.société === soc);
+    const filteredReports = raports.filter((raport) => raport._id === soc);
     setFilteredRaports(filteredReports);
   };
 
@@ -492,7 +492,7 @@ const PdfView = () => {
                           <TableCell align="center" sx={{ cursor: "pointer" }}>
                             <InfoOutlinedIcon
                               sx={{ color: "#3291F0" }}
-                              onClick={() => handleOpen(raport.société)}
+                              onClick={() => handleOpen(raport._id)}
                             />
                           </TableCell>
                         </TableRow>

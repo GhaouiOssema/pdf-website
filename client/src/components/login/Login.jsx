@@ -5,6 +5,7 @@ import LOGO from "../../assets/logo2.png";
 import jwt_decode from "jwt-decode";
 import { Dialog, DialogActions, DialogContent, Slide } from "@mui/material";
 import { Button } from "flowbite-react";
+import Footer from "../Footer";
 
 const isEmailValid = (email) => {
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -94,7 +95,7 @@ const Login = () => {
   return (
     <div>
       {open && <Popup open={open} setOpen={setOpen} />}
-      <div className="h-screen flex flex-col">
+      <div className="h-screen flex flex-col bg-gray-100">
         <header className="fixed w-full z-50 transition-all bg-white top-0 left-0 right-0">
           <nav className="px-4 lg:px-6 py-2.5 bg-none dark:bg-gray-800">
             <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-2xl">
@@ -145,85 +146,113 @@ const Login = () => {
             </div>
           </nav>
         </header>
-        <section className="min-h-screen flex items-stretch text-white ">
-          <div className="lg:flex w-1/2 hidden bg-gray-500 bg-no-repeat bg-cover relative items-center IMAG__SCAN">
-            <div className="absolute bg-black opacity-60 inset-0 z-0"></div>
-            <div className="w-full px-24 z-10">
-              <h1 className="text-5xl font-bold text-left tracking-wide">
-                Keep it special
-              </h1>
-              <p className="text-3xl my-4">
-                Capture your personal memory in unique way, anywhere.
-              </p>
+        <div className="relative min-h-screen flex pt-[30%] md:pt-0 lg:pt-0 xl:pt-0 2xl:pt-0 bg-gray-100">
+          <div className="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0 bg-gray-100">
+            <div className="sm:w-1/2 xl:w-3/5 h-full hidden md:flex flex-auto items-center justify-center p-10 overflow-hidden bg-purple-900 text-white bg-no-repeat bg-cover relative">
+              <div className="absolute bg-gray-100  inset-0 z-0"></div>
+
+              <ul className="circles">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+              </ul>
             </div>
           </div>
-          <div className="bg-gray-100 lg:w-1/2 w-full flex items-center justify-center text-center md:px-16 px-0 z-0">
-            <div className="absolute lg:hidden z-10 inset-0 bg-gray-500 bg-no-repeat object-right items-center IMAG__SCAN">
-              <div className="absolute bg-black opacity-60 inset-0 z-0"></div>
-            </div>
-            <div className="w-full py-6 z-20">
-              <h1 className="text-white md:text-gray-800 lg:text-gray-800 xl:text-gray-800 2xl:text-gray-800 font-extrabold text-2xl mb-1 text-center">
-                Bonjour à nouveau !
-              </h1>
-              <p className="text-sm font-medium text-white md:text-gray-600 lg:text-gray-600 xl:text-gray-600 2xl:text-gray-600 mb-7 text-center">
-                Content de te revoir
-              </p>
-              {error && <p className="text-red-500 mb-4">{error}</p>}
-              <form
-                onSubmit={handleSubmit}
-                className="sm:w-2/3 w-full px-4 lg:px-0 mx-auto"
-              >
-                <div className="pb-2 pt-2">
-                  <label
-                    htmlFor="email"
-                    className="block text-white md:text-gray-700 lg:text-gray-700 xl:text-gray-700 2xl:text-gray-700 font-medium mb-2 text-start"
-                  >
-                    Email :
-                  </label>
-                  <input
-                    id="email"
-                    type="email"
-                    name="email"
-                    className="text-black w-full px-4 py-2 border-none rounded-lg focus:outline-none focus:ring"
-                    placeholder="Entrez votre adresse e-mail"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    pattern={emailRegex}
-                  />
+          <div className="absolute inset-0 mt-[50px] flex justify-center items-center">
+            <div className="md:flex md:items-center md:justify-center w-full sm:w-auto md:h-full w-2/5 xl:w-2/5 p-8  md:p-10 lg:p-14 sm:rounded-lg md:rounded-none ">
+              <div className="max-w-md w-full space-y-8 bg-gray-200 bg-opacity-60 px-10 py-3 rounded-lg">
+                <div className="text-center ">
+                  <h2 className="mt-6 text-2xl font-sans font-bold text-gray-900">
+                    Bonjour à nouveau !
+                  </h2>
+                  <p className="mt-2 text-sm text-gray-500 font-sans">
+                    Content de te revoir
+                  </p>
+                  {error && <p className="text-red-500 mb-4">{error}</p>}
                 </div>
 
-                <div className="pb-2 pt-2">
-                  <label
-                    htmlFor="password"
-                    className="block text-white  lg:text-gray-700 xl:text-gray-700 2xl:text-gray-700 font-medium mb-2 text-start"
-                  >
-                    Mot de passe :
-                  </label>
-                  <input
-                    type="password"
-                    name="password"
-                    id="password"
-                    className="text-black w-full px-4 py-2 border-none rounded-lg focus:outline-none focus:ring"
-                    placeholder="Entrez votre mot de passe."
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
-                </div>
-
-                <div className="pb-2 pt-7">
-                  <button className="font-medium  block w-full px-4 py-2 text-lg rounded-lg bg-primary-700">
-                    Se connecter
-                  </button>
-                </div>
-                <div className="text-center text-white md:text-gray-600 lg:text-gray-600 xl:text-gray-600 2xl:text-gray-600 hover:underline font-medium hover:text-gray-800">
-                  <Link to={"/seconnecter/oublier"}>Mot de passe oublié?</Link>
-                </div>
-              </form>
+                <form
+                  className="mt-8 space-y-6"
+                  onSubmit={handleSubmit}
+                  method="POST"
+                >
+                  <input type="hidden" name="remember" value="true" />
+                  <div className="relative">
+                    <label
+                      htmlFor="email"
+                      className="block text-gray-700 font-sans font-medium mb-2 text-start"
+                    >
+                      Email :
+                    </label>
+                    <input
+                      id="email"
+                      type="email"
+                      name="email"
+                      className="text-black w-full px-4 py-2 border-none rounded-lg font-sans focus:outline-none focus:ring bg-gray-100 bg-opacity-90"
+                      placeholder="Entrez votre adresse e-mail"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      pattern={emailRegex}
+                    />
+                  </div>
+                  <div className="mt-8 content-center">
+                    <label
+                      htmlFor="password"
+                      className="block text-gray-700 font-sans font-medium mb-2 text-start"
+                    >
+                      Mot de passe :
+                    </label>
+                    <input
+                      type="password"
+                      name="password"
+                      id="password"
+                      className="text-black w-full px-4 py-2 border-none rounded-lg focus:outline-none focus:ring  bg-gray-100 bg-opacity-90"
+                      placeholder="Entrez votre mot de passe."
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="flex items-center justify-end">
+                    <div className="text-sm">
+                      <Link
+                        to={"/seconnecter/oublier"}
+                        className="text-indigo-400 hover:text-blue-500"
+                      >
+                        Mot de passe oublié?
+                      </Link>
+                    </div>
+                  </div>
+                  <div>
+                    <button
+                      type="submit"
+                      className="w-full flex justify-center bg-[#125ba3] hover:bg-primary-800 text-gray-100 font-sans p-4  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
+                    >
+                      Se connecter
+                    </button>
+                  </div>
+                  <p className="flex flex-col items-center justify-center mt-10 text-center text-md text-gray-500">
+                    <span>Vous n'avez pas de compte ?</span>
+                    <Link
+                      to={"/inscription"}
+                      className="text-indigo-400 hover:text-blue-500 no-underline hover:underline cursor-pointer transition ease-in duration-300"
+                    >
+                      Inscription
+                    </Link>
+                  </p>
+                </form>
+              </div>
             </div>
           </div>
-        </section>
+        </div>
       </div>
     </div>
   );

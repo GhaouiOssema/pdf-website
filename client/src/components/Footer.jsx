@@ -1,13 +1,17 @@
 import React from "react";
 import LOGO from "../assets/logo2.png";
 
-const Footer = () => {
+const Footer = ({ section }) => {
   return (
-    <footer className="text-gray-600 body-font bg-gray-100">
-      <div className="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col">
+    <footer className="text-gray-600 body-font bg-gray-100 absolute bottom-0 w-full">
+      <div className="container px-5 py-4 mx-auto flex items-center sm:flex-row flex-col">
         <div className="w-full flex sm:flex-row flex-col items-center justify-around">
           <a className="ml-0 md:ml-20 lg:ml20 xl:ml:40 2xl:ml-40 flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
-            <img src={LOGO} alt="logo" className="w-40 h-full" />
+            <img
+              src={LOGO}
+              alt="logo"
+              className="w-40 h-full hidden md:block"
+            />
           </a>
           <p className="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">
             &copy; {new Date().getFullYear()} WeCom. Tous droits réservés.

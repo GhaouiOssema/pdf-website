@@ -229,7 +229,7 @@ const PdfDetails = () => {
 
   const handleOpen = (soc) => {
     setOpen(true);
-    const filteredReports = raports.filter((raport) => raport.société === soc);
+    const filteredReports = raports.filter((raport) => raport._id === soc);
     setFilteredRaports(filteredReports);
   };
 
@@ -258,7 +258,7 @@ const PdfDetails = () => {
       )}
 
       {pdfData ? (
-        <div className="h-full w-full md:h-[100vh] lg:h-[100vh] xl:h-[100vh] ">
+        <div className="h-full w-full md:h-[110vh] lg:h-[110vh] xl:h-[110vh] ">
           <div className="flex flex-col items-center justify-center mt-5">
             <h1 className="text-3xl text-center font-sans font-bold mb-5">
               <span className="">Fiche d'équipement</span>
@@ -464,7 +464,7 @@ const PdfDetails = () => {
                                 >
                                   <InfoOutlinedIcon
                                     sx={{ color: "#3291F0" }}
-                                    onClick={() => handleOpen(raport.société)}
+                                    onClick={() => handleOpen(raport._id)}
                                   />
                                 </TableCell>
                               </TableRow>
@@ -630,7 +630,7 @@ const PdfDetails = () => {
                                 >
                                   <InfoOutlinedIcon
                                     sx={{ color: "#3291F0" }}
-                                    onClick={() => handleOpen(raport.société)}
+                                    onClick={() => handleOpen(raport._id)}
                                   />
                                 </TableCell>
                               </TableRow>
