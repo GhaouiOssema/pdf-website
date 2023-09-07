@@ -2,58 +2,81 @@ import { Box, CircularProgress } from "@mui/material";
 import axios from "axios";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import React, { useEffect, useState } from "react";
 import NotificationsOffRoundedIcon from "@mui/icons-material/NotificationsOffRounded";
-function handleClick(event) {
-  event.preventDefault();
-  console.info("You clicked a breadcrumb.");
-}
+import NotificationAddIcon from "@mui/icons-material/NotificationAdd";
+import CachedOutlinedIcon from "@mui/icons-material/CachedOutlined";
+import { Link } from "react-router-dom";
 
 const Notification = () => {
   const [loading, setLoading] = useState(true);
   const [notifications, setNotifications] = useState([]);
+  const [isRotating, setRotating] = useState(false);
 
-  useEffect(() => {
-    const fetchNotification = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        if (!token) {
-          return;
-        }
-
-        const config = {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        };
-
-        const response = await axios.get(
-          `${import.meta.env.VITE_SERVER_API_URL}/notification`,
-          config
-        );
-        if (response.status === 200) {
-          setNotifications(response.data.notifications);
-        } else {
-          setNotifications(null);
-        }
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
+  const fetchNotification = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        return;
       }
-    };
 
-    setLoading(true);
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const response = await axios.get(
+        `${import.meta.env.VITE_SERVER_API_URL}/notification`,
+        config
+      );
+
+      if (response.status === 200) {
+        setNotifications(response.data.notifications);
+      } else {
+        setNotifications(null);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+      setRotating(false);
+    }
+  };
+  useEffect(() => {
     fetchNotification();
   }, []);
+
   console.log(notifications);
+
+  const getRandomColor = () => {
+    const letters = "0123456789ABCDEF";
+    let color = "#";
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  };
+
+  const handleRefreshClick = async () => {
+    setRotating(true);
+
+    try {
+      await fetchNotification();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setTimeout(() => {
+        setRotating(false);
+      }, 2000);
+    }
+  };
 
   return (
     <div className="bg-gray-100">
-      {/* {loading ? (
+      {loading ? (
         <div className="w-full h-full flex flex-col items-center">
           <Box
             sx={{
@@ -70,7 +93,17 @@ const Notification = () => {
         <div className="bg-gray-100 min-h-screen">
           <div className="flex flex-col items-start justify-center min-h-screen bg-gradient-to-t p-6">
             <div className="w-full">
-              <div className="grid grid-cols-1 h-full">
+              <div className="grid grid-cols-1 h-full px-10">
+                <div className="flex flex-row justify-end items-center flex-wrap cursor-pointer w-full">
+                  <span
+                    className={`bg-white p-2 rounded-full ${
+                      isRotating ? "rotate-animation" : ""
+                    }`}
+                    onClick={handleRefreshClick}
+                  >
+                    <CachedOutlinedIcon />
+                  </span>
+                </div>
                 {notifications &&
                   notifications
                     ?.sort(
@@ -105,12 +138,17 @@ const Notification = () => {
                           timeStyle: "short",
                         }
                       );
+                      const COLOR = getRandomColor();
                       return (
                         <div
                           key={idx}
                           className="flex justify-between py-2 px-4 bg-white rounded-md mt-5"
                         >
-                          <div className="flex items-center space-x-4">
+                          <Link
+                            to={`/${el.site}/${el.dossier}/pdf/détails/${el.equipementId}`}
+                            className="flex items-center space-x-4 cursor-pointer"
+                          >
+                            <NotificationAddIcon sx={{ color: COLOR }} />
                             <div className="flex flex-col space-y-1">
                               <span className="font-bold">
                                 Un nouveaux raport a été ajouté
@@ -126,7 +164,7 @@ const Notification = () => {
                                 </Stack>
                               </span>
                             </div>
-                          </div>
+                          </Link>
                           <div className="flex flex-col items-center justify-center px-4 text-stone-600 text-xs md:text-sm">
                             <span className="w-full flex justify-end">
                               {timePart}
@@ -142,22 +180,23 @@ const Notification = () => {
         </div>
       ) : !notifications && !loading ? (
         <p className="text-center mt-4">Il n'existe aucun dossier.</p>
-        ) : null} */}
-      <div className="p-0 m-0 min-h-[90vh] flex justify-center items-center md:min-h-[100vh] lg:min-h-0 lg:h-[100vh] xl:h-[100vh] opacity-20">
-        <div className="flex flex-col justify-center items-center">
-          <NotificationsOffRoundedIcon
-            sx={{
-              height: 250,
-              width: 250,
-              opacity: "100%",
-              color: "black",
-            }}
-          />
-          <p className="w-full font-sans font-bold text-xl text-center">
-            Vous n'avez reçu aucun rapport jusqu'à présent.
-          </p>
+      ) : (
+        <div className="p-0 m-0 min-h-[90vh] flex justify-center items-center md:min-h-[100vh] lg:min-h-0 lg:h-[100vh] xl:h-[100vh] opacity-20">
+          <div className="flex flex-col justify-center items-center">
+            <NotificationsOffRoundedIcon
+              sx={{
+                height: 250,
+                width: 250,
+                opacity: "100%",
+                color: "black",
+              }}
+            />
+            <p className="w-full font-sans font-bold text-xl text-center">
+              Vous n'avez reçu aucun rapport jusqu'à présent.
+            </p>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

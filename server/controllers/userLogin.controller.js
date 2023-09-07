@@ -34,8 +34,6 @@ module.exports = {
         { expiresIn: "4d" }
       );
 
-      console.log(user.allPdfs);
-
       res.json({ token });
     } catch (err) {
       console.error(err);

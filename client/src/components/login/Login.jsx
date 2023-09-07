@@ -148,9 +148,8 @@ const Login = () => {
         </header>
         <div className="relative min-h-screen flex pt-[30%] md:pt-0 lg:pt-0 xl:pt-0 2xl:pt-0 bg-gray-100">
           <div className="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0 bg-gray-100">
-            <div className="sm:w-1/2 xl:w-3/5 h-full hidden md:flex flex-auto items-center justify-center p-10 overflow-hidden bg-purple-900 text-white bg-no-repeat bg-cover relative">
+            <div className="w-full xl:w-3/5 h-full md:flex flex-auto items-center justify-center p-10 overflow-hidden bg-purple-900 text-white bg-no-repeat bg-cover relative">
               <div className="absolute bg-white inset-0 z-0"></div>
-
               <ul className="circles">
                 <li></li>
                 <li></li>
@@ -183,7 +182,6 @@ const Login = () => {
                   onSubmit={handleSubmit}
                   method="POST"
                 >
-                  <input type="hidden" name="remember" value="true" />
                   <div className="relative">
                     <label
                       htmlFor="email"
