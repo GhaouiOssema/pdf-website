@@ -146,7 +146,7 @@ const Login = () => {
             </div>
           </nav>
         </header>
-        <div className="relative h-full flex mt-[10%] md:mt-0 lg:mt-0 xl:mt-0 2xl:pt-0 bg-gray-100">
+        <div className="relative h-full flex mt-[10%] md:mt-0 lg:mt-0 xl:mt-0 2xl:pt-0 bg-gray-100 overflow-hidden">
           <div className="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0 bg-gray-100">
             <div className="w-full xl:w-3/5 h-full md:flex flex-auto items-center justify-center p-10 overflow-hidden bg-purple-900 text-white bg-no-repeat bg-cover relative">
               <div className="absolute bg-white inset-0 z-0"></div>
@@ -174,11 +174,11 @@ const Login = () => {
                   <p className="mt-2 text-sm text-gray-500 font-sans">
                     Content de te revoir
                   </p>
-                  {error && <p className="text-red-500 mb-4">{error}</p>}
+                  {error && <p className="text-red-500">{error}</p>}
                 </div>
 
                 <form
-                  className="mt-8 space-y-6"
+                  className="space-y-4"
                   onSubmit={handleSubmit}
                   method="POST"
                 >
