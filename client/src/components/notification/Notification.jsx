@@ -113,14 +113,28 @@ const Notification = () => {
                     )
                     ?.map((el, idx) => {
                       const breadcrumbs = [
-                        <Typography underline="hover" key="1" color="inherit">
-                          {el.site}
+                        <Typography
+                          underline="hover"
+                          key="1"
+                          sx={{ fontSize: 15 }}
+                          color="inherit"
+                        >
+                          <span className="font-sans">{el.site}</span>
                         </Typography>,
-                        <Typography underline="hover" key="2" color="inherit">
-                          {el.dossier}
+                        <Typography
+                          underline="hover"
+                          key="2"
+                          sx={{ fontSize: 15 }}
+                          color="inherit"
+                        >
+                          <span className="font-sans">{el.dossier}</span>
                         </Typography>,
-                        <Typography key="3" color="text.primary">
-                          {el.equipementName}
+                        <Typography
+                          key="3"
+                          sx={{ fontSize: 15 }}
+                          color="text.primary"
+                        >
+                          <span className="font-sans">{el.equipementName}</span>
                         </Typography>,
                       ];
                       const notificationDateTime = new Date(
@@ -152,7 +166,7 @@ const Notification = () => {
                               <span className="text-sm md:text-base  font-bold">
                                 Un nouveaux raport a été ajouté
                               </span>
-                              <span className="text-sm">
+                              <span className="text-sm md:text-base">
                                 <Stack spacing={2}>
                                   <Breadcrumbs
                                     separator="›"
