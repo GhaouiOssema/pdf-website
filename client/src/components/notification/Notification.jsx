@@ -134,10 +134,9 @@ const Notification = () => {
                       );
                       const timePart = notificationDateTime.toLocaleTimeString(
                         [],
-                        {
-                          timeStyle: "short",
-                        }
+                        { hour12: false, timeStyle: "short" }
                       );
+
                       const COLOR = getRandomColor();
                       return (
                         <div
@@ -150,7 +149,7 @@ const Notification = () => {
                           >
                             <NotificationAddIcon sx={{ color: COLOR }} />
                             <div className="flex flex-col w-full space-y-1">
-                              <span className="text-sm md:text-base font-bold">
+                              <span className="text-sm md:text-base  font-bold">
                                 Un nouveaux raport a été ajouté
                               </span>
                               <span className="text-sm">
