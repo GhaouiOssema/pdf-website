@@ -151,125 +151,14 @@ const Register = () => {
 
         <div className="relative min-h-screen flex pt-[30%] md:pt-0 lg:pt-0 xl:pt-0 2xl:pt-0 bg-gray-100">
           <div className="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0 bg-gray-100">
-            <div className="md:flex md:items-center md:justify-center w-full sm:w-auto md:h-full w-2/5 xl:w-2/5 p-8  md:p-10 lg:p-14 sm:rounded-lg md:rounded-none bg-gray-100">
-              <div className="max-w-md w-full space-y-8">
-                <div className="text-center">
-                  <h2 className="mt-6 text-2xl font-bold text-gray-900">
-                    Bonjour à nouveau !
-                  </h2>
-                  <p className="mt-2 text-sm text-gray-500">
-                    Content de te revoir
-                  </p>
-                  {error && (
-                    <p className="font-sans font-medium text-red-500 mb-4">
-                      {error}
-                    </p>
-                  )}
-                </div>
-
-                <form
-                  className="mt-8 space-y-6"
-                  onSubmit={handleSubmit}
-                  method="POST"
-                >
-                  <div className="relative">
-                    <span className="text-start font-sans block text-black mb-2">
-                      Nom d'utilisateur
-                    </span>
-                    <input
-                      type="text"
-                      id="userName"
-                      className="text-black border-none w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring"
-                      placeholder="Entrez votre nom d'utilisateur"
-                      value={userName}
-                      onChange={(e) => setUserName(e.target.value)}
-                      required
-                    />
-                  </div>
-                  <div className="mt-8 content-center">
-                    <label
-                      htmlFor="email"
-                      className="block text-white font-sans font-medium lg:text-gray-700 xl:text-gray-700 2xl:text-gray-700 text-start mb-2"
-                    >
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      className="text-black border-none w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring"
-                      placeholder="Entrez votre adresse e-mail"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                    />
-                  </div>
-                  <div className="mt-8 content-center">
-                    <label
-                      htmlFor="password"
-                      className="block text-white  lg:text-gray-700 xl:text-gray-700 2xl:text-gray-700 text-start font-medium mb-2"
-                    >
-                      Mot de passe
-                    </label>
-                    <input
-                      type="password"
-                      id="password"
-                      className="text-black border-none w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring"
-                      placeholder="Entrez votre mot de passe."
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                    />
-                  </div>
-                  <div className="mt-8 content-center">
-                    <label
-                      htmlFor="email"
-                      className="block text-white  lg:text-gray-700 xl:text-gray-700 2xl:text-gray-700 text-start font-medium mb-2"
-                    >
-                      Confirmez votre mot de passe
-                    </label>
-                    <input
-                      type="password"
-                      id="confirmPassword"
-                      className="text-black border-none w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring"
-                      placeholder="Entrez votre adresse e-mail"
-                      value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <button
-                      type="submit"
-                      className="w-full flex justify-center bg-primary-700 hover:bg-primary-800 text-gray-100 p-4  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
-                    >
-                      Se connecter
-                    </button>
-                  </div>
-                  <p className="flex flex-col items-center justify-center mt-10 text-center text-md text-gray-500">
-                    <span>Vous n'avez pas de compte ?</span>
-                    <Link
-                      to={"/inscription"}
-                      className="text-indigo-400 hover:text-blue-500 no-underline hover:underline cursor-pointer transition ease-in duration-300"
-                    >
-                      Inscription
-                    </Link>
-                  </p>
-                </form>
-              </div>
-            </div>
             <div className="sm:w-1/2 xl:w-3/5 h-full hidden md:flex flex-auto items-center justify-center p-10 overflow-hidden bg-purple-900 text-white bg-no-repeat bg-cover relative">
-              <div className="absolute bg-primary-700 opacity-75 inset-0 z-0"></div>
+              <div className="absolute bg-white inset-0 z-0"></div>
               <div className="w-full  max-w-md z-10">
                 <div className="sm:text-4xl xl:text-5xl font-bold leading-tight mb-6">
-                  Reference site about Lorem Ipsum..
-                </div>
-                <div className="sm:text-sm xl:text-md text-gray-200 font-normal">
-                  What is Lorem Ipsum Lorem Ipsum is simply dummy text of the
-                  printing and typesetting industry Lorem Ipsum has been the
-                  industry's standard dummy text ever since the 1500s when an
-                  unknown printer took a galley of type and scrambled it to make
-                  a type specimen book it has?
+                  <p className="mt-10 text-[#125ba3] leading-[3.4rem]">
+                    Créez votre compte en quelques étapes{" "}
+                    <span className="text-[#F0854A]">simples!</span>
+                  </p>
                 </div>
               </div>
               <ul className="circles">
@@ -281,9 +170,108 @@ const Register = () => {
                 <li></li>
                 <li></li>
                 <li></li>
-                <li></li>
-                <li></li>
               </ul>
+            </div>
+            <div className="md:flex md:items-center md:justify-center w-full sm:w-auto md:h-full w-2/5 xl:w-2/5 p-8  md:p-10 lg:p-14 sm:rounded-lg md:rounded-none  bg-gray-100">
+              <div className="max-w-md w-full space-y-8 h-full">
+                <div className="text-center">
+                  {error && (
+                    <p className="font-sans font-medium text-red-500 mb-4">
+                      {error}
+                    </p>
+                  )}
+                </div>
+
+                <form
+                  className=" h-full w-full flex flex-col justify-center "
+                  onSubmit={handleSubmit}
+                  method="POST"
+                >
+                  <div className="relative">
+                    <span className="text-start  text-gray-700 font-sans font-medium mb-2">
+                      Nom d'utilisateur* :
+                    </span>
+                    <input
+                      type="text"
+                      id="userName"
+                      className="text-black border-none w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring  bg-white bg-opacity-90"
+                      placeholder="Entrez votre nom d'utilisateur"
+                      value={userName}
+                      onChange={(e) => setUserName(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="mt-4 content-center">
+                    <label
+                      htmlFor="email"
+                      className="block  text-gray-700 font-sans font-medium text-start mb-2"
+                    >
+                      Email* :
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      className="text-black border-none w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring  bg-white bg-opacity-90"
+                      placeholder="Entrez votre adresse e-mail"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="mt-4 content-center">
+                    <label
+                      htmlFor="password"
+                      className="block text-gray-700 font-sans font-medium mb-2"
+                    >
+                      Mot de passe* :
+                    </label>
+                    <input
+                      type="password"
+                      id="password"
+                      className="text-black border-none w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring  bg-white bg-opacity-90"
+                      placeholder="Entrez votre mot de passe."
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="mt-4 content-center">
+                    <label
+                      htmlFor="email"
+                      className="block  text-gray-700 font-sans font-medium mb-2"
+                    >
+                      Confirmez votre mot de passe* :
+                    </label>
+                    <input
+                      type="password"
+                      id="confirmPassword"
+                      className="text-black border-none w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring  bg-white bg-opacity-90"
+                      placeholder="Entrez votre adresse e-mail"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <button
+                      type="submit"
+                      className="mt-10 w-full flex justify-center hover:bg-[#F0854A] bg-[#125ba3] text-gray-100 font-sans p-4  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
+                    >
+                      S'inscrire
+                    </button>
+                  </div>
+                  <p className=" flex flex-col items-center justify-center mt-10 font-sans text-center text- text-gray-500">
+                    <span>Vous avez déjà un compte ?</span>
+                    <Link
+                      to={"/seconnecter"}
+                      className="text-blue-500 hover:text-blue-800  font-sans no-underline hover:underline cursor-pointer transition ease-in duration-300"
+                    >
+                      Se connecter.
+                    </Link>
+                  </p>
+                </form>
+              </div>
             </div>
           </div>
         </div>

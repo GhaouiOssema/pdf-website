@@ -149,7 +149,7 @@ const Login = () => {
         <div className="relative min-h-screen flex pt-[30%] md:pt-0 lg:pt-0 xl:pt-0 2xl:pt-0 bg-gray-100">
           <div className="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0 bg-gray-100">
             <div className="sm:w-1/2 xl:w-3/5 h-full hidden md:flex flex-auto items-center justify-center p-10 overflow-hidden bg-purple-900 text-white bg-no-repeat bg-cover relative">
-              <div className="absolute bg-gray-100  inset-0 z-0"></div>
+              <div className="absolute bg-white inset-0 z-0"></div>
 
               <ul className="circles">
                 <li></li>
@@ -167,7 +167,7 @@ const Login = () => {
           </div>
           <div className="absolute inset-0 mt-[50px] flex justify-center items-center">
             <div className="md:flex md:items-center md:justify-center w-full sm:w-auto md:h-full w-2/5 xl:w-2/5 p-8  md:p-10 lg:p-14 sm:rounded-lg md:rounded-none ">
-              <div className="max-w-md w-full space-y-8 bg-gray-200 bg-opacity-60 px-10 py-3 rounded-lg">
+              <div className="max-w-md w-full space-y-8 bg-gray-100 px-10 py-3 rounded-lg">
                 <div className="text-center ">
                   <h2 className="mt-6 text-2xl font-sans font-bold text-gray-900">
                     Bonjour à nouveau !
@@ -195,7 +195,7 @@ const Login = () => {
                       id="email"
                       type="email"
                       name="email"
-                      className="text-black w-full px-4 py-2 border-none rounded-lg font-sans focus:outline-none focus:ring bg-gray-100 bg-opacity-90"
+                      className="text-black w-full px-4 py-2 border-none rounded-lg font-sans focus:outline-none focus:ring bg-white bg-opacity-90"
                       placeholder="Entrez votre adresse e-mail"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
@@ -214,7 +214,7 @@ const Login = () => {
                       type="password"
                       name="password"
                       id="password"
-                      className="text-black w-full px-4 py-2 border-none rounded-lg focus:outline-none focus:ring  bg-gray-100 bg-opacity-90"
+                      className="text-black w-full px-4 py-2 border-none rounded-lg focus:outline-none focus:ring  bg-white bg-opacity-90"
                       placeholder="Entrez votre mot de passe."
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
@@ -225,7 +225,7 @@ const Login = () => {
                     <div className="text-sm">
                       <Link
                         to={"/seconnecter/oublier"}
-                        className="text-indigo-400 hover:text-blue-500"
+                        className="text-gray-500 hover:text-blue-500"
                       >
                         Mot de passe oublié?
                       </Link>
@@ -234,16 +234,16 @@ const Login = () => {
                   <div>
                     <button
                       type="submit"
-                      className="w-full flex justify-center bg-[#125ba3] hover:bg-primary-800 text-gray-100 font-sans p-4  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
+                      className="w-full flex justify-center bg-[#125ba3] hover:bg-primary-800 font-sans text-gray-100 font-sans p-4  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
                     >
                       Se connecter
                     </button>
                   </div>
-                  <p className="flex flex-col items-center justify-center mt-10 text-center text-md text-gray-500">
+                  <p className="flex flex-col items-center justify-center mt-10 font-sans text-center text-md text-gray-500">
                     <span>Vous n'avez pas de compte ?</span>
                     <Link
                       to={"/inscription"}
-                      className="text-indigo-400 hover:text-blue-500 no-underline hover:underline cursor-pointer transition ease-in duration-300"
+                      className="text-blue-500 hover:text-blue-800  font-sans no-underline hover:underline cursor-pointer transition ease-in duration-300"
                     >
                       Inscription
                     </Link>
