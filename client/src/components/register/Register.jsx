@@ -75,7 +75,7 @@ const Register = () => {
     const hasUppercase = /[A-Z]/.test(value);
     const hasLowercase = /[a-z]/.test(value);
 
-    setIsValid(hasSpecialCharacter && hasUppercase && hasLowercase);
+    setIsValid(hasNumber && hasUppercase && hasLowercase);
   };
 
   console.log(isValid);
@@ -91,7 +91,7 @@ const Register = () => {
       formData.append("password", password);
       formData.append("userRole", userRole);
 
-      if (confirmPassword === password) {
+      if (confirmPassword === password && isValid) {
         const response = await axios.post(
           `${import.meta.env.VITE_SERVER_API_URL}/inscription`,
           formData
@@ -100,7 +100,7 @@ const Register = () => {
         if (response.status === 201) {
           setOpen(true);
         }
-      } else if (isValid) {
+      } else if (!isValid) {
         setError("password not matched");
       } else {
         setError("Confirmez le mot de passe");
@@ -284,7 +284,7 @@ const Register = () => {
                             <div className="flex items-center justify-center">
                               <span>Mot de pass incorect</span>
                               <Tooltip
-                                title="Le mot de passe doit inclure un caractère spécial, une lettre majuscule et une lettre minuscule."
+                                title="Le mot de passe doit inclure au minimum 2 chiffre, une lettre majuscule et une lettre minuscule."
                                 sx={{ color: "red" }}
                               >
                                 <IconButton>
