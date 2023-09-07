@@ -91,9 +91,9 @@ const Notification = () => {
         </div>
       ) : notifications && notifications.length > 0 && !loading ? (
         <div className="bg-gray-100 min-h-screen">
-          <div className="flex flex-col items-start justify-center min-h-screen bg-gradient-to-t p-6">
+          <div className=" flex flex-col items-start justify-center min-h-screen bg-gradient-to-t p-6">
             <div className="w-full">
-              <div className="grid grid-cols-1 h-full px-10">
+              <div className="grid grid-cols-1 h-full w-full ">
                 <div className="flex flex-row justify-end items-center flex-wrap cursor-pointer w-full">
                   <span
                     className={`bg-white p-2 rounded-full ${
@@ -142,14 +142,14 @@ const Notification = () => {
                       return (
                         <div
                           key={idx}
-                          className="flex justify-between py-2 px-4 bg-white rounded-md mt-5"
+                          className="w-full flex justify-between py-2 px-4 bg-white rounded-md mt-5"
                         >
                           <Link
                             to={`/${el.site}/${el.dossier}/pdf/détails/${el.equipementId}`}
                             className="flex items-center space-x-4 cursor-pointer"
                           >
                             <NotificationAddIcon sx={{ color: COLOR }} />
-                            <div className="flex flex-col space-y-1">
+                            <div className="flex flex-col w-full space-y-1">
                               <span className="font-bold">
                                 Un nouveaux raport a été ajouté
                               </span>
