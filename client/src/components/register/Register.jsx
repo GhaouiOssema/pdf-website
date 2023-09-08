@@ -260,7 +260,7 @@ const Register = () => {
                       type="password"
                       id="confirmPassword"
                       className="text-black border-none w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring  bg-white bg-opacity-90"
-                      placeholder="Entrez votre adresse e-mail"
+                      placeholder="Retapez votre mot de passe"
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       required

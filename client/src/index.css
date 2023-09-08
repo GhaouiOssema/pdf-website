@@ -466,7 +466,3 @@ body {
     transform: rotate(360deg);
   }
 }
-
-.rotate-animation {
-  animation: rotate 1s linear infinite; /* You can adjust the animation duration and timing here */
-}
