@@ -104,7 +104,7 @@ const Home = () => {
       <section className="text-gray-600 body-font ">
         <div className="container mx-auto flex px-5 py-24 h-screen items-center justify-center flex-col">
           <div className="text-center lg:w-2/3 w-full">
-            <h1 className="py-10 tracking-wide leading-10 gradient-text title-font md:text-4xl xl:text-5xl sm:text-3xl text-3xl mb-4 font-extrabold text-gray-900">
+            <h1 className="font-sans py-10 tracking-wide leading-10 gradient-text title-font md:text-4xl xl:text-5xl sm:text-3xl text-3xl mb-4 font-extrabold text-gray-900">
               Une maintenance simplifiée
               {/* <img
                 alt="scribble"
@@ -115,14 +115,14 @@ const Home = () => {
               <span>dès aujourd'hui.</span>
             </h1>
 
-            <p className="mb-8 leading-relaxed md:text-xl xl:text-xl sm:text-lg text-base ">
+            <p className="mb-8 leading-relaxed md:text-xl xl:text-xl sm:text-lg text-base font-sans ">
               Maximisez l'efficacité de votre gestion et entretien d'équipements
               grâce à notre solution QR . Bénéficiez d'une maintenance
               simplifiée qui assure une performance optimale de vos
               installations.
             </p>
             <div onClick={scrollToDecouvrir} className="flex justify-center">
-              <button className="sm:text-base inline-flex justify-center items-center py-3 px-5 mr-3 text-base font-medium text-center text-white rounded-lg custome__border__blue bg-[#F0854A] hover:bg-[#F0854A]">
+              <button className="font-sans sm:text-base inline-flex justify-center items-center py-3 px-5 mr-3 text-base font-medium text-center text-white rounded-lg custome__border__blue bg-[#F0854A] hover:bg-[#F0854A]">
                 Découvrir plus
               </button>
               <button className="sm:text-base inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-[#125ba3] hover:text-white rounded-lg custome__border border-[#125ba3] hover:bg-[#125ba3]">
@@ -210,35 +210,18 @@ const Home = () => {
       </div>
 
       <section className="bg-white rounded-lg px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10 mt-[14vh] ">
-        <div className="px-4 py-6 mx-auto max-w-screen-xl lg:px-6">
-          <div className="w-full mb-8 lg:mb-16">
-            <h2 className=" text-center mb-4 text-4xl font-extrabold text-[#125ba3] dark:text-white">
-              Avantages clés
+        <div class=" px-4 mx-auto max-w-screen-xl sm:py-7 lg:px-6">
+          <div class=" mb-8 lg:mb-16">
+            <h2 className=" w-full mb-6 font-sans text-2xl font-normal tracking-tight leading-[2rem] text-gray-900 sm:text-4xl ">
+              Transformez la maintenance en une source d'efficacité. Découvrez
+              nos avantages et commencez à optimiser votre activité.
             </h2>
-            <p className="font-sans text-center text-gray-900 sm:text-xl dark:text-gray-400">
-              <span className=" font-sans text-[#F0854A]">
-                Boostez l'efficacité
-              </span>{" "}
-              de votre maintenance
-            </p>
           </div>
-          <ul className="circles">
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-          </ul>
-          <div className="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-12 md:space-y-0">
-            <div>
-              <div>
+          <div class="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
+            <div className="p-5 duration-300 transform bg-white border rounded  hover:-translate-y-2">
+              <div class="flex justify-center items-center mb-4 w-10 h-10   lg:h-12 lg:w-12 dark:bg-blue-900">
                 <svg
-                  className="w-5 h-5 text-primary-600 lg:w-6 lg:h-6 dark:text-primary-300"
+                  class="w-5 h-5 text-[#125ba3] lg:w-6 lg:h-6 dark:text-blue-300"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                   xmlns="http://www.w3.org/2000/svg"
@@ -250,18 +233,18 @@ const Home = () => {
                   ></path>
                 </svg>
               </div>
-              <h3 className="mb-2 text-gray-900 text-lg font-bold leading-5">
+              <h3 class="mb-2 text-xl font-bold dark:text-white">
                 Gagnez du temps
               </h3>
-              <p className=" font-sans text-gray-500 text-sm dark:text-gray-400">
+              <p class="text-gray-500 dark:text-gray-400">
                 Notre solution simplifie et accélère le processus de
                 maintenance, réduisant ainsi les temps d'arrêt de production.
               </p>
             </div>
-            <div>
-              <div>
+            <div className="p-5 duration-300 transform bg-white border rounded  hover:-translate-y-2">
+              <div class="flex justify-center items-center mb-4 w-10 h-10   lg:h-12 lg:w-12 dark:bg-blue-900">
                 <svg
-                  className="w-5 h-5 text-primary-600 lg:w-6 lg:h-6 dark:text-primary-300"
+                  class="w-5 h-5 text-[#125ba3] lg:w-6 lg:h-6 dark:text-blue-300"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                   xmlns="http://www.w3.org/2000/svg"
@@ -269,19 +252,19 @@ const Home = () => {
                   <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"></path>
                 </svg>
               </div>
-              <h3 className="mb-2 font-sans text-lg font-bold text-gray-900 dark:text-white">
+              <h3 class="mb-2 text-xl font-bold dark:text-white">
                 Réduisez les coûts
               </h3>
-              <p className=" font-sans text-gray-500 text-sm dark:text-gray-400">
+              <p class="text-gray-500 dark:text-gray-400">
                 Une maintenance préventive basée sur des données précises aide à
                 prévenir les pannes coûteuses et prolonge la durée de vie de vos
                 machines.
               </p>
             </div>
-            <div>
-              <div>
+            <div className="p-5 duration-300 transform bg-white border rounded  hover:-translate-y-2">
+              <div class="flex justify-center items-center mb-4 w-10 h-10   lg:h-12 lg:w-12 dark:bg-blue-900">
                 <svg
-                  className="w-5 h-5 text-primary-600 lg:w-6 lg:h-6 dark:text-primary-300"
+                  class="w-5 h-5 text-[#125ba3] lg:w-6 lg:h-6 dark:text-blue-300"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                   xmlns="http://www.w3.org/2000/svg"
@@ -294,20 +277,18 @@ const Home = () => {
                   <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z"></path>
                 </svg>
               </div>
-              <h3 className="mb-2 font-sans text-lg font-bold text-gray-900 dark:text-white">
-                Suivi centralisé
+              <h3 class="mb-2 text-xl font-bold dark:text-white">
+                Facilité d'utilisation
               </h3>
-              <p className=" font-sans text-gray-500 text-sm dark:text-gray-400">
-                Tous les rapports de maintenance sont automatiquement
-                enregistrés dans notre système, vous permettant de suivre
-                l'historique de chaque machine et de planifier les interventions
-                futures.
+              <p class="text-gray-500 dark:text-gray-400">
+                une installation simple des codes QR et une interface
+                conviviale, facilitant ainsi leur utilisation.
               </p>
             </div>
-            <div>
-              <div>
+            <div className="p-5 duration-300 transform bg-white border rounded  hover:-translate-y-2">
+              <div class="flex justify-center items-center mb-4 w-10 h-10   lg:h-12 lg:w-12 dark:bg-blue-900">
                 <svg
-                  className="w-5 h-5 text-primary-600 lg:w-6 lg:h-6 dark:text-primary-300"
+                  class="w-5 h-5 text-[#125ba3] lg:w-6 lg:h-6 dark:text-blue-300"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                   xmlns="http://www.w3.org/2000/svg"
@@ -320,31 +301,76 @@ const Home = () => {
                   ></path>
                 </svg>
               </div>
-              <h3 className="mb-2 font-sans text-lg font-bold text-gray-900 dark:text-white">
-                Facilité d'utilisation
+              <h3 class="mb-2 text-xl font-bold dark:text-white">
+                Suivi centralisé
               </h3>
-              <p className=" font-sans text-gray-500 text-sm dark:text-gray-400">
+              <p class="text-gray-500 dark:text-gray-400">
                 une installation simple des codes QR et une interface
                 conviviale, facilitant ainsi leur utilisation.
+              </p>
+            </div>
+            <div className="p-5 duration-300 transform bg-white border rounded  hover:-translate-y-2">
+              <div class=" flex justify-center items-center mb-4 w-10 h-10   lg:h-12 lg:w-12 dark:bg-blue-900">
+                <svg
+                  class="w-5 h-5 text-[#125ba3] lg:w-6 lg:h-6 dark:text-blue-300"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"></path>
+                </svg>
+              </div>
+              <h3 class="mb-2 text-xl font-bold dark:text-white">
+                Évolutivité
+              </h3>
+              <p class="text-gray-500 dark:text-gray-400">
+                Notre solution est parfaitement adaptable à vos besoins, que
+                vous ayez une petite entreprise ou une grande usine.
+              </p>
+            </div>
+            <div className="p-5 duration-300 transform bg-white border rounded  hover:-translate-y-2">
+              <div class="flex justify-center items-center mb-4 w-10 h-10   lg:h-12 lg:w-12 dark:bg-blue-900">
+                <svg
+                  class="w-5 h-5 text-[#125ba3] lg:w-6 lg:h-6 dark:text-blue-300"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </div>
+              <h3 class="mb-2 text-xl font-bold dark:text-white">
+                Support dédié
+              </h3>
+              <p class="text-gray-500 dark:text-gray-400">
+                Bénéficiez d'un service client dédié pour répondre à vos
+                questions et vous assister à chaque étape de la mise en place de
+                la solution.
               </p>
             </div>
           </div>
         </div>
       </section>
-      <section className="bg-gray-100 dark:bg-gray-800">
-        <div className="px-4 py-6 mx-auto max-w-screen-xl lg:px-6">
+
+      <section className="mt-[14vh] dark:bg-gray-800">
+        <div className=" bg-white rounded-lg mt-14  px-4 py-6 mx-auto max-w-screen-xl lg:px-6">
           <Typography
             variant="h4"
             sx={{
-              fontWeight: "bold",
               textAlign: "center",
               mb: 2,
               fontSize: { sm: "2em", md: "2em", lg: "2em", xl: "3em" },
             }}
           >
-            Questions fréquemment posées
+            <span className="font-sans font-normal text-gray-900">
+              Questions fréquemment posées
+            </span>
           </Typography>
-          <Accordion>
+          <Accordion sx={{ borderRadius: "8px", boxShadow: "none" }}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1a-content"
@@ -357,14 +383,15 @@ const Home = () => {
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
-                Réponse : Non, vous n'avez pas besoin d'équipement spécial.
-                Notre solution QR fonctionne en ligne, et vous pouvez l'utiliser
-                avec les équipements que vous avez déjà. Vous avez simplement
-                besoin d'un téléphone ou d'un ordinateur pour y accéder.
+                <span className="font-sans font-bold">Réponse :</span> Non, vous
+                n'avez pas besoin d'équipement spécial. Notre solution QR
+                fonctionne en ligne, et vous pouvez l'utiliser avec les
+                équipements que vous avez déjà. Vous avez simplement besoin d'un
+                téléphone ou d'un ordinateur pour y accéder.
               </Typography>
             </AccordionDetails>
           </Accordion>
-          <Accordion>
+          <Accordion sx={{ borderRadius: "8px", boxShadow: "none", mt: 1 }}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel2a-content"
@@ -377,13 +404,14 @@ const Home = () => {
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
-                Réponse : Si vous rencontrez des problèmes techniques, contactez
-                notre service clientèle. Nous sommes là pour vous aider à
-                résoudre vos problèmes.
+                <span className="font-sans font-bold">Réponse :</span> Si vous
+                rencontrez des problèmes techniques, contactez notre service
+                clientèle. Nous sommes là pour vous aider à résoudre vos
+                problèmes.
               </Typography>
             </AccordionDetails>
           </Accordion>
-          <Accordion>
+          <Accordion sx={{ borderRadius: "8px", boxShadow: "none", mt: 1 }}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel2a-content"
@@ -396,26 +424,47 @@ const Home = () => {
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
-                Réponse : Assurez-vous que les QR codes sont propres et
-                lisibles. Si vous avez des problèmes persistants, contactez
-                notre support technique pour obtenir de l'aide.
+                <span className="font-sans font-bold">Réponse : </span>
+                Assurez-vous que les QR codes sont propres et lisibles. Si vous
+                avez des problèmes persistants, contactez notre support
+                technique pour obtenir de l'aide.
               </Typography>
             </AccordionDetails>
           </Accordion>
         </div>
       </section>
-      <div className="bg-white rounded-lg px-4 py-6 mx-auto max-w-screen-xl lg:px-6 ">
+      <div className="bg-white rounded-lg px-4 py-6 mx-auto max-w-screen-xl lg:px-6 mt-[14vh] ">
         <section>
           <div className="flex flex-wrap">
             <div className="mb-10 w-full shrink-0 grow-0 basis-auto md:mb-0 md:w-6/12 md:px-3 lg:px-6">
-              <h2 className="mb-6 text-3xl font-bold  text-gray-700 font-sans">
-                Nous contacter
+              <h2 className=" pt-5 w-full mb-2 font-sans text-2xl font-normal tracking-tight leading-[2rem] text-gray-900 sm:text-4xl ">
+                Besoin de nous joindre rapidement ?
+                <span className="font-bold text-[#125ba3]">
+                  {" "}
+                  Pas de souci !{" "}
+                </span>
               </h2>
-              <p className="mb-6 text-neutral-500 dark:text-neutral-300">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Laudantium, modi accusantium ipsum corporis quia asperiores
-                dolorem nisi corrupti eveniet dolores ad maiores repellendus
-                enim autem omnis fugiat perspiciatis? Ad, veritatis.
+              <p className="mb-6 font-sans text-gray-500 dark:text-neutral-300">
+                <br />{" "}
+                <span className="text-gray-700 font-medium">Par Email : </span>
+                <span className="text-gray-700 font-thin ">
+                  Rédigez simplement votre message ici, et nous vous répondrons
+                  en moins de 24 heures.
+                </span>{" "}
+                <br />{" "}
+                <span className="text-gray-700 font-medium">
+                  Par Téléphone :{" "}
+                </span>
+                <span className="text-gray-700 font-thin">
+                  Pour une assistance immédiate, appelez-nous.
+                </span>{" "}
+                <br />
+                <br />
+                <span className="text-gray-700 font-light ">
+                  {" "}
+                  Votre satisfaction est notre priorité. Nous sommes là pour
+                  vous aider!
+                </span>
               </p>
               <p className="mb-2 text-neutral-500 dark:text-neutral-300">
                 Île-de-France, France
@@ -424,15 +473,15 @@ const Home = () => {
                 + 33 000 000 00
               </p>
               <p className="mb-2 text-neutral-500 dark:text-neutral-300">
-                contact@qrsolution.com
+                contact@qrsolution.fr
               </p>
             </div>
-            <div className="mb-12 w-full shrink-0 grow-0 basis-auto md:mb-0 md:w-6/12 md:px-3 lg:px-6">
+            <div className="bg-white shadow-md rounded-xl  flex justify-center flex-col  mb-12 w-full shrink-0 grow-0 basis-auto md:mb-0 md:w-6/12 md:px-3 lg:px-6">
               <form>
                 <div className="relative mb-6" data-te-input-wrapper-init>
                   <input
                     type="text"
-                    className="text-black w-full px-4 py-2 border-[#F0854A] border-2 rounded-lg font-sans focus:outline-none  bg-white bg-opacity-90"
+                    className="text-black w-full px-4 py-2 border-[#125ba3] border-2 rounded-lg font-sans focus:outline-none  bg-white bg-opacity-90"
                     id="exampleInput90"
                     placeholder="Nom"
                   />
@@ -441,13 +490,13 @@ const Home = () => {
                 <div className="relative mb-6" data-te-input-wrapper-init>
                   <input
                     type="email"
-                    className="text-black w-full px-4 py-2 border-[#F0854A] border-2 rounded-lg font-sans focus:outline-none bg-white bg-opacity-90"
+                    className="text-black w-full px-4 py-2 border-[#125ba3] border-2 rounded-lg font-sans focus:outline-none bg-white bg-opacity-90"
                     placeholder="Votre adress"
                   />
                 </div>
                 <div className="relative mb-6" data-te-input-wrapper-init>
                   <textarea
-                    className="text-black w-full px-4 py-2 border-[#F0854A] border-2 rounded-lg font-sans focus:outline-none bg-white bg-opacity-90"
+                    className="text-black w-full px-4 py-2 border-[#125ba3] border-2 rounded-lg font-sans  focus:outline-none  bg-white bg-opacity-90"
                     id="exampleFormControlTextarea1"
                     rows="3"
                     placeholder="Votre message"
@@ -457,7 +506,7 @@ const Home = () => {
                   type="button"
                   data-te-ripple-init
                   data-te-ripple-color="light"
-                  className="w-full flex justify-center bg-[#F0854A] hover:bg-primary-800 text-gray-100 font-sans p-4 rounded-lg tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500"
+                  className="w-full flex justify-center hover:bg-[#F0854A] bg-[#125ba3] text-gray-100 font-sans p-4 rounded-lg tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500"
                 >
                   Envoyer
                 </button>
@@ -468,8 +517,8 @@ const Home = () => {
       </div>
       <section className="dark:bg-gray-900 w-full">
         <div className="py-8 px-5 mx-auto">
-          <div className="text-center">
-            <h2 className="mb-4 text-xl font-extrabold leading-tight text-gray-900 dark:text-white">
+          <div className="text-center bg-white rounded-lg px-4 py-6 mx-auto max-w-screen-xl lg:px-6 ">
+            <h2 className=" pt-5 w-full mb-2 font-sans text-2xl font-normal tracking-tight leading-[2rem] text-gray-900 sm:text-4xl">
               Boostez l'efficacité de votre maintenance dès à présent !
             </h2>
             <p className="mb-6 font-light text-gray-500 dark:text-gray-400 md:text-lg text-center">
@@ -477,7 +526,7 @@ const Home = () => {
             </p>
             <Link
               to="/inscription"
-              className="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+              className="font-sans sm:text-base inline-flex justify-center items-center py-3 px-5 mr-3 text-base font-medium text-center text-white rounded-lg custome__border__blue bg-[#F0854A] hover:bg-[#F0854A]"
             >
               s'inscrire
             </Link>
