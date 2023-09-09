@@ -18,4 +18,5 @@ module.exports = {
   updateUserData: require("./updateUserDate.controller"),
   verification: require("./accountVerification.controller"),
   Notification: require("./fetchNotifications.controller"),
+  contactUs: require("./contactUs.controller"),
 };

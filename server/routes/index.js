@@ -94,6 +94,8 @@ router.put(
  * @returns {Error}  500 - An error occurred
  */
 
+router.post("/contactus/message/:email", controllers.contactUs.sendMail);
+
 router.get(
   "/public/site/folder/pdf/details/:id",
   controllers.public.getPdfDataById

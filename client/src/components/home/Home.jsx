@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import LOGO from "../../assets/logo2.png";
 import { Link } from "react-router-dom";
-import { Carousel } from "flowbite-react";
+import { Button, Carousel } from "flowbite-react";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
@@ -11,11 +11,59 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import IMG_1 from "../../assets/carrousel1.jpg";
 import IMG_2 from "../../assets/carousel2.jpg";
 import IMG_3 from "../../assets/carousel3.jpg";
+import axios from "axios";
+import CloseIcon from "@mui/icons-material/Close";
+import { Dialog, DialogActions, DialogContent, Slide } from "@mui/material";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
+const Popup = ({ open, setOpen }) => {
+  return (
+    <Dialog
+      open={open}
+      TransitionComponent={Transition}
+      keepMounted
+      aria-describedby="alert-dialog-slide-description"
+    >
+      <>
+        <DialogContent>
+          <div className="text-[#125ba3] text-center text-3xl mb-4 flex justify-center items-center">
+            <i className="fa-solid fa-circle-check"></i>
+          </div>
+          <p className="font-sans font-semibold text-[#125ba3] text-center">
+            Votre message a été envoyé correctement.
+          </p>
+        </DialogContent>
+      </>
+    </Dialog>
+  );
+};
 
 const Home = () => {
   const [isNavbarVisible, setIsNavbarVisible] = useState(false);
   const pages = ["connexion", "inscription", "Home"];
   const decouvrirSectionRef = useRef(null);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const ContactUs = useRef(null);
+  const popupRef = useRef(null);
+  const [open, setOpen] = useState(false);
+
+  const handleOutsideClick = (event) => {
+    if (popupRef.current && !popupRef.current.contains(event.target)) {
+      setOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -39,17 +87,47 @@ const Home = () => {
     };
   }, []);
 
+  const scrollToContactUs = () => {
+    if (ContactUs.current) {
+      const yOffset = -85;
+      const rect = ContactUs.current.getBoundingClientRect();
+      const y = rect.top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+  };
+
   const scrollToDecouvrir = () => {
     if (decouvrirSectionRef.current) {
-      const yOffset = -85; // Adjust this value to fine-tune the scrolling position
+      const yOffset = -85;
       const rect = decouvrirSectionRef.current.getBoundingClientRect();
       const y = rect.top + window.pageYOffset + yOffset;
       window.scrollTo({ top: y, behavior: "smooth" });
     }
   };
 
+  const sendContactForm = async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await axios.post(
+        `${import.meta.env.VITE_SERVER_API_URL}/contactus/message/${email}`,
+        {
+          email,
+          name,
+          message,
+        }
+      );
+
+      if (res.status === 200) {
+        setOpen(true);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
   return (
     <div className="bg-gray-100">
+      {open && <Popup open={open} setOpen={setOpen} />}
       {isNavbarVisible && (
         <header className="fixed w-full z-50 transition-all bg-white top-0 left-0 right-0">
           <nav className="px-4 lg:px-6 py-2.5 bg-none dark:bg-gray-800">
@@ -101,7 +179,8 @@ const Home = () => {
           </nav>
         </header>
       )}
-      <section className="text-gray-600 body-font ">
+
+      <section className="text-gray-600 body-font" ref={popupRef}>
         <div className="container mx-auto flex px-5 py-24 h-screen items-center justify-center flex-col">
           <div className="text-center lg:w-2/3 w-full">
             <h1 className="font-sans py-10 tracking-wide leading-10 gradient-text title-font md:text-4xl xl:text-5xl sm:text-3xl text-3xl mb-4 font-extrabold text-gray-900">
@@ -121,11 +200,29 @@ const Home = () => {
               simplifiée qui assure une performance optimale de vos
               installations.
             </p>
-            <div onClick={scrollToDecouvrir} className="flex justify-center">
-              <button className="font-sans sm:text-base inline-flex justify-center items-center py-3 px-5 mr-3 text-base font-medium text-center text-white rounded-lg custome__border__blue bg-[#F0854A] hover:bg-[#F0854A]">
+            <ul className="circles">
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+            </ul>
+            <div className="relative flex justify-center">
+              <button
+                onClick={scrollToDecouvrir}
+                className="font-sans sm:text-base inline-flex justify-center items-center py-3 px-5 mr-3 text-base font-medium text-center text-white rounded-lg custome__border__blue bg-[#F0854A] hover:bg-[#F0854A]"
+              >
                 Découvrir plus
               </button>
-              <button className="sm:text-base inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-[#125ba3] hover:text-white rounded-lg custome__border border-[#125ba3] hover:bg-[#125ba3]">
+              <button
+                onClick={scrollToContactUs}
+                className="sm:text-base inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-[#125ba3] hover:text-white rounded-lg custome__border border-[#125ba3] hover:bg-[#125ba3]"
+              >
                 Nous contacter
               </button>
             </div>
@@ -209,7 +306,7 @@ const Home = () => {
         </div>
       </div>
 
-      <section className="bg-white rounded-lg px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10 mt-[14vh] ">
+      <section className="bg-white rounded-lg px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10 mt-[8vh] ">
         <div class=" px-4 mx-auto max-w-screen-xl sm:py-7 lg:px-6">
           <div class=" mb-8 lg:mb-16">
             <h2 className=" w-full mb-6 font-sans text-2xl font-normal tracking-tight leading-[2rem] text-gray-900 sm:text-4xl ">
@@ -222,15 +319,17 @@ const Home = () => {
               <div class="flex justify-center items-center mb-4 w-10 h-10   lg:h-12 lg:w-12 dark:bg-blue-900">
                 <svg
                   class="w-5 h-5 text-[#125ba3] lg:w-6 lg:h-6 dark:text-blue-300"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
+                  viewBox="0 0 24 24"
+                  fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    fill-rule="evenodd"
-                    d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 0l-2 2a1 1 0 101.414 1.414L8 10.414l1.293 1.293a1 1 0 001.414 0l4-4z"
-                    clip-rule="evenodd"
-                  ></path>
+                    d="M12 16.5V8.5M16 12.5L8 12.5008M3 5.5L5 3.5M21 5.5L19 3.5M20 12.5C20 16.9183 16.4183 20.5 12 20.5C7.58172 20.5 4 16.9183 4 12.5C4 8.08172 7.58172 4.5 12 4.5C16.4183 4.5 20 8.08172 20 12.5Z"
+                    stroke="#125ba3"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
                 </svg>
               </div>
               <h3 class="mb-2 text-xl font-bold dark:text-white">
@@ -245,11 +344,23 @@ const Home = () => {
               <div class="flex justify-center items-center mb-4 w-10 h-10   lg:h-12 lg:w-12 dark:bg-blue-900">
                 <svg
                   class="w-5 h-5 text-[#125ba3] lg:w-6 lg:h-6 dark:text-blue-300"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
+                  fill="#125ba3"
+                  version="1.1"
                   xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  viewBox="0 0 319.746 319.746"
+                  xml:space="preserve"
                 >
-                  <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"></path>
+                  <path
+                    d="M285.505,310.745c0,4.971-4.029,9-9,9h-65.867c-0.056,0.001-0.112,0.001-0.168,0.001c-0.057,0-0.112,0-0.168-0.001h-78.303
+	c-0.112,0.002-0.225,0.002-0.337,0h-78.3c-0.112,0.002-0.225,0.002-0.337,0H9.305c-4.971,0-9-4.029-9-9s4.029-9,9-9h34.888V68.535
+	c0-4.971,4.029-9,9-9s9,4.029,9,9v233.21h60.637V147.218c0-4.971,4.029-9,9-9c4.971,0,9,4.029,9,9v154.527h60.64v-91.58
+	c0-4.971,4.029-9,9-9s9,4.029,9,9v91.58h57.035C281.476,301.745,285.505,305.774,285.505,310.745z M310.442,167.062
+	c-4.971,0-9,4.029-9,9v24.574l-198.001-198c-1.805-1.805-4.189-2.688-6.552-2.634H9.305c-4.971,0-9,4.029-9,9s4.029,9,9,9h84.046
+	l195.364,195.362H264.14c-4.971,0-9,4.029-9,9s4.029,9,9,9h46.302c2.917,0,5.511-1.388,7.155-3.54
+	c0.369-0.482,0.684-0.995,0.941-1.526c0.579-1.188,0.903-2.523,0.903-3.934v-0.001v-46.302
+	C319.442,171.091,315.412,167.062,310.442,167.062z"
+                  />
                 </svg>
               </div>
               <h3 class="mb-2 text-xl font-bold dark:text-white">
@@ -265,16 +376,23 @@ const Home = () => {
               <div class="flex justify-center items-center mb-4 w-10 h-10   lg:h-12 lg:w-12 dark:bg-blue-900">
                 <svg
                   class="w-5 h-5 text-[#125ba3] lg:w-6 lg:h-6 dark:text-blue-300"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
+                  viewBox="0 0 24 24"
+                  fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    fill-rule="evenodd"
-                    d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z"
-                    clip-rule="evenodd"
-                  ></path>
-                  <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z"></path>
+                    d="M14.859 16.4999L12.3975 14.0385L11.6459 14.7902C10.8764 15.5597 10.4916 15.9444 10.0781 15.8536C9.66452 15.7628 9.47641 15.2522 9.10019 14.231L7.84544 10.8253C7.09492 8.78816 6.71966 7.7696 7.24463 7.24463C7.7696 6.71966 8.78816 7.09492 10.8253 7.84544L14.231 9.10019C15.2522 9.47641 15.7628 9.66451 15.8536 10.0781C15.9444 10.4916 15.5597 10.8764 14.7902 11.6459L14.0385 12.3975L16.4999 14.859C16.7548 15.1138 16.8822 15.2413 16.9411 15.3834C17.0196 15.573 17.0196 15.7859 16.9411 15.9755C16.8822 16.1176 16.7548 16.2451 16.4999 16.4999C16.2451 16.7548 16.1176 16.8822 15.9755 16.9411C15.7859 17.0196 15.573 17.0196 15.3834 16.9411C15.2413 16.8822 15.1138 16.7548 14.859 16.4999Z"
+                    stroke="#125ba3"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C21.5093 4.43821 21.8356 5.80655 21.9449 8"
+                    stroke="#125ba3"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                  />
                 </svg>
               </div>
               <h3 class="mb-2 text-xl font-bold dark:text-white">
@@ -289,35 +407,37 @@ const Home = () => {
               <div class="flex justify-center items-center mb-4 w-10 h-10   lg:h-12 lg:w-12 dark:bg-blue-900">
                 <svg
                   class="w-5 h-5 text-[#125ba3] lg:w-6 lg:h-6 dark:text-blue-300"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
+                  viewBox="0 0 24 24"
+                  fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"></path>
                   <path
-                    fill-rule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z"
-                    clip-rule="evenodd"
-                  ></path>
+                    d="M15 15V14H14V15H15ZM20.2929 21.7071C20.6834 22.0976 21.3166 22.0976 21.7071 21.7071C22.0976 21.3166 22.0976 20.6834 21.7071 20.2929L20.2929 21.7071ZM15 9H14V10H15V9ZM21.7071 3.70711C22.0976 3.31658 22.0976 2.68342 21.7071 2.29289C21.3166 1.90237 20.6834 1.90237 20.2929 2.29289L21.7071 3.70711ZM9 15H10V14H9V15ZM2.29289 20.2929C1.90237 20.6834 1.90237 21.3166 2.29289 21.7071C2.68342 22.0976 3.31658 22.0976 3.70711 21.7071L2.29289 20.2929ZM9 9V10H10V9H9ZM3.70711 2.29289C3.31658 1.90237 2.68342 1.90237 2.29289 2.29289C1.90237 2.68342 1.90237 3.31658 2.29289 3.70711L3.70711 2.29289ZM16 20V15H14V20H16ZM15 16H20V14H15V16ZM14.2929 15.7071L20.2929 21.7071L21.7071 20.2929L15.7071 14.2929L14.2929 15.7071ZM14 4V9H16V4H14ZM15 10H20V8H15V10ZM15.7071 9.70711L21.7071 3.70711L20.2929 2.29289L14.2929 8.29289L15.7071 9.70711ZM10 20V15H8V20H10ZM9 14H4V16H9V14ZM8.29289 14.2929L2.29289 20.2929L3.70711 21.7071L9.70711 15.7071L8.29289 14.2929ZM8 4V9H10V4H8ZM9 8H4V10H9V8ZM9.70711 8.29289L3.70711 2.29289L2.29289 3.70711L8.29289 9.70711L9.70711 8.29289Z"
+                    fill="#125ba3"
+                  />
                 </svg>
               </div>
               <h3 class="mb-2 text-xl font-bold dark:text-white">
                 Suivi centralisé
               </h3>
               <p class="text-gray-500 dark:text-gray-400">
-                une installation simple des codes QR et une interface
-                conviviale, facilitant ainsi leur utilisation.
+                Tous les rapports de maintenance sont automatiquement
+                enregistrés dans notre système, vous permettant de suivre
+                l'historique de chaque machine et de planifier les interventions
+                futures.
               </p>
             </div>
             <div className="p-5 duration-300 transform bg-white border rounded  hover:-translate-y-2">
               <div class=" flex justify-center items-center mb-4 w-10 h-10   lg:h-12 lg:w-12 dark:bg-blue-900">
                 <svg
                   class="w-5 h-5 text-[#125ba3] lg:w-6 lg:h-6 dark:text-blue-300"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
+                  fill="#125ba3"
+                  viewBox="0 0 32 32"
+                  version="1.1"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"></path>
+                  <title>network</title>
+                  <path d="M27 21.75c-0.795 0.004-1.538 0.229-2.169 0.616l0.018-0.010-2.694-2.449c0.724-1.105 1.154-2.459 1.154-3.913 0-1.572-0.503-3.027-1.358-4.212l0.015 0.021 3.062-3.062c0.57 0.316 1.249 0.503 1.971 0.508h0.002c2.347 0 4.25-1.903 4.25-4.25s-1.903-4.25-4.25-4.25c-2.347 0-4.25 1.903-4.25 4.25v0c0.005 0.724 0.193 1.403 0.519 1.995l-0.011-0.022-3.062 3.062c-1.147-0.84-2.587-1.344-4.144-1.344-0.868 0-1.699 0.157-2.467 0.443l0.049-0.016-0.644-1.17c0.726-0.757 1.173-1.787 1.173-2.921 0-2.332-1.891-4.223-4.223-4.223s-4.223 1.891-4.223 4.223c0 2.332 1.891 4.223 4.223 4.223 0.306 0 0.605-0.033 0.893-0.095l-0.028 0.005 0.642 1.166c-1.685 1.315-2.758 3.345-2.758 5.627 0 0.605 0.076 1.193 0.218 1.754l-0.011-0.049-0.667 0.283c-0.78-0.904-1.927-1.474-3.207-1.474-2.334 0-4.226 1.892-4.226 4.226s1.892 4.226 4.226 4.226c2.334 0 4.226-1.892 4.226-4.226 0-0.008-0-0.017-0-0.025v0.001c-0.008-0.159-0.023-0.307-0.046-0.451l0.003 0.024 0.667-0.283c1.303 2.026 3.547 3.349 6.1 3.349 1.703 0 3.268-0.589 4.503-1.574l-0.015 0.011 2.702 2.455c-0.258 0.526-0.41 1.144-0.414 1.797v0.001c0 2.347 1.903 4.25 4.25 4.25s4.25-1.903 4.25-4.25c0-2.347-1.903-4.25-4.25-4.25v0zM8.19 5c0-0.966 0.784-1.75 1.75-1.75s1.75 0.784 1.75 1.75c0 0.966-0.784 1.75-1.75 1.75v0c-0.966-0.001-1.749-0.784-1.75-1.75v-0zM5 22.42c-0.966-0.001-1.748-0.783-1.748-1.749s0.783-1.749 1.749-1.749c0.966 0 1.748 0.782 1.749 1.748v0c-0.001 0.966-0.784 1.749-1.75 1.75h-0zM27 3.25c0.966 0 1.75 0.784 1.75 1.75s-0.784 1.75-1.75 1.75c-0.966 0-1.75-0.784-1.75-1.75v0c0.001-0.966 0.784-1.749 1.75-1.75h0zM11.19 16c0-0.001 0-0.002 0-0.003 0-2.655 2.152-4.807 4.807-4.807 1.328 0 2.53 0.539 3.4 1.409l0.001 0.001 0.001 0.001c0.87 0.87 1.407 2.072 1.407 3.399 0 2.656-2.153 4.808-4.808 4.808s-4.808-2.153-4.808-4.808c0-0 0-0 0-0v0zM27 27.75c-0.966 0-1.75-0.784-1.75-1.75s0.784-1.75 1.75-1.75c0.966 0 1.75 0.784 1.75 1.75v0c-0.001 0.966-0.784 1.749-1.75 1.75h-0z"></path>
                 </svg>
               </div>
               <h3 class="mb-2 text-xl font-bold dark:text-white">
@@ -332,15 +452,32 @@ const Home = () => {
               <div class="flex justify-center items-center mb-4 w-10 h-10   lg:h-12 lg:w-12 dark:bg-blue-900">
                 <svg
                   class="w-5 h-5 text-[#125ba3] lg:w-6 lg:h-6 dark:text-blue-300"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
+                  viewBox="0 0 24 24"
+                  id="_24x24_On_Light_Support"
+                  data-name="24x24/On Light/Support"
                   xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
                 >
-                  <path
-                    fill-rule="evenodd"
-                    d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
-                    clip-rule="evenodd"
-                  ></path>
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g
+                    id="SVGRepo_tracerCarrier"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <rect
+                      id="view-box"
+                      width="24"
+                      height="24"
+                      fill="none"
+                    ></rect>
+                    <path
+                      id="Shape"
+                      d="M8,17.751a2.749,2.749,0,0,1,5.127-1.382C15.217,15.447,16,14,16,11.25v-3c0-3.992-2.251-6.75-5.75-6.75S4.5,4.259,4.5,8.25v3.5a.751.751,0,0,1-.75.75h-1A2.753,2.753,0,0,1,0,9.751v-1A2.754,2.754,0,0,1,2.75,6h.478c.757-3.571,3.348-6,7.022-6s6.264,2.429,7.021,6h.478a2.754,2.754,0,0,1,2.75,2.75v1a2.753,2.753,0,0,1-2.75,2.75H17.44A5.85,5.85,0,0,1,13.5,17.84,2.75,2.75,0,0,1,8,17.751Zm1.5,0a1.25,1.25,0,1,0,1.25-1.25A1.251,1.251,0,0,0,9.5,17.751Zm8-6.75h.249A1.251,1.251,0,0,0,19,9.751v-1A1.251,1.251,0,0,0,17.75,7.5H17.5Zm-16-2.25v1A1.251,1.251,0,0,0,2.75,11H3V7.5H2.75A1.251,1.251,0,0,0,1.5,8.751Z"
+                      transform="translate(1.75 2.25)"
+                      fill="#125ba3"
+                    ></path>
+                  </g>
                 </svg>
               </div>
               <h3 class="mb-2 text-xl font-bold dark:text-white">
@@ -356,7 +493,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="mt-[14vh] dark:bg-gray-800">
+      <section className="mt-[8vh] dark:bg-gray-800">
         <div className=" bg-white rounded-lg mt-14  px-4 py-6 mx-auto max-w-screen-xl lg:px-6">
           <Typography
             variant="h4"
@@ -433,7 +570,11 @@ const Home = () => {
           </Accordion>
         </div>
       </section>
-      <div className="bg-white rounded-lg px-4 py-6 mx-auto max-w-screen-xl lg:px-6 mt-[14vh] ">
+
+      <div
+        ref={ContactUs}
+        className="bg-white rounded-lg px-4 py-6 mx-auto max-w-screen-xl lg:px-6 mt-[8vh] "
+      >
         <section>
           <div className="flex flex-wrap">
             <div className="mb-10 w-full shrink-0 grow-0 basis-auto md:mb-0 md:w-6/12 md:px-3 lg:px-6">
@@ -477,13 +618,16 @@ const Home = () => {
               </p>
             </div>
             <div className="bg-white shadow-md rounded-xl  flex justify-center flex-col  mb-12 w-full shrink-0 grow-0 basis-auto md:mb-0 md:w-6/12 md:px-3 lg:px-6">
-              <form>
+              <form onSubmit={sendContactForm}>
                 <div className="relative mb-6" data-te-input-wrapper-init>
                   <input
                     type="text"
                     className="text-black w-full px-4 py-2 border-[#125ba3] border-2 rounded-lg font-sans focus:outline-none  bg-white bg-opacity-90"
                     id="exampleInput90"
                     placeholder="Nom"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
                   />
                 </div>
 
@@ -492,6 +636,9 @@ const Home = () => {
                     type="email"
                     className="text-black w-full px-4 py-2 border-[#125ba3] border-2 rounded-lg font-sans focus:outline-none bg-white bg-opacity-90"
                     placeholder="Votre adress"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
                   />
                 </div>
                 <div className="relative mb-6" data-te-input-wrapper-init>
@@ -500,10 +647,13 @@ const Home = () => {
                     id="exampleFormControlTextarea1"
                     rows="3"
                     placeholder="Votre message"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    required
                   ></textarea>
                 </div>
                 <button
-                  type="button"
+                  type="submit"
                   data-te-ripple-init
                   data-te-ripple-color="light"
                   className="w-full flex justify-center hover:bg-[#F0854A] bg-[#125ba3] text-gray-100 font-sans p-4 rounded-lg tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500"
@@ -515,10 +665,11 @@ const Home = () => {
           </div>
         </section>
       </div>
+
       <section className="dark:bg-gray-900 w-full">
         <div className="py-8 px-5 mx-auto">
           <div className="text-center bg-white rounded-lg px-4 py-6 mx-auto max-w-screen-xl lg:px-6 ">
-            <h2 className=" pt-5 w-full mb-2 font-sans text-2xl font-normal tracking-tight leading-[2rem] text-gray-900 sm:text-4xl">
+            <h2 className=" pt-5 w-full mb-2 font-sans text-3xl font-normal tracking-tight leading-[2rem] text-gray-900">
               Boostez l'efficacité de votre maintenance dès à présent !
             </h2>
             <p className="mb-6 font-light text-gray-500 dark:text-gray-400 md:text-lg text-center">
@@ -533,6 +684,7 @@ const Home = () => {
           </div>
         </div>
       </section>
+
       <footer className="text-gray-600 body-font bg-gray-100">
         <div className="container px-5 py-4 mx-auto flex items-center sm:flex-row flex-col">
           <div className="w-full flex sm:flex-row flex-col items-center justify-around">
@@ -606,6 +758,7 @@ const Home = () => {
           </div>
         </div>
       </footer>
+
       {isNavbarVisible && (
         <div className="fixed bottom-20 right-6 z-50">
           <button

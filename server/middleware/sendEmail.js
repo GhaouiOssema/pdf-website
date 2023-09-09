@@ -22,7 +22,7 @@ const sendVerificationEmail = async (email, verificationToken) => {
     const content = htmlTemplate.replace("{resetLink}", verificationLink);
 
     const mailOptions = {
-      from: "your-email@gmail.com",
+      from: "qrsolution548@gmail.com",
       to: email,
       subject: "Email Verification",
       html: content,
@@ -37,4 +37,55 @@ const sendVerificationEmail = async (email, verificationToken) => {
   }
 };
 
-module.exports = sendVerificationEmail;
+const sendContactUsEmail = async (email, mailText, name, message) => {
+  console.log(email);
+  try {
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "qrsolution548",
+        pass: "pupihdlbdzdbkotr",
+      },
+    });
+
+    const user = fs.readFileSync(
+      path.join(__dirname, "../public/contactUsToUser.html"),
+      "utf-8"
+    );
+
+    const admin = fs.readFileSync(
+      path.join(__dirname, "../public/contactUsToAdmin.html"),
+      "utf-8"
+    );
+
+    const content =
+      email === "qrsolution548@gmail.com"
+        ? admin
+            .replace("{nom}", name)
+            .replace("{nom}", name)
+            .replace("{email}", mailText)
+            .replace("{message}", message)
+        : user;
+
+    const mailOptions = {
+      from: "qrsolution548@gmail.com",
+      to: email,
+      subject:
+        email === "qrsolution548@gmail.com"
+          ? ` Nouvelle soumission de formulaire de contact - ${name}`
+          : "Merci de nous avoir contactés !",
+      html: content,
+    };
+
+    await transporter.sendMail(mailOptions);
+    return true;
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+module.exports = {
+  sendContactUsEmail,
+  sendVerificationEmail,
+};

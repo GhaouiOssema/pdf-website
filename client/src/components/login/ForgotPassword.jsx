@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [isEmailSent, setIsEmailSent] = useState(false);
+  const Navigate = useNavigate();
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
@@ -26,47 +28,66 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="flex flex-col items-center h-screen">
-      {isEmailSent ? (
-        <div className="mt-20">
-          <div className="text-green-500 text-4xl mb-4 flex justify-center items-center">
-            <i className="fa-solid fa-circle-check"></i>
-          </div>
-          <p className="text-xl font-semibold text-green-500 mb-4 text-center">
-            An email with instructions to reset your password has been sent to
-            your email address.
-          </p>
+    <div className="flex flex-col justify-center h-screen bg-white">
+      <ul className="circles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+      <div className="relative grid place-items-center mx-2 my-20 sm:my-auto ">
+        <div className="bg-gray-100 w-11/12 p-12 sm:w-8/12 md:w-6/12 lg:w-5/12 2xl:w-4/12 px-6 py-10 sm:px-10 sm:py-6 rounded-lg shadow-md lg:shadow-lg">
+          {isEmailSent ? (
+            <div>
+              <div className="text-green-500 text-4xl mb-4 flex justify-center items-center">
+                <i className="fa-solid fa-circle-check"></i>
+              </div>
+              <p className="text-xl font-sans font-semibold text-green-500 mb-4 text-center">
+                An email with instructions to reset your password has been sent
+                to your email address.
+              </p>
+            </div>
+          ) : (
+            <div>
+              <div className="flex justify-center items-center text-center mb-4">
+                <h6 className="font-sans font-semibold text-[#125ba3] text-xl">
+                  Mot de passe oublié
+                </h6>
+                <i
+                  class="ml-5 fa-solid fa-house text-[#125ba3] cursor-pointer"
+                  onClick={() => Navigate("/")}
+                ></i>
+              </div>
+              <form className="space-y-5" onSubmit={handleResetPassword}>
+                <div>
+                  <input
+                    type="text"
+                    className="text-black w-full px-4 py-2 border-[#125ba3] border-2 rounded-lg font-sans focus:outline-none  bg-white bg-opacity-90"
+                    id="exampleInput90"
+                    placeholder="Entrez votre adresse e-mail"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full py-3 mt-10 bg-[#125ba3] rounded-lg font-sans font-medium text-white focus:outline-none hover:shadow-none"
+                >
+                  Envoyer un e-mail de réinitialisation
+                </button>
+              </form>
+            </div>
+          )}
         </div>
-      ) : (
-        <form
-          onSubmit={handleResetPassword}
-          className="pt-40 md:w-[50%] lg:w-[40%]"
-        >
-          <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block text-gray-700 text-sm font-bold mb-2"
-            >
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              placeholder="Entrez votre adresse e-mail"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          >
-            Envoyer un e-mail de réinitialisation
-          </button>
-        </form>
-      )}
+      </div>
     </div>
   );
 };

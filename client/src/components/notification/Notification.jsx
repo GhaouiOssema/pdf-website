@@ -49,8 +49,6 @@ const Notification = () => {
     fetchNotification();
   }, []);
 
-  console.log(notifications);
-
   const getRandomColor = () => {
     const letters = "0123456789ABCDEF";
     let color = "#";

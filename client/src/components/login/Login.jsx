@@ -148,7 +148,7 @@ const Login = () => {
         </header>
         <div className="relative h-full flex mt-[10%] md:mt-0 lg:mt-0 xl:mt-0 2xl:pt-0 bg-gray-100 overflow-hidden">
           <div className="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0 bg-gray-100">
-            <div className="w-full xl:w-3/5 h-full md:flex flex-auto items-center justify-center p-10 overflow-hidden bg-purple-900 text-white bg-no-repeat bg-cover relative">
+            <div className="w-full xl:w-3/5 h-full md:flex flex-auto items-center justify-center p-10 overflow-hidde text-white bg-no-repeat bg-cover relative">
               <div className="absolute bg-white inset-0 z-0"></div>
               <ul className="circles">
                 <li></li>

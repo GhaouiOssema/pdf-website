@@ -71,6 +71,7 @@ const App = () => {
           <Route path="/inscription" element={<Register />} />
           <Route path="/seconnecter/oublier" element={<ForgotPassword />} />
           <Route path="/verifier" element={<VerificationPage />} />
+          <Route path="/reset-password" element={<ResetPasswordForm />} />
         </Routes>
 
         <div className=" bg-gray-100">
