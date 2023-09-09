@@ -48,9 +48,9 @@ const ForgotPassword = () => {
               <div className="text-green-500 text-4xl mb-4 flex justify-center items-center">
                 <i className="fa-solid fa-circle-check"></i>
               </div>
-              <p className="text-xl font-sans font-semibold text-green-500 mb-4 text-center">
-                An email with instructions to reset your password has been sent
-                to your email address.
+              <p className="text-sm md:text-md lg:text-lg xl:text-xl font-sans font-semibold text-green-500 mb-4 text-center">
+                Un e-mail contenant des instructions pour réinitialiser votre
+                mot de passe a été envoyé à votre adresse e-mail.
               </p>
             </div>
           ) : (
@@ -79,7 +79,7 @@ const ForgotPassword = () => {
 
                 <button
                   type="submit"
-                  className="w-full py-3 mt-10 bg-[#125ba3] rounded-lg font-sans font-medium text-white focus:outline-none hover:shadow-none"
+                  className="w-full py-2 mt-10 bg-[#125ba3] rounded-lg font-sans font-medium text-white text-sm md:text-md lg:text-lg xl:text-xl focus:outline-none hover:shadow-none"
                 >
                   Envoyer un e-mail de réinitialisation
                 </button>

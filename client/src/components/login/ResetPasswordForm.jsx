@@ -93,14 +93,14 @@ const ResetPasswordForm = () => {
               <div className="text-green-500 text-4xl mb-4 flex justify-center items-center">
                 <i className="fa-solid fa-circle-check"></i>
               </div>
-              <p className="text-lg font-sans font-semibold text-green-500 mb-4 text-center">
+              <p className="text-sm md:text-md lg:text-lg xl:text-xl font-sans font-semibold text-green-500 mb-4 text-center">
                 Votre mot de passe a été réinitialisé avec succès.
               </p>
 
               <Link to="/seconnecter" className="font-sans">
                 <button
                   type="submit"
-                  className="w-full py-3 bg-[#125ba3] rounded-lg font-sans font-medium text-white focus:outline-none hover:shadow-none"
+                  className="w-full py-3 bg-[#125ba3] rounded-lg font-sans font-medium text-white text-sm md:text-md lg:text-lg xl:text-xl focus:outline-none hover:shadow-none"
                 >
                   se connecter
                 </button>
@@ -112,7 +112,6 @@ const ResetPasswordForm = () => {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                height: "100vh",
               }}
             >
               <CircularProgress />
