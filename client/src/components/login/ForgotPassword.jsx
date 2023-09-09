@@ -1,29 +1,39 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Box, CircularProgress } from "@mui/material";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [isEmailSent, setIsEmailSent] = useState(false);
+  const [loading, setLoading] = React.useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const Navigate = useNavigate();
+
+  console.log(isEmailSent);
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
-      await axios.post(
+      const response = await axios.post(
         `${import.meta.env.VITE_SERVER_API_URL}/forgot-password`,
         {
           email,
           emailType: "reset",
         }
       );
-      setIsEmailSent(true);
-    } catch (err) {
-      console.error(err);
-      alert(
-        "An error occurred while sending the reset email. Please try again."
-      );
+
+      if (response.status === 200) {
+        setIsEmailSent(true);
+        setLoading(false);
+        setErrorMessage(""); // Reset any previous error message
+      }
+    } catch (error) {
+      setIsEmailSent(false);
+      setLoading(false);
+      setErrorMessage("Utilisateur non trouvé");
     }
   };
 
@@ -43,7 +53,7 @@ const ForgotPassword = () => {
       </ul>
       <div className="relative grid place-items-center mx-2 my-20 sm:my-auto ">
         <div className="bg-gray-100 w-11/12 p-12 sm:w-8/12 md:w-6/12 lg:w-5/12 2xl:w-4/12 px-6 py-10 sm:px-10 sm:py-6 rounded-lg shadow-md lg:shadow-lg">
-          {isEmailSent ? (
+          {isEmailSent && loading === false ? (
             <div>
               <div className="text-green-500 text-4xl mb-4 flex justify-center items-center">
                 <i className="fa-solid fa-circle-check"></i>
@@ -53,6 +63,21 @@ const ForgotPassword = () => {
                 mot de passe a été envoyé à votre adresse e-mail.
               </p>
             </div>
+          ) : loading === true ? (
+            <div className="flex justify-center items-center text-center">
+              <CircularProgress />
+            </div>
+          ) : !isEmailSent &&
+            !loading &&
+            errorMessage === "Utilisateur non trouvé" ? (
+            <>
+              <div className="text-red-500 text-4xl mb-4 flex justify-center items-center">
+                <i className="fa-solid fa-triangle-exclamation"></i>
+              </div>
+              <p className="text-xl font-semibold text-red-500 mb-4 text-center">
+                Utilisateur non trouvé
+              </p>
+            </>
           ) : (
             <div>
               <div className="flex justify-center items-center text-center mb-4">
@@ -79,7 +104,7 @@ const ForgotPassword = () => {
 
                 <button
                   type="submit"
-                  className="w-full py-2 mt-10 bg-[#125ba3] rounded-lg font-sans font-medium text-white text-sm md:text-md lg:text-lg xl:text-xl focus:outline-none hover:shadow-none"
+                  className="w-full py-2 mt-10 bg-[#125ba3] rounded-lg font-sans font-medium text-white text-sm md:text-md lg:text-lg xl:text-md focus:outline-none hover:shadow-none"
                 >
                   Envoyer un e-mail de réinitialisation
                 </button>
