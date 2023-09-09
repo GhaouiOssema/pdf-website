@@ -1,12 +1,43 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
-import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
-import { Box, CircularProgress } from "@mui/material";
-import { green } from "@mui/material/colors";
-import CheckIcon from "@mui/icons-material/Check";
-import SaveIcon from "@mui/icons-material/Save";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+
+import {
+  Box,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  Slide,
+} from "@mui/material";
+import { Button } from "flowbite-react";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
+const Popup = ({ open, setOpen, messageError }) => {
+  return (
+    <Dialog
+      open={open}
+      TransitionComponent={Transition}
+      keepMounted
+      aria-describedby="alert-dialog-slide-description"
+    >
+      <>
+        <DialogContent>
+          <div className="text-red-500 text-4xl mb-4 flex justify-center items-center">
+            <i class="fa-solid fa-triangle-exclamation"></i>{" "}
+          </div>
+          <p className="text-xl font-sans font-medium text-red-500 text-center">
+            {messageError}
+          </p>
+        </DialogContent>
+      </>
+    </Dialog>
+  );
+};
 
 const ResetPasswordForm = () => {
   const searchParams = new URLSearchParams(location.search);
@@ -17,6 +48,24 @@ const ResetPasswordForm = () => {
   const [isResetSuccess, setIsResetSuccess] = useState(false);
   const [loading, setLoading] = React.useState(false);
   const [linkExpired, setLinkExpired] = useState(false);
+  const [isValid, setIsValid] = useState(false);
+  const [tooltipOpen, setTooltipOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [messageError, setMessageError] = useState("");
+  const popupRef = useRef(null);
+
+  const handleOutsideClick = (event) => {
+    if (popupRef.current && !popupRef.current.contains(event.target)) {
+      setOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
 
   useEffect(() => {
     const expirationTime = parseInt(expiration);
@@ -27,29 +76,60 @@ const ResetPasswordForm = () => {
     }
   }, [expiration]);
 
+  const passWordhandleChange = (e) => {
+    setPassword(e.target.value);
+    validatePassword(password);
+  };
+
+  const validatePassword = (value) => {
+    const hasNumber = /\d/.test(value);
+    const hasUppercase = /[A-Z]/.test(value);
+    const hasLowercase = /[a-z]/.test(value);
+
+    setIsValid(hasNumber && hasUppercase && hasLowercase);
+  };
+
+  let conditions = 0;
+
+  const handleTooltipOpen = () => {
+    setTooltipOpen(true);
+  };
+
+  const handleTooltipClose = () => {
+    setTooltipOpen(false);
+  };
+
   const handleResetPassword = async (e) => {
     e.preventDefault();
-    setLoading(true);
-
-    if (password !== confirmPassword) {
-      alert("Les mots de passe ne correspondent pas. Veuillez réessayer.");
-      return;
-    }
 
     try {
       const expiration = Date.now() + 600000;
-      const res = await axios.post(
-        `${import.meta.env.VITE_SERVER_API_URL}/reset-password`,
-        {
-          email,
-          password,
-          expiration,
-        }
-      );
 
-      if (res.status === 200) {
-        setIsResetSuccess(true);
-        setLoading(false);
+      if (confirmPassword !== password) {
+        setMessageError(
+          "Les mots de passe ne se correspondent pas,Veuillez réessayer."
+        );
+        setOpen(true);
+      } else if (confirmPassword === password && !isValid) {
+        setMessageError("le mot de passe ne vérifie pas aux conditions!");
+
+        setOpen(true);
+      } else {
+        setLoading(true);
+
+        const res = await axios.post(
+          `${import.meta.env.VITE_SERVER_API_URL}/reset-password`,
+          {
+            email,
+            password,
+            expiration,
+          }
+        );
+
+        if (res.status === 200) {
+          setIsResetSuccess(true);
+          setLoading(false);
+        }
       }
     } catch (err) {
       console.error(err);
@@ -61,7 +141,7 @@ const ResetPasswordForm = () => {
 
   if (linkExpired) {
     return (
-      <div className="pt-20">
+      <div className="pt-20 h-screen">
         <div className="text-red-500 text-4xl mb-4 flex justify-center items-center">
           <i className="fa-solid fa-triangle-exclamation"></i>
         </div>
@@ -73,7 +153,13 @@ const ResetPasswordForm = () => {
   }
 
   return (
-    <div className="flex flex-col justify-center h-screen bg-white">
+    <div
+      className="flex flex-col justify-center h-screen bg-white"
+      ref={popupRef}
+    >
+      {open && (
+        <Popup open={open} setOpen={setOpen} messageError={messageError} />
+      )}
       <ul className="circles">
         <li></li>
         <li></li>
@@ -132,9 +218,57 @@ const ResetPasswordForm = () => {
                     className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     placeholder="Entrez votre nouveau mot de passe"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={passWordhandleChange}
                     required
                   />
+                  <div className="flex -mx-1 py-1 items-center">
+                    {[
+                      {
+                        condition: /[a-z]/.test(password),
+                        color: "bg-red-500",
+                      },
+                      {
+                        condition: /[A-Z]/.test(password),
+                        color: "bg-red-500",
+                      },
+                      {
+                        condition: /\d/.test(password),
+                        color: "bg-red-500",
+                      },
+                    ].map((item, i) => {
+                      if (item.condition) {
+                        conditions += 1;
+                        item.color = "bg-green-500";
+                      }
+                      return (
+                        <div className="w-full px-1" key={i}>
+                          <div
+                            className={`h-2 rounded-xl transition-colors ${item.color}`}
+                          ></div>
+                        </div>
+                      );
+                    })}
+                    <div className="relative inline-block">
+                      <div
+                        className="cursor-pointer"
+                        onMouseEnter={handleTooltipOpen}
+                        onMouseLeave={handleTooltipClose}
+                        onClick={handleTooltipOpen}
+                      >
+                        <InfoOutlinedIcon
+                          className={`text-${
+                            conditions === 3 ? "green" : "red"
+                          }-500`}
+                        />
+                      </div>
+                      {tooltipOpen && (
+                        <div className="absolute top-0 right-0 mt-8 ml-2 p-2 bg-gray-100 w-80 text-gray-800 text-sm rounded-lg shadow-lg z-20 font-sans font-light">
+                          Le mot de passe doit inclure au minimum 2 chiffres,
+                          une lettre majuscule et une lettre minuscule.
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </div>
                 <div>
                   <label
