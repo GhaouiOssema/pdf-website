@@ -71,14 +71,11 @@ const Register = () => {
 
   const validatePassword = (value) => {
     const hasNumber = /\d/.test(value);
-    const hasSpecialCharacter = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]/.test(value);
     const hasUppercase = /[A-Z]/.test(value);
     const hasLowercase = /[a-z]/.test(value);
 
     setIsValid(hasNumber && hasUppercase && hasLowercase);
   };
-
-  console.log(isValid);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -115,7 +112,7 @@ const Register = () => {
     }
   };
 
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  let conditions = 0;
 
   return (
     <div>
@@ -248,7 +245,47 @@ const Register = () => {
                       onChange={passWordhandleChange}
                       required
                     />
+                    <div className="flex -mx-1 py-1 items-center">
+                      {[
+                        {
+                          condition: /[a-z]/.test(password),
+                          color: "bg-green-400",
+                        },
+                        {
+                          condition: /[A-Z]/.test(password),
+                          color: "bg-green-400",
+                        },
+                        {
+                          condition: /\d/.test(password),
+                          color: "bg-green-400",
+                        },
+                      ].map((item, i) => {
+                        if (item.condition) {
+                          conditions += 1;
+                          return (
+                            <div className="w-full px-1" key={i}>
+                              <div
+                                className={`h-2 rounded-xl transition-colors ${item.color}`}
+                              ></div>
+                            </div>
+                          );
+                        } else {
+                          return null;
+                        }
+                      })}
+                      {conditions < 4 && conditions > 0 && (
+                        <Tooltip
+                          title="Le mot de passe doit inclure au minimum 2 chiffre, une lettre majuscule et une lettre minuscule."
+                          sx={{ color: conditions === 3 ? "green" : "red" }}
+                        >
+                          <IconButton>
+                            <InfoOutlinedIcon />
+                          </IconButton>
+                        </Tooltip>
+                      )}
+                    </div>
                   </div>
+
                   <div className="mt-4 content-center">
                     <label
                       htmlFor="email"
