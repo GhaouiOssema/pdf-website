@@ -59,6 +59,7 @@ const Register = () => {
   const [error, setError] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isValid, setIsValid] = useState(false);
+  const [tooltipOpen, setTooltipOpen] = useState(false);
 
   const pages = ["connexion", "inscription", "Home"];
 
@@ -114,10 +115,12 @@ const Register = () => {
 
   let conditions = 0;
 
-  const [tooltipOpen, setTooltipOpen] = useState(false);
+  const handleTooltipOpen = () => {
+    setTooltipOpen(true);
+  };
 
-  const handleTooltipClick = () => {
-    setTooltipOpen(!tooltipOpen);
+  const handleTooltipClose = () => {
+    setTooltipOpen(false);
   };
 
   return (
@@ -255,42 +258,49 @@ const Register = () => {
                       {[
                         {
                           condition: /[a-z]/.test(password),
-                          color: "bg-green-400",
+                          color: "bg-red-500",
                         },
                         {
                           condition: /[A-Z]/.test(password),
-                          color: "bg-green-400",
+                          color: "bg-red-500",
                         },
                         {
                           condition: /\d/.test(password),
-                          color: "bg-green-400",
+                          color: "bg-red-500",
                         },
                       ].map((item, i) => {
                         if (item.condition) {
                           conditions += 1;
-                          return (
-                            <div className="w-full px-1" key={i}>
-                              <div
-                                className={`h-2 rounded-xl transition-colors ${item.color}`}
-                              ></div>
-                            </div>
-                          );
-                        } else {
-                          return null;
+                          item.color = "bg-green-500";
                         }
+                        return (
+                          <div className="w-full px-1" key={i}>
+                            <div
+                              className={`h-2 rounded-xl transition-colors ${item.color}`}
+                            ></div>
+                          </div>
+                        );
                       })}
-                      {conditions < 4 && conditions > 0 && (
-                        <Tooltip
-                          title="Le mot de passe doit inclure au minimum 2 chiffre, une lettre majuscule et une lettre minuscule."
-                          sx={{ color: conditions === 3 ? "green" : "red" }}
-                          onClose={() => setTooltipOpen(false)}
-                          disableFocusListener
+                      <div className="relative inline-block">
+                        <div
+                          className="cursor-pointer"
+                          onMouseEnter={handleTooltipOpen}
+                          onMouseLeave={handleTooltipClose}
+                          onClick={handleTooltipOpen}
                         >
-                          <IconButton onClick={handleTooltipClick}>
-                            <InfoOutlinedIcon />
-                          </IconButton>
-                        </Tooltip>
-                      )}
+                          <InfoOutlinedIcon
+                            className={`text-${
+                              conditions === 3 ? "green" : "red"
+                            }-500`}
+                          />
+                        </div>
+                        {tooltipOpen && (
+                          <div className="absolute top-0 right-0 mt-8 ml-2 p-2 bg-gray-100 w-80 text-gray-800 text-sm rounded-lg shadow-lg z-20 font-sans font-light">
+                            Le mot de passe doit inclure au minimum 2 chiffres,
+                            une lettre majuscule et une lettre minuscule.
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
 
