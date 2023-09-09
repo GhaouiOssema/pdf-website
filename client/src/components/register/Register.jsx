@@ -114,6 +114,12 @@ const Register = () => {
 
   let conditions = 0;
 
+  const [tooltipOpen, setTooltipOpen] = useState(false);
+
+  const handleTooltipClick = () => {
+    setTooltipOpen(!tooltipOpen);
+  };
+
   return (
     <div>
       {open && <Popup open={open} setOpen={setOpen} />}
@@ -277,8 +283,10 @@ const Register = () => {
                         <Tooltip
                           title="Le mot de passe doit inclure au minimum 2 chiffre, une lettre majuscule et une lettre minuscule."
                           sx={{ color: conditions === 3 ? "green" : "red" }}
+                          onClose={() => setTooltipOpen(false)}
+                          disableFocusListener
                         >
-                          <IconButton>
+                          <IconButton onClick={handleTooltipClick}>
                             <InfoOutlinedIcon />
                           </IconButton>
                         </Tooltip>
