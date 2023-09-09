@@ -617,7 +617,7 @@ const Home = () => {
                 contact@qrsolution.fr
               </p>
             </div>
-            <div className="bg-white shadow-md rounded-xl  flex justify-center flex-col  mb-12 w-full shrink-0 grow-0 basis-auto md:mb-0 md:w-6/12 md:px-3 lg:px-6">
+            <div className="bg-white shadow-md rounded-xl flex justify-center flex-col p-5 md:px-3 lg:px-5 xl:px-6 mb-12 w-full shrink-0 grow-0 basis-auto md:mb-0 md:w-6/12">
               <form onSubmit={sendContactForm}>
                 <div className="relative mb-6" data-te-input-wrapper-init>
                   <input

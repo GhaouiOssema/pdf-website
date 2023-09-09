@@ -12,6 +12,8 @@ import {
   Tooltip,
 } from "@mui/material";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import DoneIcon from "@mui/icons-material/Done";
+import ClearIcon from "@mui/icons-material/Clear";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -200,10 +202,10 @@ const Register = () => {
                 <li></li>
               </ul>
             </div>
-            <div className="md:flex md:items-center md:justify-center w-full sm:w-auto md:h-full w-2/5 xl:w-2/5 p-8  md:p-10 lg:p-14 sm:rounded-lg md:rounded-none  bg-gray-100">
+            <div className="md:flex md:items-center md:justify-center w-full sm:w-auto md:h-full w-2/5 xl:w-2/5 p-8 md:p-14 lg:p-14 sm:rounded-lg md:rounded-none  bg-gray-100">
               <div className="max-w-md w-full space-y-8 h-full">
                 <form
-                  className=" h-full w-full flex flex-col justify-center "
+                  className="mt-0 md:mt-10 lg:mt-10 xl:mt-10 w-full flex flex-col justify-center"
                   onSubmit={handleSubmit}
                   method="POST"
                 >
@@ -255,56 +257,62 @@ const Register = () => {
                       required
                     />
                     <div className="flex -mx-1 py-1 items-center">
-                      {[
-                        {
-                          condition: /[a-z]/.test(password),
-                          color: "bg-red-500",
-                        },
-                        {
-                          condition: /[A-Z]/.test(password),
-                          color: "bg-red-500",
-                        },
-                        {
-                          condition: /\d/.test(password),
-                          color: "bg-red-500",
-                        },
-                      ].map((item, i) => {
-                        if (item.condition) {
-                          conditions += 1;
-                          item.color = "bg-green-500";
-                        }
-                        return (
-                          <div className="w-full px-1" key={i}>
+                      {password !== "" && (
+                        <>
+                          {[
+                            {
+                              condition: /[a-z]/.test(password),
+                              color: "bg-red-500",
+                            },
+                            {
+                              condition: /[A-Z]/.test(password),
+                              color: "bg-red-500",
+                            },
+                            {
+                              condition: /\d/.test(password),
+                              color: "bg-red-500",
+                            },
+                          ].map((item, i) => {
+                            if (item.condition) {
+                              conditions += 1;
+                              item.color = "bg-green-500";
+                            }
+                            return (
+                              <div className="w-full px-1" key={i}>
+                                <div
+                                  className={`h-2 rounded-xl transition-colors ${item.color}`}
+                                ></div>
+                              </div>
+                            );
+                          })}
+
+                          <div className="relative inline-block">
                             <div
-                              className={`h-2 rounded-xl transition-colors ${item.color}`}
-                            ></div>
+                              className="cursor-pointer"
+                              onMouseEnter={handleTooltipOpen}
+                              onMouseLeave={handleTooltipClose}
+                              onClick={handleTooltipOpen}
+                            >
+                              <InfoOutlinedIcon
+                                className={`text-${
+                                  conditions === 3 ? "green" : "red"
+                                }-500`}
+                              />
+                            </div>
+                            {tooltipOpen && (
+                              <div className="absolute top-0 right-0 mt-8 ml-2 p-2 bg-gray-100 w-80 text-gray-800 text-sm rounded-lg shadow-lg z-20 font-sans font-light">
+                                Le mot de passe doit inclure au minimum 2
+                                chiffres, une lettre majuscule et une lettre
+                                minuscule.
+                              </div>
+                            )}
                           </div>
-                        );
-                      })}
-                      <div className="relative inline-block">
-                        <div
-                          className="cursor-pointer"
-                          onMouseEnter={handleTooltipOpen}
-                          onMouseLeave={handleTooltipClose}
-                          onClick={handleTooltipOpen}
-                        >
-                          <InfoOutlinedIcon
-                            className={`text-${
-                              conditions === 3 ? "green" : "red"
-                            }-500`}
-                          />
-                        </div>
-                        {tooltipOpen && (
-                          <div className="absolute top-0 right-0 mt-8 ml-2 p-2 bg-gray-100 w-80 text-gray-800 text-sm rounded-lg shadow-lg z-20 font-sans font-light">
-                            Le mot de passe doit inclure au minimum 2 chiffres,
-                            une lettre majuscule et une lettre minuscule.
-                          </div>
-                        )}
-                      </div>
+                        </>
+                      )}
                     </div>
                   </div>
 
-                  <div className="mt-4 content-center">
+                  <div className="relative mt-4 content-center">
                     <label
                       htmlFor="email"
                       className="block  text-gray-700 font-sans font-medium mb-2"
@@ -320,6 +328,14 @@ const Register = () => {
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       required
                     />
+                    <div className="absolute jus inset-y-0 right-0 mt-7 flex justify-center items-center pr-2">
+                      {confirmPassword != "" &&
+                        (password === confirmPassword ? (
+                          <DoneIcon sx={{ color: "green" }} />
+                        ) : (
+                          <ClearIcon sx={{ color: "red" }} />
+                        ))}
+                    </div>
                   </div>
 
                   <div>

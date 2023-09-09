@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import DoneIcon from "@mui/icons-material/Done";
+import ClearIcon from "@mui/icons-material/Clear";
 
 import {
   Box,
@@ -222,55 +224,58 @@ const ResetPasswordForm = () => {
                     required
                   />
                   <div className="flex -mx-1 py-1 items-center">
-                    {[
-                      {
-                        condition: /[a-z]/.test(password),
-                        color: "bg-red-500",
-                      },
-                      {
-                        condition: /[A-Z]/.test(password),
-                        color: "bg-red-500",
-                      },
-                      {
-                        condition: /\d/.test(password),
-                        color: "bg-red-500",
-                      },
-                    ].map((item, i) => {
-                      if (item.condition) {
-                        conditions += 1;
-                        item.color = "bg-green-500";
-                      }
-                      return (
-                        <div className="w-full px-1" key={i}>
-                          <div
-                            className={`h-2 rounded-xl transition-colors ${item.color}`}
-                          ></div>
+                    {password !== "" &&
+                      [
+                        {
+                          condition: /[a-z]/.test(password),
+                          color: "bg-red-500",
+                        },
+                        {
+                          condition: /[A-Z]/.test(password),
+                          color: "bg-red-500",
+                        },
+                        {
+                          condition: /\d/.test(password),
+                          color: "bg-red-500",
+                        },
+                      ].map((item, i) => {
+                        if (item.condition) {
+                          conditions += 1;
+                          item.color = "bg-green-500";
+                        }
+                        return (
+                          <div className="w-full px-1" key={i}>
+                            <div
+                              className={`h-2 rounded-xl transition-colors ${item.color}`}
+                            ></div>
+                          </div>
+                        );
+                      })}
+                    {password !== "" && (
+                      <div className="relative inline-block">
+                        <div
+                          className="cursor-pointer"
+                          onMouseEnter={handleTooltipOpen}
+                          onMouseLeave={handleTooltipClose}
+                          onClick={handleTooltipOpen}
+                        >
+                          <InfoOutlinedIcon
+                            className={`text-${
+                              conditions === 3 ? "green" : "red"
+                            }-500`}
+                          />
                         </div>
-                      );
-                    })}
-                    <div className="relative inline-block">
-                      <div
-                        className="cursor-pointer"
-                        onMouseEnter={handleTooltipOpen}
-                        onMouseLeave={handleTooltipClose}
-                        onClick={handleTooltipOpen}
-                      >
-                        <InfoOutlinedIcon
-                          className={`text-${
-                            conditions === 3 ? "green" : "red"
-                          }-500`}
-                        />
+                        {tooltipOpen && (
+                          <div className="absolute top-0 right-0 mt-8 ml-2 p-2 bg-gray-100 w-80 text-gray-800 text-sm rounded-lg shadow-lg z-20 font-sans font-light">
+                            Le mot de passe doit inclure au minimum 2 chiffres,
+                            une lettre majuscule et une lettre minuscule.
+                          </div>
+                        )}
                       </div>
-                      {tooltipOpen && (
-                        <div className="absolute top-0 right-0 mt-8 ml-2 p-2 bg-gray-100 w-80 text-gray-800 text-sm rounded-lg shadow-lg z-20 font-sans font-light">
-                          Le mot de passe doit inclure au minimum 2 chiffres,
-                          une lettre majuscule et une lettre minuscule.
-                        </div>
-                      )}
-                    </div>
+                    )}
                   </div>
                 </div>
-                <div>
+                <div className="relative">
                   <label
                     htmlFor="confirmPassword"
                     className="block text-gray-700 text-sm font-bold mb-2"
@@ -280,12 +285,20 @@ const ResetPasswordForm = () => {
                   <input
                     type="password"
                     id="confirmPassword"
-                    className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className="appearance-none border rounded w-full py-2 px-3 pr-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     placeholder="Confirmez le nouveau mot de passe"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     required
                   />
+                  <div className="absolute jus inset-y-0  right-0 mt-7 flex justify-center items-center cursor-pointer pr-2">
+                    {confirmPassword != "" &&
+                      (password === confirmPassword ? (
+                        <DoneIcon sx={{ color: "green" }} />
+                      ) : (
+                        <ClearIcon sx={{ color: "red" }} />
+                      ))}
+                  </div>
                 </div>
 
                 <button
