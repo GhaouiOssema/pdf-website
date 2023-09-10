@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import DoneIcon from "@mui/icons-material/Done";
@@ -29,10 +29,10 @@ const Popup = ({ open, setOpen, messageError }) => {
     >
       <>
         <DialogContent>
-          <div className="text-red-500 text-4xl mb-4 flex justify-center items-center">
-            <i class="fa-solid fa-triangle-exclamation"></i>{" "}
+          <div className="text-[#DC2626] text-center text-3xl mb-4 flex justify-center items-center">
+            <i className="fa-solid fa-circle-check"></i>
           </div>
-          <p className="text-xl font-sans font-medium text-red-500 text-center">
+          <p className="font-sans font-semibold text-[#DC2626] text-center">
             {messageError}
           </p>
         </DialogContent>

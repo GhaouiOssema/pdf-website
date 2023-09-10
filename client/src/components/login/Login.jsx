@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import LOGO from "../../assets/logo2.png";
 import jwt_decode from "jwt-decode";
 import { Dialog, DialogActions, DialogContent, Slide } from "@mui/material";
-import { Button } from "flowbite-react";
-import Footer from "../Footer";
 
 const isEmailValid = (email) => {
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -26,12 +24,12 @@ const Popup = ({ open, setOpen }) => {
     >
       <>
         <DialogContent>
-          <div className="text-[#F0854A] text-4xl mb-4 flex justify-center items-center">
+          <div className="text-[#DC2626] text-center text-3xl mb-4 flex justify-center items-center">
             <i class="fa-solid fa-triangle-exclamation"></i>{" "}
           </div>
-          <p className="text-xl font-sans font-normal text-[#F0854A] text-center">
-            Désolé , votre compte n'est pas encore vérifié , veuillez vérifier
-            votre courrier pour finaliser l' inscription.
+          <p className="font-sans font-semibold text-[#DC2626] text-justify">
+            Votre compte n'est pas encore vérifié , veuillez vérifier votre
+            courrier pour finaliser l' inscription.
           </p>
         </DialogContent>
       </>
@@ -45,6 +43,20 @@ const Login = () => {
   const pages = ["connexion", "inscription", "Home"];
   const [open, setOpen] = useState(false);
   const [error, setError] = useState("");
+  const popupRef = useRef(null);
+
+  const handleOutsideClick = (event) => {
+    if (popupRef.current && !popupRef.current.contains(event.target)) {
+      setOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -89,7 +101,7 @@ const Login = () => {
   return (
     <div>
       {open && <Popup open={open} setOpen={setOpen} />}
-      <div className="h-screen flex flex-col bg-gray-100">
+      <div className="h-screen flex flex-col bg-gray-100" ref={popupRef}>
         <header className="fixed w-full z-50 transition-all bg-white top-0 left-0 right-0">
           <nav className="px-4 lg:px-6 py-2.5 bg-none dark:bg-gray-800">
             <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-2xl">

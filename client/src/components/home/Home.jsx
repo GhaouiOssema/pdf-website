@@ -2,15 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import LOGO from "../../assets/logo2.png";
 import { Link } from "react-router-dom";
-import { Button, Carousel } from "flowbite-react";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import IMG_1 from "../../assets/carrousel1.jpg";
-import IMG_2 from "../../assets/carousel2.jpg";
-import IMG_3 from "../../assets/carousel3.jpg";
 import axios from "axios";
 import CloseIcon from "@mui/icons-material/Close";
 import { Dialog, DialogActions, DialogContent, Slide } from "@mui/material";
@@ -29,10 +25,10 @@ const Popup = ({ open, setOpen }) => {
     >
       <>
         <DialogContent>
-          <div className="text-[#125ba3] text-center text-3xl mb-4 flex justify-center items-center">
+          <div className="text-[#008000] text-center text-3xl mb-4 flex justify-center items-center">
             <i className="fa-solid fa-circle-check"></i>
           </div>
-          <p className="font-sans font-semibold text-[#125ba3] text-center">
+          <p className="font-sans font-semibold text-[#008000] text-center">
             Votre message a été envoyé correctement.
           </p>
         </DialogContent>

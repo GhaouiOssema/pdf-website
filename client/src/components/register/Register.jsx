@@ -31,10 +31,10 @@ const Popup = ({ open, setOpen }) => {
     >
       <>
         <DialogContent>
-          <div className="text-[#125ba3] text-4xl mb-4 flex justify-center items-center">
+          <div className="text-[#008000] text-center text-3xl mb-4 flex justify-center items-center">
             <i className="fa-solid fa-circle-check"></i>
           </div>
-          <p className="font-sans font-semibold text-[#125ba3] text-center">
+          <p className="font-sans font-semibold text-[#008000] text-center">
             Un email du verification a été envoyé à votre boîte mail.
           </p>
         </DialogContent>
@@ -250,7 +250,7 @@ const Register = () => {
                       Mot de passe* :
                     </label>
                     <input
-                      type="text"
+                      type="password"
                       id="password"
                       className="text-black border-none w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring  bg-white bg-opacity-90"
                       placeholder="Entrez votre mot de passe."
