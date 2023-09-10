@@ -454,15 +454,3 @@ body {
     border-radius: 10%;
   }
 }
-.rotate-animation {
-  transition: rotate() 0.5s ease-in-out;
-}
-
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}

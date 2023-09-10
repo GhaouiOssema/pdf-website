@@ -58,7 +58,7 @@ const ForgotPassword = () => {
               <div className="text-green-500 text-4xl mb-4 flex justify-center items-center">
                 <i className="fa-solid fa-circle-check"></i>
               </div>
-              <p className="text-sm md:text-md lg:text-lg xl:text-xl font-sans font-semibold text-green-500 mb-4 text-center">
+              <p className="text-sm md:text-base lg:text-base xl:text-base font-sans font-semibold text-green-500 mb-4 text-center">
                 Un e-mail contenant des instructions pour réinitialiser votre
                 mot de passe a été envoyé à votre adresse e-mail.
               </p>

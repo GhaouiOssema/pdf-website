@@ -42,21 +42,11 @@ const Notification = () => {
       console.error(error);
     } finally {
       setLoading(false);
-      setRotating(false);
     }
   };
   useEffect(() => {
     fetchNotification();
   }, []);
-
-  const getRandomColor = () => {
-    const letters = "0123456789ABCDEF";
-    let color = "#";
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  };
 
   const handleRefreshClick = async () => {
     setRotating(true);
@@ -68,7 +58,7 @@ const Notification = () => {
     } finally {
       setTimeout(() => {
         setRotating(false);
-      }, 2000);
+      }, 2500);
     }
   };
 
@@ -89,17 +79,27 @@ const Notification = () => {
         </div>
       ) : notifications && notifications.length > 0 && !loading ? (
         <div className="bg-gray-100 min-h-screen">
-          <div className=" flex flex-col items-start justify-center min-h-screen bg-gradient-to-t p-6">
+          <div className="flex flex-col items-start justify-center min-h-screen bg-gradient-to-t p-6">
             <div className="w-full">
               <div className="grid grid-cols-1 h-full w-full px-0 md:px-4 lg:px-4 xl:px-4">
-                <div className="flex flex-row justify-end items-center flex-wrap cursor-pointer w-full">
+                <div className="flex flex-row justify-between items-center flex-wrap cursor-pointer w-full">
+                  <div className="w-[85%] md:w-[90%] lg:w-[93%] xl:w-[95%] bg-[#125ba3] flex flex-wrap items-center justify-between gap-2 px-4 py-2 rounded-md">
+                    <span className="font-sans font-semibold text-white">
+                      Mes notification
+                    </span>
+                    <span className="font-sans font-normal text-white ">
+                      {notifications.length}
+                    </span>
+                  </div>
                   <span
                     className={`bg-white p-2 rounded-full ${
-                      isRotating ? "rotate-animation" : ""
+                      isRotating ? "animate-spin" : ""
                     }`}
-                    onClick={handleRefreshClick}
                   >
-                    <CachedOutlinedIcon />
+                    <CachedOutlinedIcon
+                      sx={{ color: "#125ba3" }}
+                      onClick={handleRefreshClick}
+                    />
                   </span>
                 </div>
                 {notifications &&
@@ -149,7 +149,6 @@ const Notification = () => {
                         { hour12: false, timeStyle: "short" }
                       );
 
-                      const COLOR = getRandomColor();
                       return (
                         <div
                           key={idx}
@@ -159,9 +158,9 @@ const Notification = () => {
                             to={`/${el.site}/${el.dossier}/pdf/détails/${el.equipementId}`}
                             className="flex items-center space-x-2 md:space-x-4 lg:space-x-4 xl:space-x-4 cursor-pointer"
                           >
-                            <NotificationAddIcon sx={{ color: COLOR }} />
+                            <NotificationAddIcon sx={{ color: "#125ba3" }} />
                             <div className="flex flex-col w-full space-y-1">
-                              <span className="text-sm md:text-base  font-bold">
+                              <span className="text-sm md:text-base font-sans font-semibold">
                                 Un nouveaux raport a été ajouté
                               </span>
                               <span className="text-sm md:text-base">

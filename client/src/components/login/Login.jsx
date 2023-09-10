@@ -218,7 +218,7 @@ const Login = () => {
                       type="password"
                       name="password"
                       id="password"
-                      className="text-black w-full px-4 py-2 border-none rounded-lg focus:outline-none focus:ring  bg-white bg-opacity-90"
+                      className="text-black w-full px-4 py-2 border-none rounded-lg font-sans focus:outline-none focus:ring  bg-white bg-opacity-90"
                       placeholder="Entrez votre mot de passe."
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import {
   Box,
@@ -12,7 +12,6 @@ import {
 } from "@mui/material";
 
 import jwt_decode from "jwt-decode";
-import DoneAllOutlinedIcon from "@mui/icons-material/DoneAllOutlined";
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
 import KeyboardArrowLeftOutlinedIcon from "@mui/icons-material/KeyboardArrowLeftOutlined";
 import EditNoteOutlinedIcon from "@mui/icons-material/EditNoteOutlined";
@@ -107,31 +106,24 @@ const Popup = ({ open, setOpen, dialogType }) => {
     >
       {dialogType !== "change" ? (
         <>
-          <DialogTitle>
-            {dialogType !== "change" && (
-              <h1 className="text-base font-sans font-semibold tracking-wide text-center">
-                Merci de saisir les informations ci dessous
-              </h1>
-            )}
-          </DialogTitle>
-          <DialogContent>
+          <DialogContent sx={{ background: "#F4F4F5" }}>
             {errorMessage && (
               <p className="text-red-500 mb-4">{errorMessage}</p>
             )}
             <label
               htmlFor="repeat-password"
-              className="block mb-2 text-md font-sans font-medium text-gray-900 dark:text-white"
+              className="block text-gray-700 font-sans font-medium mb-2 text-start"
             >
               {dialogType === "Nom d'utilisateur"
-                ? "Nom"
-                : "code du verification"}
+                ? "Nom* :"
+                : "code du verification* :"}
             </label>
             <input
               type="text"
-              className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:shadow-sm-light"
+              className="text-black w-full px-4 py-2 mb-2 border-none rounded-lg font-sans focus:outline-none focus:ring bg-white bg-opacity-90"
               placeholder={
                 dialogType === "Nom d'utilisateur"
-                  ? "nouveaux nom d'utilisateur"
+                  ? "Nouveaux nom d'utilisateur"
                   : "Nouvelle code de vérification"
               }
               required
@@ -146,14 +138,14 @@ const Popup = ({ open, setOpen, dialogType }) => {
             />
             <label
               htmlFor="repeat-password"
-              className="block mb-2 text-md font-sans font-medium text-gray-900 dark:text-white"
+              className="block text-gray-700 font-sans font-medium mb-2 text-start"
             >
-              Mot de passe
+              Mot de passe* :
             </label>
             <input
               type="text"
-              className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:shadow-sm-light"
-              placeholder="mot de passe"
+              className="text-black w-full px-4 py-2 border-none rounded-lg font-sans focus:outline-none focus:ring  bg-white bg-opacity-90"
+              placeholder="Mot de passe"
               required
               value={userPassword}
               onChange={(e) => setUserPassword(e.target.value)}
@@ -164,10 +156,10 @@ const Popup = ({ open, setOpen, dialogType }) => {
         <>
           <DialogContent>
             <div className="">
-              <div className="text-green-500 text-4xl mb-4 flex justify-center items-center">
+              <div className="text-[#008000] text-4xl mb-4 flex justify-center items-center">
                 <i className="fa-solid fa-circle-check"></i>
               </div>
-              <p className="text-xl font-sans font-medium text-green-500 text-center">
+              <p className="font-sans font-semibold text-[#008000] text-center">
                 Un email a été envoyé à votre boîte mail.
               </p>
             </div>
@@ -175,14 +167,35 @@ const Popup = ({ open, setOpen, dialogType }) => {
         </>
       )}
 
-      <DialogActions>
-        <Button onClick={() => setOpen(false)}>
-          {dialogType === "change" ? "Fermer" : "Annuler"}
-        </Button>
-        {dialogType !== "change" && (
-          <Button onClick={handleClose}>Modifier</Button>
-        )}
-      </DialogActions>
+      {dialogType !== "change" && (
+        <DialogActions
+          sx={{
+            background: "#F4F4F5",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "end",
+          }}
+        >
+          <Button
+            sx={{
+              color: "#DC2626",
+              "&:hover": { backgroundColor: "transparent" },
+            }}
+            onClick={() => setOpen(false)}
+          >
+            Fermer
+          </Button>
+          <Button
+            sx={{
+              color: "#125ba3",
+              "&:hover": { backgroundColor: "transparent" },
+            }}
+            onClick={handleClose}
+          >
+            Modifier
+          </Button>
+        </DialogActions>
+      )}
     </Dialog>
   );
 };
@@ -198,15 +211,23 @@ function formatDate(dateString) {
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);
-  const [email, setEmail] = useState(userData?.email);
-  const [showPassword, setShowPassword] = useState(false);
   const [open, setOpen] = React.useState(false);
   const [dialogType, setDialogType] = useState("");
   const [isExpended, setIsExpended] = useState(false);
+  const popupRef = useRef(null);
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
+  const handleOutsideClick = (event) => {
+    if (popupRef.current && !popupRef.current.contains(event.target)) {
+      setOpen(false);
+    }
   };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -276,28 +297,33 @@ const Profile = () => {
   return (
     <div>
       {open && <Popup open={open} setOpen={setOpen} dialogType={dialogType} />}
-      <div className="bg-gray-100 h-screen py-0 md:py-[10%]">
+      <div
+        className="bg-gray-100 h-screen py-0 flex flex-col justify-center"
+        ref={dialogType === "change" ? popupRef : null}
+      >
         <div className="container mx-auto">
           <div className="md:flex flex-col justify-center items-center flex-wrap">
             <div className="w-full md:w-[75%] flex justify-center flex-wrap lg:flex-nowrap xl:flex-nowrap">
-              <div className="h-full w-full flex justify-between items-center flex-wrap lg:flex-nowrap xl:flex-nowrap mb-3 rounded-b-md shadow-md border-t-4 border-blue-700">
-                <div className="bg-white rounded-b-md w-full p-3">
-                  <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">
-                    {userData.userName}
+              <div className="h-full w-full flex justify-between items-center flex-wrap lg:flex-nowrap xl:flex-nowrap mb-3 shadow-md rounded-lg">
+                <div className="bg-white rounded-lg w-full p-3">
+                  <h1 className="text-gray-900 font-sans font-semibold text-md md:text-xl lg:text-xl xl:text-xl leading-8 my-1">
+                    Mon Profile
                   </h1>
 
                   <ul className="text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded">
                     <li className="flex items-center py-3">
-                      <span>Status</span>
+                      <span className="font-sans font-semibold">Status</span>
                       <span className="ml-auto">
-                        <span className="bg-blue-700 py-1 px-2 rounded text-white text-sm">
+                        <span className="bg-[#125ba3] py-1 px-2 rounded text-white text-sm font-sans">
                           Active
                         </span>
                       </span>
                     </li>
                     <li className="flex items-center py-3">
-                      <span>Membre depuis</span>
-                      <span className="ml-auto">
+                      <span className="font-sans font-semibold">
+                        Membre depuis
+                      </span>
+                      <span className="ml-auto font-sans font-light">
                         {formatDate(userData.userCreationAccountDate)}
                       </span>
                     </li>
@@ -305,14 +331,14 @@ const Profile = () => {
                 </div>
               </div>
 
-              <div className="bg-white h-full mb-4 lg:mb-4 xl:mb-4 ml-0 lg:ml-3 pb-[8.8px] xl:ml-3 flex justify-between items-center flex-wrap lg:flex-nowrap xl:flex-nowrap w-full rounded-b-md shadow-md border-t-4 border-blue-700">
-                <div className="flex flex-col w-full p-3 rounded-b-md">
-                  <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">
-                    {userData.userName}
+              <div className="bg-white h-full mb-4 lg:mb-4 xl:mb-4 ml-0 lg:ml-3 pb-[8.8px] xl:ml-3 flex justify-between items-center flex-wrap lg:flex-nowrap xl:flex-nowrap w-full rounded-lg shadow-lg">
+                <div className="flex flex-col w-full p-3 rounded-lg">
+                  <h1 className="text-gray-900 font-sans font-semibold text-md md:text-xl lg:text-xl xl:text-xl leading-8 my-1">
+                    Mes statistiques
                   </h1>
                   <div className="my-2 mt-3 flex justify-between items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
                     <div className="flex items-center font-semibold text-gray-900 leading-8 ">
-                      <span className="text-blue-700 mr-2">
+                      <span className="text-[#125ba3] mr-2">
                         <svg
                           className="h-5"
                           xmlns="http://www.w3.org/2000/svg"
@@ -328,21 +354,22 @@ const Profile = () => {
                           />
                         </svg>
                       </span>
-                      <span className="tracking-wide whitespace-nowrap">
+                      <span className="tracking-wide whitespace-nowrap font-sans font-semibold">
                         Nombre des equiments
                       </span>
                     </div>
-                    <ul className="list-inside space-y-2">
+                    <ul className="list-inside space-y-2 font-sans-sans font-medium">
                       <li>
-                        <div className="text-blue-700">
+                        <div className="text-[#125ba3]">
                           {userData.allPdfs.length}
                         </div>
                       </li>
                     </ul>
                   </div>
+
                   <div className="my-2 mt-3 flex justify-between items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
                     <div className="flex items-center  font-semibold text-gray-900 leading-8 ">
-                      <span className="text-blue-700 mr-2">
+                      <span className="text-[#125ba3] mr-2">
                         <svg
                           className="h-5"
                           xmlns="http://www.w3.org/2000/svg"
@@ -363,13 +390,13 @@ const Profile = () => {
                           />
                         </svg>
                       </span>
-                      <span className="tracking-wide whitespace-nowrap">
+                      <span className="tracking-wide whitespace-nowrap font-sans font-semibold">
                         Nombre des sites
                       </span>
                     </div>
-                    <ul className="list-inside space-y-2">
+                    <ul className="list-inside space-y-2 font-sans-sans font-medium">
                       <li>
-                        <div className="text-blue-700">
+                        <div className="text-[#125ba3]">
                           {userData.folders.length}
                         </div>
                       </li>
@@ -378,10 +405,11 @@ const Profile = () => {
                 </div>
               </div>
             </div>
+
             <div className="w-full md:w-[75%]">
-              <div className="bg-white shadow-md border-t-4 rounded-b-md border-blue-700">
-                <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
-                  <span className="text-blue-700">
+              <div className="bg-white shadow-md rounded-lg py-2 px-3 ">
+                <div className="flex items-center space-x-2 text-gray-900 leading-8 pb-3">
+                  <span className="text-[#125ba3]">
                     <svg
                       className="h-5"
                       xmlns="http://www.w3.org/2000/svg"
@@ -397,52 +425,58 @@ const Profile = () => {
                       />
                     </svg>
                   </span>
-                  <span className="tracking-wide">À propos</span>
+                  <span className="text-md md:text-xl lg:text-xl xl:text-xl tracking-wide font-sans font-semibold">
+                    À propos
+                  </span>
                 </div>
                 <div className="text-gray-700">
                   <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 text-sm">
                     <div className="grid grid-cols-2">
-                      <div className="px-4 py-2 font-semibold">
+                      <div className="px-4 py-2 font-sans font-semibold">
                         Nom d'utilisateur
                       </div>
-                      <div className="px-4 py-2"> {userData.userName} </div>
+                      <div className="px-4 py-2 font-sans font-light">
+                        {userData.userName}
+                      </div>
                     </div>
                     <div className="grid grid-cols-2">
-                      <div className="px-4 py-2 font-semibold">
+                      <div className="px-4 py-2 font-sans font-semibold">
                         Mot de passe
                       </div>
-                      <div className="px-4 py-2">password</div>
+                      <div className="px-4 py-2 font-sans font-light">
+                        password
+                      </div>
                     </div>
 
                     <div className="grid grid-cols-2">
-                      <div className="px-4 py-2 font-semibold text-xs md:text-sm">
+                      <div className="px-4 py-2 font-sans font-semibold">
                         Code de vérification
                       </div>
-                      <div className="px-4 py-2">
+                      <div className="px-4 py-2 font-sans font-light">
                         {userData.verification_code}
                       </div>
                     </div>
                     <div className="grid grid-cols-2">
-                      <div className="px-4 py-2 font-semibold text-xs md:text-sm">
+                      <div className="px-4 py-2 font-sans font-semibold">
                         Email
                       </div>
-                      <div className="px-4 py-2 break-words">
+                      <div className="px-4 py-2 font-sans font-light break-words">
                         {userData.email}
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-
               <div className="my-4"></div>
             </div>
+
             <div className="w-full md:w-[75%]">
-              <div className="bg-white shadow-md border-t-4 rounded-b-md border-blue-700">
+              <div className="bg-white shadow-md rounded-lg py-2 px-3">
                 <div
                   onClick={() => setIsExpended((prev) => !prev)}
-                  className="flex items-center space-x-2 font-semibold text-gray-900 leading-8 cursor-pointer"
+                  className="flex items-center space-x-2 text-gray-900 leading-8 cursor-pointer"
                 >
-                  <span className="text-blue-700">
+                  <span className="text-[#125ba3]">
                     <svg
                       className="h-5"
                       xmlns="http://www.w3.org/2000/svg"
@@ -459,7 +493,7 @@ const Profile = () => {
                     </svg>
                   </span>
                   <div className="w-full flex justify-between items-center flex-wrap">
-                    <span className="text-sm lg:tex-base xl:text-base tracking-wide my-1">
+                    <span className="text-sm md:text-xl lg:text-xl xl:text-xl font-sans font-semibold tracking-wide my-1">
                       Modifier vos information personnel
                     </span>
                     <span className="cursor-pointer">
@@ -481,11 +515,13 @@ const Profile = () => {
                   >
                     <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 text-sm py-3 px-3">
                       <div className="grid items-center grid-cols-2 justify-between">
-                        <div className="font-semibold">Nom d'utilisateur</div>
+                        <div className="font-sans font-semibold">
+                          Nom d'utilisateur
+                        </div>
                         <div className="flex justify-end w-[85%] cursor-pointer">
                           <EditNoteOutlinedIcon
                             sx={{ fontSize: 20 }}
-                            className="w-5 h-5 text-blue-700"
+                            className="w-5 h-5 text-[#125ba3]"
                             onClick={() => {
                               setOpen(true);
                               setDialogType("Nom d'utilisateur");
@@ -494,25 +530,25 @@ const Profile = () => {
                         </div>
                       </div>
                       <div className="grid items-center grid-cols-2 py-2">
-                        <div className="px-0 lg:px-4 xl:px-4 font-semibold">
+                        <div className="px-0 lg:px-4 xl:px-4 font-sans font-semibold">
                           Mot de passe
                         </div>
                         <div className="flex justify-end w-[85%] cursor-pointer">
                           <EditNoteOutlinedIcon
                             sx={{ fontSize: 20 }}
-                            className="w-5 h-5 text-blue-700"
+                            className="w-5 h-5 text-[#125ba3]"
                             onClick={handleResetPassword}
                           />
                         </div>
                       </div>
                       <div className=" grid items-center grid-cols-2 py-2">
-                        <div className="text-sm font-semibold">
+                        <div className="font-sans font-semibold">
                           Code de vérification
                         </div>
                         <div className="flex justify-end w-[85%] cursor-pointer">
                           <EditNoteOutlinedIcon
                             sx={{ fontSize: 20 }}
-                            className="w-5 h-5 text-blue-700"
+                            className="w-5 h-5 text-[#125ba3]"
                             onClick={() => {
                               setOpen(true);
                               setDialogType("Code de vérification");
