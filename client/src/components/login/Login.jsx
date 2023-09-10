@@ -26,21 +26,15 @@ const Popup = ({ open, setOpen }) => {
     >
       <>
         <DialogContent>
-          <div className="text-red-500 text-4xl mb-4 flex justify-center items-center">
+          <div className="text-[#F0854A] text-4xl mb-4 flex justify-center items-center">
             <i class="fa-solid fa-triangle-exclamation"></i>{" "}
           </div>
-          <p className="text-xl font-sans font-medium text-red-500 text-center">
-            désolé , votre email n'est pas encore vérifié , veuillez vérifier
-            votre courrier pour finaliser l' inscription
+          <p className="text-xl font-sans font-normal text-[#F0854A] text-center">
+            Désolé , votre compte n'est pas encore vérifié , veuillez vérifier
+            votre courrier pour finaliser l' inscription.
           </p>
         </DialogContent>
       </>
-
-      <DialogActions>
-        <Button onClick={() => setOpen(false)} className="bg-blue-700">
-          Fermer
-        </Button>
-      </DialogActions>
     </Dialog>
   );
 };

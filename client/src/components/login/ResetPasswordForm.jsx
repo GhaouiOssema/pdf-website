@@ -84,11 +84,9 @@ const ResetPasswordForm = () => {
   };
 
   const validatePassword = (value) => {
-    const hasNumber = /\d/.test(value);
-    const hasUppercase = /[A-Z]/.test(value);
-    const hasLowercase = /[a-z]/.test(value);
+    const isValidPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{7,}$/.test(value);
 
-    setIsValid(hasNumber && hasUppercase && hasLowercase);
+    setIsValid(isValidPassword);
   };
 
   let conditions = 0;
@@ -227,11 +225,12 @@ const ResetPasswordForm = () => {
                     {password !== "" &&
                       [
                         {
-                          condition: /[a-z]/.test(password),
+                          condition: password.length >= 8,
                           color: "bg-red-500",
                         },
                         {
-                          condition: /[A-Z]/.test(password),
+                          condition:
+                            /[a-z]/.test(password) && /[A-Z]/.test(password),
                           color: "bg-red-500",
                         },
                         {
@@ -266,9 +265,9 @@ const ResetPasswordForm = () => {
                           />
                         </div>
                         {tooltipOpen && (
-                          <div className="absolute top-0 right-0 mt-8 ml-2 p-2 bg-gray-100 w-80 text-gray-800 text-sm rounded-lg shadow-lg z-20 font-sans font-light">
-                            Le mot de passe doit inclure au minimum 2 chiffres,
-                            une lettre majuscule et une lettre minuscule.
+                          <div className="absolute top-0 right-0 mt-8 ml-2 p-2 bg-white w-80 text-gray-800 text-sm rounded-lg shadow-lg z-20 font-sans font-light">
+                            Le mot de passe doit inclure au minimum 8
+                            caractères, une lettre majuscule et un chiffre .
                           </div>
                         )}
                       </div>

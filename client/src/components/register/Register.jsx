@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import LOGO from "../../assets/logo2.png";
@@ -31,24 +31,14 @@ const Popup = ({ open, setOpen }) => {
     >
       <>
         <DialogContent>
-          <div className="text-green-500 text-4xl mb-4 flex justify-center items-center">
+          <div className="text-[#125ba3] text-4xl mb-4 flex justify-center items-center">
             <i className="fa-solid fa-circle-check"></i>
           </div>
-          <p className="text-xl font-sans font-medium text-green-500 text-center">
+          <p className="font-sans font-semibold text-[#125ba3] text-center">
             Un email du verification a été envoyé à votre boîte mail.
           </p>
         </DialogContent>
       </>
-
-      <DialogActions>
-        <Button
-          onClick={() => {
-            setOpen(false), navigate("/seconnecter");
-          }}
-        >
-          Fermer
-        </Button>
-      </DialogActions>
     </Dialog>
   );
 };
@@ -62,10 +52,24 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isValid, setIsValid] = useState(false);
   const [tooltipOpen, setTooltipOpen] = useState(false);
+  const popupRef = useRef(null);
 
   const pages = ["connexion", "inscription", "Home"];
 
   const [open, setOpen] = useState(false);
+
+  const handleOutsideClick = (event) => {
+    if (popupRef.current && !popupRef.current.contains(event.target)) {
+      setOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
 
   const passWordhandleChange = (e) => {
     setPassword(e.target.value);
@@ -73,11 +77,9 @@ const Register = () => {
   };
 
   const validatePassword = (value) => {
-    const hasNumber = /\d/.test(value);
-    const hasUppercase = /[A-Z]/.test(value);
-    const hasLowercase = /[a-z]/.test(value);
+    const isValidPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{7,}$/.test(value);
 
-    setIsValid(hasNumber && hasUppercase && hasLowercase);
+    setIsValid(isValidPassword);
   };
 
   const handleSubmit = async (e) => {
@@ -126,7 +128,7 @@ const Register = () => {
   };
 
   return (
-    <div>
+    <div ref={popupRef}>
       {open && <Popup open={open} setOpen={setOpen} />}
       <div className="h-full flex flex-col bg-gray-100">
         <header className="fixed w-full z-50 transition-all bg-white top-0 left-0 right-0">
@@ -203,7 +205,7 @@ const Register = () => {
               </ul>
             </div>
             <div className="md:flex md:items-center md:justify-center w-full sm:w-auto md:h-full w-2/5 xl:w-2/5 p-8 md:p-14 lg:p-14 sm:rounded-lg md:rounded-none  bg-gray-100">
-              <div className="max-w-md w-full space-y-8 h-full">
+              <div className="max-w-md w-full space-y-8 h-full flex flex-col justify-end">
                 <form
                   className="mt-0 md:mt-10 lg:mt-10 xl:mt-10 w-full flex flex-col justify-center"
                   onSubmit={handleSubmit}
@@ -248,7 +250,7 @@ const Register = () => {
                       Mot de passe* :
                     </label>
                     <input
-                      type="password"
+                      type="text"
                       id="password"
                       className="text-black border-none w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring  bg-white bg-opacity-90"
                       placeholder="Entrez votre mot de passe."
@@ -261,11 +263,13 @@ const Register = () => {
                         <>
                           {[
                             {
-                              condition: /[a-z]/.test(password),
+                              condition: password.length >= 8,
                               color: "bg-red-500",
                             },
                             {
-                              condition: /[A-Z]/.test(password),
+                              condition:
+                                /[a-z]/.test(password) &&
+                                /[A-Z]/.test(password),
                               color: "bg-red-500",
                             },
                             {
@@ -300,10 +304,9 @@ const Register = () => {
                               />
                             </div>
                             {tooltipOpen && (
-                              <div className="absolute top-0 right-0 mt-8 ml-2 p-2 bg-gray-100 w-80 text-gray-800 text-sm rounded-lg shadow-lg z-20 font-sans font-light">
-                                Le mot de passe doit inclure au minimum 2
-                                chiffres, une lettre majuscule et une lettre
-                                minuscule.
+                              <div className="absolute top-0 right-0 mt-8 ml-2 p-2 bg-white w-80 text-gray-800 text-sm rounded-lg shadow-lg z-20 font-sans font-light">
+                                Le mot de passe doit inclure au minimum 8
+                                caractères, une lettre majuscule et un chiffre .
                               </div>
                             )}
                           </div>
@@ -351,21 +354,7 @@ const Register = () => {
                     <div className="text-center ">
                       {error && (
                         <div className="font-sans font-medium text-red-500">
-                          {error === "password not matched" ? (
-                            <div className="flex items-center justify-center">
-                              <span>Mot de pass incorect</span>
-                              <Tooltip
-                                title="Le mot de passe doit inclure au minimum 2 chiffre, une lettre majuscule et une lettre minuscule."
-                                sx={{ color: "red" }}
-                              >
-                                <IconButton>
-                                  <InfoOutlinedIcon />
-                                </IconButton>
-                              </Tooltip>
-                            </div>
-                          ) : (
-                            error
-                          )}
+                          {error}
                         </div>
                       )}
                     </div>

@@ -4,30 +4,23 @@ const User = require("../models/USER");
 const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
-const sendVerificationEmail = require("../middleware/sendEmail");
+const { sendVerificationEmail } = require("../middleware/sendEmail");
 
 module.exports = {
   async register(req, res) {
     try {
       const { userName, email, password, userRole } = req.body;
-      let profileImageBase64 = null;
-
-      if (req.file) {
-        const { buffer } = req.file;
-        profileImageBase64 = buffer.toString("base64");
-      }
 
       const existingUser = await User.findOne({
-        $or: [{ email }, { userName }],
+        $or: [{ userName }, { email }],
       });
       if (existingUser) {
-        return res.status(400).json({ error: "User already exists" });
+        return res.status(400).json({ error: "L'utilisateur existe déjà" });
       }
 
       const hashedPassword = await bcrypt.hash(password, 10);
 
       const user = new User({
-        profileImage: profileImageBase64,
         userName,
         email,
         password: hashedPassword,
