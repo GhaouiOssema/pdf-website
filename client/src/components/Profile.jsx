@@ -452,7 +452,7 @@ const Profile = () => {
                       <div className="px-4 py-2 font-sans font-semibold">
                         Code de vérification
                       </div>
-                      <div className="px-4 py-2 font-sans font-light">
+                      <div className="px-4 py-2 font-sans font-light break-words">
                         {userData.verification_code}
                       </div>
                     </div>

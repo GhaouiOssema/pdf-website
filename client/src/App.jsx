@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import Login from "./components/login/Login";
 import Register from "./components/register/Register";
@@ -22,7 +22,6 @@ import PublicFicheTechnique from "./components/public/PublicFicheTechnique";
 import PublicDoeFiles from "./components/public/PublicDoeFiles";
 import PublicView from "./components/public/PublicView";
 import TopBar from "./components/TopBar";
-import Footer from "./components/Footer";
 import VerificationPage from "./components/register/VerificationPage";
 import Notification from "./components/notification/Notification";
 
@@ -31,6 +30,7 @@ const App = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const sidebarRef = useRef(null);
   const [verified, setVerified] = useState(false);
+  const Navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -40,6 +40,7 @@ const App = () => {
       if (decoded.exp < currentTime) {
         setIsAuthenticated(false);
         localStorage.removeItem("token");
+        Navigate("/");
       } else {
         setIsAuthenticated(true);
         setVerified(decoded.emailVerified);

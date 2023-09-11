@@ -4,6 +4,7 @@ import { Document, Page, pdfjs } from "react-pdf";
 import { useParams } from "react-router-dom";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 import { Box, CircularProgress, Typography } from "@mui/material";
+import DoNotDisturbIcon from "@mui/icons-material/DoNotDisturb";
 
 const Plan = () => {
   const { fichier } = useParams();
@@ -80,9 +81,21 @@ const Plan = () => {
   return (
     <div className="bg-gray-100 flex justify-center items-center ">
       {error && !pdfData ? (
-        <Typography variant="h5" color="error">
-          {error}
-        </Typography>
+        <div className="h-screen flex justify-center items-center opacity-20">
+          <div className="flex flex-col justify-center items-center">
+            <DoNotDisturbIcon
+              sx={{
+                height: 250,
+                width: 250,
+                opacity: "100%",
+                color: "black",
+              }}
+            />
+            <p className="w-full font-sans font-bold text-xl text-center break-words">
+              Aucun fiche technique n'est lié à cet équipement.
+            </p>
+          </div>
+        </div>
       ) : loading ? (
         <Box
           sx={{

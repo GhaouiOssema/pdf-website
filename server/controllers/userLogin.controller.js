@@ -31,7 +31,7 @@ module.exports = {
           pdfList: [user.allPdfs],
         },
         process.env.SECRET_TOKEN,
-        { expiresIn: "4d" }
+        { expiresIn: "3d" }
       );
 
       res.json({ token });

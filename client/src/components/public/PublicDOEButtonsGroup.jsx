@@ -108,14 +108,10 @@ const PublicDOEButtonsGroup = ({ pdfData }) => {
     setSelectedFileIndex(newValue);
     fetchDOEFiles(pdfData.doeFiles[selectedFileIndex].fileId);
   };
-  const getPdfViewerWidth = () => {
-    const screenWidth = screenSize.width;
-    return screenWidth < 700 ? screenWidth - 40 : 1000;
-  };
 
   return (
     <>
-      {pdfData.doeFiles && (
+      {pdfData?.doeFiles && (
         <Box
           sx={{ bgcolor: "background.paper", width: "100%", minHeight: "70vh" }}
         >
@@ -182,7 +178,7 @@ const PublicDOEButtonsGroup = ({ pdfData }) => {
                         pageNumber={index + 1}
                         renderTextLayer={false}
                         height={500}
-                        width={getPdfViewerWidth()}
+                        width={screenSize.width < 700 ? 200 : 1000}
                         className="mt-1"
                       />
                     ))}

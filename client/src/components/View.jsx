@@ -66,12 +66,17 @@ const RaportView = ({
   const [siteAddress, setSiteAddress] = useState("");
   const [siteCodePostal, setSiteCodePostal] = useState("");
   const [selectedCategories, setSelectedCategories] = useState([]);
-  const [name, setName] = useState(""); // Renamed state variable
+  const [name, setName] = useState("");
 
   // for updates
   const [adresse, setAdresse] = useState("");
   const [codePostal, setCodePostal] = useState("");
   const [subContent, setSubContent] = useState([]);
+
+  const [errorMessageForCreatingSite, seterrorMessageForCreatingSite] =
+    useState("");
+  const [errorMessageForUpdatingSite, seterrorMessageForUpdatingSite] =
+    useState("");
 
   const handleSiteAddressChange = (event) => {
     setSiteAddress(event.target.value);
@@ -131,8 +136,12 @@ const RaportView = ({
       setAlertMsg("success");
       setOpen(true);
       handleClick();
+      seterrorMessageForCreatingSite("");
     } catch (error) {
-      console.error(error);
+      seterrorMessageForCreatingSite("Le dossier existe déjà");
+      setAlertMsg("");
+      setOpen(false);
+      setErrorMessage(err.response.data.error);
     }
   };
 
@@ -163,8 +172,12 @@ const RaportView = ({
       setAlertMsg("success");
       handleClick();
       setOpen(true);
+      seterrorMessageForUpdatingSite("");
     } catch (error) {
-      console.error(error); // Handle the error response
+      seterrorMessageForUpdatingSite("Le dossier existe déjà");
+      setAlertMsg("");
+      setOpen(false);
+      setErrorMessage(err.response.data.error);
     }
   };
 
@@ -271,7 +284,7 @@ const RaportView = ({
                         >
                           Catégorie
                         </label>
-                        <FormControl size="small" className="w-[100%]">
+                        <FormControl sx={{ width: "100%" }} size="small">
                           <InputLabel
                             id="checkbox-label"
                             sx={{ width: "100%" }}
@@ -287,7 +300,17 @@ const RaportView = ({
                             input={
                               <OutlinedInput label="Sélectionnez un Catégorie" />
                             }
-                            renderValue={(selected) => selected.join(", ")}
+                            renderValue={(selected) => {
+                              if (selected.length <= 2) {
+                                return selected.join(", ");
+                              } else {
+                                const firstTwo = selected
+                                  .slice(0, 2)
+                                  .join(", ");
+                                const moreCount = selected.length - 2;
+                                return `${firstTwo} + ${moreCount}`;
+                              }
+                            }}
                             MenuProps={MenuProps}
                             fullWidth
                             sx={{ bgcolor: "#FAFAFA" }}
@@ -306,6 +329,12 @@ const RaportView = ({
                         </FormControl>
                       </div>
 
+                      {errorMessageForCreatingSite && (
+                        <div className="w-full text-center block mb-2 text-md font-sans font-base text-red-500 dark:text-white">
+                          {errorMessageForCreatingSite}
+                        </div>
+                      )}
+
                       <div className="flex flex-wrap justify-center space-x-2">
                         <Button
                           variant="outlined"
@@ -317,7 +346,14 @@ const RaportView = ({
                         <Button
                           variant="outlined"
                           color="error"
-                          onClick={close}
+                          onClick={() => {
+                            close();
+                            seterrorMessageForCreatingSite("");
+                            setSiteAddress("");
+                            setSiteCodePostal("");
+                            setSelectedCategories([]);
+                            setName("");
+                          }}
                         >
                           Annuler
                         </Button>
@@ -331,7 +367,7 @@ const RaportView = ({
                         </span>
                       </h1>
 
-                      <div className="px-3 mb-6">
+                      <div className="mb-6">
                         <label
                           htmlFor="adress_site"
                           className="w-full block mb-2 text-md font-sans font-medium text-gray-900 dark:text-white"
@@ -349,7 +385,7 @@ const RaportView = ({
                         />
                       </div>
 
-                      <div className="px-3 mb-6">
+                      <div className="mb-6">
                         <label
                           htmlFor="code_postal"
                           className="w-full block mb-2 text-md font-sans font-medium text-gray-900 dark:text-white"
@@ -367,7 +403,7 @@ const RaportView = ({
                         />
                       </div>
 
-                      <div className="px-3 mb-6">
+                      <div className="mb-6">
                         <label
                           htmlFor="code_postal"
                           className="w-full block mb-2 text-md font-sans font-medium text-gray-900 dark:text-white"
@@ -387,7 +423,17 @@ const RaportView = ({
                             input={
                               <OutlinedInput label="Sélectionnez un Catégorie" />
                             }
-                            renderValue={(selected) => selected.join(", ")}
+                            renderValue={(selected) => {
+                              if (selected.length <= 2) {
+                                return selected.join(", ");
+                              } else {
+                                const firstTwo = selected
+                                  .slice(0, 2)
+                                  .join(", ");
+                                const moreCount = selected.length - 2;
+                                return `${firstTwo} + ${moreCount}`;
+                              }
+                            }}
                             MenuProps={MenuProps}
                           >
                             {names.map((name) => (
@@ -401,6 +447,13 @@ const RaportView = ({
                           </Select>
                         </FormControl>
                       </div>
+
+                      {errorMessageForUpdatingSite && (
+                        <div className="w-full text-center block mb-2 text-md font-sans font-base text-red-500 dark:text-white">
+                          {errorMessageForUpdatingSite}
+                        </div>
+                      )}
+
                       <Stack
                         spacing={2}
                         direction="row"
@@ -421,7 +474,13 @@ const RaportView = ({
                         <Button
                           variant="outlined"
                           color="error"
-                          onClick={close}
+                          onClick={() => {
+                            close();
+                            seterrorMessageForUpdatingSite("");
+                            setAdresse("");
+                            setCodePostal("");
+                            setSubContent([]);
+                          }}
                         >
                           Annuler
                         </Button>

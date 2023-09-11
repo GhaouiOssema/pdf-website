@@ -144,9 +144,9 @@ const FormSend = () => {
     formDataStep1.append("site", formState.site);
     formDataStep1.append("title", formState.title);
     formDataStep1.append("publicOrPrivate", formState.publicOrPrivate);
+    formDataStep1.append("input1", formState.input1);
 
     if (formState.publicOrPrivate === "Armoire electrique") {
-      formDataStep1.append("input1", formState.input1);
       formDataStep1.append("input2", formState.input2);
     } else {
       formDataStep1.append("input", formState.input);
@@ -521,15 +521,26 @@ const FormSend = () => {
                     {["Climatisation", "Chauffage", "Ventilasion"].includes(
                       formState.publicOrPrivate
                     ) && (
-                      <input
-                        className="w-[15rem] bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg pl-5"
-                        type="text"
-                        placeholder="Modéle"
-                        value={formState.input}
-                        onChange={handleChange}
-                        name="input"
-                        required
-                      />
+                      <div className="mt-2 flex sm:flex-row flex-col items-center justify-around">
+                        <input
+                          className="max w-[46%] bg-gray-100 text-gray-900 p-3 rounded-lg pl-5"
+                          type="text"
+                          placeholder="PTA"
+                          value={formState.input1}
+                          onChange={handleChange}
+                          name="input1"
+                          required
+                        />
+                        <input
+                          className="max w-[46%] bg-gray-100 text-gray-900 p-3 rounded-lg pl-5 mt-2 sm:mt-0"
+                          type="text"
+                          placeholder="Modéle"
+                          value={formState.input}
+                          onChange={handleChange}
+                          name="input"
+                          required
+                        />
+                      </div>
                     )}
                     {formState.selectedFile && (
                       <Stack
@@ -811,7 +822,7 @@ const FormSend = () => {
                         <Button
                           variant="contained"
                           color="primary"
-                          onClick={handleSubmitStep3}
+                          onClick={handleSubmitStep4}
                           sx={{ borderRadius: "8px" }}
                         >
                           Suivant
@@ -894,16 +905,6 @@ const FormSend = () => {
                       <span className="font-sans font-bold text-sm md:text-base lg:text-base xl:text-base">
                         {steps[activeStep]}
                       </span>
-                      {formState.selectedImage && (
-                        <div
-                          className="text-black cursor-pointer ml-5"
-                          onClick={() =>
-                            setFormState({ ...formState, selectedImage: null })
-                          }
-                        >
-                          <CancelOutlinedIcon />
-                        </div>
-                      )}
                       <Button
                         onClick={skipLength}
                         color="primary"

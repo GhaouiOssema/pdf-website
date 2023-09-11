@@ -6,7 +6,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import axios from "axios";
-import { Box, Button, CircularProgress, Stack } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 
 const ITEM_HEIGHT = 48;
 
@@ -23,26 +23,19 @@ const SiteOption = ({
   setOpenSection,
   setButtonType,
   setFolderIdUpdate,
-  optionRef,
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
   const [loading, setLoading] = useState(false);
   const [deleteResponseConfirmation, setDeleteResponseConfirmation] =
     useState(false);
+  const menuRef = useRef(null);
 
   const handleClick = (event) => {
-    if (event && typeof event.stopPropagation === "function") {
-      setAnchorEl(event.currentTarget);
-      event.stopPropagation();
-    }
+    setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = (event) => {
-    if (event && typeof event.stopPropagation === "function") {
-      event.stopPropagation();
-      setAnchorEl(null);
-    }
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
   const handleDelete = async (folderId, event) => {
@@ -68,9 +61,9 @@ const SiteOption = ({
       );
 
       if (res.status === 200) {
-        handleClose(event);
         setLoading(false);
         setDeleteResponseConfirmation(true);
+        handleClose(); // Close the menu
       } else {
         console.error("Failed to delete folder");
       }
@@ -79,12 +72,25 @@ const SiteOption = ({
     }
   };
 
-  const handleEdit = async (folderId, event) => {
+  const handleEdit = (folderId, event) => {
     setFolderIdUpdate(folderId);
-    handleClose(event);
     setOpenSection(true);
     setButtonType("editSite");
+    handleClose(); // Close the menu
   };
+
+  const handleOutsideClick = (event) => {
+    if (menuRef.current && !menuRef.current.contains(event.target)) {
+      handleClose(); // Close the menu
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
 
   useEffect(() => {
     let timeoutReload;
@@ -100,31 +106,17 @@ const SiteOption = ({
     return () => {
       clearTimeout(timeoutReload);
     };
-  }, [open]);
-
-  const handleOutsideClick = (event) => {
-    if (optionRef.current && !optionRef.current.contains(event.target)) {
-      handleClose(event);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleOutsideClick);
-    return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
-    };
-  }, []);
+  }, [deleteResponseConfirmation]);
 
   return (
-    <div>
+    <div className="mt-5">
       <IconButton
         aria-label="more"
         id="long-button"
-        aria-controls={open ? "long-menu" : undefined}
-        aria-expanded={open ? "true" : undefined}
+        aria-controls={anchorEl ? "long-menu" : undefined}
+        aria-expanded={Boolean(anchorEl)}
         aria-haspopup="true"
-        onClick={(event) => handleClick(event)}
-        onClose={(event) => handleClose(event)}
+        onClick={handleClick}
       >
         <MoreVertIcon />
       </IconButton>
@@ -134,25 +126,24 @@ const SiteOption = ({
           "aria-labelledby": "long-button",
         }}
         anchorEl={anchorEl}
-        open={open}
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
         PaperProps={{
           style: {
             maxHeight: ITEM_HEIGHT * 4.5,
             width: "20ch",
           },
         }}
+        ref={menuRef}
       >
-        <MenuItem
-          onClick={(event) => handleDelete(folders._id, event)}
-          onClose={(event) => handleClose(event)}
-        >
+        <MenuItem onClick={(event) => handleDelete(folders._id, event)}>
           <div className="w-full flex justify-around items-center font-sans font-medium text-red-500">
             {loading ? (
               <CircularIndeterminate sx={{ color: "#EF4444" }} />
             ) : (
               <DeleteIcon sx={{ color: "#EF4444" }} />
             )}
-            <span>Suprimer</span>
+            <span>Supprimer</span>
           </div>
         </MenuItem>
         <MenuItem onClick={(event) => handleEdit(folders._id, event)}>

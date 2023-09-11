@@ -8,6 +8,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import DoNotDisturbIcon from "@mui/icons-material/DoNotDisturb";
 
 import DOEButtonsGroup from "./PublicDOEButtonsGroup";
 import { CircularProgress } from "@mui/material";
@@ -75,18 +76,23 @@ const PublicDoeFiles = () => {
     setValue(index);
   };
 
-  if (!pdfData) {
+  if (pdfData?.doeFiles.length === 0) {
     return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "70vh",
-        }}
-      >
-        <CircularProgress />
-      </Box>
+      <div className="h-screen flex justify-center items-center opacity-20">
+        <div className="flex flex-col justify-center items-center">
+          <DoNotDisturbIcon
+            sx={{
+              height: 250,
+              width: 250,
+              opacity: "100%",
+              color: "black",
+            }}
+          />
+          <p className="w-full font-sans font-bold text-xl text-center break-words">
+            Aucun fiche technique n'est lié à cet équipement.
+          </p>
+        </div>
+      </div>
     );
   }
 
@@ -114,7 +120,7 @@ const PublicDoeFiles = () => {
               centered
               sx={{
                 width: "100%",
-                bgcolor: "rgb(50, 145, 240)",
+                bgcolor: "#125ba3",
                 color: "white",
                 "& .MuiTabs-indicator": {
                   backgroundColor: "white",

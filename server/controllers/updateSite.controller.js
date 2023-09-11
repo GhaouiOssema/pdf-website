@@ -39,6 +39,14 @@ module.exports = {
         return res.status(404).json({ error: "Folder not found" });
       }
 
+      const existingFolder = await Folder.findOne({
+        name,
+      });
+
+      if (existingFolder) {
+        return res.status(401).json({ message: "Le dossier existe déjà" });
+      }
+
       folder.adresse = adresse;
       folder.code_postal = code_postal;
 

@@ -13,9 +13,12 @@ import { Table } from "flowbite-react";
 import {
   Backdrop,
   CircularProgress,
+  Dialog,
+  DialogContent,
   Fade,
   Modal,
   Paper,
+  Slide,
   TableBody,
   TableCell,
   TableContainer,
@@ -144,6 +147,32 @@ const TransitionsModal = ({ open, handleClose, raports, filteredRaports }) => {
   );
 };
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
+const Popup = ({ popupView }) => {
+  return (
+    <Dialog
+      open={popupView}
+      TransitionComponent={Transition}
+      keepMounted
+      aria-describedby="alert-dialog-slide-description"
+    >
+      <>
+        <DialogContent>
+          <div className="text-[#008000] text-center text-3xl mb-4 flex justify-center items-center">
+            <i className="fa-solid fa-circle-check"></i>
+          </div>
+          <p className="font-sans font-semibold text-[#008000] text-center">
+            Mission accomplie ! Le nouveau rapport a été envoyé avec succès.
+          </p>
+        </DialogContent>
+      </>
+    </Dialog>
+  );
+};
+
 const PdfView = () => {
   const { site, dossier, id } = useParams();
   const [pdfData, setPdfData] = useState(null);
@@ -157,8 +186,22 @@ const PdfView = () => {
   const [socIndex, setSocIndex] = useState(null);
   const [filteredRaports, setFilteredRaports] = useState([]);
   const [confirmationCode, setConfirmationCode] = useState(null);
-
   const [selectedOption, setSelectedOption] = useState("Option 1");
+  const [popupView, setPopupView] = useState(false);
+  const popupRef = useRef(null);
+
+  const handleOutsideClick = (event) => {
+    if (popupRef.current && !popupRef.current.contains(event.target)) {
+      setPopupView(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
 
   const handleOptionChange = (option) => {
     setSelectedOption(option);
@@ -209,6 +252,7 @@ const PdfView = () => {
   };
 
   const sendRaport = async () => {
+    setPopupView(true);
     try {
       const requestData = {
         société: company,
@@ -245,13 +289,11 @@ const PdfView = () => {
       );
 
       if (response.status === 200) {
-        alert("Raport sent");
         window.location.reload();
         setValue(0);
       }
     } catch (error) {
       console.log("Error sending report:", error);
-      alert(error.response.data.error);
     }
   };
 
@@ -290,7 +332,8 @@ const PdfView = () => {
   }
 
   return (
-    <section className="flex flex-col h-screen">
+    <section className="flex flex-col h-screen" ref={popupRef}>
+      {popupView && <Popup popupView={popupView} setOpen={setOpen} />}
       {open && (
         <TransitionsModal
           open={open}
@@ -509,10 +552,7 @@ const PdfView = () => {
               className="bg-white my-5 rounded-lg"
             >
               <div>
-                <label
-                  htmlFor="email"
-                  className="text-center block mb-2 text-md font-sans font-medium text-gray-900 dark:text-white"
-                >
+                <label className="text-center block mb-2 text-md font-sans font-medium text-gray-900 dark:text-white">
                   Veuillez saisir les informations ci dessous
                 </label>
                 <div className="mb-6 mt-5">

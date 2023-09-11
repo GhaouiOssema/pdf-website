@@ -1,7 +1,8 @@
-const PDF = require("../models/PDF");
+const PDFs = require("../models/PDF"); // Import your PDF model
 const Folder = require("../models/FOLDER");
 const UserAccount = require("../models/USER");
 const jwt = require("jsonwebtoken");
+const { deleteFileById } = require("../utils/deleteFile");
 
 module.exports = {
   async delete(req, res) {
@@ -46,9 +47,28 @@ module.exports = {
 
       await folderObj.save();
 
-      await PDF.deleteOne({ _id: deletedPdf._id });
+      await PDFs.deleteOne({ _id: deletedPdf._id });
 
-      // Delete the PDF from the UserAccount schema
+      // Delete associated files from GridFS
+      if (deletedPdf.mainPdf && deletedPdf.mainPdf.fileId) {
+        deleteFileById(deletedPdf.mainPdf.fileId, "pdfFiles");
+      }
+
+      if (deletedPdf.pdfImage && deletedPdf.pdfImage.fileId) {
+        deleteFileById(deletedPdf.pdfImage.fileId, "imageFiles");
+      }
+
+      if (deletedPdf.fiche && deletedPdf.fiche.fileId) {
+        deleteFileById(deletedPdf.fiche.fileId, "fileInfoFiles");
+      }
+
+      for (const doeFile of deletedPdf.doeFiles) {
+        if (doeFile && doeFile.fileId) {
+          deleteFileById(doeFile.fileId, "doeFiles");
+        }
+      }
+
+      // Delete the PDF reference from the UserAccount schema
       const user = await UserAccount.findOne({ userId: decoded.userId });
       if (user) {
         const pdfIndex = user.allPdfs.findIndex(
@@ -60,10 +80,12 @@ module.exports = {
         }
       }
 
-      res.json({ message: "PDF file deleted successfully" });
+      res.json({
+        message: "PDF file and associated files deleted successfully",
+      });
     } catch (error) {
       res.status(500).json({ message: error.message });
-      console.log(error);
+      console.error(error);
     }
   },
 };

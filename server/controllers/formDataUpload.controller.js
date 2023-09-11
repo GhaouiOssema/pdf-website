@@ -34,7 +34,7 @@ module.exports = {
         title: req.body.title,
         pdfDetails: {
           pdfModel: req.body.input,
-          PAT: req.body.input1 && req.body.input1,
+          PAT: req.body.input1,
           installationDate: (req.body.input2 && req.body.input2) || "",
         },
         user: userId,

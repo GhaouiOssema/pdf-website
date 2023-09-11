@@ -12,6 +12,14 @@ const addSite = async (req, res) => {
       return res.status(401).json({ error: "Unauthorized" });
     }
 
+    const existingFolder = await Folder.findOne({
+      name,
+    });
+
+    if (existingFolder) {
+      return res.status(401).json({ message: "Le dossier existe déjà" });
+    }
+
     // Create the new folder
     const folder = new Folder({
       name,

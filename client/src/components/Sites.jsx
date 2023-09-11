@@ -27,7 +27,6 @@ const MultiSelectTreeView = ({
   setFolderIdUpdate,
   expanded,
   setExpanded,
-  optionRef,
 }) => {
   const ID = folders._id;
   const contentRef = useRef(null);
@@ -72,16 +71,6 @@ const MultiSelectTreeView = ({
           </span>
         </div>
       </div>
-      <SiteOption
-        folders={folders}
-        setOpenSection={setOpenSection}
-        setButtonType={setButtonType}
-        setFolderIdUpdate={setFolderIdUpdate}
-        ID={ID}
-        setExpanded={setExpanded}
-        expanded={expanded}
-        optionRef={optionRef}
-      />
     </div>
   );
 
@@ -91,11 +80,10 @@ const MultiSelectTreeView = ({
         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
         overflow: "hidden",
         transition: "height 0.3s",
-        height: isExpanded(folders._id) ? "auto" : "87px",
+        height: isExpanded(folders._id) ? "auto" : "80px",
         backgroundColor: "white",
       }}
       className="rounded-lg w-full lg:w-[80%] xl:w-[85%]"
-      ref={optionRef}
     >
       <TreeView
         aria-label="multi-select"
@@ -106,55 +94,66 @@ const MultiSelectTreeView = ({
         onNodeToggle={handleToggle}
         sx={{ height: "100%", flexDirection: "row-reverse" }}
       >
-        <TreeItem
-          key={folders._id}
-          nodeId={folders._id}
-          label={labelFormat}
-          onClick={() => {
-            handleToggle(null, [folders._id]);
-          }}
-        >
-          {folders && (
-            <>
-              {folders.content.map((subFolder) => {
-                const folderName = subFolder.subFolder.name;
-                let iconComponent = null;
+        <div className="flex flex-row-reverse justify-between">
+          <div className="">
+            <SiteOption
+              folders={folders}
+              setOpenSection={setOpenSection}
+              setButtonType={setButtonType}
+              setFolderIdUpdate={setFolderIdUpdate}
+            />
+          </div>
+          <TreeItem
+            key={folders._id}
+            nodeId={folders._id}
+            label={labelFormat}
+            onClick={() => {
+              handleToggle(null, [folders._id]);
+            }}
+            sx={{ width: "100%" }}
+          >
+            {folders && (
+              <>
+                {folders.content.map((subFolder) => {
+                  const folderName = subFolder.subFolder.name;
+                  let iconComponent = null;
 
-                switch (folderName) {
-                  case "Chauffage":
-                    iconComponent = <HvacIcon sx={{ color: "blue" }} />;
-                    break;
-                  case "Climatisation":
-                    iconComponent = <AcUnitIcon sx={{ color: "blue" }} />;
-                    break;
-                  case "Ventilasion":
-                    iconComponent = <HeatPumpIcon sx={{ color: "blue" }} />;
-                    break;
-                  case "Armoire electrique":
-                    iconComponent = <KitchenIcon sx={{ color: "blue" }} />;
-                    break;
-                  default:
-                    break;
-                }
+                  switch (folderName) {
+                    case "Chauffage":
+                      iconComponent = <HvacIcon sx={{ color: "blue" }} />;
+                      break;
+                    case "Climatisation":
+                      iconComponent = <AcUnitIcon sx={{ color: "blue" }} />;
+                      break;
+                    case "Ventilasion":
+                      iconComponent = <HeatPumpIcon sx={{ color: "blue" }} />;
+                      break;
+                    case "Armoire electrique":
+                      iconComponent = <KitchenIcon sx={{ color: "blue" }} />;
+                      break;
+                    default:
+                      break;
+                  }
 
-                return (
-                  <Link
-                    key={subFolder._id}
-                    to={`/${folders.adresse}/${folderName}/pdf`}
-                    className="flex item-center"
-                  >
-                    {iconComponent}
-                    <TreeItem
+                  return (
+                    <Link
                       key={subFolder._id}
-                      nodeId={subFolder._id}
-                      label={folderName}
-                    />
-                  </Link>
-                );
-              })}
-            </>
-          )}
-        </TreeItem>
+                      to={`/${folders.adresse}/${folderName}/pdf`}
+                      className="flex item-center"
+                    >
+                      {iconComponent}
+                      <TreeItem
+                        key={subFolder._id}
+                        nodeId={subFolder._id}
+                        label={folderName}
+                      />
+                    </Link>
+                  );
+                })}
+              </>
+            )}
+          </TreeItem>
+        </div>
       </TreeView>
     </Box>
   );
@@ -185,8 +184,6 @@ const Sites = () => {
     code_postal: true,
     subfolder: true,
   });
-
-  const optionRef = useRef();
 
   const handleCloseAlert = (event, reason) => {
     if (reason === "clickaway") {
@@ -295,9 +292,12 @@ const Sites = () => {
           </Snackbar>
         </Stack>
       </Backdrop>
-      <div className="pt-10">
-        <div className="flex justify-center items-center">
-          <h1 className="text-3xl text-center font-bold pr-10">Vos Sites</h1>
+      <div className="mt-10 w-full  flex flex-wrap items-center justify-between gap-2  px-10  ">
+        <div className="bg-[#125ba3] w-full py-2 rounded-md flex flex-wrap items-center justify-between gap-2 px-4">
+          <span className="font-sans font-semibold text-white ">Mes Sites</span>
+          <span className="font-sans font-normal text-white ">
+            {folders.length}
+          </span>
         </div>
       </div>
 
@@ -416,7 +416,7 @@ const Sites = () => {
           }`}
         >
           <>
-            {folders !== [] && !loading && folders.length !== 0 ? (
+            {folders && !loading && folders.length !== 0 ? (
               folders
                 ?.filter((folder) => {
                   const lowerCaseSearchQuery = searchQuery.toLowerCase();
@@ -465,7 +465,6 @@ const Sites = () => {
                       setFolderIdUpdate={setFolderIdUpdate}
                       expanded={expanded}
                       setExpanded={setExpanded}
-                      optionRef={optionRef}
                     />
                   </div>
                 ))

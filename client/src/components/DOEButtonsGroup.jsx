@@ -53,6 +53,7 @@ const DOEButtonsGroup = ({ pdfData }) => {
   const [doeFiles, setDOEFiles] = useState([]);
   const [pdfLoaded, setPdfLoaded] = useState(false);
   const [numPages, setNumPages] = useState(null);
+  const [Loading, setLoading] = useState(true);
   const [screenSize, setScreenSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -126,7 +127,7 @@ const DOEButtonsGroup = ({ pdfData }) => {
 
   return (
     <>
-      {pdfData.doeFiles && (
+      {pdfData?.doeFiles && (
         <Box
           sx={{ bgcolor: "background.paper", width: "100%", minHeight: "70vh" }}
         >
@@ -193,7 +194,7 @@ const DOEButtonsGroup = ({ pdfData }) => {
                         pageNumber={index + 1}
                         renderTextLayer={false}
                         height={500}
-                        width={getPdfViewerWidth()}
+                        width={screenSize.width < 700 ? 200 : 1000}
                         className="mt-1"
                       />
                     ))}

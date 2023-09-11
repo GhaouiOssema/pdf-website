@@ -11,11 +11,12 @@ import CachedOutlinedIcon from "@mui/icons-material/CachedOutlined";
 import { Link } from "react-router-dom";
 
 const Notification = () => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [isRotating, setRotating] = useState(false);
 
   const fetchNotification = async () => {
+    setLoading(true);
     try {
       const token = localStorage.getItem("token");
       if (!token) {
@@ -50,7 +51,6 @@ const Notification = () => {
 
   const handleRefreshClick = async () => {
     setRotating(true);
-
     try {
       await fetchNotification();
     } catch (error) {
@@ -63,45 +63,32 @@ const Notification = () => {
   };
 
   return (
-    <div className="bg-gray-100">
-      {loading ? (
-        <div className="w-full h-full flex flex-col items-center">
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              height: "50vh",
-            }}
-          >
-            <CircularProgress />
-          </Box>
+    <div className="bg-gray-100 h-screen">
+      <div className="p-6 flex flex-row justify-between items-center flex-wrap w-full">
+        <div className="w-[85%] md:w-[90%] lg:w-[93%] xl:w-[95%] bg-[#125ba3] flex flex-wrap items-center justify-between gap-2 px-4 py-2 rounded-md">
+          <span className="font-sans font-semibold text-white">
+            Mes notification
+          </span>
+          <span className="font-sans font-normal text-white ">
+            {notifications.length}
+          </span>
         </div>
-      ) : notifications && notifications.length > 0 && !loading ? (
+        <span
+          className={`bg-white p-2 rounded-full ${
+            isRotating ? "animate-spin" : ""
+          }`}
+        >
+          <CachedOutlinedIcon
+            sx={{ color: "#125ba3", cursor: "pointer" }}
+            onClick={handleRefreshClick}
+          />
+        </span>
+      </div>
+      {notifications && !loading ? (
         <div className="bg-gray-100 min-h-screen">
-          <div className="flex flex-col items-start justify-center min-h-screen bg-gradient-to-t p-6">
+          <div className="flex flex-col items-start justify-start min-h-screen bg-gradient-to-t p-6">
             <div className="w-full">
               <div className="grid grid-cols-1 h-full w-full px-0 md:px-4 lg:px-4 xl:px-4">
-                <div className="flex flex-row justify-between items-center flex-wrap cursor-pointer w-full">
-                  <div className="w-[85%] md:w-[90%] lg:w-[93%] xl:w-[95%] bg-[#125ba3] flex flex-wrap items-center justify-between gap-2 px-4 py-2 rounded-md">
-                    <span className="font-sans font-semibold text-white">
-                      Mes notification
-                    </span>
-                    <span className="font-sans font-normal text-white ">
-                      {notifications.length}
-                    </span>
-                  </div>
-                  <span
-                    className={`bg-white p-2 rounded-full ${
-                      isRotating ? "animate-spin" : ""
-                    }`}
-                  >
-                    <CachedOutlinedIcon
-                      sx={{ color: "#125ba3" }}
-                      onClick={handleRefreshClick}
-                    />
-                  </span>
-                </div>
                 {notifications &&
                   notifications
                     ?.sort(
@@ -188,9 +175,7 @@ const Notification = () => {
             </div>
           </div>
         </div>
-      ) : !notifications && !loading ? (
-        <p className="text-center mt-4">Il n'existe aucun dossier.</p>
-      ) : (
+      ) : !loading ? (
         <div className="p-0 m-0 min-h-[90vh] flex justify-center items-center md:min-h-[100vh] lg:min-h-0 lg:h-[100vh] xl:h-[100vh] opacity-20">
           <div className="flex flex-col justify-center items-center">
             <NotificationsOffRoundedIcon
@@ -205,6 +190,19 @@ const Notification = () => {
               Vous n'avez reçu aucun rapport jusqu'à présent.
             </p>
           </div>
+        </div>
+      ) : (
+        <div className="w-full h-full flex flex-col items-center">
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "50vh",
+            }}
+          >
+            <CircularProgress />
+          </Box>
         </div>
       )}
     </div>

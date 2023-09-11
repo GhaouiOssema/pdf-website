@@ -1,8 +1,13 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const UserAccount = require("../models/USER");
+const mongoose = require("mongoose");
 const Folder = require("../models/FOLDER");
+const {
+  Types: { ObjectId },
+} = mongoose;
 const PDFs = require("../models/PDF");
+const { deleteFileById } = require("../utils/deleteFile");
 
 module.exports = {
   async delete(req, res) {
@@ -23,7 +28,7 @@ module.exports = {
         process.env.SECRET_TOKEN
       );
 
-      const { userId } = decodedToken;
+      const { userId, pdfList } = decodedToken;
       const user = await UserAccount.findById(userId);
 
       if (!user) {
@@ -39,10 +44,24 @@ module.exports = {
         return res.status(404).json({ message: "Folder not found" });
       }
 
-      // Delete related PDFs
-      await PDFs.deleteMany({ dossier: folderId });
+      const pdfsToDelete = await PDFs.find({ dossier: folderId });
 
-      // Remove folder from user's folders
+      // Delete related PDFs
+      for (const pdf of pdfsToDelete) {
+        await PDFs.deleteOne({ _id: pdf._id });
+        deleteFileById(pdf.mainPdf.fileId, "pdfFiles");
+        deleteFileById(pdf.pdfImage.fileId, "imageFiles");
+        deleteFileById(pdf.fiche.fileId, "fileInfoFiles");
+        for (const doeFile of pdf.doeFiles) {
+          deleteFileById(doeFile.fileId, "doeFiles");
+        }
+      }
+
+      // Remove deleted PDFs from the user's allPdfs field
+      user.allPdfs = user.allPdfs.filter(
+        (pdfId) => !pdfsToDelete.some((pdf) => pdf._id.equals(pdfId))
+      );
+
       user.folders.pull(folder._id);
       await user.save();
 
