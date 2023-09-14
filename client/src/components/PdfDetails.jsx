@@ -261,9 +261,9 @@ const PdfDetails = () => {
 
       {pdfData ? (
         <div className="h-full w-full md:h-screen lg:h-screen xl:h-screen py-2">
-          <div className="flex flex-col items-center justify-center">
-            <div className="w-full md:w-[70%] px-3  mb-4">
-              <p className="text-md text-center bg-[#125ba3] text-white rounded-md font-sans font-semibold py-0.5">
+          <div className="flex flex-col items-center justify-center mt-4">
+            <div className="w-full md:w-[70%] px-3 ">
+              <p className="rounded-lg text-center mb-4 bg-[#125ba3] text-white text-md md:text-xl lg:text-xl xl:text-xl tracking-wide font-sans font-semibold py-1">
                 Fiche d'équipement
               </p>
             </div>
@@ -334,9 +334,9 @@ const PdfDetails = () => {
 
           <div>
             {/* Desktop View */}
-            <div className="hidden md:flex flex-col items-center justify-cneter py-2 lg:px-5 mx-auto w-full">
-              <div className=" md:w-[70%] w-full mt-5 h-full">
-                <p className="text-md mb-4 text-center bg-[#125ba3] text-white rounded-md font-sans font-semibold py-0.5">
+            <div className="hidden md:flex flex-col items-center justify-cneter lg:px-5 mx-auto w-full">
+              <div className="md:w-[70%] w-full mt-4 h-full">
+                <p className="rounded-lg text-center mb-4 bg-gray-400 text-white text-md md:text-xl lg:text-xl xl:text-xl tracking-wide font-sans font-semibold py-1">
                   Information d'équipement
                 </p>
                 <div className="pdf-preview">
@@ -346,7 +346,7 @@ const PdfDetails = () => {
                         {!imageLoading && !imageError && (
                           <figure className="relative">
                             <img
-                              className="h-40 w-40 bg-no-repeat object-cover"
+                              className="h-40 w-80 bg-no-repeat object-cover rounded-lg"
                               src={image}
                               alt="image"
                             />
@@ -355,24 +355,24 @@ const PdfDetails = () => {
                       </div>
                       <div>
                         <div className="mb-3 flex flex-col  sm:flex-row justify-start items-center">
-                          <h1 className="font-bold text-normal">Titre :</h1>
-                          <span className="text-black ml-3 text-base">
+                          <h1 className="font-sans font-semibold">Titre :</h1>
+                          <span className="ml-3 font-sans font-light">
                             {pdfData.title}
                           </span>
                         </div>
                         {dossier === "Armoire electrique" && (
                           <>
                             <div className="mb-3 flex flex-col sm:flex-row items-center justify-start text-center">
-                              <h1 className="font-normal">PTA :</h1>
-                              <span className="text-black ml-3">
+                              <h1 className="font-sans font-semibold">PTA :</h1>
+                              <span className="ml-3 font-sans font-light">
                                 {pdfData?.pdfDetails?.PAT}
                               </span>
                             </div>
                             <div className="mb-3 flex flex-col sm:flex-row justify-center text-center">
-                              <h1 className="font-bold">
+                              <h1 className="font-sans font-semibold">
                                 Date d'installation :
                               </h1>
-                              <span className="text-black ml-3">
+                              <span className="ml-3 font-sans font-light">
                                 {
                                   new Date(
                                     pdfData?.pdfDetails?.installationDate
@@ -389,14 +389,16 @@ const PdfDetails = () => {
                         ) && (
                           <>
                             <div className="mb-3 flex flex-col sm:flex-row items-center justify-start text-center">
-                              <h1 className="font-normal">PTA :</h1>
-                              <span className="text-black ml-3">
+                              <h1 className="font-sans font-semibold">PTA :</h1>
+                              <span className="ml-3 font-sans font-light">
                                 {pdfData?.pdfDetails?.PAT}
                               </span>
                             </div>
                             <div className="mb-3 flex flex-col sm:flex-row justify-center items-center">
-                              <h1 className="font-normal">Modéle :</h1>
-                              <span className="text-black ml-3">
+                              <h1 className="font-sans font-semibold">
+                                Modéle :
+                              </h1>
+                              <span className="ml-3 font-sans font-light">
                                 {pdfData?.pdfDetails?.pdfModel}
                               </span>
                             </div>
@@ -409,11 +411,10 @@ const PdfDetails = () => {
               </div>
 
               <div className="w-full md:w-[70%] mt-5">
-                {/* Adjust margin top */}
-                <p className="text-center mb-4 bg-[#125ba3] text-white rounded-md font-sans font-semibold text-md py-0.5">
+                <p className="rounded-lg text-center mb-4 bg-gray-400 text-white text-md md:text-xl lg:text-xl xl:text-xl tracking-wide font-sans font-semibold py-1">
                   Tableau des Rapports
                 </p>
-                <div className="pdf-preview bg-white h-60 shadow-md shadow-black/20 rounded-t-lg">
+                <div className="pdf-preview bg-white h-[30vh] shadow-md shadow-black/20 rounded-t-lg">
                   <div style={{ height: "100%", overflow: "auto" }}>
                     <Table
                       sx={{ minWidth: 650 }}
@@ -423,15 +424,17 @@ const PdfDetails = () => {
                       <TableHead>
                         <TableRow>
                           <TableCell align="center" sx={{ p: 1, m: 0 }}>
-                            <span className="font-sans font-bold">Sociéte</span>
+                            <span className="font-sans font-semibold">
+                              Sociéte
+                            </span>
                           </TableCell>
                           <TableCell align="center" sx={{ p: 1, m: 0 }}>
-                            <span className="font-sans font-bold">
+                            <span className="font-sans font-semibold">
                               Date du dernier entretien
                             </span>
                           </TableCell>
                           <TableCell align="center" sx={{ p: 1, m: 0 }}>
-                            <span className="font-sans font-bold">
+                            <span className="font-sans font-semibold">
                               Date du prochain entretien
                             </span>
                           </TableCell>
@@ -454,21 +457,27 @@ const PdfDetails = () => {
                                 }}
                               >
                                 <TableCell align="center">
-                                  {raport.société}
+                                  <span className="px-4 py-2 font-sans font-light">
+                                    {raport.société}
+                                  </span>
                                 </TableCell>
                                 <TableCell align="center">
-                                  {
-                                    new Date(raport.dateDernierEntretien)
-                                      .toISOString()
-                                      .split("T")[0]
-                                  }
+                                  <span className="px-4 py-2 font-sans font-light">
+                                    {
+                                      new Date(raport.dateDernierEntretien)
+                                        .toISOString()
+                                        .split("T")[0]
+                                    }
+                                  </span>
                                 </TableCell>
                                 <TableCell align="center">
-                                  {
-                                    new Date(raport.dateProchainEntretien)
-                                      .toISOString()
-                                      .split("T")[0]
-                                  }
+                                  <span className="px-4 py-2 font-sans font-light">
+                                    {
+                                      new Date(raport.dateProchainEntretien)
+                                        .toISOString()
+                                        .split("T")[0]
+                                    }
+                                  </span>
                                 </TableCell>
                                 <TableCell
                                   align="center"
@@ -503,12 +512,12 @@ const PdfDetails = () => {
             {/* Mobile View */}
             <div className="md:hidden">
               <div className="mt-5 px-3">
-                <p className="mb-4 text-center bg-[#125ba3] text-white rounded-md font-sans font-semibold text-md py-0.5">
+                <p className="rounded-lg text-center mb-4 bg-gray-400 text-white text-md md:text-xl lg:text-xl xl:text-xl tracking-wide font-sans font-semibold py-1">
                   Information d'équipement
                 </p>
                 <div className="qr-code-section bg-white p-2">
                   <div className="flex flex-wrap mb-3">
-                    <h1 className="ml-3 font-sans font-normal">Titre :</h1>
+                    <span className="font-sans font-semibold">Titre :</span>
                     <span className="ml-3 font-sans font-light text-black">
                       {pdfData.title}
                     </span>
@@ -516,16 +525,16 @@ const PdfDetails = () => {
                   {dossier === "Armoire electrique" && (
                     <>
                       <div className="flex flex-wrap mb-3">
-                        <h1 className="ml-3 font-sans font-normal">PTA :</h1>
-                        <span className="ml-3 font-sans font-light text-black">
+                        <h1 className="ml-3 font-sans font-semibold">PTA :</h1>
+                        <span className="ml-3 font-sans font-light">
                           {pdfData?.pdfDetails?.PAT}
                         </span>
                       </div>
                       <div className="flex flex-wrap mb-3">
-                        <h1 className="ml-3 font-sans font-bold">
+                        <h1 className="ml-3 font-sans font-semibold">
                           Date d'installation :
                         </h1>
-                        <span className="ml-3 font-sans font-light text-black">
+                        <span className="ml-3 font-sans font-light">
                           {
                             new Date(pdfData?.pdfDetails?.installationDate)
                               .toISOString()
@@ -540,14 +549,16 @@ const PdfDetails = () => {
                   ) && (
                     <>
                       <div className="flex flex-wrap mb-3">
-                        <h1 className="ml-3 font-sans font-normal">PTA :</h1>
+                        <h1 className="ml-3 font-sans font-semibold">PTA :</h1>
                         <span className="ml-3 font-sans font-light text-black">
                           {pdfData?.pdfDetails?.PAT}
                         </span>
                       </div>
                       <div className="flex flex-wrap mb-3">
-                        <h1 className="ml-3 font-sans font-normal">Modéle:</h1>
-                        <span className="ml-3 font-sans font-light text-black">
+                        <h1 className="ml-3 font-sans font-semibold">
+                          Modéle:
+                        </h1>
+                        <span className="ml-3 font-sans font-light">
                           {pdfData?.pdfDetails?.pdfModel}
                         </span>
                       </div>
@@ -567,7 +578,7 @@ const PdfDetails = () => {
                 )}
               </div>
               <div className="mt-5 px-3">
-                <p className="mb-4 text-center bg-[#125ba3] text-white rounded-md font-sans font-semibold text-md py-0.5">
+                <p className="rounded-lg text-center mb-4 bg-gray-400 text-white text-md md:text-xl lg:text-xl xl:text-xl tracking-wide font-sans font-semibold py-1">
                   Tableau des Rapports
                 </p>
                 <div
@@ -585,17 +596,17 @@ const PdfDetails = () => {
                       <TableHead>
                         <TableRow>
                           <TableCell align="center">
-                            <span className="font-sans font-bold text-[10px]">
+                            <span className="font-sans font-semibold text-[10px]">
                               Sociéte
                             </span>
                           </TableCell>
                           <TableCell align="center">
-                            <span className="font-sans font-bold text-[10px]">
+                            <span className="font-sans font-semibold text-[10px]">
                               Date du dernier entretien
                             </span>
                           </TableCell>
                           <TableCell align="center">
-                            <span className="font-sans font-bold text-[10px]">
+                            <span className="font-sans font-semibold text-[10px]">
                               Date du prochain entretien
                             </span>
                           </TableCell>
@@ -618,12 +629,12 @@ const PdfDetails = () => {
                                 }}
                               >
                                 <TableCell align="center" sx={{ fontSize: 10 }}>
-                                  <span className="font-sans font-medium text-[10px]">
+                                  <span className="font-sans font-light text-[10px]">
                                     {raport.société}
                                   </span>
                                 </TableCell>
                                 <TableCell align="center">
-                                  <span className="font-sans font-medium text-[10px]">
+                                  <span className="font-sans font-light text-[10px]">
                                     {
                                       new Date(raport.dateDernierEntretien)
                                         .toISOString()
@@ -632,7 +643,7 @@ const PdfDetails = () => {
                                   </span>
                                 </TableCell>
                                 <TableCell align="center">
-                                  <span className="w-full font-sans font-medium text-[10px]">
+                                  <span className="w-full font-sans font-light text-[10px]">
                                     {
                                       new Date(raport.dateProchainEntretien)
                                         .toISOString()

@@ -80,10 +80,11 @@ const PdfFile = () => {
   const [openAlert, setOpenAlert] = useState(false);
   const [deletingPdfTitle, setDeletingPdfTitle] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [deleteLoading, setDeleteLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
   const [filteredPdfs, setFilteredPdfs] = useState([]);
-  const itemsPerPage = 7;
+  const itemsPerPage = 13;
   const totalPages = Math.ceil(pdfs.length / itemsPerPage);
 
   const pageNumbers = Array.from(
@@ -161,8 +162,6 @@ const PdfFile = () => {
     fetchPdfs();
   }, [site, dossier]);
 
-  const [deleteLoading, setDeleteLoading] = useState(false);
-
   const handleDelete = async (title) => {
     setDeleteLoading(true);
     setDeletingPdfTitle(title);
@@ -185,12 +184,19 @@ const PdfFile = () => {
   return (
     <section className="bg-gray-100 dark:bg-gray-900 h-screen">
       <div>
-        <h1 className="text-xl sm:text-xl md:text-xl lg:text-xl text-center font-bold mb-4 pt-2 flex justify-center flex-wrap px-4">
-          Tous les équipements pour {dossier}
-        </h1>
+        <div className="mx-auto max-w-screen-xl lg:px-12 px-4 py-6">
+          <div className="bg-[#125ba3] mx-auto max-w-screen-xl px-4 rounded-md flex flex-wrap items-center justify-between py-2">
+            <span className="font-sans font-semibold text-white ">
+              les équipements de {dossier}
+            </span>
+            <span className="font-sans font-normal text-white ">
+              {displayedPdfs.length}
+            </span>
+          </div>
+        </div>
 
         <div className="mx-auto max-w-screen-xl lg:px-12 px-4">
-          <div className="bg-white dark:bg-gray-800 relative shadow-md overflow-hidden rounded-lg">
+          <div className="bg-white dark:bg-gray-800 relative shadow-md overflow-hidden rounded-lg h-[80vh]">
             <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
               {/* Search input */}
               <div className="w-full md:w-1/2">
@@ -231,12 +237,15 @@ const PdfFile = () => {
             {!loading && pdfs.length > 0 ? (
               <div className="overflow-x-auto max-h-100">
                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                  <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                  <thead className="text-md text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                      <th scope="col" className="px-4 py-3 font-sans">
+                      <th
+                        scope="col"
+                        className="px-4 py-3 font-sans font-semibold"
+                      >
                         Titre
                       </th>
-                      <th scope="col" className="text-left py-3 font-sans">
+                      <th scope="col" className="text-left py-3 font-semibold">
                         Date du création
                       </th>
                       <th scope="col" className="text-left py-3 font-sans"></th>
@@ -281,7 +290,7 @@ const PdfFile = () => {
                             {deleteLoading && deletingPdfTitle === pdf.title ? (
                               <CircularIndeterminate />
                             ) : (
-                              <DeleteIcon sx={{ color: "red" }} />
+                              <DeleteIcon className="text-red-500" />
                             )}
                           </div>
                         </td>
@@ -306,7 +315,7 @@ const PdfFile = () => {
             )}
             {/* Pagination */}
             <nav
-              className="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4"
+              className="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4 bottom-0 absolute"
               aria-label="Table navigation"
             >
               <ul className="inline-flex items-stretch -space-x-px">

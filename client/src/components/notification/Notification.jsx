@@ -63,8 +63,8 @@ const Notification = () => {
   };
 
   return (
-    <div className="bg-gray-100 h-screen">
-      <div className="p-6 flex flex-row justify-between items-center flex-wrap w-full">
+    <div className="bg-gray-100 min-h-screen">
+      <div className="p-6 flex flex-row justify-between items-center flex-wrap w-full mx-auto max-w-screen-xl lg:px-12 px-4 py-6">
         <div className="w-[85%] md:w-[90%] lg:w-[93%] xl:w-[95%] bg-[#125ba3] flex flex-wrap items-center justify-between gap-2 px-4 py-2 rounded-md">
           <span className="font-sans font-semibold text-white">
             Mes notification
@@ -176,7 +176,7 @@ const Notification = () => {
           </div>
         </div>
       ) : !loading && notifications.length === 0 ? (
-        <div className="flex flex-col justify-center items-center pt-20 opacity-20">
+        <div className="h-full flex flex-col justify-center items-center pt-20 opacity-20">
           <NotificationsOffRoundedIcon
             sx={{
               height: 250,
@@ -190,13 +190,12 @@ const Notification = () => {
           </p>
         </div>
       ) : (
-        <div className="w-full h-full flex flex-col items-center">
+        <div className="w-full h-full flex flex-col items-center pt-20">
           <Box
             sx={{
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              height: "40vh",
             }}
           >
             <CircularProgress />

@@ -84,7 +84,7 @@ const MultiSelectTreeView = ({
         height: isExpanded(folders._id) ? "auto" : "80px",
         backgroundColor: "white",
       }}
-      className="rounded-lg w-full lg:w-[80%] xl:w-[85%]"
+      className="rounded-lg w-full"
     >
       <TreeView
         aria-label="multi-select"
@@ -291,8 +291,9 @@ const Sites = () => {
           </Snackbar>
         </Stack>
       </Backdrop>
-      <div className="w-full  flex flex-wrap items-center justify-between gap-2 p-6  ">
-        <div className="bg-[#125ba3] w-full rounded-md flex flex-wrap items-center justify-between gap-2 px-4 py-2">
+
+      <div className="mx-auto max-w-screen-xl lg:px-12 px-4 py-6">
+        <div className="bg-[#125ba3] mx-auto max-w-screen-xl px-4 rounded-md flex flex-wrap items-center justify-between py-2">
           <span className="font-sans font-semibold text-white ">Mes Sites</span>
           <span className="font-sans font-normal text-white ">
             {folders.length}
@@ -395,7 +396,7 @@ const Sites = () => {
         className={`mt-10 ${
           screenSize.width < 700
             ? "w-full"
-            : "flex justify-center items-center w-full"
+            : "flex justify-center items-center mx-auto max-w-screen-xl lg:px-12 px-4 py-4"
         } `}
       >
         <div
@@ -406,7 +407,7 @@ const Sites = () => {
                 folders.length > 0 &&
                 screenSize.width > 700 &&
                 !loading
-              ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 w-full"
+              ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 w-full boor"
               : !folders &&
                 !folders.length < 0 &&
                 !loading &&
@@ -453,7 +454,7 @@ const Sites = () => {
                     className={`rounded-lg ${
                       screenSize.width < 700
                         ? "w-full mt-4"
-                        : "w-[99%] py-3 flex justify-center"
+                        : "w-full py-3 flex justify-center px-1"
                     }`}
                     key={index}
                   >

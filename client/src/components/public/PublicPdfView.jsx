@@ -219,7 +219,7 @@ const PublicPdfView = () => {
       {pdfData ? (
         <div className="h-full w-full md:h-screen lg:h-screen xl:h-screen py-2">
           <div className="flex flex-col items-center justify-center mt-4">
-            <div className="w-full md:w-[70%] px-3  mb-4">
+            <div className="w-full md:w-[70%] px-3 ">
               <p className="rounded-lg text-center mb-4 bg-[#125ba3] text-white text-md md:text-xl lg:text-xl xl:text-xl tracking-wide font-sans font-semibold py-1">
                 Fiche d'équipement
               </p>
