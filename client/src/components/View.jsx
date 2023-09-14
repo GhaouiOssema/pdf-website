@@ -82,8 +82,8 @@ const RaportView = ({
     setSiteAddress(event.target.value);
   };
 
-  const handleSiteCodePostalChange = (event) => {
-    setSiteCodePostal(event.target.value);
+  const handleSiteCodePostalChange = (value) => {
+    setSiteCodePostal(value);
   };
 
   const handleCategoryChange = (event) => {
@@ -107,6 +107,9 @@ const RaportView = ({
         (value) => value === null || value === undefined || value === ""
       );
 
+      const isCodePostalValid =
+        formData.code_postal && formData.code_postal.length === 5;
+
       const token = localStorage.getItem("token");
       if (!token) {
         return;
@@ -116,8 +119,14 @@ const RaportView = ({
       // Extract the necessary information from the token payload
 
       if (anyFieldEmpty) {
-        console.log("One or more fields are empty");
-        setOpen(false); // Close the popup or set its visibility to false
+        seterrorMessageForCreatingSite("Tous les champs doivent être remplis");
+        return;
+      }
+
+      if (!isCodePostalValid) {
+        seterrorMessageForCreatingSite(
+          "le code postal doit avoir une longueur de 5 caractères."
+        );
         return;
       }
 
@@ -138,10 +147,9 @@ const RaportView = ({
       handleClick();
       seterrorMessageForCreatingSite("");
     } catch (error) {
-      seterrorMessageForCreatingSite("Le dossier existe déjà");
       setAlertMsg("");
       setOpen(false);
-      setErrorMessage(err.response.data.error);
+      seterrorMessageForCreatingSite(error.response.data.message);
     }
   };
 
@@ -163,6 +171,29 @@ const RaportView = ({
         name: name,
       };
 
+      const anyFieldEmpty = Object.values(data).some(
+        (value) => value === null || value === undefined || value === ""
+      );
+
+      const isCodePostalValid =
+        data.code_postal && data.code_postal.length === 5;
+
+      if (!token) {
+        return;
+      }
+
+      if (anyFieldEmpty) {
+        seterrorMessageForUpdatingSite("Tous les champs doivent être remplis");
+        return;
+      }
+
+      if (!isCodePostalValid) {
+        seterrorMessageForUpdatingSite(
+          "le code postal doit avoir une longueur de 5 caractères."
+        );
+        return;
+      }
+
       const response = await axios.put(
         `${import.meta.env.VITE_SERVER_API_URL}/site/${folderIdUpdate}`,
         data,
@@ -174,10 +205,9 @@ const RaportView = ({
       setOpen(true);
       seterrorMessageForUpdatingSite("");
     } catch (error) {
-      seterrorMessageForUpdatingSite("Le dossier existe déjà");
+      // seterrorMessageForUpdatingSite(error.response.data.message);
       setAlertMsg("");
       setOpen(false);
-      setErrorMessage(err.response.data.error);
     }
   };
 
@@ -206,20 +236,20 @@ const RaportView = ({
             <Box
               component="form"
               sx={{
-                bgcolor: "white",
+                bgcolor: "#F4F4F5",
                 height: "100%",
                 borderRadius: 2,
-                width: { lg: 500, md: 500, sm: 300, xs: 300 },
+                width: { lg: 500, md: 500, sm: 400, xs: 300 },
                 display: "flex",
                 justifyContent: "center",
               }}
             >
-              <div className="text-black pb-10">
-                <div className="w-full max-w-lg ">
+              <div className="text-black pb-10 ">
+                <div className="w-full max-w-lg">
                   {type === "siteButton" ? (
                     <>
-                      <h1 className="pt-10 tracking-wide text-center text-gray-700 text-lg font-sans font-bold mb-10 flex justify-center items-center flex-wrap whitespace-normal sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
-                        <span className="text-sm sm:text-base md:text-lg lg:text-lg xl:text-lg">
+                      <h1 className="pt-10 tracking-wide text-center text-gray-700 text-lg font-sans font-bold mb-10 flex justify-center items-center flex-wrap whitespace-normal sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl px-4">
+                        <span className="w-full text-sm sm:text-sm md:text-md lg:text-lg xl:text-lg tracking-wide break-words">
                           Veuillez saisir les informations du site
                         </span>
                       </h1>
@@ -227,60 +257,66 @@ const RaportView = ({
                       <div className="px-3 mb-6">
                         <label
                           htmlFor="nom_site"
-                          className="w-full block mb-2 text-md font-sans font-medium text-gray-900 dark:text-white"
+                          className="block text-gray-700 font-sans font-medium mb-2 text-start"
                         >
                           Nom
                         </label>
                         <input
                           type="text"
                           id="nom_site"
-                          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:shadow-sm-light"
+                          className="text-black w-full px-4 py-2 border-none rounded-lg font-sans focus:outline-none focus:ring bg-white bg-opacity-90"
                           placeholder="le nom du site"
                           value={name}
                           onChange={handleNameChange}
-                          required
                         />
                       </div>
 
                       <div className="px-3 mb-6">
                         <label
                           htmlFor="adress_site"
-                          className="w-full block mb-2 text-md font-sans font-medium text-gray-900 dark:text-white"
+                          className="block text-gray-700 font-sans font-medium mb-2 text-start"
                         >
                           Adresse
                         </label>
                         <input
                           type="text"
                           id="adress_site"
-                          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:shadow-sm-light"
+                          className="text-black w-full px-4 py-2 border-none rounded-lg font-sans focus:outline-none focus:ring bg-white bg-opacity-90"
                           placeholder="Adresse du site"
                           value={siteAddress}
                           onChange={handleSiteAddressChange}
-                          required
                         />
                       </div>
                       <div className="px-3 mb-6">
                         <label
                           htmlFor="code_postal"
-                          className="w-full block mb-2 text-md font-sans font-medium text-gray-900 dark:text-white"
+                          className="block text-gray-700 font-sans font-medium mb-2 text-start"
                         >
                           Code postal
                         </label>
                         <input
-                          type="text"
+                          type="number"
                           id="code_postal"
-                          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:shadow-sm-light"
+                          className="text-black w-full px-4 py-2 border-none rounded-lg font-sans focus:outline-none focus:ring bg-white bg-opacity-90"
                           placeholder="Code postal"
                           value={siteCodePostal}
-                          onChange={handleSiteCodePostalChange}
-                          required
+                          onChange={(e) => {
+                            const inputValue = e.target.value;
+                            if (inputValue.length <= 5) {
+                              handleSiteCodePostalChange(inputValue);
+                            }
+                          }}
+                          min="1000"
+                          max="9999"
+                          step="1"
+                          maxLength="5"
                         />
                       </div>
 
                       <div className="px-3 mb-6">
                         <label
                           htmlFor="code_postal"
-                          className="w-full block mb-2 text-md font-sans font-medium text-gray-900 dark:text-white"
+                          className="block text-gray-700 font-sans font-medium mb-2 text-start"
                         >
                           Catégorie
                         </label>
@@ -313,7 +349,7 @@ const RaportView = ({
                             }}
                             MenuProps={MenuProps}
                             fullWidth
-                            sx={{ bgcolor: "#FAFAFA" }}
+                            sx={{ bgcolor: "white" }}
                           >
                             {names.map((name) => (
                               <MenuItem key={name} value={name}>
@@ -329,13 +365,7 @@ const RaportView = ({
                         </FormControl>
                       </div>
 
-                      {errorMessageForCreatingSite && (
-                        <div className="w-full text-center block mb-2 text-md font-sans font-base text-red-500 dark:text-white">
-                          {errorMessageForCreatingSite}
-                        </div>
-                      )}
-
-                      <div className="flex flex-wrap justify-center space-x-2">
+                      <div className="px-3 mb-6">
                         <Button
                           variant="outlined"
                           color="success"
@@ -354,10 +384,17 @@ const RaportView = ({
                             setSelectedCategories([]);
                             setName("");
                           }}
+                          sx={{ ml: 3 }}
                         >
                           Annuler
                         </Button>
                       </div>
+
+                      {errorMessageForCreatingSite && (
+                        <div className="flex px-6 text-center text-sm font-sans font-base text-red-500 dark:text-white break-words tracking-wide">
+                          {errorMessageForCreatingSite}
+                        </div>
+                      )}
                     </>
                   ) : type === "editSite" ? (
                     <>
@@ -370,14 +407,32 @@ const RaportView = ({
                       <div className="mb-6">
                         <label
                           htmlFor="adress_site"
-                          className="w-full block mb-2 text-md font-sans font-medium text-gray-900 dark:text-white"
+                          className="block text-gray-700 font-sans font-medium mb-2 text-start"
+                        >
+                          Nom du site
+                        </label>
+                        <input
+                          type="text"
+                          id="adress_site"
+                          className="text-black w-full px-4 py-2 border-none rounded-lg font-sans focus:outline-none focus:ring bg-white bg-opacity-90"
+                          placeholder="Nom du site"
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
+                          required
+                        />
+                      </div>
+
+                      <div className="mb-6">
+                        <label
+                          htmlFor="adress_site"
+                          className="block text-gray-700 font-sans font-medium mb-2 text-start"
                         >
                           Adresse du site
                         </label>
                         <input
                           type="text"
                           id="adress_site"
-                          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:shadow-sm-light"
+                          className="text-black w-full px-4 py-2 border-none rounded-lg font-sans focus:outline-none focus:ring bg-white bg-opacity-90"
                           placeholder="Adresse du site"
                           value={adresse}
                           onChange={(e) => setAdresse(e.target.value)}
@@ -388,26 +443,32 @@ const RaportView = ({
                       <div className="mb-6">
                         <label
                           htmlFor="code_postal"
-                          className="w-full block mb-2 text-md font-sans font-medium text-gray-900 dark:text-white"
+                          className="block text-gray-700 font-sans font-medium mb-2 text-start"
                         >
                           Code postal
                         </label>
                         <input
-                          type="text"
+                          type="number"
                           id="code_postal"
-                          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:shadow-sm-light"
+                          className="text-black w-full px-4 py-2 border-none rounded-lg font-sans focus:outline-none focus:ring bg-white bg-opacity-90"
                           placeholder="Code postal"
                           value={codePostal}
-                          onChange={(e) => setCodePostal(e.target.value)}
+                          onChange={(e) => {
+                            const inputValue = e.target.value;
+                            if (inputValue.length <= 5) {
+                              setCodePostal(inputValue);
+                            }
+                          }}
+                          min="1000"
+                          max="9999"
+                          step="1"
+                          maxLength="5"
                           required
                         />
                       </div>
 
                       <div className="mb-6">
-                        <label
-                          htmlFor="code_postal"
-                          className="w-full block mb-2 text-md font-sans font-medium text-gray-900 dark:text-white"
-                        >
+                        <label className="block text-gray-700 font-sans font-medium mb-2 text-start">
                           Catégorie
                         </label>
                         <FormControl sx={{ width: "100%" }} size="small">
@@ -435,6 +496,7 @@ const RaportView = ({
                               }
                             }}
                             MenuProps={MenuProps}
+                            sx={{ bgcolor: "white" }}
                           >
                             {names.map((name) => (
                               <MenuItem key={name} value={name}>
@@ -448,26 +510,15 @@ const RaportView = ({
                         </FormControl>
                       </div>
 
-                      {errorMessageForUpdatingSite && (
-                        <div className="w-full text-center block mb-2 text-md font-sans font-base text-red-500 dark:text-white">
-                          {errorMessageForUpdatingSite}
-                        </div>
-                      )}
-
-                      <Stack
-                        spacing={2}
-                        direction="row"
-                        sx={{
-                          display: "flex",
-                          flexDirection: "row",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
+                      <div className="flex flex-wrap justify-start mb-6 space-x-2">
                         <Button
                           variant="outlined"
                           color="success"
                           onClick={updateSite}
+                          sx={{
+                            color: "#125ba3",
+                            "&:hover": { backgroundColor: "transparent" },
+                          }}
                         >
                           Modifier
                         </Button>
@@ -481,10 +532,20 @@ const RaportView = ({
                             setCodePostal("");
                             setSubContent([]);
                           }}
+                          sx={{
+                            color: "#DC2626",
+                            "&:hover": { backgroundColor: "transparent" },
+                          }}
                         >
                           Annuler
                         </Button>
-                      </Stack>
+                      </div>
+
+                      {errorMessageForUpdatingSite && (
+                        <div className="w-full text-center text-sm font-sans font-base text-red-500 dark:text-white break-words tracking-wide">
+                          {errorMessageForUpdatingSite}
+                        </div>
+                      )}
                     </>
                   ) : null}
                 </div>

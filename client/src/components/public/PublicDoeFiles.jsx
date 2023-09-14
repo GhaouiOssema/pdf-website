@@ -49,8 +49,12 @@ const a11yProps = (index) => {
 const PublicDoeFiles = () => {
   const { id } = useParams();
   const [pdfData, setPdfData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const getPdfData = async () => {
+      setLoading(true);
+
       try {
         const response = await axios.get(
           `${
@@ -60,6 +64,8 @@ const PublicDoeFiles = () => {
         setPdfData(response.data.pdf);
       } catch (error) {
         console.log("Error retrieving PDF data:", error);
+      } finally {
+        setLoading(false);
       }
     };
     getPdfData();
@@ -76,89 +82,99 @@ const PublicDoeFiles = () => {
     setValue(index);
   };
 
-  if (pdfData?.doeFiles.length === 0) {
+  if (loading) {
     return (
-      <div className="h-screen flex justify-center items-center opacity-20">
-        <div className="flex flex-col justify-center items-center">
-          <DoNotDisturbIcon
-            sx={{
-              height: 250,
-              width: 250,
-              opacity: "100%",
-              color: "black",
-            }}
-          />
-          <p className="w-full font-sans font-bold text-xl text-center break-words">
-            Aucun fiche technique n'est lié à cet équipement.
-          </p>
-        </div>
-      </div>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress />
+      </Box>
     );
   }
 
   return (
-    <section className="flex flex-col max-w-screen-2xl">
-      <h1 className="text-3xl text-center font-bold mt-5 mb-5">
-        Les DOE d'equipement
-      </h1>
-      <div className="flex justify-center ">
-        <Box sx={{ bgcolor: "", width: "80%", color: "white" }}>
-          <Box
-            sx={{
-              color: "white",
-              "& .MuiTabs-indicator": {
-                backgroundColor: "white",
-              },
-              "& .Mui-selected": {
-                color: "white",
-              },
-            }}
-          >
-            <Tabs
-              value={value}
-              onChange={handleChange}
-              centered
-              sx={{
-                width: "100%",
-                bgcolor: "#125ba3",
-                color: "white",
-                "& .MuiTabs-indicator": {
-                  backgroundColor: "white",
-                },
-                "& .Mui-selected": {
-                  background: "white",
-                },
-                borderRadius: 2,
-              }}
-            >
-              <Tab
-                label="DOE"
-                {...a11yProps(0)}
+    <>
+      {pdfData?.doeFiles.length !== 0 ? (
+        <section className="flex flex-col max-w-screen-2xl">
+          <h1 className="text-3xl text-center font-bold mt-5 mb-5">
+            Les DOE d'equipement
+          </h1>
+          <div className="flex justify-center bg-gray-100">
+            <Box sx={{ bgcolor: "", width: "80%", color: "white" }}>
+              <Box
                 sx={{
                   color: "white",
+                  "& .MuiTabs-indicator": {
+                    backgroundColor: "white",
+                  },
+                  "& .Mui-selected": {
+                    color: "white",
+                  },
                 }}
-              />
-            </Tabs>
-          </Box>
+              >
+                <Tabs
+                  value={value}
+                  onChange={handleChange}
+                  centered
+                  sx={{
+                    width: "100%",
+                    bgcolor: "#125ba3",
+                    color: "white",
+                    "& .MuiTabs-indicator": {
+                      backgroundColor: "white",
+                    },
+                    "& .Mui-selected": {
+                      background: "white",
+                    },
+                    borderRadius: 2,
+                  }}
+                >
+                  <Tab
+                    label="DOE"
+                    {...a11yProps(0)}
+                    sx={{
+                      color: "white",
+                    }}
+                  />
+                </Tabs>
+              </Box>
 
-          <SwipeableViews
-            axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-            index={value}
-            onChangeIndex={handleChangeIndex}
-            className="text-black"
-          >
-            <TabPanel
-              value={value}
-              index={0}
-              dir={theme.direction}
-              className=" w-full"
-            >
-              <DOEButtonsGroup pdfData={pdfData} />
-            </TabPanel>
-          </SwipeableViews>
-        </Box>
-      </div>
-    </section>
+              <SwipeableViews
+                axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+                index={value}
+                onChangeIndex={handleChangeIndex}
+                className="text-black"
+              >
+                <TabPanel value={value} index={0} dir={theme.direction}>
+                  <DOEButtonsGroup pdfData={pdfData} />
+                </TabPanel>
+              </SwipeableViews>
+            </Box>
+          </div>
+        </section>
+      ) : (
+        <div className="h-screen flex justify-center items-center opacity-20">
+          <div className="flex flex-col justify-center items-center">
+            <DoNotDisturbIcon
+              sx={{
+                height: 250,
+                width: 250,
+                opacity: "100%",
+                color: "black",
+              }}
+            />
+            <p className="w-full font-sans font-bold text-xl text-center break-words">
+              Aucun DOE n'est lié à cet équipement.
+            </p>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

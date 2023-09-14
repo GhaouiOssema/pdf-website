@@ -79,6 +79,7 @@ const PublicDOEButtonsGroup = ({ pdfData }) => {
   };
 
   const fetchDOEFiles = async (id) => {
+    console.log(id);
     try {
       const response = await axios.get(
         `${
@@ -106,7 +107,7 @@ const PublicDOEButtonsGroup = ({ pdfData }) => {
 
   const handleChange = (event, newValue) => {
     setSelectedFileIndex(newValue);
-    fetchDOEFiles(pdfData.doeFiles[selectedFileIndex].fileId);
+    fetchDOEFiles(pdfData.doeFiles[newValue].fileId);
   };
 
   return (
@@ -137,18 +138,20 @@ const PublicDOEButtonsGroup = ({ pdfData }) => {
                   justifyContent: "center",
                 }}
               >
-                {pdfData.doeFiles.map((file, idx) => (
+                {pdfData.doeFiles.map((file, index) => (
                   <Tab
-                    key={idx}
+                    key={index}
                     label={
                       <Stack direction="row" spacing={1}>
                         <Chip
                           label={file.filename}
-                          onClick={() => setSelectedFileIndex(idx, file.fileId)}
+                          onClick={() =>
+                            setSelectedFileIndex(index, file.fileId)
+                          }
                         />
                       </Stack>
                     }
-                    {...a11yProps(idx)}
+                    {...a11yProps(index)}
                   />
                 ))}
               </Tabs>
@@ -169,7 +172,7 @@ const PublicDOEButtonsGroup = ({ pdfData }) => {
                 <Document
                   file={`data:application/pdf;base64,${file}`}
                   onLoadSuccess={handlePdfLoadSuccess}
-                  className="flex justify-center"
+                  className="flex flex-col items-center justify-center"
                 >
                   {pdfLoaded &&
                     Array.from(new Array(numPages), (el, index) => (

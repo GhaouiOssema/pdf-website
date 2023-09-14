@@ -100,9 +100,9 @@ const App = () => {
                 />
                 <Route path="/messites" element={<Sites />} />
                 <Route path="/profile" element={<Profile />} />
-                <Route path="/plan/:fichier" element={<Plan />} />
+                <Route path="/fiche_technique/:fichier" element={<Plan />} />
                 <Route
-                  path="/:site/:dossier/pdf/detail/fiche_technique/:pdfid"
+                  path="/:site/:dossier/pdf/detail/plan/:pdfid"
                   element={<FicheTechnique />}
                 />
                 <Route
@@ -118,11 +118,11 @@ const App = () => {
                   element={<PublicPdfView />}
                 />
                 <Route
-                  path="/publique/:site/:dossier/plan/:fichier"
+                  path="/publique/:site/:dossier/fiche_technique/:fichier"
                   element={<PublicPlan />}
                 />
                 <Route
-                  path="/publique/:site/:dossier/fiche_technique/:pdfid"
+                  path="/publique/:site/:dossier/plan/:pdfid"
                   element={<PublicFicheTechnique />}
                 />
                 <Route

@@ -10,7 +10,13 @@ const connectDB = require("./config/Database.config");
 connectDB();
 
 const app = express();
-app.use(cors({ origin: true, credentials: true }));
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  })
+);
 app.use(bodyParser.json());
 app.use(helmet());
 app.use(helmet.contentSecurityPolicy());

@@ -79,3 +79,17 @@ export const style = {
   p: 4,
   borderRadius: 2,
 };
+
+export const initialState = {
+  selectedFile: null,
+  selectedImage: null,
+  selectedInfo: null,
+  selectedDOE: null,
+  title: "",
+  owner: "",
+  publicOrPrivate: "",
+  input1: "",
+  input2: "",
+  input: "",
+  site: "",
+};

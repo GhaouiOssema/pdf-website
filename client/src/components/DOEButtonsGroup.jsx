@@ -80,6 +80,7 @@ const DOEButtonsGroup = ({ pdfData }) => {
   };
 
   const fetchDOEFiles = async (id) => {
+    console.log(id);
     try {
       const token = localStorage.getItem("token");
       if (!token) {
@@ -115,14 +116,15 @@ const DOEButtonsGroup = ({ pdfData }) => {
     }
   };
 
+  // if (selectedFileIndex === 0) {
+  //   fetchDOEFiles(pdfData.doeFiles[0].fileId);
+  // }
+
   const handleChange = (event, newValue) => {
     setSelectedFileIndex(newValue);
+    // if (newValue >= 0) {
     fetchDOEFiles(pdfData.doeFiles[selectedFileIndex].fileId);
-  };
-
-  const getPdfViewerWidth = () => {
-    const screenWidth = screenSize.width;
-    return screenWidth < 700 ? screenWidth - 40 : 1000;
+    // }
   };
 
   return (

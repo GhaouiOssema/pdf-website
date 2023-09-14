@@ -39,7 +39,7 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ py: 3 }}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -151,7 +151,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const Popup = ({ popupView }) => {
+const Popup = ({ popupView, popupErrorMessage }) => {
   return (
     <Dialog
       open={popupView}
@@ -159,16 +159,27 @@ const Popup = ({ popupView }) => {
       keepMounted
       aria-describedby="alert-dialog-slide-description"
     >
-      <>
-        <DialogContent>
-          <div className="text-[#008000] text-center text-3xl mb-4 flex justify-center items-center">
-            <i className="fa-solid fa-circle-check"></i>
-          </div>
-          <p className="font-sans font-semibold text-[#008000] text-center">
-            Mission accomplie ! Le nouveau rapport a été envoyé avec succès.
-          </p>
-        </DialogContent>
-      </>
+      <DialogContent>
+        {popupErrorMessage ? (
+          <>
+            <div className="text-[#DC2626] text-center text-3xl mb-4 flex justify-center items-center">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <p className="font-sans font-semibold text-[#DC2626] text-center">
+              {popupErrorMessage}
+            </p>
+          </>
+        ) : (
+          <>
+            <div className="text-[#008000] text-center text-3xl mb-4 flex justify-center items-center">
+              <i className="fa-solid fa-circle-check"></i>
+            </div>
+            <p className="font-sans font-semibold text-[#008000] text-center">
+              Mission accomplie ! Le nouveau rapport a été envoyé avec succès.
+            </p>
+          </>
+        )}
+      </DialogContent>
     </Dialog>
   );
 };
@@ -188,6 +199,7 @@ const PdfView = () => {
   const [confirmationCode, setConfirmationCode] = useState(null);
   const [selectedOption, setSelectedOption] = useState("Option 1");
   const [popupView, setPopupView] = useState(false);
+  const [popupErrorMessage, setPopupErrorMessage] = useState(false);
   const popupRef = useRef(null);
 
   const handleOutsideClick = (event) => {
@@ -252,7 +264,6 @@ const PdfView = () => {
   };
 
   const sendRaport = async () => {
-    setPopupView(true);
     try {
       const requestData = {
         société: company,
@@ -289,11 +300,17 @@ const PdfView = () => {
       );
 
       if (response.status === 200) {
-        window.location.reload();
-        setValue(0);
+        setPopupView(true);
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       }
     } catch (error) {
       console.log("Error sending report:", error);
+      if (error.response.status === 403) {
+        setPopupView(true);
+        setPopupErrorMessage("le code du maintenance est invalide");
+      }
     }
   };
 
@@ -333,7 +350,13 @@ const PdfView = () => {
 
   return (
     <section className="flex flex-col h-screen" ref={popupRef}>
-      {popupView && <Popup popupView={popupView} setOpen={setOpen} />}
+      {popupView && (
+        <Popup
+          popupView={popupView}
+          setOpen={setOpen}
+          popupErrorMessage={popupErrorMessage}
+        />
+      )}
       {open && (
         <TransitionsModal
           open={open}
@@ -347,7 +370,7 @@ const PdfView = () => {
       <h1 className="text-3xl text-center font-bold mt-5 mb-5">
         Fiche d'entretien
       </h1>
-      <div className="flex justify-center bg-gray-100">
+      <div className="flex justify-center bg-gray-100 px-2">
         <Box
           sx={{
             width: { sm: "100%", md: "90%", lg: "80%", xl: "80%" },
@@ -371,7 +394,7 @@ const PdfView = () => {
               centered
               sx={{
                 width: "100%",
-                bgcolor: "rgb(50, 145, 240)",
+                bgcolor: "#125ba3",
                 color: "white",
                 "& .MuiTabs-indicator": {
                   backgroundColor: "white",
@@ -409,7 +432,7 @@ const PdfView = () => {
           >
             <TabPanel value={value} index={0} dir={theme.direction}>
               <TableContainer className="bg-white rounded-lg w-full">
-                <Table size="small" aria-label="a dense table">
+                <Table size="small">
                   <TableHead>
                     <TableRow>
                       <TableCell align="center" sx={{ fontWeight: "bold" }}>
@@ -549,7 +572,7 @@ const PdfView = () => {
               value={value}
               index={1}
               dir={theme.direction}
-              className="bg-white my-5 rounded-lg"
+              className="bg-white my-5 rounded-lg px-3"
             >
               <div>
                 <label className="text-center block mb-2 text-md font-sans font-medium text-gray-900 dark:text-white">
@@ -558,7 +581,7 @@ const PdfView = () => {
                 <div className="mb-6 mt-5">
                   <label
                     htmlFor="email"
-                    className="block mb-2 text-md font-sans font-medium text-gray-900 dark:text-white"
+                    className="block text-gray-700 font-sans font-medium mb-2 text-start"
                   >
                     Sociéte
                   </label>
@@ -574,14 +597,14 @@ const PdfView = () => {
                 <div className="mb-6">
                   <label
                     for="message"
-                    className="block mb-2 text-md font-sans font-medium text-gray-900 dark:text-white"
+                    className="block mb-2 text-md font-sans font-medium text-gray-700 dark:text-white"
                   >
                     Observation
                   </label>
                   <textarea
                     rows="4"
                     className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                    placeholder="Leave a comment..."
+                    placeholder="Écrivez votre observation ici"
                     value={observation}
                     onChange={(e) => setObservation(e.target.value)}
                     required
@@ -590,7 +613,7 @@ const PdfView = () => {
                 <div className="mb-6">
                   <label
                     htmlFor="repeat-password"
-                    className="block mb-2 text-md font-sans font-medium text-gray-900 dark:text-white"
+                    className="block mb-2 text-md font-sans font-medium text-gray-700 dark:text-white"
                   >
                     Piéce changée
                   </label>
@@ -600,6 +623,7 @@ const PdfView = () => {
                     required
                     value={partChanged}
                     onChange={(e) => setPartChanged(e.target.value)}
+                    placeholder="ex: mouteur, cable ...."
                   />
                 </div>
                 <div className="w-full mb-6">
@@ -617,7 +641,7 @@ const PdfView = () => {
                       </div>
                       <label
                         htmlFor="option1"
-                        className="ml-2 text-sm font-sans text-gray-900 dark:text-gray-300"
+                        className="ml-2 text-sm font-sans font-medium text-gray-700 dark:text-gray-300"
                       >
                         Correctif
                       </label>
@@ -635,7 +659,7 @@ const PdfView = () => {
                       </div>
                       <label
                         htmlFor="option2"
-                        className="ml-2 text-sm font-sans text-gray-900 dark:text-gray-300"
+                        className="ml-2 text-sm font-sans font-medium text-gray-700 dark:text-gray-300"
                       >
                         Préventif
                       </label>
@@ -645,7 +669,7 @@ const PdfView = () => {
                 <div className="block mb-6 sm:w-1/2 w-full">
                   <label
                     for="date"
-                    className="w-full h-full text-md font-sans font-medium text-gray-900 dark:text-white"
+                    className="w-full h-full font-sans font-medium text-gray-700 dark:text-white"
                   >
                     Date du prochain entretie :
                   </label>
@@ -678,7 +702,7 @@ const PdfView = () => {
                 <button
                   type="submit"
                   onClick={sendRaport}
-                  className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700"
+                  className="text-white bg-[#125ba3] hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700"
                 >
                   Envoyer le Raport
                 </button>

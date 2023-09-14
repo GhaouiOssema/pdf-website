@@ -19,6 +19,7 @@ import MuiAlert from "@mui/material/Alert";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import SiteOption from "./SiteOption";
+import DoNotDisturbIcon from "@mui/icons-material/DoNotDisturb";
 
 const MultiSelectTreeView = ({
   folders,
@@ -230,8 +231,6 @@ const Sites = () => {
         );
         if (response.status === 200) {
           setFolders(response.data);
-        } else {
-          setFolders(null);
         }
       } catch (error) {
         console.error(error);
@@ -278,7 +277,7 @@ const Sites = () => {
                 severity="success"
                 sx={{ width: "100%" }}
               >
-                Fichier ajouté avec succès
+                Site ajouté avec succès
               </ATert>
             ) : alertMsg === "error" ? (
               <ATert
@@ -292,8 +291,8 @@ const Sites = () => {
           </Snackbar>
         </Stack>
       </Backdrop>
-      <div className="mt-10 w-full  flex flex-wrap items-center justify-between gap-2  px-10  ">
-        <div className="bg-[#125ba3] w-full py-2 rounded-md flex flex-wrap items-center justify-between gap-2 px-4">
+      <div className="w-full  flex flex-wrap items-center justify-between gap-2 p-6  ">
+        <div className="bg-[#125ba3] w-full rounded-md flex flex-wrap items-center justify-between gap-2 px-4 py-2">
           <span className="font-sans font-semibold text-white ">Mes Sites</span>
           <span className="font-sans font-normal text-white ">
             {folders.length}
@@ -302,6 +301,7 @@ const Sites = () => {
       </div>
 
       {/* SEARCH SECTION */}
+
       <div className="flex mt-10 justify-center items-center">
         <div className="flex items-center justify-between w-[70%] ">
           {/* Search input */}
@@ -416,7 +416,7 @@ const Sites = () => {
           }`}
         >
           <>
-            {folders && !loading && folders.length !== 0 ? (
+            {folders && !loading && folders.length > 0 ? (
               folders
                 ?.filter((folder) => {
                   const lowerCaseSearchQuery = searchQuery.toLowerCase();
@@ -468,7 +468,21 @@ const Sites = () => {
                     />
                   </div>
                 ))
-            ) : loading ? (
+            ) : !loading && folders.length === 0 ? (
+              <div className="flex flex-col justify-center items-center opacity-20">
+                <DoNotDisturbIcon
+                  sx={{
+                    height: 250,
+                    width: 250,
+                    opacity: "100%",
+                    color: "black",
+                  }}
+                />
+                <p className="w-full font-sans font-bold text-xl text-center break-words">
+                  Il n'existe aucun site .
+                </p>
+              </div>
+            ) : (
               <div className="w-full h-full flex flex-col  items-center">
                 <Box
                   sx={{
@@ -481,8 +495,6 @@ const Sites = () => {
                   <CircularProgress />
                 </Box>
               </div>
-            ) : (
-              <p className="text-center mt-4"> Il n'existe aucun dossier .</p>
             )}
           </>
         </div>

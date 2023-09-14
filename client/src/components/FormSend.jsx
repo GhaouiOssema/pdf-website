@@ -16,24 +16,11 @@ import axios from "axios";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
+import { initialState } from "../utils/utils";
 
 const ATert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
-
-const initialState = {
-  selectedFile: null,
-  selectedImage: null,
-  selectedInfo: null,
-  selectedDOE: null,
-  title: "",
-  owner: "",
-  publicOrPrivate: "",
-  input1: "",
-  input2: "",
-  input: "",
-  site: "",
-};
 
 const FormSend = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -152,57 +139,58 @@ const FormSend = () => {
       formDataStep1.append("input", formState.input);
     }
 
-    try {
-      setIsUploading(true);
-      setUploadProgress(0);
-      const response = await axios.post(
-        `${import.meta.env.VITE_SERVER_API_URL}/FormUpload/mainpdf`,
-        formDataStep1,
-        {
-          ...config,
-          onUploadProgress: (progressEvent) => {
-            const totalBytes = progressEvent.total;
-            const startTime = new Date().getTime();
+    if (formDataStep1)
+      try {
+        setIsUploading(true);
+        setUploadProgress(0);
+        const response = await axios.post(
+          `${import.meta.env.VITE_SERVER_API_URL}/FormUpload/mainpdf`,
+          formDataStep1,
+          {
+            ...config,
+            onUploadProgress: (progressEvent) => {
+              const totalBytes = progressEvent.total;
+              const startTime = new Date().getTime();
 
-            const interval = setInterval(() => {
-              const currentTime = new Date().getTime();
-              const elapsedTime = currentTime - startTime;
+              const interval = setInterval(() => {
+                const currentTime = new Date().getTime();
+                const elapsedTime = currentTime - startTime;
 
-              if (elapsedTime >= responseTime) {
-                clearInterval(interval);
-                setUploadProgress(100);
-                return;
-              }
+                if (elapsedTime >= responseTime) {
+                  clearInterval(interval);
+                  setUploadProgress(100);
+                  return;
+                }
 
-              const uploadedBytes = (elapsedTime / responseTime) * totalBytes;
-              const percentage = Math.min(
-                Math.round((uploadedBytes / totalBytes) * 100),
-                100
-              );
-              setUploadProgress(percentage);
-            }, 100); // Update progress every 100 milliseconds
+                const uploadedBytes = (elapsedTime / responseTime) * totalBytes;
+                const percentage = Math.min(
+                  Math.round((uploadedBytes / totalBytes) * 100),
+                  100
+                );
+                setUploadProgress(percentage);
+              }, 100); // Update progress every 100 milliseconds
 
-            // Simulate server response time
-            const responseTime = 2000; // Adjust the response time in milliseconds as needed
-          },
+              // Simulate server response time
+              const responseTime = 2000; // Adjust the response time in milliseconds as needed
+            },
+          }
+        );
+
+        if (response.status === 200) {
+          setAlertMsg("envoyé avec réussite");
+          handleClick();
+          setLoading(false);
+          setFormComplated((prev) => prev + 1);
+          setActiveStep((prevActiveStep) => prevActiveStep + 1);
         }
-      );
-
-      if (response.status === 200) {
-        setAlertMsg("success");
+      } catch (error) {
+        console.error(error);
+        setAlertMsg("erreur");
         handleClick();
         setLoading(false);
-        setFormComplated((prev) => prev + 1);
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      } finally {
+        setIsUploading(false); // Upload complete or error, stop uploading
       }
-    } catch (error) {
-      console.error(error);
-      setAlertMsg("error");
-      handleClick();
-      setLoading(false);
-    } finally {
-      setIsUploading(false); // Upload complete or error, stop uploading
-    }
   };
 
   const handleSubmitStep2 = async (event) => {
@@ -247,7 +235,7 @@ const FormSend = () => {
       );
 
       if (response.status === 200) {
-        setAlertMsg("success");
+        setAlertMsg("envoyé avec réussite");
         handleClick();
         setLoading(false);
         setFormComplated((prev) => prev + 1);
@@ -255,7 +243,7 @@ const FormSend = () => {
       }
     } catch (error) {
       console.error(error);
-      setAlertMsg("error");
+      setAlertMsg("erreur");
       handleClick();
       setLoading(false);
     } finally {
@@ -304,7 +292,7 @@ const FormSend = () => {
       );
 
       if (response.status === 200) {
-        setAlertMsg("success");
+        setAlertMsg("envoyé avec réussite");
         handleClick();
         setLoading(false);
         setFormComplated((prev) => prev + 1);
@@ -312,7 +300,7 @@ const FormSend = () => {
       }
     } catch (error) {
       console.error(error);
-      setAlertMsg("error");
+      setAlertMsg("erreur");
       handleClick();
       setLoading(false);
     } finally {
@@ -368,7 +356,7 @@ const FormSend = () => {
       );
 
       if (response.status === 200) {
-        setAlertMsg("success");
+        setAlertMsg("envoyé avec réussite");
         handleClick();
         setLoading(false);
         setFormComplated((prev) => prev + 1);
@@ -376,7 +364,7 @@ const FormSend = () => {
       }
     } catch (error) {
       console.error(error);
-      setAlertMsg("error");
+      setAlertMsg("erreur");
       handleClick();
       setLoading(false);
     } finally {
@@ -568,9 +556,12 @@ const FormSend = () => {
                 {activeStep < steps.length - 1 && (
                   <Button
                     variant="contained"
-                    color="primary"
                     onClick={handleSubmitStep1}
-                    sx={{ mt: 5, borderRadius: "8px" }}
+                    sx={{
+                      mt: 5,
+                      borderRadius: "8px",
+                      backgroundColor: "#125ba3",
+                    }}
                   >
                     Suivant
                   </Button>
@@ -597,7 +588,7 @@ const FormSend = () => {
               <>
                 <div className="h-[21vh]">
                   {formState.selectedImage ? (
-                    <div className="relative flex mb-4">
+                    <div className="relative flex justify-center flex-wrap mb-4">
                       <img
                         src={URL.createObjectURL(formState.selectedImage)}
                         alt="Selected file"
@@ -646,7 +637,10 @@ const FormSend = () => {
                       variant="contained"
                       color="primary"
                       onClick={handleSubmitStep2}
-                      sx={{ borderRadius: "8px" }}
+                      sx={{
+                        borderRadius: "8px",
+                        backgroundColor: "#125ba3",
+                      }}
                     >
                       Suivant
                     </Button>
@@ -733,7 +727,10 @@ const FormSend = () => {
                           variant="contained"
                           color="primary"
                           onClick={handleSubmitStep3}
-                          sx={{ borderRadius: "8px" }}
+                          sx={{
+                            borderRadius: "8px",
+                            backgroundColor: "#125ba3",
+                          }}
                         >
                           Suivant
                         </Button>
@@ -823,7 +820,10 @@ const FormSend = () => {
                           variant="contained"
                           color="primary"
                           onClick={handleSubmitStep4}
-                          sx={{ borderRadius: "8px" }}
+                          sx={{
+                            borderRadius: "8px",
+                            backgroundColor: "#125ba3",
+                          }}
                         >
                           Suivant
                         </Button>
@@ -866,36 +866,43 @@ const FormSend = () => {
             <div className="w-full md:w-[70%] lg:w-[70%] xl:w-[70%] p-6 mx-auto rounded-lg shadow-2xl bg-white">
               <div className="w-full flex flex-col justify-center items-center">
                 {activeStep === steps.length ? (
-                  <div className="w-full p-2 h-[304.09px]">
+                  <div className="w-full h-[304.09px]">
                     <div className="flex flex-col justify-center items-center h-full">
-                      <div className="text-green-500 text-4xl mb-4 flex justify-center items-center">
-                        <i className="fa-solid fa-circle-check"></i>
-                      </div>
-                      <h1 className="text-2xl text-center font-bold mb-4">
-                        Ajout complété!
-                      </h1>
+                      {formComplated === 4 && fieldEmpty.length === 0 && (
+                        <>
+                          <div className="text-[#008000] text-4xl mb-4 flex justify-center items-center">
+                            <i className="fa-solid fa-circle-check"></i>
+                          </div>
+                          <h1 className="text-2xl text-center font-sans font-bold mb-4">
+                            Ajout complété!
+                          </h1>
+                        </>
+                      )}
                       {formComplated !== 4 && fieldEmpty.length > 0 && (
                         <div className="w-full flex flex-col items-center mb-4">
-                          <h1 className="w-full text-center font-bold text-red-500 uppercase">
+                          <h1 className="w-full text-center font-sans font-bold text-red-500 uppercase py-1">
                             Les champs non renseignés :
                           </h1>
-                          <h4 className="text-md w-full text-center flex flex-col justify-center items-center">
+                          <div className="flex flex-col gap-1 ml-4">
                             {fieldEmpty.map((el, idx) => (
-                              <ul key={idx} className="w-full ">
-                                <li className="w-full text-center">{el}</li>
-                              </ul>
+                              <div
+                                key={idx}
+                                className="flex items-center w-full"
+                              >
+                                <div className="w-2 h-2 bg-[#125ba3] rounded-full mr-2"></div>
+                                <div className="w-full text-start">{el}</div>
+                              </div>
                             ))}
-                          </h4>
+                          </div>
                         </div>
                       )}
                       <div className="text-center">
-                        <Button
-                          variant="contained"
-                          color="success"
+                        <button
+                          className="w-full text-sm flex justify-center bg-[#125ba3] hover:bg-primary-800 text-gray-100 font-sans py-2 px-8 rounded-md tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
                           onClick={() => Navigate("/messites")}
                         >
                           Retourner à la liste
-                        </Button>
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -905,13 +912,15 @@ const FormSend = () => {
                       <span className="font-sans font-bold text-sm md:text-base lg:text-base xl:text-base">
                         {steps[activeStep]}
                       </span>
-                      <Button
-                        onClick={skipLength}
-                        color="primary"
-                        className="font-sans font-bold text-sm md:text-base lg:text-base xl:text-base"
-                      >
-                        Ignorer
-                      </Button>
+                      {activeStep !== 0 && (
+                        <Button
+                          onClick={skipLength}
+                          color="primary"
+                          className="font-sans font-bold text-sm md:text-base lg:text-base xl:text-base"
+                        >
+                          Ignorer
+                        </Button>
+                      )}
                     </div>
                     <div className="w-full">{getStepContent(activeStep)}</div>
                   </>
@@ -924,7 +933,7 @@ const FormSend = () => {
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <ATert
           onClose={handleClose}
-          severity={alertMsg === "success" ? "success" : "error"}
+          severity={alertMsg === "envoyé avec réussite" ? "success" : "error"}
         >
           {alertMsg}
         </ATert>

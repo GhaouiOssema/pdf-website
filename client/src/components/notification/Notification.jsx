@@ -84,7 +84,7 @@ const Notification = () => {
           />
         </span>
       </div>
-      {notifications && !loading ? (
+      {notifications && !loading && notifications.length > 0 ? (
         <div className="bg-gray-100 min-h-screen">
           <div className="flex flex-col items-start justify-start min-h-screen bg-gradient-to-t p-6">
             <div className="w-full">
@@ -175,21 +175,19 @@ const Notification = () => {
             </div>
           </div>
         </div>
-      ) : !loading ? (
-        <div className="p-0 m-0 min-h-[90vh] flex justify-center items-center md:min-h-[100vh] lg:min-h-0 lg:h-[100vh] xl:h-[100vh] opacity-20">
-          <div className="flex flex-col justify-center items-center">
-            <NotificationsOffRoundedIcon
-              sx={{
-                height: 250,
-                width: 250,
-                opacity: "100%",
-                color: "black",
-              }}
-            />
-            <p className="w-full font-sans font-bold text-xl text-center">
-              Vous n'avez reçu aucun rapport jusqu'à présent.
-            </p>
-          </div>
+      ) : !loading && notifications.length === 0 ? (
+        <div className="flex flex-col justify-center items-center pt-20 opacity-20">
+          <NotificationsOffRoundedIcon
+            sx={{
+              height: 250,
+              width: 250,
+              opacity: "100%",
+              color: "black",
+            }}
+          />
+          <p className="w-full font-sans font-bold text-xl text-center">
+            Vous n'avez reçu aucun rapport jusqu'à présent.
+          </p>
         </div>
       ) : (
         <div className="w-full h-full flex flex-col items-center">
@@ -198,7 +196,7 @@ const Notification = () => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              height: "50vh",
+              height: "40vh",
             }}
           >
             <CircularProgress />

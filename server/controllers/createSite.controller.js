@@ -5,11 +5,17 @@ const addSite = async (req, res) => {
   const { adresse, code_postal, subFolders, name } = req.body;
 
   try {
+    if ((!adresse, !code_postal, !subFolders, !name)) {
+      return res
+        .status(400)
+        .json({ error: "Tous les champs doivent être remplis." });
+    }
+
     const userId = req.headers["x-user-id"];
     const userName = req.headers["x-user-name"];
 
     if (!userId || !userName) {
-      return res.status(401).json({ error: "Unauthorized" });
+      return res.status(401).json({ message: "Unauthorized" });
     }
 
     const existingFolder = await Folder.findOne({
@@ -17,7 +23,7 @@ const addSite = async (req, res) => {
     });
 
     if (existingFolder) {
-      return res.status(401).json({ message: "Le dossier existe déjà" });
+      return res.status(400).json({ message: "Le dossier existe déjà" });
     }
 
     // Create the new folder

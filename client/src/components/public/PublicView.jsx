@@ -45,7 +45,7 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ py: 3 }}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -245,8 +245,6 @@ const PublicView = () => {
   };
 
   const sendRaport = async () => {
-    setPopupView(true);
-
     try {
       const requestData = {
         société: company,
@@ -271,8 +269,10 @@ const PublicView = () => {
       );
 
       if (response.status === 200) {
-        window.location.reload();
-        setValue(2);
+        setPopupView(true);
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       }
     } catch (error) {
       console.log("Error sending report:", error);
@@ -329,7 +329,7 @@ const PublicView = () => {
       <h1 className="text-3xl text-center font-bold mt-5 mb-5">
         Fiche d'entretien
       </h1>
-      <div className="flex justify-center bg-gray-100">
+      <div className="flex justify-center bg-gray-100 px-2">
         <Box
           sx={{
             width: { sm: "100%", md: "90%", lg: "80%", xl: "80%" },
@@ -353,7 +353,7 @@ const PublicView = () => {
               centered
               sx={{
                 width: "100%",
-                bgcolor: "rgb(50, 145, 240)",
+                bgcolor: "#125ba3",
                 color: "white",
                 "& .MuiTabs-indicator": {
                   backgroundColor: "white",
@@ -531,17 +531,14 @@ const PublicView = () => {
               value={value}
               index={1}
               dir={theme.direction}
-              className="bg-white my-5 rounded-lg"
+              className="bg-white my-5 rounded-lg px-3"
             >
               <div>
                 <label className="text-center block mb-2 text-md font-sans font-medium text-gray-900 dark:text-white">
                   Veuillez saisir les informations ci dessous
                 </label>
                 <div className="mb-6 mt-5">
-                  <label
-                    htmlFor="email"
-                    className="block mb-2 text-md font-sans font-medium text-gray-900 dark:text-white"
-                  >
+                  <label className="block text-gray-700 font-sans font-medium mb-2 text-start text-md">
                     Sociéte
                   </label>
                   <input
@@ -556,14 +553,14 @@ const PublicView = () => {
                 <div className="mb-6">
                   <label
                     for="message"
-                    className="block mb-2 text-md font-sans font-medium text-gray-900 dark:text-white"
+                    className="block mb-2 text-md font-sans font-medium text-gray-700 dark:text-white"
                   >
                     Observation
                   </label>
                   <textarea
                     rows="4"
                     className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                    placeholder="Leave a comment..."
+                    placeholder="Écrivez votre observation ici"
                     value={observation}
                     onChange={(e) => setObservation(e.target.value)}
                     required
@@ -572,7 +569,7 @@ const PublicView = () => {
                 <div className="mb-6">
                   <label
                     htmlFor="repeat-password"
-                    className="block mb-2 text-md font-sans font-medium text-gray-900 dark:text-white"
+                    className="block mb-2 text-md font-sans font-medium text-gray-700 dark:text-white"
                   >
                     Piéce changée
                   </label>
@@ -582,6 +579,7 @@ const PublicView = () => {
                     required
                     value={partChanged}
                     onChange={(e) => setPartChanged(e.target.value)}
+                    placeholder="ex: mouteur, cable ...."
                   />
                 </div>
                 <div className="w-full mb-6">
@@ -599,7 +597,7 @@ const PublicView = () => {
                       </div>
                       <label
                         htmlFor="option1"
-                        className="ml-2 text-sm font-sans text-gray-900 dark:text-gray-300"
+                        className="ml-2 text-sm font-sans font-medium text-gray-700 dark:text-gray-300"
                       >
                         Correctif
                       </label>
@@ -617,17 +615,17 @@ const PublicView = () => {
                       </div>
                       <label
                         htmlFor="option2"
-                        className="ml-2 text-sm font-sans text-gray-900 dark:text-gray-300"
+                        className="ml-2 text-sm font-sans font-medium text-gray-700 dark:text-gray-300"
                       >
                         Préventif
                       </label>
                     </div>
                   </div>
                 </div>
-                <div className="block mb-6 sm:w-1/2 w-full">
+                <div className="block mb-6 w-full">
                   <label
                     for="date"
-                    className="w-full h-full text-md font-sans font-medium text-gray-900 dark:text-white"
+                    className="w-full h-full font-sans font-medium text-gray-700 dark:text-white"
                   >
                     Date du prochain entretie :
                   </label>
@@ -635,7 +633,7 @@ const PublicView = () => {
                     date-rangepicker
                     name="date"
                     type="date"
-                    className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                    className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:shadow-sm-light"
                     placeholder="Select date start"
                     value={nextMaintenanceDate}
                     onChange={(e) => setNextMaintenanceDate(e.target.value)}
@@ -660,7 +658,7 @@ const PublicView = () => {
                 <button
                   type="submit"
                   onClick={sendRaport}
-                  className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700"
+                  className="text-white bg-[#125ba3] hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700"
                 >
                   Envoyer le Raport
                 </button>

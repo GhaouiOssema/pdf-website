@@ -79,21 +79,16 @@ const QrView = ({ open, setOpen, site, dossier, id }) => {
       >
         <div>
           <Box sx={style}>
-            <Typography
-              id="spring-modal-title"
-              sx={{ textAlign: "center", fontWeight: "bold" }}
-              variant="h5"
-              component="h1"
-            >
+            <span className="text-lg font-sans font-medium flex justify-center flex-wrap text-center">
               Scannez moi
-            </Typography>
-            <div className="flex justify-center items-center">
+            </span>
+            <div className="flex justify-center items-center mb-2">
               <div
                 className="w-auto h-auto bg-black  mt-2 mb-2"
                 ref={qrCodeRef}
               >
                 <QRCode
-                  className="w-auto h-auto "
+                  className="w-60 h-60 "
                   value={`${
                     import.meta.env.VITE_NETLIFY_URL
                   }/publique/${site}/${dossier}/pdf/${id}`}
@@ -102,9 +97,11 @@ const QrView = ({ open, setOpen, site, dossier, id }) => {
             </div>
             <div
               onClick={handleDownloadQRCode}
-              className="cursor-pointer w-full text-center uppercase text-sm tracking-wide bg-blue-700 text-gray-100 px-2 py-[10px] rounded-md focus:outline-none focus:shadow-outline hover:bg-green-700"
+              className="cursor-pointer w-full flex justify-center"
             >
-              <span>Télècharger</span>
+              <span className="w-full text-center uppercase text-sm tracking-wide bg-[#125ba3] text-gray-100 px-2 py-[10px] rounded-md focus:outline-none focus:shadow-outline hover:bg-green-700">
+                Télècharger
+              </span>
             </div>
           </Box>
         </div>

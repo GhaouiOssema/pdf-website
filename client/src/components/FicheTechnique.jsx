@@ -92,7 +92,7 @@ const FicheTechnique = () => {
               }}
             />
             <p className="w-full font-sans font-bold text-xl text-center break-words">
-              Aucun fiche technique n'est lié à cet équipement.
+              Aucun plan n'est lié à cet équipement.
             </p>
           </div>
         </div>

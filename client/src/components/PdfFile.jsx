@@ -190,7 +190,7 @@ const PdfFile = () => {
         </h1>
 
         <div className="mx-auto max-w-screen-xl lg:px-12 px-4">
-          <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden rounded-lg">
+          <div className="bg-white dark:bg-gray-800 relative shadow-md overflow-hidden rounded-lg">
             <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
               {/* Search input */}
               <div className="w-full md:w-1/2">
@@ -233,12 +233,13 @@ const PdfFile = () => {
                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                      <th scope="col" className="px-4 py-3">
+                      <th scope="col" className="px-4 py-3 font-sans">
                         Titre
                       </th>
-                      <th scope="col" className="text-left py-3">
+                      <th scope="col" className="text-left py-3 font-sans">
                         Date du création
                       </th>
+                      <th scope="col" className="text-left py-3 font-sans"></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -249,19 +250,19 @@ const PdfFile = () => {
                       >
                         <th
                           scope="row"
-                          className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                          className="px-4 py-3 font-sans font-light text-gray-900 whitespace-nowrap dark:text-white"
                         >
                           <Link
                             to={`/${site}/${dossier}/pdf/détails/${pdf._id}`}
                           >
                             <div className="flex items-center">
                               <i className="fa-solid fa-file-pdf text-2xl text-red-500"></i>
-                              <span className="ml-3">{pdf.title}</span>
+                              <span className="ml-4">{pdf.title}</span>
                             </div>
                           </Link>
                         </th>
 
-                        <td className="px-4 py-3">
+                        <td className="px-4 py-3 font-sans font-light">
                           <Link
                             to={`/${site}/${dossier}/pdf/détails/${pdf._id}`}
                           >
@@ -301,7 +302,7 @@ const PdfFile = () => {
                 <CircularProgress />
               </Box>
             ) : (
-              <p className="text-center mt-4">Aucun PDF disponible.</p>
+              <p className="text-center mt-4">Aucun équipement disponible.</p>
             )}
             {/* Pagination */}
             <nav

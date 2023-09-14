@@ -27,7 +27,7 @@ module.exports = {
       }
 
       const { folderId } = req.params;
-      const { adresse, code_postal, subfolders } = req.body;
+      const { adresse, code_postal, subfolders, name } = req.body;
 
       if (!adresse || !code_postal) {
         return res.status(400).json({ message: "Missing required fields" });
@@ -39,14 +39,20 @@ module.exports = {
         return res.status(404).json({ error: "Folder not found" });
       }
 
+      if (folder.user.toString() !== userId.toString()) {
+        return res.status(403).json({ message: "Access denied" });
+      }
+
       const existingFolder = await Folder.findOne({
         name,
+        user: userId,
       });
 
       if (existingFolder) {
         return res.status(401).json({ message: "Le dossier existe déjà" });
       }
 
+      folder.name = name;
       folder.adresse = adresse;
       folder.code_postal = code_postal;
 

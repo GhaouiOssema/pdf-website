@@ -123,7 +123,7 @@ const PdfDetails = () => {
   const [isImageFullscreen, setIsImageFullscreen] = useState(false);
   const [QrViewModal, setQrViewModal] = useState(false);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(4);
   const [filteredRaports, setFilteredRaports] = useState([]);
   const [socIndex, setSocIndex] = useState(null);
 
@@ -223,7 +223,7 @@ const PdfDetails = () => {
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+    setRowsPerPage(parseInt(event.target.value, 4));
     setPage(0);
   };
 
@@ -260,12 +260,14 @@ const PdfDetails = () => {
       )}
 
       {pdfData ? (
-        <div className="h-full w-full md:h-[110vh] lg:h-[110vh] xl:h-[110vh] ">
-          <div className="flex flex-col items-center justify-center pt-20">
-            <h1 className="text-3xl text-center font-bold mb-5">
-              <span className="">Fiche d'équipement</span>
-            </h1>
-            <div className="flex flex-col space-y-3 md:space-y-0 md:flex-row md:space-x-3">
+        <div className="h-full w-full md:h-screen lg:h-screen xl:h-screen py-2">
+          <div className="flex flex-col items-center justify-center">
+            <div className="w-full md:w-[70%] px-3  mb-4">
+              <p className="text-md text-center bg-[#125ba3] text-white rounded-md font-sans font-semibold py-0.5">
+                Fiche d'équipement
+              </p>
+            </div>
+            <div className="flex flex-col justify-center space-y-3 md:space-y-0 md:flex-row md:space-x-3">
               <Link
                 to={`/${site}/${dossier}/pdf/detail/doe/${id}`}
                 className="w-full md:w-auto"
@@ -280,7 +282,7 @@ const PdfDetails = () => {
               </Link>
 
               <Link
-                to={`/${site}/${dossier}/pdf/detail/fiche_technique/${id}`}
+                to={`/${site}/${dossier}/pdf/detail/plan/${id}`}
                 className="w-full md:w-auto"
               >
                 <button
@@ -288,7 +290,7 @@ const PdfDetails = () => {
                   className="w-full md:w-auto flex items-center justify-start text-white bg-[#125ba3] hover:bg-[#F0854A] focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-xs px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 transition ease-in duration-300"
                 >
                   <InfoOutlinedIcon className="mr-2" />
-                  <span>Fiche technique</span>
+                  <span>Ouvrir le Plan </span>
                 </button>
               </Link>
               <div
@@ -318,13 +320,13 @@ const PdfDetails = () => {
                 </button>
               </Link>
 
-              <Link to={`/plan/${id}`} className="w-full md:w-auto">
+              <Link to={`/fiche_technique/${id}`} className="w-full md:w-auto">
                 <button
                   type="button"
                   className="w-full md:w-auto flex items-center justify-start text-white bg-[#125ba3] hover:bg-[#F0854A] focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-xs px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 transition ease-in duration-300"
                 >
                   <InfoOutlinedIcon className="mr-2" />
-                  <span>Ouvrir le Plan </span>
+                  <span>Fiche technique</span>
                 </button>
               </Link>
             </div>
@@ -334,7 +336,7 @@ const PdfDetails = () => {
             {/* Desktop View */}
             <div className="hidden md:flex flex-col items-center justify-cneter py-2 lg:px-5 mx-auto w-full">
               <div className=" md:w-[70%] w-full mt-5 h-full">
-                <p className="font-bold text-lg mb-4 text-center">
+                <p className="text-md mb-4 text-center bg-[#125ba3] text-white rounded-md font-sans font-semibold py-0.5">
                   Information d'équipement
                 </p>
                 <div className="pdf-preview">
@@ -344,7 +346,7 @@ const PdfDetails = () => {
                         {!imageLoading && !imageError && (
                           <figure className="relative">
                             <img
-                              className="h-40 w-80 bg-no-repeat object-cover rounded-lg"
+                              className="h-40 w-40 bg-no-repeat object-cover"
                               src={image}
                               alt="image"
                             />
@@ -353,7 +355,7 @@ const PdfDetails = () => {
                       </div>
                       <div>
                         <div className="mb-3 flex flex-col  sm:flex-row justify-start items-center">
-                          <h1 className="font-bold text-base">Titre :</h1>
+                          <h1 className="font-bold text-normal">Titre :</h1>
                           <span className="text-black ml-3 text-base">
                             {pdfData.title}
                           </span>
@@ -361,7 +363,7 @@ const PdfDetails = () => {
                         {dossier === "Armoire electrique" && (
                           <>
                             <div className="mb-3 flex flex-col sm:flex-row items-center justify-start text-center">
-                              <h1 className="font-bold">PTA :</h1>
+                              <h1 className="font-normal">PTA :</h1>
                               <span className="text-black ml-3">
                                 {pdfData?.pdfDetails?.PAT}
                               </span>
@@ -387,13 +389,13 @@ const PdfDetails = () => {
                         ) && (
                           <>
                             <div className="mb-3 flex flex-col sm:flex-row items-center justify-start text-center">
-                              <h1 className="font-bold">PTA :</h1>
+                              <h1 className="font-normal">PTA :</h1>
                               <span className="text-black ml-3">
                                 {pdfData?.pdfDetails?.PAT}
                               </span>
                             </div>
                             <div className="mb-3 flex flex-col sm:flex-row justify-center items-center">
-                              <h1 className="font-bold">Modéle :</h1>
+                              <h1 className="font-normal">Modéle :</h1>
                               <span className="text-black ml-3">
                                 {pdfData?.pdfDetails?.pdfModel}
                               </span>
@@ -408,10 +410,10 @@ const PdfDetails = () => {
 
               <div className="w-full md:w-[70%] mt-5">
                 {/* Adjust margin top */}
-                <p className="font-sans font-bold text-lg text-center mb-4">
+                <p className="text-center mb-4 bg-[#125ba3] text-white rounded-md font-sans font-semibold text-md py-0.5">
                   Tableau des Rapports
                 </p>
-                <div className="pdf-preview bg-white shadow-md shadow-black/20 rounded-lg">
+                <div className="pdf-preview bg-white h-60 shadow-md shadow-black/20 rounded-t-lg">
                   <div style={{ height: "100%", overflow: "auto" }}>
                     <Table
                       sx={{ minWidth: 650 }}
@@ -482,16 +484,18 @@ const PdfDetails = () => {
                       </TableBody>
                     </Table>
                   </div>
-                  <TablePagination
-                    rowsPerPageOptions={[]}
-                    component="div"
-                    count={raports ? raports.length : 0}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                    labelRowsPerPage=""
-                  />
+                  <div className="bg-white shadow-md shadow-black/20 rounded-b-lg">
+                    <TablePagination
+                      rowsPerPageOptions={[]}
+                      component="div"
+                      count={raports ? raports.length : 0}
+                      rowsPerPage={rowsPerPage}
+                      page={page}
+                      onPageChange={handleChangePage}
+                      onRowsPerPageChange={handleChangeRowsPerPage}
+                      labelRowsPerPage=""
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -499,9 +503,12 @@ const PdfDetails = () => {
             {/* Mobile View */}
             <div className="md:hidden">
               <div className="mt-5 px-3">
-                <div className="qr-code-section bg-white">
+                <p className="mb-4 text-center bg-[#125ba3] text-white rounded-md font-sans font-semibold text-md py-0.5">
+                  Information d'équipement
+                </p>
+                <div className="qr-code-section bg-white p-2">
                   <div className="flex flex-wrap mb-3">
-                    <h1 className="ml-3 font-sans font-bold">Titre :</h1>
+                    <h1 className="ml-3 font-sans font-normal">Titre :</h1>
                     <span className="ml-3 font-sans font-light text-black">
                       {pdfData.title}
                     </span>
@@ -509,7 +516,7 @@ const PdfDetails = () => {
                   {dossier === "Armoire electrique" && (
                     <>
                       <div className="flex flex-wrap mb-3">
-                        <h1 className="ml-3 font-sans font-bold">PTA :</h1>
+                        <h1 className="ml-3 font-sans font-normal">PTA :</h1>
                         <span className="ml-3 font-sans font-light text-black">
                           {pdfData?.pdfDetails?.PAT}
                         </span>
@@ -533,13 +540,13 @@ const PdfDetails = () => {
                   ) && (
                     <>
                       <div className="flex flex-wrap mb-3">
-                        <h1 className="ml-3 font-sans font-bold">PTA :</h1>
+                        <h1 className="ml-3 font-sans font-normal">PTA :</h1>
                         <span className="ml-3 font-sans font-light text-black">
                           {pdfData?.pdfDetails?.PAT}
                         </span>
                       </div>
                       <div className="flex flex-wrap mb-3">
-                        <h1 className="ml-3 font-sans font-bold">Modéle:</h1>
+                        <h1 className="ml-3 font-sans font-normal">Modéle:</h1>
                         <span className="ml-3 font-sans font-light text-black">
                           {pdfData?.pdfDetails?.pdfModel}
                         </span>
@@ -550,17 +557,9 @@ const PdfDetails = () => {
               </div>
               <div className="mt-5 px-3">
                 {!imageLoading && !imageError && (
-                  <div
-                    className={`max-w-lg relative ${
-                      isImageFullscreen
-                        ? "fixed top-0 left-0 w-screen h-screen z-50 bg-black flex justify-center items-center"
-                        : ""
-                    }`}
-                  >
+                  <div className="max-w-lg relative w-full flex justify-center">
                     <img
-                      className={`h-auto max-w-full rounded-lg ${
-                        isImageFullscreen ? "cursor-pointer" : ""
-                      }`}
+                      className="h-auto max-w-full"
                       src={image}
                       alt="image"
                     />
@@ -568,7 +567,7 @@ const PdfDetails = () => {
                 )}
               </div>
               <div className="mt-5 px-3">
-                <p className="font-sans font-bold text-lg mb-4 text-center">
+                <p className="mb-4 text-center bg-[#125ba3] text-white rounded-md font-sans font-semibold text-md py-0.5">
                   Tableau des Rapports
                 </p>
                 <div

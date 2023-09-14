@@ -59,7 +59,7 @@ const SideBar = ({ isSidebarOpen, setIsSidebarOpen, sidebarRef }) => {
                 </p>
               </Link>
             </div>
-            <div className="mt-5 bg-top bg-cover space-y-1 pl-1">
+            <div className="mt-5 bg-top bg-cover space-y-1">
               <Link
                 to={"/notification"}
                 className="text-lg text-gray-700 hover:text-black font-sans font-light hover:font-medium px-4 py-2.5 flex justify-start items-center transition-all duration-200 hover:bg-gray-200 group cursor-pointer"
