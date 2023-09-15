@@ -141,7 +141,6 @@ const DOEButtonsGroup = ({ pdfData }) => {
       {pdfData?.doeFiles && (
         <Box
           sx={{ bgcolor: "background.paper", width: "100%", minHeight: "70vh" }}
-          className="boor"
         >
           <Box sx={{ display: "flex", justifyContent: "center" }}>
             <Box

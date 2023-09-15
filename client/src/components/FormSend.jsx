@@ -953,7 +953,7 @@ const FormSend = () => {
                       <span className="font-sans font-bold text-sm md:text-base lg:text-base xl:text-base">
                         {steps[activeStep]}
                       </span>
-                      {activeStep !== 0 && (
+                      {activeStep !== 0 && !isUploading && (
                         <Button
                           onClick={skipLength}
                           color="primary"
