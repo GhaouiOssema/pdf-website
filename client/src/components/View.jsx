@@ -42,27 +42,8 @@ const RaportView = ({
   handleClick,
   alertMsg,
   folderIdUpdate,
+  existingFolders,
 }) => {
-  const [screenSize, setScreenSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
-  });
-
-  useEffect(() => {
-    const handleResize = () => {
-      setScreenSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
   const [siteAddress, setSiteAddress] = useState("");
   const [siteCodePostal, setSiteCodePostal] = useState("");
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -498,14 +479,34 @@ const RaportView = ({
                             MenuProps={MenuProps}
                             sx={{ bgcolor: "white" }}
                           >
-                            {names.map((name) => (
-                              <MenuItem key={name} value={name}>
-                                <Checkbox
-                                  checked={subContent.indexOf(name) > -1}
-                                />
-                                <ListItemText primary={name} />
-                              </MenuItem>
-                            ))}
+                            {names.map((folderName) => {
+                              const isExisting = existingFolders.content.some(
+                                (subFolder) =>
+                                  subFolder.subFolder.name === folderName
+                              );
+                              const isChecked = subContent.includes(folderName);
+                              const defaultSubfolder =
+                                names.indexOf(folderName) <
+                                existingFolders.content.length;
+
+                              return (
+                                <MenuItem
+                                  key={folderName}
+                                  value={folderName}
+                                  disabled={isExisting}
+                                  selected={isChecked}
+                                >
+                                  <Checkbox
+                                    checked={
+                                      defaultSubfolder
+                                        ? defaultSubfolder
+                                        : isChecked
+                                    }
+                                  />
+                                  <ListItemText primary={folderName} />
+                                </MenuItem>
+                              );
+                            })}
                           </Select>
                         </FormControl>
                       </div>

@@ -23,6 +23,7 @@ const SiteOption = ({
   setOpenSection,
   setButtonType,
   setFolderIdUpdate,
+  setExistingFolders,
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -76,7 +77,8 @@ const SiteOption = ({
     setFolderIdUpdate(folderId);
     setOpenSection(true);
     setButtonType("editSite");
-    handleClose(); // Close the menu
+    handleClose();
+    setExistingFolders(folders);
   };
 
   const handleOutsideClick = (event) => {

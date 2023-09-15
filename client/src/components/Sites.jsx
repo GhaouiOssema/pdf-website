@@ -28,15 +28,15 @@ const MultiSelectTreeView = ({
   setFolderIdUpdate,
   expanded,
   setExpanded,
+  setExistingFolders,
+  existingFolders,
 }) => {
-  const ID = folders._id;
   const contentRef = useRef(null);
 
   const handleToggle = (event, nodeIds) => {
     const nodeId = nodeIds[0];
     const isNodeExpanded = expanded.includes(nodeId);
 
-    // Toggle the expanded state for the clicked item
     if (isNodeExpanded) {
       setExpanded(expanded.filter((id) => id !== nodeId));
     } else {
@@ -105,8 +105,8 @@ const MultiSelectTreeView = ({
               setOpenSection={setOpenSection}
               setButtonType={setButtonType}
               setFolderIdUpdate={setFolderIdUpdate}
-              handleToggle={handleToggle}
-              expanded={expanded}
+              existingFolders={existingFolders}
+              setExistingFolders={setExistingFolders}
             />
           </div>
           <TreeItem
@@ -184,6 +184,8 @@ const Sites = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [expanded, setExpanded] = useState([]);
+  const [existingFolders, setExistingFolders] = useState(null);
+
   const [filterOptions, setFilterOptions] = useState({
     name: true,
     address: true,
@@ -269,6 +271,7 @@ const Sites = () => {
           handleClick={handleClick}
           alertMsg={alertMsg}
           folderIdUpdate={folderIdUpdate}
+          existingFolders={existingFolders}
         />
         <Stack spacing={2} sx={{ width: "100%" }}>
           <Snackbar
@@ -313,8 +316,8 @@ const Sites = () => {
           {/* Search input */}
           <div className="w-full items-center mt-4 md:mt-0 flex flex-col">
             <form className="flex items-center w-full md:w-[80%]">
-              <label htmlFor="simple-search" className="sr-only">
-                Search
+              <label htmlFor="search" className="sr-only">
+                Recherche
               </label>
               <div className="relative w-full">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -334,9 +337,9 @@ const Sites = () => {
                 </div>
                 <input
                   type="text"
-                  id="simple-search"
+                  id="search"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  placeholder="Search"
+                  placeholder="Recherche"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   required
@@ -349,7 +352,7 @@ const Sites = () => {
           <div className="md:w-[40%] mt-4 md:mt-0 flex flex-col items-center">
             <button
               type="button"
-              className="md:flex items-center justify-center text-white bg-[#125ba3] hover:bg-primary-800 font-medium rounded-lg text-sm px-4 py-2 dark:bg-[#125ba3] dark:hover:bg-primary-700 focus:outline-none hidden "
+              className="md:flex items-center justify-center text-white bg-[#125ba3] hover:bg-primary-500 font-medium rounded-lg text-sm px-4 py-2 dark:bg-[#125ba3] dark:hover:bg-primary-700 focus:outline-none hidden transition ease-in duration-300"
               onClick={() => {
                 setButtonType("siteButton");
                 setOpenSection(true);
@@ -372,7 +375,7 @@ const Sites = () => {
             </button>
             <button
               type="button"
-              className="md:hidden ml-5 flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none"
+              className="md:hidden ml-5 flex items-center justify-center text-white bg-primary-500 hover:bg-primary-800 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none transition ease-in duration-300"
               onClick={() => {
                 setButtonType("siteButton");
                 setOpenSection(true);
@@ -470,6 +473,8 @@ const Sites = () => {
                       setFolderIdUpdate={setFolderIdUpdate}
                       expanded={expanded}
                       setExpanded={setExpanded}
+                      existingFolders={existingFolders}
+                      setExistingFolders={setExistingFolders}
                     />
                   </div>
                 ))

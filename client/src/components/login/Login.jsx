@@ -27,7 +27,7 @@ const Popup = ({ open, setOpen }) => {
           <div className="text-[#DC2626] text-center text-3xl mb-4 flex justify-center items-center">
             <i class="fa-solid fa-triangle-exclamation"></i>{" "}
           </div>
-          <p className="font-sans font-semibold text-[#DC2626] text-justify">
+          <p className="font-sans font-semibold text-[#DC2626] text-center">
             Votre compte n'est pas encore vérifié , veuillez vérifier votre
             courrier pour finaliser l' inscription.
           </p>

@@ -5,7 +5,7 @@ import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
 import { useSpring, animated } from "@react-spring/web";
 import QRCode from "react-qr-code";
-import html2canvas from "html2canvas"; // Make sure to import html2canvas
+import html2canvas from "html2canvas";
 const Fade = React.forwardRef(function Fade(props, ref) {
   const {
     children,

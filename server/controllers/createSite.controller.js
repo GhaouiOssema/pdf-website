@@ -20,6 +20,7 @@ const addSite = async (req, res) => {
 
     const existingFolder = await Folder.findOne({
       name,
+      user: userId,
     });
 
     if (existingFolder) {
