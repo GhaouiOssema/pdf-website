@@ -385,7 +385,7 @@ const RaportView = ({
                         </span>
                       </h1>
 
-                      <div className="mb-6">
+                      <div className="px-3 mb-6">
                         <label
                           htmlFor="adress_site"
                           className="block text-gray-700 font-sans font-medium mb-2 text-start"
@@ -403,7 +403,7 @@ const RaportView = ({
                         />
                       </div>
 
-                      <div className="mb-6">
+                      <div className="px-3 mb-6">
                         <label
                           htmlFor="adress_site"
                           className="block text-gray-700 font-sans font-medium mb-2 text-start"
@@ -421,7 +421,7 @@ const RaportView = ({
                         />
                       </div>
 
-                      <div className="mb-6">
+                      <div className="px-3 mb-6">
                         <label
                           htmlFor="code_postal"
                           className="block text-gray-700 font-sans font-medium mb-2 text-start"
@@ -448,7 +448,7 @@ const RaportView = ({
                         />
                       </div>
 
-                      <div className="mb-6">
+                      <div className="px-3 mb-6">
                         <label className="block text-gray-700 font-sans font-medium mb-2 text-start">
                           Catégorie
                         </label>
@@ -511,7 +511,7 @@ const RaportView = ({
                         </FormControl>
                       </div>
 
-                      <div className="flex flex-wrap justify-start mb-6 space-x-2">
+                      <div className="px-3 mb-6">
                         <Button
                           variant="outlined"
                           color="success"
@@ -536,6 +536,7 @@ const RaportView = ({
                           sx={{
                             color: "#DC2626",
                             "&:hover": { backgroundColor: "transparent" },
+                            ml: 3,
                           }}
                         >
                           Annuler
