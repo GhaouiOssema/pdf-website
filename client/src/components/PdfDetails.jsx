@@ -263,7 +263,7 @@ const PdfDetails = () => {
         <div className="h-full w-full md:h-screen lg:h-screen xl:h-screen py-2">
           <div className="flex flex-col items-center justify-center mt-4">
             <div className="w-full md:w-[70%] px-3 ">
-              <p className="rounded-lg text-center mb-4 bg-[#125ba3] text-white text-md md:text-xl lg:text-xl xl:text-xl tracking-wide font-sans font-semibold py-1">
+              <p className="rounded-lg text-center mb-4 bg-[#125ba3] text-white text-md tracking-wide font-sans font-semibold py-1">
                 Fiche d'équipement
               </p>
             </div>
@@ -336,7 +336,7 @@ const PdfDetails = () => {
             {/* Desktop View */}
             <div className="hidden md:flex flex-col items-center justify-cneter lg:px-5 mx-auto w-full">
               <div className="md:w-[70%] w-full mt-4 h-full">
-                <p className="rounded-lg text-center mb-4 bg-gray-400 text-white text-md md:text-xl lg:text-xl xl:text-xl tracking-wide font-sans font-semibold py-1">
+                <p className="rounded-lg text-center mb-4 bg-gray-400 text-white text-md tracking-wide font-sans font-semibold py-1">
                   Information d'équipement
                 </p>
                 <div className="pdf-preview">
@@ -411,7 +411,7 @@ const PdfDetails = () => {
               </div>
 
               <div className="w-full md:w-[70%] mt-5">
-                <p className="rounded-lg text-center mb-4 bg-gray-400 text-white text-md md:text-xl lg:text-xl xl:text-xl tracking-wide font-sans font-semibold py-1">
+                <p className="rounded-lg text-center mb-4 bg-gray-400 text-white text-md tracking-wide font-sans font-semibold py-1">
                   Tableau des Rapports
                 </p>
                 <div className="pdf-preview bg-white h-[30vh] shadow-md shadow-black/20 rounded-t-lg">
@@ -512,7 +512,7 @@ const PdfDetails = () => {
             {/* Mobile View */}
             <div className="md:hidden">
               <div className="mt-5 px-3">
-                <p className="rounded-lg text-center mb-4 bg-gray-400 text-white text-md md:text-xl lg:text-xl xl:text-xl tracking-wide font-sans font-semibold py-1">
+                <p className="rounded-lg text-center mb-4 bg-gray-400 text-white text-md tracking-wide font-sans font-semibold py-1">
                   Information d'équipement
                 </p>
                 <div className="qr-code-section bg-white p-2">
@@ -578,7 +578,7 @@ const PdfDetails = () => {
                 )}
               </div>
               <div className="mt-5 px-3">
-                <p className="rounded-lg text-center mb-4 bg-gray-400 text-white text-md md:text-xl lg:text-xl xl:text-xl tracking-wide font-sans font-semibold py-1">
+                <p className="rounded-lg text-center mb-4 bg-gray-400 text-white text-md tracking-wide font-sans font-semibold py-1">
                   Tableau des Rapports
                 </p>
                 <div

@@ -16,7 +16,7 @@ import axios from "axios";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
-import { initialState } from "../utils/utils";
+import { areFieldsEmpty, initialState } from "../utils/utils";
 
 const ATert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -122,6 +122,7 @@ const FormSend = () => {
       });
     }
   };
+
   const handleSubmitStep1 = async (event) => {
     event.preventDefault();
 
@@ -135,62 +136,83 @@ const FormSend = () => {
 
     if (formState.publicOrPrivate === "Armoire electrique") {
       formDataStep1.append("input2", formState.input2);
+      if (formState.input2 === "") {
+        handleClick();
+        setAlertMsg("Tous les champs doivent être remplis");
+        return;
+      }
     } else {
       formDataStep1.append("input", formState.input);
+      if (formState.input === "") {
+        handleClick();
+        setAlertMsg("Tous les champs doivent être remplis");
+        return;
+      }
     }
 
-    if (formDataStep1)
-      try {
-        setIsUploading(true);
-        setUploadProgress(0);
-        const response = await axios.post(
-          `${import.meta.env.VITE_SERVER_API_URL}/FormUpload/mainpdf`,
-          formDataStep1,
-          {
-            ...config,
-            onUploadProgress: (progressEvent) => {
-              const totalBytes = progressEvent.total;
-              const startTime = new Date().getTime();
+    if (
+      formState.site === "" ||
+      formState.title === "" ||
+      formState.publicOrPrivate === "" ||
+      formState.input1 === "" ||
+      formState.selectedFile === null
+    ) {
+      handleClick();
+      setAlertMsg("Tous les champs doivent être remplis");
+      return;
+    }
 
-              const interval = setInterval(() => {
-                const currentTime = new Date().getTime();
-                const elapsedTime = currentTime - startTime;
+    try {
+      setIsUploading(true);
+      setUploadProgress(0);
+      const response = await axios.post(
+        `${import.meta.env.VITE_SERVER_API_URL}/FormUpload/mainpdf`,
+        formDataStep1,
+        {
+          ...config,
+          onUploadProgress: (progressEvent) => {
+            const totalBytes = progressEvent.total;
+            const startTime = new Date().getTime();
 
-                if (elapsedTime >= responseTime) {
-                  clearInterval(interval);
-                  setUploadProgress(100);
-                  return;
-                }
+            const interval = setInterval(() => {
+              const currentTime = new Date().getTime();
+              const elapsedTime = currentTime - startTime;
 
-                const uploadedBytes = (elapsedTime / responseTime) * totalBytes;
-                const percentage = Math.min(
-                  Math.round((uploadedBytes / totalBytes) * 100),
-                  100
-                );
-                setUploadProgress(percentage);
-              }, 100); // Update progress every 100 milliseconds
+              if (elapsedTime >= responseTime) {
+                clearInterval(interval);
+                setUploadProgress(100);
+                return;
+              }
 
-              // Simulate server response time
-              const responseTime = 2000; // Adjust the response time in milliseconds as needed
-            },
-          }
-        );
+              const uploadedBytes = (elapsedTime / responseTime) * totalBytes;
+              const percentage = Math.min(
+                Math.round((uploadedBytes / totalBytes) * 100),
+                100
+              );
+              setUploadProgress(percentage);
+            }, 100); // Update progress every 100 milliseconds
 
-        if (response.status === 200) {
-          setAlertMsg("envoyé avec réussite");
-          handleClick();
-          setLoading(false);
-          setFormComplated((prev) => prev + 1);
-          setActiveStep((prevActiveStep) => prevActiveStep + 1);
+            // Simulate server response time
+            const responseTime = 2000; // Adjust the response time in milliseconds as needed
+          },
         }
-      } catch (error) {
-        console.error(error);
-        setAlertMsg("erreur");
+      );
+
+      if (response.status === 200) {
+        setAlertMsg("envoyé avec réussite");
         handleClick();
         setLoading(false);
-      } finally {
-        setIsUploading(false); // Upload complete or error, stop uploading
+        setFormComplated((prev) => prev + 1);
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
       }
+    } catch (error) {
+      console.error(error);
+      setAlertMsg("erreur");
+      handleClick();
+      setLoading(false);
+    } finally {
+      setIsUploading(false); // Upload complete or error, stop uploading
+    }
   };
 
   const handleSubmitStep2 = async (event) => {
@@ -198,6 +220,12 @@ const FormSend = () => {
 
     const formDataStep1 = new FormData();
     formDataStep1.append("selectedImage", formState.selectedImage);
+
+    if (formState.selectedImage === null) {
+      handleClick();
+      setAlertMsg("Veuillez remplir le champ d'image");
+      return;
+    }
 
     try {
       setIsUploading(true);
@@ -250,11 +278,18 @@ const FormSend = () => {
       setIsUploading(false); // Upload complete or error, stop uploading
     }
   };
+
   const handleSubmitStep3 = async (event) => {
     event.preventDefault();
 
     const formDataStep1 = new FormData();
     formDataStep1.append("selectedInfo", formState.selectedInfo);
+
+    if (formState.selectedInfo === null) {
+      handleClick();
+      setAlertMsg("Veuillez remplir le champ de fiche technique");
+      return;
+    }
 
     try {
       setIsUploading(true);
@@ -307,10 +342,10 @@ const FormSend = () => {
       setIsUploading(false); // Upload complete or error, stop uploading
     }
   };
+
   const handleSubmitStep4 = async (event) => {
     event.preventDefault();
 
-    // Ensure formState.selectedDOE is an array
     const selectedDOEFiles = Array.isArray(formState.selectedDOE)
       ? formState.selectedDOE
       : [formState.selectedDOE];
@@ -319,6 +354,12 @@ const FormSend = () => {
     selectedDOEFiles.forEach((file) => {
       formDataStep1.append("selectedDOE", file);
     });
+
+    if (formState.selectedDOE === null || formState.selectedDOE.length < 1) {
+      handleClick();
+      setAlertMsg("Veuillez remplir le champ de Dossier des Ouvrages Executés");
+      return;
+    }
 
     try {
       setIsUploading(true);

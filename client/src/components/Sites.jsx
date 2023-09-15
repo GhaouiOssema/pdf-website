@@ -93,15 +93,20 @@ const MultiSelectTreeView = ({
         multiSelect
         expanded={expanded}
         onNodeToggle={handleToggle}
-        sx={{ height: "100%", flexDirection: "row-reverse" }}
+        sx={{
+          height: "100%",
+          flexDirection: "row-reverse",
+        }}
       >
         <div className="flex flex-row-reverse justify-between">
-          <div className="">
+          <div className="absolute z-50">
             <SiteOption
               folders={folders}
               setOpenSection={setOpenSection}
               setButtonType={setButtonType}
               setFolderIdUpdate={setFolderIdUpdate}
+              handleToggle={handleToggle}
+              expanded={expanded}
             />
           </div>
           <TreeItem
@@ -248,7 +253,7 @@ const Sites = () => {
   };
 
   return (
-    <div className="h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100">
       <Backdrop
         sx={{
           color: "#fff",
@@ -292,7 +297,7 @@ const Sites = () => {
         </Stack>
       </Backdrop>
 
-      <div className="mx-auto max-w-screen-xl lg:px-12 px-4 py-6">
+      <div className="mx-auto max-w-screen-lg lg:px-12 px-4 py-6">
         <div className="bg-[#125ba3] mx-auto max-w-screen-xl px-4 rounded-md flex flex-wrap items-center justify-between py-2">
           <span className="font-sans font-semibold text-white ">Mes Sites</span>
           <span className="font-sans font-normal text-white ">
@@ -344,7 +349,7 @@ const Sites = () => {
           <div className="md:w-[40%] mt-4 md:mt-0 flex flex-col items-center">
             <button
               type="button"
-              className="md:flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none hidden "
+              className="md:flex items-center justify-center text-white bg-[#125ba3] hover:bg-primary-800 font-medium rounded-lg text-sm px-4 py-2 dark:bg-[#125ba3] dark:hover:bg-primary-700 focus:outline-none hidden "
               onClick={() => {
                 setButtonType("siteButton");
                 setOpenSection(true);
@@ -393,21 +398,21 @@ const Sites = () => {
       </div>
 
       <div
-        className={`mt-10 ${
+        className={`mt-10 px-4 ${
           screenSize.width < 700
             ? "w-full"
-            : "flex justify-center items-center mx-auto max-w-screen-xl lg:px-12 px-4 py-4"
+            : "flex justify-center items-center mx-auto max-w-screen-lg lg:px-12 py-4"
         } `}
       >
         <div
-          className={`px-3 h-full ${
+          className={`h-full ${
             screenSize.width < 700
               ? ""
               : folders &&
                 folders.length > 0 &&
                 screenSize.width > 700 &&
                 !loading
-              ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 w-full boor"
+              ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 w-full"
               : !folders &&
                 !folders.length < 0 &&
                 !loading &&
@@ -441,7 +446,6 @@ const Sites = () => {
                         ?.includes(lowerCaseSearchQuery)
                     );
 
-                  // Return true if any of the filters match
                   return (
                     shouldFilterByAddress ||
                     shouldFilterByCodePostal ||

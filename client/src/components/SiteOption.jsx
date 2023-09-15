@@ -137,19 +137,19 @@ const SiteOption = ({
         ref={menuRef}
       >
         <MenuItem onClick={(event) => handleDelete(folders._id, event)}>
-          <div className="w-full flex justify-around items-center font-sans font-medium text-red-500">
+          <div className=" w-full flex items-center justify-around font-sans font-medium text-red-500">
             {loading ? (
               <CircularIndeterminate sx={{ color: "#EF4444" }} />
             ) : (
-              <DeleteIcon sx={{ color: "#EF4444" }} />
+              <DeleteIcon sx={{ color: "#EF4444" }} className="" />
             )}
-            <span>Supprimer</span>
+            <span className="w-[60%] ">Supprimer</span>
           </div>
         </MenuItem>
         <MenuItem onClick={(event) => handleEdit(folders._id, event)}>
-          <div className="w-full flex justify-around font-sans font-medium text-blue-500">
-            <EditNoteIcon sx={{ color: "#3B82F6" }} />
-            <span>Modifier</span>
+          <div className=" w-full flex items-center justify-around font-sans font-medium text-blue-500">
+            <EditNoteIcon sx={{ color: "#3B82F6" }} className="" />
+            <span className="w-[50%] ">Modifier</span>
           </div>
         </MenuItem>
       </Menu>

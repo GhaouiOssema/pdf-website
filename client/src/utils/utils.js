@@ -93,3 +93,7 @@ export const initialState = {
   input: "",
   site: "",
 };
+
+export const areFieldsEmpty = (fields) => {
+  return fields.some((field) => !field || field.trim() === "");
+};

@@ -143,7 +143,7 @@ const Popup = ({ open, setOpen, dialogType }) => {
               Mot de passe* :
             </label>
             <input
-              type="text"
+              type="password"
               className="text-black w-full px-4 py-2 border-none rounded-lg font-sans focus:outline-none focus:ring  bg-white bg-opacity-90"
               placeholder="Mot de passe"
               required

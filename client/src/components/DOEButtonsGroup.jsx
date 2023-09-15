@@ -123,7 +123,7 @@ const DOEButtonsGroup = ({ pdfData }) => {
   const handleChange = (event, newValue) => {
     setSelectedFileIndex(newValue);
     // if (newValue >= 0) {
-    fetchDOEFiles(pdfData.doeFiles[selectedFileIndex].fileId);
+    fetchDOEFiles(pdfData.doeFiles[newValue].fileId);
     // }
   };
 

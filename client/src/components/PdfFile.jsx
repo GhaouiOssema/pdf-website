@@ -184,7 +184,7 @@ const PdfFile = () => {
   return (
     <section className="bg-gray-100 dark:bg-gray-900 h-screen">
       <div>
-        <div className="mx-auto max-w-screen-xl lg:px-12 px-4 py-6">
+        <div className="mx-auto max-w-screen-lg lg:px-12 px-4 py-6">
           <div className="bg-[#125ba3] mx-auto max-w-screen-xl px-4 rounded-md flex flex-wrap items-center justify-between py-2">
             <span className="font-sans font-semibold text-white ">
               les équipements de {dossier}
@@ -195,7 +195,7 @@ const PdfFile = () => {
           </div>
         </div>
 
-        <div className="mx-auto max-w-screen-xl lg:px-12 px-4">
+        <div className="mx-auto max-w-screen-lg lg:px-12 px-4">
           <div className="bg-white dark:bg-gray-800 relative shadow-md overflow-hidden rounded-lg h-[80vh]">
             <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
               {/* Search input */}
@@ -241,12 +241,15 @@ const PdfFile = () => {
                     <tr>
                       <th
                         scope="col"
-                        className="px-4 py-3 font-sans font-semibold"
+                        className="px-4 py-3 font-sans font-semibold lowercase"
                       >
-                        Titre
+                        <span className="uppercase">t</span>itre
                       </th>
-                      <th scope="col" className="text-left py-3 font-semibold">
-                        Date du création
+                      <th
+                        scope="col"
+                        className="text-left py-3 font-semibold lowercase"
+                      >
+                        <span className="uppercase">D</span>ate du création
                       </th>
                       <th scope="col" className="text-left py-3 font-sans"></th>
                     </tr>
@@ -285,7 +288,7 @@ const PdfFile = () => {
                         <td className="px-4 py-3 flex items-center justify-end">
                           <div
                             onClick={() => handleDelete(pdf.title)}
-                            className="w-full flex justify-around items-center font-bold text-red-500"
+                            className="w-full flex justify-end items-center font-bold text-red-500"
                           >
                             {deleteLoading && deletingPdfTitle === pdf.title ? (
                               <CircularIndeterminate />
