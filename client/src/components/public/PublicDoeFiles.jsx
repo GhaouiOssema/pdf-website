@@ -25,7 +25,7 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ py: 3 }}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -100,7 +100,7 @@ const PublicDoeFiles = () => {
   return (
     <>
       {pdfData?.doeFiles.length !== 0 ? (
-        <section className="flex flex-col max-w-screen-2xl">
+        <section className="flex flex-col max-w-screen-2xl min-h-screen">
           <h1 className="text-3xl text-center font-bold mt-5 mb-5">
             Les DOE d'equipement
           </h1>

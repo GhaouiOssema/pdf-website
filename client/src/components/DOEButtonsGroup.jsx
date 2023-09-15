@@ -141,12 +141,13 @@ const DOEButtonsGroup = ({ pdfData }) => {
       {pdfData?.doeFiles && (
         <Box
           sx={{ bgcolor: "background.paper", width: "100%", minHeight: "70vh" }}
+          className="boor"
         >
           <Box sx={{ display: "flex", justifyContent: "center" }}>
             <Box
               sx={{
                 flexGrow: 1,
-                maxWidth: { xs: 320, sm: 480, md: "100%" },
+                width: { xs: 320, sm: 480, md: "100%" },
                 bgcolor: "white",
               }}
             >
@@ -205,7 +206,7 @@ const DOEButtonsGroup = ({ pdfData }) => {
                         pageNumber={index + 1}
                         renderTextLayer={false}
                         height={500}
-                        width={screenSize.width < 700 ? 200 : 700}
+                        width={screenSize.width < 700 ? 300 : 700}
                         className="mt-1"
                       />
                     ))}

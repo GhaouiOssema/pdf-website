@@ -134,7 +134,7 @@ const PublicDOEButtonsGroup = ({ pdfData }) => {
             <Box
               sx={{
                 flexGrow: 1,
-                maxWidth: { xs: 500, sm: 500, md: "100%" },
+                width: { xs: 320, sm: 480, md: "100%" },
                 bgcolor: "white",
               }}
             >
@@ -195,7 +195,7 @@ const PublicDOEButtonsGroup = ({ pdfData }) => {
                         pageNumber={index + 1}
                         renderTextLayer={false}
                         height={500}
-                        width={screenSize.width < 700 ? 200 : 700}
+                        width={screenSize.width < 700 ? 300 : 700}
                         className="mt-1"
                       />
                     ))}
