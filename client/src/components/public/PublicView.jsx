@@ -280,6 +280,9 @@ const PublicView = () => {
   };
 
   useEffect(() => {
+    // Set loading to true when starting the data fetch
+    setLoading(true);
+
     const fetchData = async () => {
       try {
         const response = await axios.get(
@@ -291,6 +294,9 @@ const PublicView = () => {
         setRaports(filteredRaports);
       } catch (error) {
         console.log(error);
+      } finally {
+        // Set loading to false after the data fetch completes (whether it succeeds or fails)
+        setLoading(false);
       }
     };
 
@@ -390,8 +396,11 @@ const PublicView = () => {
             className="text-black lg:w-full md:w-full w-screen-xl"
           >
             <TabPanel value={value} index={0} dir={theme.direction}>
-              <TableContainer className="bg-white rounded-lg w-full">
-                <Table size="small" aria-label="a dense table">
+              <TableContainer
+                className="bg-white rounded-lg w-full"
+                sx={{ minHeight: "400px" }}
+              >
+                <Table size="small">
                   <TableHead>
                     <TableRow>
                       <TableCell align="center" sx={{ fontWeight: "bold" }}>
@@ -444,15 +453,32 @@ const PublicView = () => {
                       </TableCell>
                     </TableRow>
                   </TableHead>
-                  <TableBody>
-                    {raports &&
-                      raports.map((raport, index) => (
-                        <TableRow
-                          key={raport.id}
-                          sx={{
-                            "&:last-child td, &:last-child th": { border: 0 },
-                          }}
+                  <TableBody
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    {loading ? (
+                      <TableRow>
+                        <TableCell
+                          component="th"
+                          align="center"
+                          scope="row"
+                          colSpan={6}
                         >
+                          <Box
+                            sx={{
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              height: "40vh",
+                            }}
+                          >
+                            <CircularProgress />
+                          </Box>
+                        </TableCell>
+                      </TableRow>
+                    ) : raports && raports.length > 0 ? (
+                      raports.map((raport, index) => (
+                        <TableRow key={raport.id}>
                           <TableCell component="th" align="center" scope="row">
                             <span className="font-sans">
                               {
@@ -521,7 +547,21 @@ const PublicView = () => {
                             />
                           </TableCell>
                         </TableRow>
-                      ))}
+                      ))
+                    ) : (
+                      <TableRow>
+                        <TableCell
+                          component="th"
+                          align="center"
+                          scope="row"
+                          colSpan={6}
+                        >
+                          <span className="font-sans">
+                            Aucun historique de maintenance enregistré.
+                          </span>
+                        </TableCell>
+                      </TableRow>
+                    )}
                   </TableBody>
                 </Table>
               </TableContainer>

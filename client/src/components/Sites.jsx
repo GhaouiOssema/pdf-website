@@ -338,7 +338,7 @@ const Sites = () => {
                 <input
                   type="text"
                   id="search"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                  className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   placeholder="Recherche"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
@@ -415,7 +415,7 @@ const Sites = () => {
                 folders.length > 0 &&
                 screenSize.width > 700 &&
                 !loading
-              ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 w-full"
+              ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 w-full"
               : !folders &&
                 !folders.length < 0 &&
                 !loading &&

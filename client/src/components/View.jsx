@@ -106,7 +106,7 @@ const RaportView = ({
 
       if (!isCodePostalValid) {
         seterrorMessageForCreatingSite(
-          "le code postal doit avoir une longueur de 5 caractères."
+          "Code postal invalide : Le code postal doit comporter au moins 5 chiffres."
         );
         return;
       }
@@ -170,7 +170,7 @@ const RaportView = ({
 
       if (!isCodePostalValid) {
         seterrorMessageForUpdatingSite(
-          "le code postal doit avoir une longueur de 5 caractères."
+          "Code postal invalide : Le code postal doit comporter au moins 5 chiffres."
         );
         return;
       }
@@ -306,7 +306,7 @@ const RaportView = ({
                             id="checkbox-label"
                             sx={{ width: "100%" }}
                           >
-                            Sélectionnez un Catégorie
+                            Sélectionnez une Catégorie
                           </InputLabel>
                           <Select
                             labelId="demo-multiple-checkbox-label"
@@ -315,7 +315,7 @@ const RaportView = ({
                             value={selectedCategories}
                             onChange={handleCategoryChange}
                             input={
-                              <OutlinedInput label="Sélectionnez un Catégorie" />
+                              <OutlinedInput label="Sélectionnez une Catégorie" />
                             }
                             renderValue={(selected) => {
                               if (selected.length <= 2) {
@@ -454,7 +454,7 @@ const RaportView = ({
                         </label>
                         <FormControl sx={{ width: "100%" }} size="small">
                           <InputLabel id="demo-multiple-checkbox-label">
-                            Sélectionnez un Catégorie
+                            Sélectionnez une Catégorie
                           </InputLabel>
                           <Select
                             labelId="demo-multiple-checkbox-label"
@@ -463,7 +463,7 @@ const RaportView = ({
                             value={subContent}
                             onChange={(e) => setSubContent(e.target.value)}
                             input={
-                              <OutlinedInput label="Sélectionnez un Catégorie" />
+                              <OutlinedInput label="Sélectionnez une Catégorie" />
                             }
                             renderValue={(selected) => {
                               if (selected.length <= 2) {

@@ -193,7 +193,7 @@ const PdfView = () => {
   const [observation, setObservation] = useState("");
   const [partChanged, setPartChanged] = useState("");
   const [nextMaintenanceDate, setNextMaintenanceDate] = useState("");
-  const [raports, setRaports] = useState(null);
+  const [raports, setRaports] = useState([]);
   const [socIndex, setSocIndex] = useState(null);
   const [filteredRaports, setFilteredRaports] = useState([]);
   const [confirmationCode, setConfirmationCode] = useState(null);
@@ -201,6 +201,8 @@ const PdfView = () => {
   const [popupView, setPopupView] = useState(false);
   const [popupErrorMessage, setPopupErrorMessage] = useState(false);
   const popupRef = useRef(null);
+  const [loading, setLoading] = useState(false);
+  const [loaded, setloaded] = useState(false);
 
   const handleOutsideClick = (event) => {
     if (popupRef.current && !popupRef.current.contains(event.target)) {
@@ -315,22 +317,38 @@ const PdfView = () => {
   };
 
   useEffect(() => {
+    let isMounted = true;
+
     const fetchData = async () => {
+      setLoading(true);
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_SERVER_API_URL}/pdf/raports`,
           config
         );
-        const filteredRaports = response.data.filter((raport) =>
-          pdfData?.raports?.includes(raport._id)
-        );
-        setRaports(filteredRaports);
+
+        if (isMounted) {
+          const filteredRaports = response.data.filter((raport) =>
+            pdfData?.raports?.includes(raport._id)
+          );
+          setRaports(filteredRaports);
+        }
       } catch (error) {
         console.log(error);
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     };
 
+    // Call fetchData when the component mounts and when pdfData changes
     fetchData();
+
+    // Cleanup function to set isMounted to false when the component unmounts
+    return () => {
+      isMounted = false;
+    };
   }, [pdfData]);
 
   if (!pdfData) {
@@ -431,7 +449,10 @@ const PdfView = () => {
             className="text-black lg:w-full md:w-full w-screen-xl"
           >
             <TabPanel value={value} index={0} dir={theme.direction}>
-              <TableContainer className="bg-white rounded-lg w-full">
+              <TableContainer
+                className="bg-white rounded-lg w-full"
+                sx={{ minHeight: "400px" }}
+              >
                 <Table size="small">
                   <TableHead>
                     <TableRow>
@@ -485,15 +506,32 @@ const PdfView = () => {
                       </TableCell>
                     </TableRow>
                   </TableHead>
-                  <TableBody>
-                    {raports &&
-                      raports.map((raport, index) => (
-                        <TableRow
-                          key={raport.id}
-                          sx={{
-                            "&:last-child td, &:last-child th": { border: 0 },
-                          }}
+                  <TableBody
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    {loading ? (
+                      <TableRow>
+                        <TableCell
+                          component="th"
+                          align="center"
+                          scope="row"
+                          colSpan={6}
                         >
+                          <Box
+                            sx={{
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              height: "40vh",
+                            }}
+                          >
+                            <CircularProgress />
+                          </Box>
+                        </TableCell>
+                      </TableRow>
+                    ) : raports && raports.length > 0 ? (
+                      raports.map((raport, index) => (
+                        <TableRow key={raport.id}>
                           <TableCell component="th" align="center" scope="row">
                             <span className="font-sans">
                               {
@@ -562,7 +600,21 @@ const PdfView = () => {
                             />
                           </TableCell>
                         </TableRow>
-                      ))}
+                      ))
+                    ) : (
+                      <TableRow>
+                        <TableCell
+                          component="th"
+                          align="center"
+                          scope="row"
+                          colSpan={6}
+                        >
+                          <span className="font-sans">
+                            Aucun historique de maintenance enregistré.
+                          </span>
+                        </TableCell>
+                      </TableRow>
+                    )}
                   </TableBody>
                 </Table>
               </TableContainer>

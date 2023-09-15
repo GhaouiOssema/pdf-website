@@ -295,10 +295,10 @@ const Profile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="h-screen bg-gray-100 flex flex-col justify-center items-center">
       {open && <Popup open={open} setOpen={setOpen} dialogType={dialogType} />}
       <div
-        className="py-0 flex flex-col justify-center"
+        className="py-0 flex flex-col justify-center items-center"
         ref={dialogType === "change" ? popupRef : null}
       >
         <div className="container mx-auto">

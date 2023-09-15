@@ -64,8 +64,8 @@ const Notification = () => {
 
   return (
     <div className="bg-gray-100 min-h-screen">
-      <div className="p-6 flex flex-row justify-between items-center flex-wrap w-full mx-auto max-w-screen-lg lg:px-12 px-4 py-4">
-        <div className="w-[85%] md:w-[90%] lg:w-[93%] xl:w-[95%] bg-gray-400 flex flex-wrap items-center justify-between gap-2 px-4 py-2 rounded-md">
+      <div className="p-6 flex flex-row justify-between items-center flex-wrap w-full mx-auto max-w-screen-lg lg:px-12 px-4 py-6">
+        <div className="w-[82%] md:w-[87%] lg:w-[90%] xl:w-[93%] bg-gray-400 flex flex-wrap items-center justify-between gap-2 px-4 py-2 rounded-md">
           <span className="font-sans font-semibold text-white">
             Mes notification
           </span>
