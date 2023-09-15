@@ -352,7 +352,7 @@ const Sites = () => {
           <div className="md:w-[40%] mt-4 md:mt-0 flex flex-col items-center">
             <button
               type="button"
-              className="md:flex items-center justify-center text-white bg-[#125ba3] hover:bg-primary-500 font-medium rounded-lg text-sm px-4 py-2 dark:bg-[#125ba3] dark:hover:bg-primary-700 focus:outline-none hidden transition ease-in duration-300"
+              className="md:flex items-center justify-center text-white bg-[#125ba3] hover:bg-primary-500 font-medium rounded-lg text-sm px-4 py-2 dark:bg-[#125ba3] dark:hover:bg-primary-500 focus:outline-none hidden transition ease-in duration-300"
               onClick={() => {
                 setButtonType("siteButton");
                 setOpenSection(true);
@@ -375,7 +375,7 @@ const Sites = () => {
             </button>
             <button
               type="button"
-              className="md:hidden ml-5 flex items-center justify-center text-white bg-primary-500 hover:bg-primary-800 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none transition ease-in duration-300"
+              className="md:hidden ml-5 flex items-center justify-center text-white bg-[#125ba3] hover:bg-primary-500 font-medium rounded-lg text-sm px-4 py-2 dark:bg-[#125ba3] dark:hover:bg-primary-500 focus:outline-none transition ease-in duration-300"
               onClick={() => {
                 setButtonType("siteButton");
                 setOpenSection(true);

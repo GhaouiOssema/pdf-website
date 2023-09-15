@@ -287,7 +287,7 @@ const FormSend = () => {
 
     if (formState.selectedInfo === null) {
       handleClick();
-      setAlertMsg("Veuillez remplir le champ de fiche technique");
+      setAlertMsg("Veuillez remplir le champ de plan");
       return;
     }
 
