@@ -260,7 +260,7 @@ const PdfDetails = () => {
       )}
 
       {pdfData ? (
-        <div className="h-full w-full md:h-screen lg:h-screen xl:h-screen py-2">
+        <div className="h-full min-h-screen py-2 bg-gray-100">
           <div className="flex flex-col items-center justify-center mt-4">
             <div className="w-full md:w-[70%] px-3 ">
               <p className="rounded-lg text-center mb-4 bg-[#125ba3] text-white text-md tracking-wide font-sans font-semibold py-1">
