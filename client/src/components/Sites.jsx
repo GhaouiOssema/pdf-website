@@ -422,7 +422,7 @@ const Sites = () => {
           }`}
         >
           <>
-            {folders && !loading && folders.length > 0 ? (
+            {!loading && folders.length > 0 ? (
               folders
                 ?.filter((folder) => {
                   const lowerCaseSearchQuery = searchQuery.toLowerCase();
@@ -473,7 +473,20 @@ const Sites = () => {
                     />
                   </div>
                 ))
-            ) : !loading && folders.length === 0 ? (
+            ) : loading ? (
+              <div className="w-full h-full flex flex-col  items-center">
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "50vh",
+                  }}
+                >
+                  <CircularProgress />
+                </Box>
+              </div>
+            ) : (
               <div className="flex flex-col justify-center items-center opacity-20">
                 <DoNotDisturbIcon
                   sx={{
@@ -486,19 +499,6 @@ const Sites = () => {
                 <p className="w-full font-sans font-bold text-xl text-center break-words">
                   Il n'existe aucun site .
                 </p>
-              </div>
-            ) : (
-              <div className="w-full h-full flex flex-col  items-center">
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    height: "50vh",
-                  }}
-                >
-                  <CircularProgress />
-                </Box>
               </div>
             )}
           </>

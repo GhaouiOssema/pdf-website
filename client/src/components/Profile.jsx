@@ -286,8 +286,8 @@ const Profile = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          height: "80vh",
         }}
+        className="min-h-screen bg-gray-100"
       >
         <CircularProgress />
       </Box>
@@ -295,10 +295,10 @@ const Profile = () => {
   }
 
   return (
-    <div>
+    <div className="min-h-screen bg-gray-100">
       {open && <Popup open={open} setOpen={setOpen} dialogType={dialogType} />}
       <div
-        className="bg-gray-100 h-screen py-0 flex flex-col justify-center"
+        className="py-0 flex flex-col justify-center"
         ref={dialogType === "change" ? popupRef : null}
       >
         <div className="container mx-auto">

@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 
 const Notification = () => {
   const [loading, setLoading] = useState(false);
-  const [notifications, setNotifications] = useState(null);
+  const [notifications, setNotifications] = useState([]);
   const [isRotating, setRotating] = useState(false);
 
   const fetchNotification = async () => {
@@ -84,33 +84,7 @@ const Notification = () => {
           />
         </span>
       </div>
-      {loading ? (
-        <div className="w-full h-full flex flex-col items-center pt-20">
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <CircularProgress />
-          </Box>
-        </div>
-      ) : !loading && !notifications ? (
-        <div className="h-full flex flex-col justify-center items-center pt-20 opacity-20">
-          <NotificationsOffRoundedIcon
-            sx={{
-              height: 250,
-              width: 250,
-              opacity: "100%",
-              color: "black",
-            }}
-          />
-          <p className="w-full font-sans font-bold text-xl text-center">
-            Vous n'avez reçu aucun rapport jusqu'à présent.
-          </p>
-        </div>
-      ) : (
+      {!loading && notifications.length > 0 ? (
         <div className="bg-gray-100 h-full">
           <div className="flex flex-col items-start justify-start bg-gradient-to-t">
             <div className="w-full">
@@ -188,6 +162,32 @@ const Notification = () => {
               </div>
             </div>
           </div>
+        </div>
+      ) : loading ? (
+        <div className="w-full h-full flex flex-col items-center pt-20">
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <CircularProgress />
+          </Box>
+        </div>
+      ) : (
+        <div className="h-full flex flex-col justify-center items-center pt-20 opacity-20">
+          <NotificationsOffRoundedIcon
+            sx={{
+              height: 250,
+              width: 250,
+              opacity: "100%",
+              color: "black",
+            }}
+          />
+          <p className="w-full font-sans font-bold text-xl text-center">
+            Vous n'avez reçu aucun rapport jusqu'à présent.
+          </p>
         </div>
       )}
     </div>
