@@ -58,6 +58,16 @@ const PublicDOEButtonsGroup = ({ pdfData }) => {
     height: window.innerHeight,
   });
 
+  const [initialFileFetched, setInitialFileFetched] = useState(false);
+
+  useEffect(() => {
+    // Fetch the first file when the component mounts
+    if (!initialFileFetched && pdfData?.doeFiles.length > 0) {
+      fetchDOEFiles(pdfData.doeFiles[0].fileId, 0);
+      setInitialFileFetched(true);
+    }
+  }, [pdfData, initialFileFetched]);
+
   useEffect(() => {
     const handleResize = () => {
       setScreenSize({
@@ -78,7 +88,7 @@ const PublicDOEButtonsGroup = ({ pdfData }) => {
     setNumPages(numPages);
   };
 
-  const fetchDOEFiles = async (id) => {
+  const fetchDOEFiles = async (id, index) => {
     console.log(id);
     try {
       const response = await axios.get(
@@ -88,14 +98,16 @@ const PublicDOEButtonsGroup = ({ pdfData }) => {
         { responseType: "arraybuffer" }
       );
 
-      setLoading(true);
-
       const blob = new Blob([response.data], { type: "application/pdf" });
 
       const reader = new FileReader();
       reader.onloadend = () => {
         const base64Pdf = reader.result.split(",")[1];
-        setDOEFiles((prevFiles) => [...prevFiles, base64Pdf]);
+        setDOEFiles((prevFiles) => {
+          const updatedFiles = [...prevFiles];
+          updatedFiles[index] = base64Pdf;
+          return updatedFiles;
+        });
         setLoading(false);
       };
       reader.readAsDataURL(blob);
@@ -107,7 +119,9 @@ const PublicDOEButtonsGroup = ({ pdfData }) => {
 
   const handleChange = (event, newValue) => {
     setSelectedFileIndex(newValue);
-    fetchDOEFiles(pdfData.doeFiles[newValue].fileId);
+    if (!doeFiles[newValue] && pdfData?.doeFiles[newValue]) {
+      fetchDOEFiles(pdfData.doeFiles[newValue].fileId, newValue);
+    }
   };
 
   return (
@@ -181,7 +195,7 @@ const PublicDOEButtonsGroup = ({ pdfData }) => {
                         pageNumber={index + 1}
                         renderTextLayer={false}
                         height={500}
-                        width={screenSize.width < 700 ? 200 : 1000}
+                        width={screenSize.width < 700 ? 200 : 700}
                         className="mt-1"
                       />
                     ))}
